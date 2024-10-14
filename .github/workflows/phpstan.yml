@@ -23,4 +23,5 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: PHPStan Analysis
-      run: vendor/bin/phpstan analyse --level=max src
+      run: vendor/bin/phpstan analyse --level=max wp-content/themes/thabatta-advocacia
+
