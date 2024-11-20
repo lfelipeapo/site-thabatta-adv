@@ -1,2 +1,9 @@
 .tmp
 .air.toml
+/data/wordpress/wp-content/boost-cache
+/data/wordpress/wp-content/cache
+/data/wordpress/wp-content/jpcrm-storage
+/data/wordpress/wp-content/uploads
+/data/wordpress/wp-content/upgrade-temp-backup
+/data/wordpress/readme.html
+/data/wordpress/readme.html

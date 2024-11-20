@@ -1,0 +1,7 @@
+includes:
+    - phpstan-baseline.neon
+parameters:
+    level: 7 # the analysis level, from 0 (loose) to 8 (strict)
+    paths: # the paths to scan
+        - wp-content/themes
+    ignoreErrors:

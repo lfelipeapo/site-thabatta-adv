@@ -4,6 +4,7 @@ services:
     restart: always
     ports:
       - "8100:80" # HTTP
+      - "8443:443"
     environment:
       SERVER_NAME: ${SERVER_NAME:-:80}
       WORDPRESS_DB_HOST: ${DB_HOST:-db}
@@ -28,7 +29,7 @@ services:
           define('WP_HOME', 'http://localhost:8100');
           
     volumes:
-      - ./wp-content:/var/www/html/wp-content
+      - ./data:/var/www/html
       - ./debug/dev.ini:/usr/local/etc/php/conf.d/dev.ini
 
     depends_on:

@@ -1,11 +1,14 @@
+version: '3.9' # Versão do Compose
+
 services:
   wordpress:
     image: wpeverywhere/frankenwp:latest-php8.3
     restart: always
     ports:
-      - "8100:443"   # HTTP
+      - "8000:80" # HTTP
+      - "8100:443" # HTTPS
     environment:
-      SERVER_NAME: ${SERVER_NAME:-:80}
+      SERVER_NAME: ${SERVER_NAME:-localhost}
       WORDPRESS_DB_HOST: ${DB_HOST:-db}
       WORDPRESS_DB_USER: ${DB_USER:-exampleuser}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-examplepass}
@@ -26,11 +29,9 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
           define('WP_SITEURL', 'http://localhost:8100');
           define('WP_HOME', 'http://localhost:8100');
-          
     volumes:
-      - ./wp-content:/var/www/html/wp-content
+      - ./data:/var/www/html
       - ./debug/dev.ini:/usr/local/etc/php/conf.d/dev.ini
-
     depends_on:
       - db
     tty: true
@@ -55,6 +56,7 @@ services:
       - ${LOCAL_PHPMYADMIN_PORT:-8086}:80
     environment:
       PMA_HOST: db
+      PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-examplepass}
     depends_on:
       - db
