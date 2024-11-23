@@ -7,3 +7,4 @@
 /data/wordpress/wp-content/upgrade-temp-backup
 /data/wordpress/readme.html
 /data/wordpress/readme.html
+data/wp-includes/.fuse_hidden*

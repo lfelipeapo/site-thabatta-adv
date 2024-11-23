@@ -7,9 +7,9 @@
 		"php": ">=7.0"
 	},
 	"require-dev": {
-		"yoast/phpunit-polyfills": "1.1.0",
-		"automattic/jetpack-changelogger": "^4.2.2",
-		"automattic/jetpack-logo": "^2.0.2",
+		"yoast/phpunit-polyfills": "^1.1.1",
+		"automattic/jetpack-changelogger": "^4.2.8",
+		"automattic/jetpack-logo": "^2.0.5",
 		"automattic/wordbless": "dev-master"
 	},
 	"suggest": {
@@ -23,6 +23,9 @@
 	"scripts": {
 		"phpunit": [
 			"./vendor/phpunit/phpunit/phpunit --colors=always"
+		],
+		"test-coverage": [
+			"php -dpcov.directory=. ./vendor/bin/phpunit --coverage-php \"$COVERAGE_DIR/php.cov\""
 		],
 		"test-php": [
 			"@composer phpunit"

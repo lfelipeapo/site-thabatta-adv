@@ -2,21 +2,29 @@
 # This file is distributed under the same license as the Plugins - Health Check &amp; Troubleshooting - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-02-03 14:53:55+0000\n"
+"PO-Revision-Date: 2024-11-02 13:12:46+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: GlotPress/4.0.0-beta.2\n"
+"X-Generator: GlotPress/4.0.1\n"
 "Language: pt_BR\n"
 "Project-Id-Version: Plugins - Health Check &amp; Troubleshooting - Stable (latest release)\n"
 
+#: pages/troubleshoot.php:17
+msgid "The Troubleshooting Mode from the Health Check plugin will be available as a standalone plugin in the future, since the primary Health Check features have been available in WordPress since version 5.2."
+msgstr "O Modo de Resolução de Problemas do plugin Diagnóstico estará disponível como um plugin independente no futuro, já que os principais recursos do Diagnóstico estão disponíveis no WordPress desde a versão 5.2."
+
+#: pages/tools.php:17
+msgid "The additional tools for the Health Check plugin will be available as a standalone plugin in the future, since the primary Health Check features have been available in WordPress since version 5.2."
+msgstr "As ferramentas adicionais para o plugin Diagnóstico estarão disponíveis como um plugin independente no futuro, já que os principais recursos do Diagnóstico estão disponíveis no WordPress desde a versão 5.2."
+
 #. translators: %s: The date and time the screenshot was taken.
-#: pages/screenshots.php:111
+#: pages/screenshots.php:114
 msgid "Published on %s"
 msgstr "Publicado em %s"
 
-#: pages/screenshots.php:97
+#: pages/screenshots.php:100
 msgid "Delete screenshot"
 msgstr "Excluir captura de tela"
 
@@ -46,7 +54,7 @@ msgstr "Para fazer uma captura de tela para compartilhar com os usuários de sup
 msgid "This is a beta-feature, and some inconsistencies in screenshots is to be expected, please keep that, and the fact that your pages may show sensitive information in mind when sharing screenshots."
 msgstr "Este é um recurso beta e algumas inconsistências nas capturas de tela podem acontecer. Lembre-se disso e do fato de que as suas páginas podem mostrar informações confidenciais ao compartilhar as capturas de tela."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1303
+#: mu-plugin/health-check-troubleshooting-mode.php:1304
 msgid "If you wish to troubleshoot as another user, or as an anonymous site visitor, the <a href=\"https://wordpress.org/plugins/user-switching/\">User Switcher plugin</a> allows for all of this while also being compatible with Troubleshooting Mode."
 msgstr "Se você deseja resolver problemas como outro usuário ou como visitante anônimo do site, o <a href=\"https://wordpress.org/plugins/user-switching/\">plugin User Switcher</a> permite tudo isso e também é compatível com o Modo de Resolução de Problemas."
 
@@ -55,8 +63,8 @@ msgid "Your site is using the virtual <code>robots.txt</code> file which is gene
 msgstr "Seu site está usando o arquivo virtual do <code>robots.txt</code> gerado pelo WordPress."
 
 #: HealthCheck/Tools/class-health-check-robotstxt.php:21
-msgid "The <code>robots.txt</code> file tells search engines which folders are allowed to crawl and which not. WordPress generates a virtual files if there is no physical file. If there is a non-virtual file, the content is shown here."
-msgstr "O arquivo <code>robots.txt</code> informa aos mecanismos de pesquisa quais pastas podem ser rastreadas e quais não. O WordPress gera um arquivo virtual se não houver um arquivo físico. Se houver um arquivo não virtual, o conteúdo será mostrado aqui."
+msgid "The <code>robots.txt</code> file tells search engines which directories are allowed to be crawled and which not. WordPress generates a virtual file if there is no physical file. If there is a non-virtual file, the content will be displayed here."
+msgstr "O arquivo <code>robots.txt</code> informa aos motores de pesquisa quais diretórios podem ser rastreados e quais não podem. O WordPress gera um arquivo virtual se não houver um arquivo físico. Se houver um arquivo não virtual, o conteúdo será exibido aqui."
 
 #: HealthCheck/Tools/class-health-check-robotstxt.php:20
 msgid "robots.txt Viewer"
@@ -119,63 +127,63 @@ msgstr "O plugin pode conter recursos beta, que você, como proprietário do sit
 msgid "Beta features"
 msgstr "Recursos beta"
 
-#: HealthCheck/class-health-check-screenshots.php:245
+#: HealthCheck/class-health-check-screenshots.php:248
 msgid "Take screenshot"
 msgstr "Tirar captura de tela"
 
-#: HealthCheck/class-health-check-screenshots.php:144
+#: HealthCheck/class-health-check-screenshots.php:147
 msgid "Screenshot"
 msgstr "Captura de tela"
 
-#: HealthCheck/class-health-check-screenshots.php:129
-#: HealthCheck/class-health-check-screenshots.php:143 pages/screenshots.php:17
+#: HealthCheck/class-health-check-screenshots.php:132
+#: HealthCheck/class-health-check-screenshots.php:146 pages/screenshots.php:17
 msgid "Screenshots"
 msgstr "Capturas de tela"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1618
+#: mu-plugin/health-check-troubleshooting-mode.php:1619
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1617
+#: mu-plugin/health-check-troubleshooting-mode.php:1618
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1610
+#: mu-plugin/health-check-troubleshooting-mode.php:1611
 msgid "You were attempting to perform an action that requires a security token, which was either not present in your request, or was considered invalid. Please verify that the following action is intentional, or feel free to cancel the action and nothing will change."
 msgstr "Você estava tentando executar uma ação que requer um token de segurança, que não estava presente na sua solicitação ou foi considerado inválido. Verifique se a ação a seguir é intencional ou sinta-se à vontade para cancelar a ação e nada mudará."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1606
+#: mu-plugin/health-check-troubleshooting-mode.php:1607
 msgid "Troubleshooting Mode - Security check"
 msgstr "Modo de Resolução de Problemas - Verificação de segurança"
 
 #. translators: The theme being activated.
-#: mu-plugin/health-check-troubleshooting-mode.php:952
+#: mu-plugin/health-check-troubleshooting-mode.php:953
 msgid "You were attempting to <strong>change the active theme</strong> to %s while troubleshooting."
 msgstr "Você estava tentando <strong>alterar o tema ativo</strong> para %s durante a resolução de problemas."
 
 #. translators: The plugin being affected.
-#: mu-plugin/health-check-troubleshooting-mode.php:867
+#: mu-plugin/health-check-troubleshooting-mode.php:868
 msgid "You were attempting to <strong>disable</strong> the %s plugin while troubleshooting."
 msgstr "Você estava tentando <strong>desativar</strong> o plugin %s durante a resolução de problemas."
 
 #. translators: The plugin being affected.
-#: mu-plugin/health-check-troubleshooting-mode.php:781
+#: mu-plugin/health-check-troubleshooting-mode.php:782
 msgid "You were attempting to <strong>enable</strong> the %s plugin while troubleshooting."
 msgstr "Você estava tentando <strong>ativar</strong> o plugin %s durante a resolução de problemas."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:752
+#: mu-plugin/health-check-troubleshooting-mode.php:753
 msgid "You were attempting to <strong>dismiss all notices</strong>."
 msgstr "Você estava tentando <strong>dispensar todos os avisos</strong>."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:725
+#: mu-plugin/health-check-troubleshooting-mode.php:726
 msgid "You were attempting to <strong>disable Troubleshooting Mode</strong>."
 msgstr "Você estava tentando <strong>desativar o Modo de Resolução de Problemas</strong>."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:195
+#: mu-plugin/health-check-troubleshooting-mode.php:196
 msgid "Install the latest classic default theme"
 msgstr "Instale o tema padrão clássico mais recente"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:186
+#: mu-plugin/health-check-troubleshooting-mode.php:187
 msgid "Install the latest default theme"
 msgstr "Instale o tema padrão mais recente"
 
@@ -212,34 +220,34 @@ msgstr "Você está executando uma versão mais antiga do WordPress, a versão %
 msgid "WordPress update needed!"
 msgstr "Atualização do WordPress necessária!"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1299
+#: mu-plugin/health-check-troubleshooting-mode.php:1300
 msgid "The Health Check plugin will attempt to disable cache solutions on your site, but if you are using a custom caching solution, you may need to disable it manually when troubleshooting."
 msgstr "O plugin de Diagnóstico tentará desativar as soluções de cache no seu site, mas se você estiver usando uma solução de cache personalizada, pode ser necessário desativá-la manualmente durante a resolução de problemas."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1004
+#: mu-plugin/health-check-troubleshooting-mode.php:1005
 msgid "Switch anyway"
 msgstr "Troque mesmo assim"
 
 #. translators: %s: Plugin name.
-#: mu-plugin/health-check-troubleshooting-mode.php:1000
+#: mu-plugin/health-check-troubleshooting-mode.php:1001
 msgid "Force-switch to the %s theme, even though the loopback checks failed."
 msgstr "Força a mudança para o tema %s, mesmo que as verificações de loopback tenham falhado."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:921
+#: mu-plugin/health-check-troubleshooting-mode.php:922
 msgid "Disable anyway"
 msgstr "Desativar mesmo assim"
 
 #. translators: %s: Plugin name.
-#: mu-plugin/health-check-troubleshooting-mode.php:917
+#: mu-plugin/health-check-troubleshooting-mode.php:918
 msgid "Force-disable the plugin, %s, even though the loopback checks failed."
 msgstr "Forçar a desativação do plugin, %s, mesmo que as verificações de loopback tenham falhado."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:836
+#: mu-plugin/health-check-troubleshooting-mode.php:837
 msgid "Enable anyway"
 msgstr "Ativar mesmo assim"
 
 #. translators: %s: Plugin name.
-#: mu-plugin/health-check-troubleshooting-mode.php:832
+#: mu-plugin/health-check-troubleshooting-mode.php:833
 msgid "Force-enable the plugin, %s, even though the loopback checks failed."
 msgstr "Forçar a ativação do plugin, %s, mesmo que as verificações de loopback tenham falhado."
 
@@ -363,28 +371,28 @@ msgid "This page can show you every detail about the configuration of your WordP
 msgstr "Esta página pode mostrar todos os detalhes sobre a configuração do seu site em WordPress. Para quaisquer melhorias que possam ser feitas, consulte a página de <a href=\"%s\">status do diagnóstico</a>."
 
 #. translators: %d: Amount of hidden themes.
-#: mu-plugin/health-check-troubleshooting-mode.php:1479
+#: mu-plugin/health-check-troubleshooting-mode.php:1480
 msgid "Show %d remaining theme"
 msgid_plural "Show %d remaining themes"
 msgstr[0] "Mostrar %d tema restante"
 msgstr[1] "Mostrar %d temas restantes"
 
 #. translators: %d: Amount of hidden plugins.
-#: mu-plugin/health-check-troubleshooting-mode.php:1393
+#: mu-plugin/health-check-troubleshooting-mode.php:1394
 msgid "Show %d remaining plugin"
 msgid_plural "Show %d remaining plugins"
 msgstr[0] "Mostrar %d plugin restante"
 msgstr[1] "Mostrar %d plugins restantes"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:314
+#: mu-plugin/health-check-troubleshooting-mode.php:315
 msgid "When bulk-disabling plugins, a site failure occurred. Because of this the change was automatically reverted."
 msgstr "Ao desativar plugins em massa, ocorreu uma falha no site. Por esse motivo, a alteração foi revertida automaticamente."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:289
+#: mu-plugin/health-check-troubleshooting-mode.php:290
 msgid "When bulk-enabling plugins, a site failure occurred. Because of this the change was automatically reverted."
 msgstr "Ao ativar plugins em massa, ocorreu uma falha no site. Por esse motivo, a alteração foi revertida automaticamente."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:264
+#: mu-plugin/health-check-troubleshooting-mode.php:265
 msgid "When enabling troubleshooting on the selected plugins, a site failure occurred. Because of this the selected plugins were kept disabled while troubleshooting mode started."
 msgstr "Ao ativar a resolução de problemas nos plugins selecionados, ocorreu uma falha no site. Por esse motivo, os plugins selecionados foram mantidos desativados enquanto o modo de resolução de problemas foi iniciado."
 
@@ -424,7 +432,7 @@ msgstr "Se deseja exportar todas as informações desta página em uma convenien
 msgid "Site Health Info"
 msgstr "Informações de diagnóstico"
 
-#: pages/troubleshoot.php:17
+#: pages/troubleshoot.php:21
 msgid "Troubleshooting mode"
 msgstr "Modo de resolução de problemas"
 
@@ -538,35 +546,35 @@ msgid "The loopback request to your site failed, this means features relying on 
 msgstr "A solicitação loopback para o seu site falhou, o que significa que recursos que dependem disso não estão funcionando com o esperado."
 
 #. translators: %d: The amount of notices that are visible.
-#: mu-plugin/health-check-troubleshooting-mode.php:1506
+#: mu-plugin/health-check-troubleshooting-mode.php:1507
 msgid "Notices (%d)"
 msgstr "Avisos (%d)"
 
 #. translators: %d: The amount of available themes.
-#: mu-plugin/health-check-troubleshooting-mode.php:1421
+#: mu-plugin/health-check-troubleshooting-mode.php:1422
 msgid "Available themes (%d)"
 msgstr "Temas disponíveis (%d)"
 
 #. translators: %d: The amount of available plugins.
-#: mu-plugin/health-check-troubleshooting-mode.php:1316
+#: mu-plugin/health-check-troubleshooting-mode.php:1317
 msgid "Available plugins (%d)"
 msgstr "Plugins disponíveis (%d)"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1267
+#: mu-plugin/health-check-troubleshooting-mode.php:1268
 msgid "enabled"
 msgstr "ativado"
 
 #. translators: %s: The running status of Troubleshooting Mode.
-#: mu-plugin/health-check-troubleshooting-mode.php:1264
+#: mu-plugin/health-check-troubleshooting-mode.php:1265
 msgid "Troubleshooting Mode - %s"
 msgstr "Modo de resolução de problemas - %s"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1174
+#: mu-plugin/health-check-troubleshooting-mode.php:1175
 msgctxt "Prefix for inactive themes in troubleshooting mode"
 msgid "Switch to"
 msgstr "Trocar para"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1174
+#: mu-plugin/health-check-troubleshooting-mode.php:1175
 msgctxt "Prefix for the active theme in troubleshooting mode"
 msgid "Active:"
 msgstr "Ativo:"
@@ -596,6 +604,7 @@ msgid "Hi! This test message was sent by the Health Check plugin from %1$s (%2$s
 msgstr "Olá! Esta mensagem de teste foi enviada pelo plugin Diagnóstico a partir de %1$s (%2$s) em %3$s às %4$s. Se você está lendo isto, tudo está funcionando."
 
 #. Plugin Name of the plugin
+#: health-check.php
 msgid "Health Check & Troubleshooting"
 msgstr "Diagnóstico e resolução de problemas"
 
@@ -613,68 +622,68 @@ msgstr "Tema ativo: %s"
 msgid "Waiting..."
 msgstr "Aguardando..."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1458
+#: mu-plugin/health-check-troubleshooting-mode.php:1459
 msgid "Switch to this theme"
 msgstr "Trocar para este tema"
 
 #. translators: %s: Theme name.
-#: mu-plugin/health-check-troubleshooting-mode.php:1454
+#: mu-plugin/health-check-troubleshooting-mode.php:1455
 msgid "Switch the active theme to %s"
 msgstr "Trocar o tema ativo para %s"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1382
+#: mu-plugin/health-check-troubleshooting-mode.php:1383
 msgid "Enable"
 msgstr "Ativar"
 
 #. translators: %s: Plugin name.
-#: mu-plugin/health-check-troubleshooting-mode.php:1378
+#: mu-plugin/health-check-troubleshooting-mode.php:1379
 msgid "Enable the plugin, %s, while troubleshooting."
 msgstr "Ativar o plugin %s durante a resolução de problemas."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1361
+#: mu-plugin/health-check-troubleshooting-mode.php:1362
 msgid "Disable"
 msgstr "Desativar"
 
 #. translators: %s: Plugin name.
-#: mu-plugin/health-check-troubleshooting-mode.php:1357
+#: mu-plugin/health-check-troubleshooting-mode.php:1358
 msgid "Disable the plugin, %s, while troubleshooting."
 msgstr "Desativar o plugin %s durante a resolução de problemas."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1563
+#: mu-plugin/health-check-troubleshooting-mode.php:1564
 msgid "Dismiss notices"
 msgstr "Dispensar avisos"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1526
+#: mu-plugin/health-check-troubleshooting-mode.php:1527
 msgid "Plugin actions, such as activating and deactivating, are not available while in Troubleshooting Mode."
 msgstr "Ações (actions) de plugins, como as executadas durante a ativação e desativação, não estão disponíveis no modo de resolução de problemas."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1518
+#: mu-plugin/health-check-troubleshooting-mode.php:1519
 msgid "There are no notices to show."
 msgstr "Não há avisos para mostrar."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1295
+#: mu-plugin/health-check-troubleshooting-mode.php:1296
 msgid "Here you can enable individual plugins or themes, helping you to find out what might be causing strange behaviors on your site. Do note that <strong>any changes you make to settings will be kept</strong> when you disable Troubleshooting Mode."
 msgstr "Aqui você pode ativar plugins ou temas individualmente, o que ajuda a encontrar o motivo de comportamentos estranhos no seu site. Observe que <strong>qualquer mudança que você faça nas configurações serão mantidas</strong> quando você desativar o modo de resolução de problemas."
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1291
+#: mu-plugin/health-check-troubleshooting-mode.php:1292
 msgid "Your site is currently in Troubleshooting Mode. This has <strong>no effect on your site visitors</strong>, they will continue to view your site as usual, but for you it will look as if you had just installed WordPress for the first time."
 msgstr "Seu site está com o modo de resolução de problemas ativado. Isso <strong>não afeta o modo como seus visitantes veem o site</strong>, eles continuarão vendo o site normalmente, mas para você parecerá como se o WordPress tivesse acabado de ser instalado."
 
 #. Translators: %1$s: The theme slug that was switched to.. %2$s: The
 #. force-enable link markup.
-#: mu-plugin/health-check-troubleshooting-mode.php:983
+#: mu-plugin/health-check-troubleshooting-mode.php:984
 msgid "When switching the active theme to %1$s, a site failure occurred. Because of this we reverted the theme to the one you used previously. %2$s"
 msgstr "Ao trocar o tema ativo para %1$s, uma falha ocorre no site. Por causa disso, revertemos o tema para aquele que você estava usando anteriormente. %2$s"
 
 #. Translators: %1$s: The plugin slug that was disabled. %2$s: The
 #. force-disable link markup.
-#: mu-plugin/health-check-troubleshooting-mode.php:900
+#: mu-plugin/health-check-troubleshooting-mode.php:901
 msgid "When disabling the plugin, %1$s, a site failure occurred. Because of this the change was automatically reverted. %2$s"
 msgstr "Ao desabilitar o plugin, %1$s, uma falha ocorre no site. Por conta disso, a mudança foi automaticamente desfeita. %2$s"
 
 #. Translators: %1$s: The link-button markup to force enable the plugin. %2$s:
 #. The force-enable link markup.
-#: mu-plugin/health-check-troubleshooting-mode.php:815
+#: mu-plugin/health-check-troubleshooting-mode.php:816
 msgid "When enabling the plugin, %1$s, a site failure occurred. Because of this the change was automatically reverted. %2$s"
 msgstr "Ao ativar o plugin, %1$s, uma falha ocorre no site. Por causa disso, a mudança foi automaticamente desfeita. %2$s"
 
@@ -730,11 +739,11 @@ msgid "(Latest version: %s)"
 msgstr "(Versão mais recente: %s)"
 
 #. translators: Prefix for the active theme in a listing.
-#: mu-plugin/health-check-troubleshooting-mode.php:1464
+#: mu-plugin/health-check-troubleshooting-mode.php:1465
 msgid "Active:"
 msgstr "Ativo:"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1158
+#: mu-plugin/health-check-troubleshooting-mode.php:1159
 msgid "Themes"
 msgstr "Temas"
 
@@ -824,17 +833,17 @@ msgid "Content changed"
 msgstr "Conteúdo alterado"
 
 #: HealthCheck/class-health-check.php:343
-#: HealthCheck/class-health-check.php:352 pages/tools.php:17
+#: HealthCheck/class-health-check.php:352 pages/tools.php:21
 msgid "Tools"
 msgstr "Ferramentas"
 
 #: HealthCheck/class-health-check-troubleshoot.php:244
-#: mu-plugin/health-check-troubleshooting-mode.php:1197
-#: mu-plugin/health-check-troubleshooting-mode.php:1285
+#: mu-plugin/health-check-troubleshooting-mode.php:1198
+#: mu-plugin/health-check-troubleshooting-mode.php:1286
 msgid "Disable Troubleshooting Mode"
 msgstr "Desativar modo de resolução de problemas"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:177
+#: mu-plugin/health-check-troubleshooting-mode.php:178
 msgid "You don't have any of the default themes installed. A default theme helps you determine if your current theme is causing conflicts."
 msgstr "Você não tem nenhum tema padrão instalado. Um tema padrão ajuda a determinar se o seu tema atual está causando conflitos."
 
@@ -844,38 +853,38 @@ msgid "Health Check"
 msgstr "Diagnóstico"
 
 #. Translators: %s: Plugin slug.
-#: mu-plugin/health-check-troubleshooting-mode.php:1126
+#: mu-plugin/health-check-troubleshooting-mode.php:1127
 msgid "Enable %s"
 msgstr "Ativar %s"
 
 #. Translators: %s: Plugin slug.
-#: mu-plugin/health-check-troubleshooting-mode.php:1109
+#: mu-plugin/health-check-troubleshooting-mode.php:1110
 msgid "Disable %s"
 msgstr "Desativar %s"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1070
+#: mu-plugin/health-check-troubleshooting-mode.php:1071
 msgid "Manage active plugins"
 msgstr "Gerenciar plugins ativos"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:331
-#: mu-plugin/health-check-troubleshooting-mode.php:405
+#: mu-plugin/health-check-troubleshooting-mode.php:332
+#: mu-plugin/health-check-troubleshooting-mode.php:406
 msgid "Enable while troubleshooting"
 msgstr "Ativar durante a resolução de problemas"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:332
-#: mu-plugin/health-check-troubleshooting-mode.php:391
+#: mu-plugin/health-check-troubleshooting-mode.php:333
+#: mu-plugin/health-check-troubleshooting-mode.php:392
 msgid "Disable while troubleshooting"
 msgstr "Desativar durante a resolução de problemas"
 
-#: pages/troubleshoot.php:30
+#: pages/troubleshoot.php:34
 msgid "A Troubleshooting Mode menu is added to your admin bar, which will allow you to enable plugins individually, switch back to your current theme, and disable Troubleshooting Mode."
 msgstr "Um menu do modo de resolução de problemas está presente na sua barra de administração, que permitirá que você ative plugins individualmente, volte ao seu tema atual e desative o Modo de resolução de problemas."
 
-#: pages/troubleshoot.php:26
+#: pages/troubleshoot.php:30
 msgid "By enabling the Troubleshooting Mode, all plugins will appear inactive and your site will switch to the default theme only for you. All other users will see your site as usual."
 msgstr "Ativando o modo de resolução de problemas, todos os plugins serão desativados e o seu site usará um tema padrão, mas só para você. Todos os outros usuários verão o site da forma usual."
 
-#: pages/troubleshoot.php:21
+#: pages/troubleshoot.php:25
 msgid "When troubleshooting issues on your site, you are likely to be told to disable all plugins and switch to the default theme."
 msgstr "Quando é preciso resolver problemas no seu site, normalmente as pessoas pedem que você desative seus plugins e use um tema padrão."
 
@@ -917,7 +926,7 @@ msgid "Media Handling"
 msgstr "Manipulação de mídia"
 
 #: HealthCheck/class-health-check.php:314
-#: mu-plugin/health-check-troubleshooting-mode.php:325
+#: mu-plugin/health-check-troubleshooting-mode.php:326
 msgid "Troubleshoot"
 msgstr "Resolver problemas"
 
@@ -933,19 +942,19 @@ msgstr "Não foi possível substituir o arquivo do plugin necessário para ativa
 msgid "Enable Troubleshooting Mode"
 msgstr "Ativar modo de resolução de problemas"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1079
+#: mu-plugin/health-check-troubleshooting-mode.php:1080
 msgid "Plugins"
 msgstr "Plugins"
 
-#: mu-plugin/health-check-troubleshooting-mode.php:1060
+#: mu-plugin/health-check-troubleshooting-mode.php:1061
 msgid "Troubleshooting Mode"
 msgstr "Modo de resolução de problemas"
 
-#: pages/troubleshoot.php:34
+#: pages/troubleshoot.php:38
 msgid "Please note, that due to how Must Use plugins work, any such plugin will not be disabled for the troubleshooting session."
 msgstr "Observe que, devido ao modo como os plugins Must Use funcionam, qualquer plugin desse tipo não será desabilitado durante uma sessão de resolução de problemas."
 
-#: pages/troubleshoot.php:22
+#: pages/troubleshoot.php:26
 msgid "Understandably, you do not wish to do so as it may affect your site visitors, leaving them with lost functionality."
 msgstr "Compreensivelmente, você não quer fazer isso já que algumas funcionalidades podem parar de existir, o que pode afetar os visitantes do seu site."
 
@@ -993,15 +1002,18 @@ msgid "(Supports 64bit values)"
 msgstr "(Suporta valores de 64bits)"
 
 #. Author of the plugin
+#: health-check.php
 msgid "The WordPress.org community"
 msgstr "A comunidade do WordPress.org"
 
 #. Description of the plugin
+#: health-check.php
 msgid "Checks the health of your WordPress install."
 msgstr "Verifica as condições da sua instalação do WordPress."
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
+#: health-check.php
 msgid "https://wordpress.org/plugins/health-check/"
 msgstr "https://br.wordpress.org/plugins/health-check/"
 
