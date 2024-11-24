@@ -1,14 +1,11 @@
 includes:
-    - /data/phpstan-baseline.neon
+    - data/phpstan-baseline.neon
 parameters:
     level: 7
     paths:
-        - /data/wp-content/themes
-        - /data/wp-content/plugins
+        - data/wp-content
     excludePaths:
-        - /data/vendor/*
-        - /data/wp-content/plugins/*/vendor/*
+        - data/vendor/*
     ignoreErrors:
-        - '#Call to undefined function add_action\(\)#'
-        - '#Call to undefined function add_filter\(\)#'
-        - '#Call to undefined function wp_enqueue_script\(\)#'
+        - '#Call to undefined function add_action#'
+        - '#Call to undefined function add_filter#'
