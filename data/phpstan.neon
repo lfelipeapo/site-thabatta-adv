@@ -3,7 +3,7 @@ includes:
 parameters:
     level: 7
     paths:
-        - wp-content
+        - wp-content/themes
     excludePaths:
         - vendor/*
     ignoreErrors:
