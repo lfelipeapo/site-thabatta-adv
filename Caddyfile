@@ -34,7 +34,7 @@
         precompressed br gzip
     }
 
-    php_fastcgi unix//var/run/php-fpm.sock {
+    php_server {
         trusted_proxies private_ranges
         resolve_root_symlink
     }
