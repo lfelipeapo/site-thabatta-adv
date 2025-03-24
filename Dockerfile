@@ -115,11 +115,6 @@ RUN mkdir /var/www/html/wp-content/cache
 ENV TZ=America/Sao_Paulo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Adicionar PHPStan
-RUN curl -sSLO https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar && \
-    chmod +x phpstan.phar && \
-    mv phpstan.phar /usr/local/bin/phpstan
-
 # Instalação do WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \

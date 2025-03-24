@@ -132,7 +132,9 @@ if ( ! function_exists( 'twentytwentyfive_register_block_bindings' ) ) :
 			'twentytwentyfive/format',
 			array(
 				'label'              => _x( 'Post format name', 'Label for the block binding placeholder in the editor', 'twentytwentyfive' ),
-				'get_value_callback' => 'twentytwentyfive_format_binding',
+				'get_value_callback' => function() {
+					return twentytwentyfive_format_binding();
+				},
 			)
 		);
 	}
