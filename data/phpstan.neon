@@ -1,13 +1,14 @@
 includes:
-    - phpstan-baseline.neon
+  - phpstan-baseline.neon
 parameters:
-    level: 5
-    paths:
-        - wp-content/themes
-    excludePaths:
-        - vendor/*
-    bootstrapFiles:
-        - data/wp-config-docker.php
-    ignoreErrors:
-        - '#Call to undefined function add_action#'
-        - '#Call to undefined function add_filter#'
+  level: 5
+  paths:
+    - wp-content/themes
+  excludePaths:
+    - vendor/*
+  bootstrapFiles: []
+  ignoreErrors:
+    - '#Call to undefined function add_action#'
+    - '#Call to undefined function add_filter#'
+    - '#^Else branch is unreachable because ternary operator condition is always true\.\$ in path#'
+  reportUnmatchedIgnoredErrors: false
