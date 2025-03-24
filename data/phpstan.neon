@@ -6,6 +6,8 @@ parameters:
         - wp-content/themes
     excludePaths:
         - vendor/*
+    bootstrapFiles:
+        - data/wp-config-docker.php
     ignoreErrors:
         - '#Call to undefined function add_action#'
         - '#Call to undefined function add_filter#'
