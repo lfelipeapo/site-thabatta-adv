@@ -21,31 +21,13 @@
 # You may not have the hostname being called due to dynamic IPs and load balancers.
 # Allowing all hosts on port 80 for health checks, local dev & cases where the hostname is unknown.
 {$SERVER_NAME:localhost} {
-	root * /var/www/html
-
 	@static {
 		file
 		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff
 	}
 
+	root * /var/www/html/
 	encode br zstd gzip
-
-	file_server @static {
-        precompressed br gzip
-    }
-
-    php_server {
-        trusted_proxies private_ranges
-        resolve_root_symlink
-    }
-
-    @uploads {
-        path_regexp ^/wp-content/uploads/.*
-    }
-
-    header @uploads {
-		Cache-Control "public, max-age=31536000"
-	}
 	
 	wp_cache {
 		loc {$CACHE_LOC:/var/www/html/wp-content/cache}

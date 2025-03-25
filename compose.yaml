@@ -12,7 +12,7 @@ services:
       - "443:443/udp" # HTTP/3
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
-      WORDPRESS_DB_HOST: ${DB_HOST:-db}
+      WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${DB_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-wordpress}
       WORDPRESS_DB_NAME: ${DB_NAME:-wordpress}
@@ -30,8 +30,8 @@ services:
         auto_https disable_redirects
         debug
       WORDPRESS_CONFIG_EXTRA: |
-        define('WP_SITEURL', 'http://localhost:8100');
-        define('WP_HOME', 'http://localhost:8100');
+        define('WP_SITEURL', 'https://localhost');
+        define('WP_HOME', 'https://localhost');
     volumes:
       - ./data/wp-content:/var/www/html/wp-content
       - ./data/wp-content/themes/mytheme:/var/www/html/wp-content/themes/mytheme

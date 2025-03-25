@@ -4,10 +4,10 @@ ARG USER=www-data
 
 FROM dunglas/frankenphp:latest-builder-php${PHP_VERSION} as builder
 
-# Copy xcaddy in the builder image
+# Copia o xcaddy da imagem builder do Caddy
 COPY --from=caddy:builder /usr/bin/xcaddy /usr/bin/xcaddy
 
-# CGO must be enabled to build FrankenPHP
+# CGO deve estar habilitado para compilar o FrankenPHP
 ENV CGO_ENABLED=1 XCADDY_SETCAP=1 XCADDY_GO_BUILD_FLAGS='-ldflags="-w -s" -trimpath'
 
 COPY ./sidekick/middleware/cache ./cache
@@ -29,7 +29,7 @@ LABEL org.opencontainers.image.source=https://github.com/StephenMiracle/frankenw
 LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.vendor="Stephen Miracle"
 
-# Replace the official binary with our custom build
+# Substitui o binário oficial pelo nosso build customizado
 COPY --from=builder /usr/local/bin/frankenphp /usr/local/bin/frankenphp
 ENV WP_DEBUG=${DEBUG:+1}
 ENV FORCE_HTTPS=0
@@ -45,15 +45,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
     libssl-dev \
     libzip-dev \
+    libnss3-tools \
     unzip \
     git \
     libjpeg-dev \
     libwebp-dev \
     libzip-dev \
     libmemcached-dev \
-    zlib1g-dev
+    zlib1g-dev \
+    netcat-openbsd
 
-# Install required PHP extensions (see https://make.wordpress.org/hosting/handbook/handbook/server-environment/#php-extensions)
+# Instala as extensões PHP necessárias
 RUN install-php-extensions \
     bcmath \
     exif \
@@ -71,7 +73,7 @@ COPY --from=wp /usr/src/wordpress /usr/src/wordpress
 COPY --from=wp /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d/
 COPY --from=wp /usr/local/bin/docker-entrypoint.sh /usr/local/bin/
 
-# Set recommended PHP.ini settings
+# Configurações recomendadas do PHP.ini
 RUN set -eux; \
     { \
     echo 'opcache.memory_consumption=128'; \
@@ -99,36 +101,36 @@ VOLUME /var/www/html/wp-content
 COPY data/wp-content/mu-plugins /var/www/html/wp-content/mu-plugins
 RUN mkdir /var/www/html/wp-content/cache
 
-# Timezone configuration
+# Configuração de fuso horário
 ENV TZ=America/Sao_Paulo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Install WP-CLI
+# Instala WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
-# Install PHPStan
+# Instala PHPStan
 RUN curl -sSLO https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar \
     && chmod a+x phpstan.phar \
     && mv phpstan.phar /usr/local/bin/phpstan
 
-# Git pre-commit configuration
+# Configuração do Git pre-commit
 RUN apt-get update && apt-get install -y git \
     && mkdir -p /app/.git/hooks \
     && echo '#!/bin/sh\nphpstan analyse --configuration=/app/public/phpstan.neon' > /app/.git/hooks/pre-commit \
     && chmod +x /app/.git/hooks/pre-commit
 
-# Copy project files
+# Copia os arquivos do projeto
 COPY data/ /var/www/html/
 
-# Add custom entrypoint wrapper (plugins will be installed at runtime)
+# Adiciona o entrypoint wrapper customizado
 COPY docker-entrypoint-wrapper.sh /usr/local/bin/docker-entrypoint-wrapper.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint-wrapper.sh
 
 COPY Caddyfile /etc/caddy/Caddyfile
 
-# Caddy requires extra capabilities to bind to ports 80 and 443
+# Configura as capacidades necessárias para o Caddy
 RUN useradd -D ${USER} && \
     setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp
 
