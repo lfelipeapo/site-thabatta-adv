@@ -4,14 +4,15 @@
 	"type": "jetpack-library",
 	"license": "GPL-2.0-or-later",
 	"require": {
-		"php": ">=7.0",
-		"automattic/jetpack-assets": "^2.3.13",
-		"automattic/jetpack-status": "^4.0.3"
+		"php": ">=7.2",
+		"automattic/jetpack-assets": "^4.0.12",
+		"automattic/jetpack-status": "^5.0.8"
 	},
 	"require-dev": {
-		"automattic/wordbless": "dev-master",
+		"automattic/jetpack-test-environment": "@dev",
 		"yoast/phpunit-polyfills": "^1.1.1",
-		"automattic/jetpack-changelogger": "^4.2.8"
+		"automattic/jetpack-changelogger": "^6.0.1",
+		"automattic/phpunit-select-config": "^1.0.0"
 	},
 	"suggest": {
 		"automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
@@ -23,16 +24,14 @@
 	},
 	"scripts": {
 		"phpunit": [
-			"./vendor/phpunit/phpunit/phpunit --colors=always"
+			"phpunit-select-config phpunit.#.xml.dist --colors=always"
 		],
 		"test-coverage": [
-			"php -dpcov.directory=. ./vendor/bin/phpunit --coverage-php \"$COVERAGE_DIR/php.cov\""
+			"php -dpcov.directory=. ./vendor/bin/phpunit-select-config phpunit.#.xml.dist --coverage-php \"$COVERAGE_DIR/php.cov\""
 		],
 		"test-php": [
 			"@composer phpunit"
-		],
-		"post-install-cmd": "WorDBless\\Composer\\InstallDropin::copy",
-		"post-update-cmd": "WorDBless\\Composer\\InstallDropin::copy"
+		]
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -43,7 +42,7 @@
 		},
 		"autotagger": true,
 		"branch-alias": {
-			"dev-trunk": "0.5.x-dev"
+			"dev-trunk": "0.7.x-dev"
 		},
 		"textdomain": "jetpack-image-cdn",
 		"version-constants": {

@@ -12,7 +12,7 @@ namespace Automattic\Jetpack\Image_CDN;
  */
 final class Image_CDN {
 
-	const PACKAGE_VERSION = '0.5.3';
+	const PACKAGE_VERSION = '0.7.9';
 
 	/**
 	 * Singleton.
@@ -393,7 +393,7 @@ final class Image_CDN {
 			 * present all attributes as double-quoted attributes and include at
 			 * most one copy of each attribute, escaping all values appropriately.
 			 */
-			$tag_name = strtolower( $processor->get_tag() );
+			$tag_name = strtolower( (string) $processor->get_tag() );
 			$tag      = new \WP_HTML_Tag_Processor( "<{$tag_name}>" );
 			$tag->next_tag();
 			foreach ( $processor->get_attribute_names_with_prefix( '' ) ?? array() as $name ) {
@@ -1444,5 +1444,14 @@ final class Image_CDN {
 	 */
 	private static function is_amp_endpoint() {
 		return class_exists( '\Jetpack_AMP_Support' ) && \Jetpack_AMP_Support::is_amp_request();
+	}
+
+	/**
+	 * Get the list of supported image extensions
+	 *
+	 * @return string[] Array of supported extensions
+	 */
+	public static function get_supported_extensions() {
+		return self::$extensions;
 	}
 }

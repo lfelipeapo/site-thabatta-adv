@@ -1,11 +1,11 @@
 === Jetpack Boost - Website Speed, Performance and Critical CSS  ===
-Contributors: automattic, xwp, adnan007, bjorsch, danwalmsley, davidlonjon, dilirity, donncha, ebinnion, exelero, jeherve, jpolakovic, karthikbhatb, kraftbj, luchad0res, pyronaur, rheinardkorf, scruffian, thingalon
+Contributors: automattic, xwp, adnan007, bjorsch, danwalmsley, davidlonjon, dilirity, donncha, ebinnion, exelero, jeherve, jpolakovic, karthikbhatb, kraftbj, lsarsfield, luchad0res, pyronaur, rheinardkorf, scruffian, thingalon
 Donate link: https://automattic.com
 Tags: performance, speed, web vitals, critical css, cache
-Requires at least: 6.5
+Requires at least: 6.6
 Tested up to: 6.7
-Requires PHP: 7.0
-Stable tag: 3.6.0
+Requires PHP: 7.2
+Stable tag: 3.11.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,9 +43,9 @@ Currently, the plugin has 6 performance modules available:
 
 2. *Page Cache* speeds up your site by saving pages as static files. These files are quickly served to visitors, reducing load times and enhancing user experience.
 
-3. *Defer Non-Essential Javascript* moves some tasks to after the page loads, so that important visual information can be seen sooner and your website loads quicker.
+3. *Defer Non-Essential JavaScript* moves some tasks to after the page loads, so that important visual information can be seen sooner and your website loads quicker.
 
-   Read more about deferring javascript at [web.dev](https://jetpack.com/redirect/?source=jetpack-boost-defer-js)
+   Read more about deferring JavaScript at [web.dev](https://jetpack.com/redirect/?source=jetpack-boost-defer-js)
 
 4. *Image Guide* is a must-have feature for anyone who wants to optimize the images on their website. With this guide, you can ensure that the images on your site are the right size and dimensions, which is critical for improving user experience, page speed, and site ranking. Following the tips and best practices outlined in the guide, you can reduce image file sizes and speed up your site. Check out our [support page](https://jetpack.com/support/jetpack-boost/image-performance-guide/) to learn more about this feature and how it can help you achieve a faster and smoother website experience for your users.
 
@@ -183,24 +183,19 @@ If you run into compatibility issues, please do let us know. You can drop us a l
 2. Jetpack Boost Speed Improvement
 
 == Changelog ==
-### 3.6.0 - 2024-11-22
+### 3.11.0 - 2025-03-19
 #### Added
-- Cornerstone Pages: Added setting to allow selecting important pages.
+- Page Cache: Add more cookies to the ignore-list for better caching.
 
 #### Changed
-- Critical CSS: Improved logic that generates URLs for critical CSS generation.
-- General: Improved compatibility with WordPress 6.7.
-- General: Updated badges used to show state of features.
-- Page Speed: Updated speed scores to be based on first cornerstone page.
-
-#### Removed
-- Image Guide: Removed URL parameter based override.
+- Cache: Hide conflicting notice about cache setup on WoA.
+- Concatenate JS/CSS: Ensure delivery method tester is only tested once per network on Multisite.
+- UI: Change style of pills.
+- UI: Upgrade CTAs on the Jetpack Boost admin now opens a modal instead of navigating to the upgrade page.
+- Update package dependencies.
 
 #### Fixed
-- Image Size Analysis: Fixed UI not properly reflecting current state after interaction.
-- Page Speed: Fixed typo in Overall Score tooltip.
-- Performance History: Fixed tooltip behavior.
-- UI: Fixed Boost's menu counter sometimes displaying incorrectly.
+- Critical CSS: Prevent the process from failing when a single provider fails storing its CSS.
 
 --------
 
