@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Health Check &amp; Troubleshooting - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-11-02 13:12:46+0000\n"
+"PO-Revision-Date: 2025-03-04 18:55:21+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -277,7 +277,7 @@ msgstr "Nome de usuário do banco de dados"
 
 #: HealthCheck/BackCompat/class-wp-debug-data.php:715
 msgid "Are pretty permalinks supported?"
-msgstr "Os links permanentes são suportados?"
+msgstr "Os links amigáveis são suportados?"
 
 #: HealthCheck/BackCompat/class-wp-debug-data.php:519
 msgid "Max number of files allowed"
@@ -586,7 +586,7 @@ msgstr "Você não tem acesso a esse arquivo."
 
 #: HealthCheck/BackCompat/class-wp-debug-data.php:600
 msgid "(Does not support 64bit values)"
-msgstr "(Não oferece suporte a valores 64bit)"
+msgstr "(Não oferece suporte a valores de 64 bits)"
 
 #: HealthCheck/BackCompat/class-wp-debug-data.php:624
 msgid "Unable to determine what web server software is used"
@@ -826,7 +826,7 @@ msgstr "Arquivo não encontrado"
 
 #: HealthCheck/Tools/class-health-check-files-integrity.php:105
 msgid "(View Diff)"
-msgstr "(Ver diff)"
+msgstr "(Ver diferenças)"
 
 #: HealthCheck/Tools/class-health-check-files-integrity.php:105
 msgid "Content changed"
@@ -878,11 +878,11 @@ msgstr "Desativar durante a resolução de problemas"
 
 #: pages/troubleshoot.php:34
 msgid "A Troubleshooting Mode menu is added to your admin bar, which will allow you to enable plugins individually, switch back to your current theme, and disable Troubleshooting Mode."
-msgstr "Um menu do modo de resolução de problemas está presente na sua barra de administração, que permitirá que você ative plugins individualmente, volte ao seu tema atual e desative o Modo de resolução de problemas."
+msgstr "Um menu do Modo de resolução de problemas está presente na sua barra de administração, que permitirá que você ative plugins individualmente, volte ao seu tema atual e desative o Modo de resolução de problemas."
 
 #: pages/troubleshoot.php:30
 msgid "By enabling the Troubleshooting Mode, all plugins will appear inactive and your site will switch to the default theme only for you. All other users will see your site as usual."
-msgstr "Ativando o modo de resolução de problemas, todos os plugins serão desativados e o seu site usará um tema padrão, mas só para você. Todos os outros usuários verão o site da forma usual."
+msgstr "Ativando o Modo de resolução de problemas, todos os plugins serão desativados e o seu site usará um tema padrão, mas só para você. Todos os outros usuários verão o site da forma usual."
 
 #: pages/troubleshoot.php:25
 msgid "When troubleshooting issues on your site, you are likely to be told to disable all plugins and switch to the default theme."
@@ -999,7 +999,7 @@ msgstr "Informações de versão ou autor indisponíveis."
 
 #: HealthCheck/BackCompat/class-wp-debug-data.php:600
 msgid "(Supports 64bit values)"
-msgstr "(Suporta valores de 64bits)"
+msgstr "(Oferece suporte a valores de 64 bits)"
 
 #. Author of the plugin
 #: health-check.php

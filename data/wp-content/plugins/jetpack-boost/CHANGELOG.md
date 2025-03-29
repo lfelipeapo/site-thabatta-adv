@@ -5,6 +5,100 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.11.0] - 2025-03-19
+### Added
+- Page Cache: Add more cookies to the ignore-list for better caching. [#42365]
+
+### Changed
+- Cache: Hide conflicting notice about cache setup on WoA. [#42466]
+- Concatenate JS/CSS: Ensure delivery method tester is only tested once per network on Multisite. [#41918]
+- UI: Change style of pills. [#42460]
+- UI: Upgrade CTAs on the Jetpack Boost admin now opens a modal instead of navigating to the upgrade page. [#42309] [#42416]
+- Update package dependencies. [#42511] [#42509]
+
+### Fixed
+- Critical CSS: Prevent the process from failing when a single provider fails storing its CSS. [#42110]
+
+## [3.10.4] - 2025-03-12
+### Fixed
+- Critical CSS: Mask CSS to prevent WAF false-positives during generation. [#42320]
+
+## [3.10.3] - 2025-03-06
+### Fixed
+- Critical CSS: Fix generation. [#42263]
+
+## [3.10.2] - 2025-03-06
+### Fixed
+- Critical CSS: Fix fatal error during generation. [#42261]
+
+## [3.10.1] - 2025-03-06
+### Added
+- Concatenate JS/CSS: Show a notice if legacy files are being served. [#41604]
+
+### Changed
+- Concatenate JS/CSS: Improved handling of minification settings. [#41716]
+- General: Improved the way modules are configured internally [#39859] [#41673]
+- Update package dependencies. [#41955] [#42163] [#42180]
+
+### Fixed
+- Critical CSS: Implement a workaround for WAF interfering with generation. [#42245]
+- Critical CSS: Fix showing empty error in some cases, when generation failed. [#42026]
+- Critical CSS: Prevent invalid URLs from breaking the whole process. [#41946]
+
+## [3.9.0] - 2025-02-17
+### Added
+- Cloud CSS: Handle prioritized cloud CSS regeneration for cornerstone pages updates. [#41516]
+- Concatenate JS: Add compatibility with "Depay Payments for WooCommerce". [#41571]
+- Speed Scores: Add tracking for speed score pop-out CTA. [#41556]
+
+### Changed
+- Admin Panel: Cleanup CSS styles. [#41371]
+- Concatenate JS/CSS: Update concatenated assets to be stored on the server as files. [#41056]
+- Updated package dependencies. [#41286] [#41491] [#41577] [#41659]
+
+### Fixed
+- UI: Fix UI discrepancy in Boost settings page upon toggling multiple Modules at same time. [#41472]
+
+## [3.8.0] - 2025-01-23
+### Added
+- Critical CSS: Flag a site-health issue for Critical CSS when a page from the Cornerstone Pages list is modified. [#41006]
+- Page Cache: Add extra PHP file the site owner can use to modify how the cache works. [#40920]
+- Page Cache: Filter cookies and GET parameters so they do not cause a cache miss. [#40894]
+
+### Changed
+- Critical CSS: Reduce unnecessary regenerations. [#40891]
+
+### Fixed
+- Page Cache: Clear Page Cache when Image CDN Auto Resize Lazy Images is toggled. [#41226]
+- Page Cache: Fix issue where exceptions were incorrectly applied to the entire URL. [#40999]
+- Concatenate JS: Improve compatibility with WooCommerce Shipping. [#40874]
+- Concatenate CSS: Fix cases where minification might cause a file to load slower. [#40956]
+- Image CDN: Ensure that double encoding doesn't happen. [#40886]
+
+## [3.7.0] - 2025-01-06
+### Added
+- Concatenate JS/CSS: Added a button that allows loading default excludes. [#40496]
+- General: Added tracks events to clickable elements on the settings page. [#40246]
+- General: Added WordPress filters to allow Cornerstone Pages list and Image Size Analyzer source data to be updated. [#40442]
+- Concatenate JS/CSS: Added HTTP header to take advantage of WordPress.com edge caching [#40557]
+- UI: Added notifications when interacting with dashboard settings. [#40593]
+
+### Changed
+- UI: Gave Page Cache, Concatenate JS/CSS and Image CDN - Image Quality modules a more unifed look. [#40224]
+
+### Fixed
+- Critical CSS: Improved UI responsiveness during a retry after failed generation. [#40675]
+- UI: Fixed showing an error if no ISA report was found. [#40660]
+
+## [3.6.1] - 2024-11-28
+### Changed
+- Image CDN: Improve performance. [#39883]
+- General: Update minimum PHP version to 7.2. [#40147]
+- General: Update minimum WordPress version to 6.6. [#40146]
+
+### Fixed
+- Compatibility: Fixed situations where minify could break due to too many files being enqueued in the elementor editor. [#40339]
+
 ## [3.6.0] - 2024-11-22
 ### Added
 - Cornerstone Pages: Added setting to allow selecting important pages. [#39863]
@@ -543,6 +637,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First public alpha release
 
+[3.11.0]: https://github.com/Automattic/jetpack-boost-production/compare/3.10.4...3.11.0
+[3.10.4]: https://github.com/Automattic/jetpack-boost-production/compare/3.10.3...3.10.4
+[3.10.3]: https://github.com/Automattic/jetpack-boost-production/compare/3.10.2...3.10.3
+[3.10.2]: https://github.com/Automattic/jetpack-boost-production/compare/3.10.1...3.10.2
+[3.10.1]: https://github.com/Automattic/jetpack-boost-production/compare/3.9.0...3.10.1
+[3.9.0]: https://github.com/Automattic/jetpack-boost-production/compare/3.8.0...3.9.0
+[3.8.0]: https://github.com/Automattic/jetpack-boost-production/compare/3.7.0...3.8.0
+[3.7.0]: https://github.com/Automattic/jetpack-boost-production/compare/3.6.1...3.7.0
+[3.6.1]: https://github.com/Automattic/jetpack-boost-production/compare/3.6.0...3.6.1
 [3.6.0]: https://github.com/Automattic/jetpack-boost-production/compare/3.5.2...3.6.0
 [3.5.2]: https://github.com/Automattic/jetpack-boost-production/compare/3.5.1...3.5.2
 [3.5.1]: https://github.com/Automattic/jetpack-boost-production/compare/3.5.0...3.5.1
