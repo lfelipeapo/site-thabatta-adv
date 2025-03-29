@@ -22,7 +22,10 @@ type ProductStatus =
 	| 'needs_activation'
 	| 'needs_first_site_connection'
 	| 'user_connection_error'
-	| 'can_upgrade';
+	| 'can_upgrade'
+	| 'needs_attention'
+	| 'expired'
+	| 'expiring';
 
 type JetpackModule =
 	| 'anti-spam'
@@ -33,13 +36,31 @@ type JetpackModule =
 	| 'extras'
 	| 'ai'
 	| 'jetpack-ai'
+	| 'protect'
 	| 'scan'
 	| 'search'
 	| 'social'
-	| 'security'
-	| 'protect'
+	| 'stats'
 	| 'videopress'
-	| 'stats';
+	| 'security'
+	| 'growth'
+	| 'complete'
+	| 'site-accelerator'
+	| 'newsletter'
+	| 'related-posts'
+	| 'brute-force';
+
+type JetpackModuleWithCard =
+	| 'anti-spam'
+	| 'backup'
+	| 'boost'
+	| 'crm'
+	| 'jetpack-ai'
+	| 'protect'
+	| 'search'
+	| 'social'
+	| 'stats'
+	| 'videopress';
 
 type ThreatItem = {
 	// Protect API properties (free plan)
@@ -67,6 +88,112 @@ type ScanItem = {
 	version: string;
 };
 
+type RewindStatus =
+	| 'missing_plan'
+	| 'no_connected_jetpack'
+	| 'no_connected_jetpack_with_credentials'
+	| 'vp_active_on_site'
+	| 'vp_can_transfer'
+	| 'host_not_supported'
+	| 'multisite_not_supported'
+	| 'no_site_found';
+
+type BackupStatus =
+	| 'started'
+	| 'finished'
+	| 'no-credentials'
+	| 'backups-deactivated'
+	| 'no-credentials-atomic'
+	| 'credential-error'
+	| 'http-only-error'
+	| 'not-accessible'
+	| 'backup-deactivated'
+	| 'Kill switch active'
+	| 'error'
+	| 'error-will-retry';
+
+type BackupNeedsAttentionData = {
+	source: 'rewind' | 'last_backup';
+	status: RewindStatus | BackupStatus;
+	last_updated: string;
+};
+type ProtectNeedsAttentionData = {
+	threat_count: number;
+	critical_threat_count: number;
+	fixable_threat_ids: number[];
+};
+
+type Purchase = {
+	ID: string;
+	user_id: string;
+	blog_id: string;
+	product_id: string;
+	subscribed_date: string;
+	renew: string;
+	auto_renew: string;
+	renew_date: string;
+	inactive_date: string | null;
+	active: string;
+	meta: string | object;
+	ownership_id: string;
+	most_recent_renew_date: string;
+	amount: number;
+	expiry_date: string;
+	expiry_message: string;
+	expiry_sub_message: string;
+	expiry_status: string;
+	partner_name: string | null;
+	partner_slug: string | null;
+	partner_key_id: string | null;
+	subscription_status: string;
+	product_name: string;
+	product_slug: string;
+	product_type: string;
+	blog_created_date: string;
+	blogname: string;
+	domain: string;
+	description: string;
+	attached_to_purchase_id: string | null;
+	included_domain: string;
+	included_domain_purchase_amount: number;
+	currency_code: string;
+	currency_symbol: string;
+	renewal_price_tier_slug: string | null;
+	renewal_price_tier_usage_quantity: number | null;
+	current_price_tier_slug: string | null;
+	current_price_tier_usage_quantity: number | null;
+	price_tier_list: Array< object >;
+	price_text: string;
+	bill_period_label: string;
+	bill_period_days: number;
+	regular_price_text: string;
+	regular_price_integer: number;
+	product_display_price: string;
+	price_integer: number;
+	is_cancelable: boolean;
+	can_explicit_renew: boolean;
+	can_disable_auto_renew: boolean;
+	can_reenable_auto_renewal: boolean;
+	iap_purchase_management_link: string | null;
+	is_iap_purchase: boolean;
+	is_locked: boolean;
+	is_refundable: boolean;
+	refund_period_in_days: number;
+	is_renewable: boolean;
+	is_renewal: boolean;
+	has_private_registration: boolean;
+	refund_amount: number;
+	refund_integer: number;
+	refund_currency_symbol: string;
+	refund_text: string;
+	refund_options: object | null;
+	total_refund_amount: number;
+	total_refund_integer: number;
+	total_refund_currency: string;
+	total_refund_text: string;
+	check_dns: boolean;
+};
+
 interface Window {
 	myJetpackInitialState?: {
 		siteSuffix: string;
@@ -88,6 +215,7 @@ interface Window {
 		blogID: string;
 		fileSystemWriteAccess: 'yes' | 'no';
 		isStatsModuleActive: string;
+		canUserViewStats: boolean;
 		isUserFromKnownHost: string;
 		jetpackManage: {
 			isAgencyAccount: boolean;
@@ -109,10 +237,7 @@ interface Window {
 			isSiteConnected: boolean;
 			isUserConnected: boolean;
 			jetpackPlugins: Array< string >;
-			ownedProducts: JetpackModule[];
-			unownedProducts: JetpackModule[];
 			modules: Array< string >;
-			purchases: Array< string >;
 		};
 		myJetpackUrl: string;
 		myJetpackVersion: string;
@@ -140,12 +265,15 @@ interface Window {
 				[ key: string ]: {
 					class: string;
 					description: string;
+					category: 'security' | 'performance' | 'growth' | 'create' | 'management';
 					disclaimers: Array< string[] >;
 					features: string[];
 					has_free_offering: boolean;
+					feature_identifying_paid_plan: string;
 					has_paid_plan_for_product: boolean;
 					features_by_tier: Array< string >;
 					is_bundle: boolean;
+					is_feature: boolean;
 					is_plugin_active: boolean;
 					is_upgradable: boolean;
 					is_upgradable_by_bundle: string[];
@@ -155,6 +283,8 @@ interface Window {
 					plugin_slug: string;
 					post_activation_url: string;
 					post_checkout_url?: string;
+					manage_paid_plan_purchase_url?: string;
+					renew_paid_plan_purchase_url?: string;
 					pricing_for_ui?: {
 						available: boolean;
 						wpcom_product_slug: string;
@@ -172,6 +302,11 @@ interface Window {
 							should_prorate_when_offer_ends: boolean;
 							transition_after_renewal_count: number;
 							usage_limit?: number;
+							reason?: {
+								errors: {
+									introductoryOfferRemovedSubscriptionFound: string[];
+								};
+							};
 						};
 						tiers?: {
 							[ key: string ]: {
@@ -186,6 +321,11 @@ interface Window {
 									shouldProrateWhenOfferEnds: boolean;
 									transitionAfterRenewalCount: number;
 									usageLimit?: number;
+									reason?: {
+										errors: {
+											introductoryOfferRemovedSubscriptionFound: string[];
+										};
+									};
 								};
 								isIntroductoryOffer: boolean;
 								productTerm: string;
@@ -196,7 +336,7 @@ interface Window {
 					};
 					purchase_url?: string;
 					requires_user_connection: boolean;
-					slug: string;
+					slug: JetpackModule;
 					standalone_plugin_info: {
 						has_standalone_plugin: boolean;
 						is_standalone_installed: boolean;
@@ -207,6 +347,12 @@ interface Window {
 					tiers: string[];
 					title: string;
 					wpcom_product_slug: string;
+					doesModuleNeedAttention:
+						| false
+						| {
+								type: 'warning' | 'error';
+								data: BackupNeedsAttentionData | ProtectNeedsAttentionData;
+						  };
 				};
 			};
 		};
@@ -228,6 +374,7 @@ interface Window {
 				plugins: ScanItem[];
 				status: string;
 				themes: ScanItem[];
+				threats?: ThreatItem[];
 			};
 			wafConfig: {
 				automatic_rules_available: boolean;
@@ -241,6 +388,8 @@ interface Window {
 				jetpack_waf_share_data: '1' | '';
 				jetpack_waf_share_debug_data: boolean;
 				standalone_mode: boolean;
+				waf_supported: boolean;
+				waf_enabled: boolean;
 			};
 		};
 		videopress: {
@@ -264,78 +413,6 @@ interface Window {
 			};
 			videoCount: number;
 		};
-		purchases: {
-			items: Array< {
-				ID: string;
-				user_id: string;
-				blog_id: string;
-				product_id: string;
-				subscribed_date: string;
-				renew: string;
-				auto_renew: string;
-				renew_date: string;
-				inactive_date: string | null;
-				active: string;
-				meta: string | object;
-				ownership_id: string;
-				most_recent_renew_date: string;
-				amount: number;
-				expiry_date: string;
-				expiry_message: string;
-				expiry_sub_message: string;
-				expiry_status: string;
-				partner_name: string | null;
-				partner_slug: string | null;
-				partner_key_id: string | null;
-				subscription_status: string;
-				product_name: string;
-				product_slug: string;
-				product_type: string;
-				blog_created_date: string;
-				blogname: string;
-				domain: string;
-				description: string;
-				attached_to_purchase_id: string | null;
-				included_domain: string;
-				included_domain_purchase_amount: number;
-				currency_code: string;
-				currency_symbol: string;
-				renewal_price_tier_slug: string | null;
-				renewal_price_tier_usage_quantity: number | null;
-				current_price_tier_slug: string | null;
-				current_price_tier_usage_quantity: number | null;
-				price_tier_list: Array< object >;
-				price_text: string;
-				bill_period_label: string;
-				bill_period_days: number;
-				regular_price_text: string;
-				regular_price_integer: number;
-				product_display_price: string;
-				price_integer: number;
-				is_cancelable: boolean;
-				can_explicit_renew: boolean;
-				can_disable_auto_renew: boolean;
-				can_reenable_auto_renewal: boolean;
-				iap_purchase_management_link: string | null;
-				is_iap_purchase: boolean;
-				is_locked: boolean;
-				is_refundable: boolean;
-				refund_period_in_days: number;
-				is_renewable: boolean;
-				is_renewal: boolean;
-				has_private_registration: boolean;
-				refund_amount: number;
-				refund_integer: number;
-				refund_currency_symbol: string;
-				refund_text: string;
-				refund_options: object | null;
-				total_refund_amount: number;
-				total_refund_integer: number;
-				total_refund_currency: string;
-				total_refund_text: string;
-				check_dns: boolean;
-			} >;
-		};
 		redBubbleAlerts: {
 			'missing-connection'?: {
 				type: string;
@@ -346,6 +423,34 @@ interface Window {
 				data: {
 					plugin: string;
 				};
+			};
+			backup_failure?: {
+				type: 'warning' | 'error';
+				data: BackupNeedsAttentionData;
+			};
+			[ key: `${ string }--plan_expired` ]: {
+				product_slug: string;
+				product_name?: string;
+				expiry_date?: string;
+				expiry_message?: string;
+				manage_url?: string;
+				products_effected?: string[];
+			};
+			[ key: `${ string }--plan_expiring_soon` ]: {
+				product_slug: string;
+				product_name?: string;
+				expiry_date?: string;
+				expiry_message?: string;
+				manage_url?: string;
+				products_effected?: string[];
+			};
+			protect_has_threats?: {
+				type: 'warning' | 'error';
+				data: ProtectNeedsAttentionData;
+			};
+			[ key: `${ string }--plugins_needing_installed_activated` ]: {
+				needs_installed?: string[];
+				needs_activated_only?: string[];
 			};
 		};
 		recommendedModules: {
@@ -370,8 +475,9 @@ interface Window {
 		};
 		topJetpackMenuItemUrl: string;
 		isAtomic: boolean;
+		sandboxedDomain: string;
+		isDevVersion: boolean;
 		userIsAdmin: string;
-		userIsNewToJetpack: string;
 	};
 	JP_CONNECTION_INITIAL_STATE: {
 		apiRoot: string;
@@ -401,6 +507,8 @@ interface Window {
 				blogId: number;
 				wpcomUser: {
 					avatar: boolean;
+					display_name: string;
+					email: string;
 				};
 				gravatar: string;
 				permissions: {
