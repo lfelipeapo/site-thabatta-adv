@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Jetpack Boost &#8211; Website Speed, Performance and Critical CSS - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-03-20 00:23:01+0000\n"
+"PO-Revision-Date: 2025-03-27 16:54:07+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -501,7 +501,7 @@ msgid "Continue for free"
 msgstr "Continuar gratuitamente"
 
 #: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-jetpack-ai.php:158
-#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:72
+#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:78
 msgid "Get feedback on posts"
 msgstr "Receba feedback sobre os posts"
 
@@ -812,9 +812,9 @@ msgstr "Gere texto, tabelas, listas e formulários"
 #: app/assets/dist/jetpack-boost.js:13
 #: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:16
 #: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:30
-#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:68
-#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:72
+#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:74
 #: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:78
+#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:84
 msgid "Upgrade"
 msgstr "Atualização"
 
@@ -956,19 +956,19 @@ msgstr "Backups na nuvem em tempo real com armazenamento de 1 GB"
 msgid "Essential security tools: real-time backups and comment spam protection."
 msgstr "Ferramentas essenciais de segurança: backups em tempo real e proteção anti-spam para comentários."
 
-#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:257
+#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:264
 msgid "Severity labels"
 msgstr "Etiquetas de gravidade"
 
-#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:250
+#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:257
 msgid "Notifications"
 msgstr "Notificações"
 
-#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:243
+#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:250
 msgid "One-click auto fixes"
 msgstr "Correções automáticas em um clique"
 
-#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:236
+#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:243
 msgid "Access to scan on Cloud"
 msgstr "Acesso a varreduras na nuvem"
 
@@ -1199,11 +1199,11 @@ msgstr "Novo serviço grátis: Mostre taxas de entrega do Canadá na sua loja!"
 msgid "New free service: Show USPS shipping rates on your store! Added bonus: print shipping labels without leaving WooCommerce."
 msgstr "Novo serviço grátis: Mostre taxas de entrega USPS em na sua loja! Bônus: impressão de etiquetas de envio sem sair WooCommerce."
 
-#: jetpack_vendor/automattic/jetpack-jitm/src/class-jitm.php:204
+#: jetpack_vendor/automattic/jetpack-jitm/src/class-jitm.php:205
 msgid "Activating"
 msgstr "Ativando"
 
-#: jetpack_vendor/automattic/jetpack-jitm/src/class-jitm.php:203
+#: jetpack_vendor/automattic/jetpack-jitm/src/class-jitm.php:204
 msgid "Activated"
 msgstr "Ativado"
 
@@ -1220,13 +1220,13 @@ msgstr "O status \"%s\" é inválido"
 #: app/admin/deactivation-dialog.php:17
 #: jetpack_vendor/automattic/jetpack-plugin-deactivation/src/dialog-template.php:25
 #: jetpack_vendor/automattic/jetpack-connection/dist/jetpack-connection.js:7
-#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:158
+#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:164
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-jetpack-ai.php:393
 #: app/assets/dist/jetpack-boost.js:60
-#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:78
+#: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:84
 msgid "Contact Us"
 msgstr "Fale conosco"
 
@@ -1328,7 +1328,7 @@ msgstr "Você não está autorizado a instalar plugins neste site."
 msgid "Deactivate"
 msgstr "Desativar"
 
-#: jetpack_vendor/automattic/jetpack-jitm/src/class-jitm.php:202
+#: jetpack_vendor/automattic/jetpack-jitm/src/class-jitm.php:203
 #: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:14
 #: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:16
 #: jetpack_vendor/automattic/jetpack-my-jetpack/build/index.js:30
@@ -1662,31 +1662,31 @@ msgstr "O parâmetro obrigatório \"%s\" está malformado."
 msgid "The required \"%s\" parameter is missing."
 msgstr "O parâmetro obrigatório \"%s\" está ausente."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:972
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1001
 msgid "Failed to disconnect the site as it appears already disconnected."
 msgstr "Ocorreu uma falha ao desconectar o site, pois ele já está desconectado."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:929
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:958
 msgid "Site is not connected"
 msgstr "O site não está conectado"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:923
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:952
 msgid "Invalid user id is provided"
 msgstr "A ID de usuário fornecida é inválida"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:917
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:946
 msgid "Invalid user token is provided"
 msgstr "O token de usuário fornecido é inválido"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:297
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:325
 msgid "New owner"
 msgstr "Novo proprietário"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:279
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:307
 msgid "Is connection owner"
 msgstr "É proprietário da conexão"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:274
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:302
 msgid "New user token"
 msgstr "Novo token de usuário"
 
@@ -1696,6 +1696,7 @@ msgstr "Indica de qual plugin está vindo a solicitação"
 
 #: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:236
 #: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:257
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:280
 #: jetpack_vendor/automattic/jetpack-connection/src/identity-crisis/class-rest-endpoints.php:62
 msgid "URI of the admin page where the user should be redirected after connection flow"
 msgstr "URI da página de administração para onde o usuário é redirecionado após um fluxo de conexão"
@@ -1850,7 +1851,7 @@ msgid "Jetpack is already connected."
 msgstr "O Jetpack já está conectado."
 
 #: jetpack_vendor/automattic/jetpack-connection/legacy/class-jetpack-xmlrpc-server.php:367
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:446
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:474
 msgid "Blog is already registered"
 msgstr "Blog já registrado"
 
@@ -1880,7 +1881,7 @@ msgid "Invalid user identifier."
 msgstr "Identificador de usuário inválido."
 
 #. translators: %1$s is a PHP class name.
-#: jetpack_vendor/automattic/jetpack-config/src/class-config.php:188
+#: jetpack_vendor/automattic/jetpack-config/src/class-config.php:195
 msgid "Unable to load class %1$s. Please add the package that contains it using composer and make sure you are requiring the Jetpack autoloader"
 msgstr "Não foi possível carregar a classe %1$s. Adicione o pacote em que a classe está localizada usando o composer e certifique-se de que está pedindo o Jetpack autoloader."
 
@@ -1911,7 +1912,7 @@ msgstr "O Boost está conectado ao WP.com"
 msgid "Please specify a valid module. It should be one of %s"
 msgstr "Especifique um módulo válido. Deve ser um destes: %s"
 
-#: app/modules/optimizations/cloud-css/Cloud_CSS.php:119
+#: app/modules/optimizations/cloud-css/Cloud_CSS.php:135
 msgid "Jetpack Boost is currently generating critical css for this page"
 msgstr "No momento, o Jetpack Boost está gerando o CSS crítico desta página"
 
@@ -2027,8 +2028,8 @@ msgstr ""
 msgid "Dismiss notice"
 msgstr "Descartar aviso"
 
-#: app/admin/class-admin.php:120
-#: jetpack_vendor/automattic/jetpack-jitm/src/class-jitm.php:205
+#: app/admin/class-admin.php:121
+#: jetpack_vendor/automattic/jetpack-jitm/src/class-jitm.php:206
 msgid "Settings"
 msgstr "Configurações"
 

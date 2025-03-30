@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Advanced Custom Fields (ACF®) - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-10-30 10:13:30+0000\n"
+"PO-Revision-Date: 2025-03-26 11:39:02+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,41 @@ msgstr ""
 "X-Generator: GlotPress/4.0.1\n"
 "Language: pt_BR\n"
 "Project-Id-Version: Plugins - Advanced Custom Fields (ACF®) - Stable (latest release)\n"
+
+#. translators: This text is prepended by a link to ACF's website, and appended
+#. by a link to WP Engine's website.
+#: includes/admin/admin.php:324
+msgid "are developed and maintained by"
+msgstr "são desenvolvidos e mantidos por"
+
+#: includes/validation.php:144
+msgid "Learn more"
+msgstr "Saiba mais"
+
+#: includes/class-acf-site-health.php:291
+msgid "Update Source"
+msgstr "Atualizar origem"
+
+#: includes/admin/views/acf-post-type/advanced-settings.php:850
+#: includes/admin/views/acf-taxonomy/advanced-settings.php:810
+msgid "By default only admin users can edit this setting."
+msgstr "Por padrão, somente usuários administradores podem editar esta configuração."
+
+#: includes/admin/views/acf-field-group/field.php:322
+msgid "Close and Add Field"
+msgstr "Fechar e adicionar campo"
+
+#: includes/class-acf-site-health.php:292
+msgid "wordpress.org"
+msgstr "wordpress.org"
+
+#: includes/fields/class-acf-field.php:341
+msgid "Learn more."
+msgstr "Saiba mais."
+
+#: includes/fields/class-acf-field.php:359
+msgid "Allow Access to Value in Editor UI"
+msgstr "Permitir acesso ao valor na interface de usuário do editor"
 
 #: includes/api/api-template.php:1054
 msgid "[The ACF shortcode cannot display fields from non-public posts]"
@@ -102,6 +137,30 @@ msgstr "Ícone de texto de página"
 #: includes/fields/class-acf-field-icon_picker.php:680
 msgid "Table Row Delete Icon"
 msgstr "Ícone de deletar linha da tabela"
+
+#: includes/admin/post-types/admin-field-group.php:125
+msgid "Has no relationship selected"
+msgstr "Não tem nenhuma relação selecionada"
+
+#: includes/admin/post-types/admin-field-group.php:115
+msgid "Relationship is not equal to"
+msgstr "Relação não é igual a"
+
+#: includes/admin/post-types/admin-field-group.php:114
+msgid "Relationship is equal to"
+msgstr "Relação é igual a"
+
+#: includes/admin/post-types/admin-field-group.php:124
+msgid "Has any relationship selected"
+msgstr "Tem qualquer relação selecionada"
+
+#: includes/admin/post-types/admin-field-group.php:117
+msgid "Relationships do not contain"
+msgstr "Relações não contêm"
+
+#: includes/admin/post-types/admin-field-group.php:116
+msgid "Relationships contain"
+msgstr "Relações contêm"
 
 #: includes/admin/views/browse-fields-modal.php:10
 msgid "Renew PRO to Unlock"
@@ -397,10 +456,6 @@ msgstr "Este campo não deve ser um <a href=\"%s\" target=\"_blank\">termo reser
 msgid "A text input specifically designed for storing web addresses."
 msgstr "Uma entrada de texto projetada especificamente para armazenar endereços da web."
 
-#: includes/fields/class-acf-field-user.php:17
-msgid "Allows the selection of one or more users which can be used to create relationships between data objects."
-msgstr "Permite a seleção de um ou mais usuários que podem ser usados para criar relacionamentos entre objetos de dados."
-
 #: includes/fields/class-acf-field-number.php:23
 msgid "An input limited to numerical values."
 msgstr "Uma entrada limitada a valores numéricos."
@@ -547,10 +602,6 @@ msgstr "Uma lista suspensa com uma seleção de escolhas que você especifica."
 msgid "This provides an interactive interface for managing a collection of attachments. Most settings are similar to the Image field type. Additional settings allow you to specify where new attachments are added in the gallery and the minimum/maximum number of attachments allowed."
 msgstr "Isso fornece uma interface interativa para gerenciar uma coleção de anexos. A maioria das configurações é semelhante ao tipo de campo Imagem. Configurações adicionais permitem que você especifique onde novos anexos são adicionados na galeria e o número mínimo/máximo de anexos permitidos."
 
-#: includes/fields/class-acf-field-relationship.php:19
-msgid "A dual-column interface to select one or more posts, pages, or custom post type items to create a relationship with the item that you're currently editing. Includes options to search and filter."
-msgstr "Uma interface de coluna dupla para selecionar um ou mais posts, páginas ou itens de tipo de post personalizados para criar um relacionamento com o item que você está editando no momento. Inclui opções para pesquisar e filtrar."
-
 #: includes/fields/class-acf-field-password.php:23
 msgid "An input for providing a password using a masked field."
 msgstr "Uma entrada para fornecer uma senha usando um campo mascarado."
@@ -582,6 +633,14 @@ msgstr "Permite agrupar e organizar campos personalizados em painéis recolhíve
 #: includes/fields.php:449
 msgid "This provides a solution for repeating content such as slides, team members, and call-to-action tiles, by acting as a parent to a set of subfields which can be repeated again and again."
 msgstr "Isso fornece uma solução para repetir conteúdo, como slides, membros da equipe e blocos de chamada para ação, agindo como um ascendente para um conjunto de subcampos que podem ser repetidos várias vezes."
+
+#: includes/fields/class-acf-field-user.php:17
+msgid "Allows the selection of one or more users which can be used to create relationships between data objects."
+msgstr "Permite a seleção de um ou mais usuários que podem ser usados para criar relações entre objetos de dados."
+
+#: includes/fields/class-acf-field-relationship.php:19
+msgid "A dual-column interface to select one or more posts, pages, or custom post type items to create a relationship with the item that you're currently editing. Includes options to search and filter."
+msgstr "Uma interface de coluna dupla para selecionar uma ou mais postagens, páginas ou itens de tipo de postagem personalizados para criar uma relação com o item que você está editando no momento. Inclui opções para pesquisar e filtrar."
 
 #: includes/admin/views/global/navigation.php:86
 #: includes/class-acf-site-health.php:286 includes/fields.php:331
@@ -1223,6 +1282,10 @@ msgstr "Por padrão, o tipo de post receberá um novo item de nível superior no
 msgid "Pages"
 msgstr "Páginas"
 
+#: includes/admin/admin-internal-post-type.php:347
+msgid "Link Existing Field Groups"
+msgstr "Vincular grupos de campos existentes"
+
 #: includes/admin/post-types/admin-field-group.php:146
 msgid "Type to search..."
 msgstr "Digite para pesquisar..."
@@ -1238,6 +1301,10 @@ msgstr "tipo de post"
 #: includes/admin/admin-internal-post-type.php:338
 msgid "Done"
 msgstr "Concluído"
+
+#: includes/admin/admin-internal-post-type.php:324
+msgid "Field Group(s)"
+msgstr "Grupo(s) de campos"
 
 #: includes/admin/admin-internal-post-type-list.php:277
 #: includes/admin/post-types/admin-post-types.php:346
@@ -2136,6 +2203,10 @@ msgstr "Personalize o slug usado no URL"
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:888
 msgid "List the taxonomy in the Tag Cloud Widget controls."
 msgstr "Listar a taxonomia nos controles do widget de nuvem de tags."
+
+#: includes/admin/views/acf-taxonomy/advanced-settings.php:842
+msgid "A PHP function name to be called for sanitizing taxonomy data saved from a meta box."
+msgstr "Um nome de função PHP a ser chamado para limpar os dados de taxonomia salvos a partir de uma metabox."
 
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:768
 msgid "Controls the meta box on the content editor screen. By default, the Categories meta box is shown for hierarchical taxonomies, and the Tags meta box is shown for non-hierarchical taxonomies."
@@ -3910,10 +3981,6 @@ msgstr "Novo grupo de campos"
 msgid "Edit Field Group"
 msgstr "Editar grupo de campos"
 
-#: acf.php:429
-msgid "Field Group"
-msgstr "Grupo de campos"
-
 #: includes/fields/class-acf-field-select.php:420
 #: includes/fields/class-acf-field-true_false.php:187
 msgid "Stylized UI"
@@ -4038,6 +4105,14 @@ msgstr "Texto"
 #: includes/fields/class-acf-field-relationship.php:616
 msgid "Post ID"
 msgstr "ID do post"
+
+#: includes/fields/class-acf-field-relationship.php:648
+msgid "Maximum Posts"
+msgstr "Máximo de posts"
+
+#: includes/fields/class-acf-field-relationship.php:638
+msgid "Minimum Posts"
+msgstr "Mínimo de posts"
 
 #: includes/admin/views/acf-field-group/options.php:183
 #: includes/admin/views/acf-post-type/advanced-settings.php:29
@@ -4407,6 +4482,14 @@ msgstr "Atualização concluída."
 msgid "Site is up to date"
 msgstr "O site está atualizado"
 
+#: includes/admin/views/acf-field-group/options.php:139
+msgid "Instruction Placement"
+msgstr "Posição das instruções"
+
+#: includes/admin/views/acf-field-group/options.php:122
+msgid "Label Placement"
+msgstr "Posição do rótulo"
+
 #: includes/admin/views/acf-field-group/options.php:110
 msgid "Side"
 msgstr "Lateral"
@@ -4714,6 +4797,11 @@ msgstr "Limitar a escolha da biblioteca de mídia"
 msgid "Uploaded to post"
 msgstr "Anexado ao post"
 
+#: includes/fields/class-acf-field-file.php:276
+#: includes/fields/class-acf-field-image.php:306
+msgid "Allowed File Types"
+msgstr "Tipos de arquivos permitidos"
+
 #: includes/fields/class-acf-field-google-map.php:57
 msgid "Sorry, this browser does not support geolocation"
 msgstr "O seu navegador não suporta o recurso de geolocalização"
@@ -4876,12 +4964,6 @@ msgstr "Os sites a seguir necessitam de uma atualização do banco de dados. Mar
 #: includes/fields/class-acf-field-image.php:271
 msgid "Restrict which images can be uploaded"
 msgstr "Limita as imagens que podem ser enviadas"
-
-#: includes/fields/class-acf-field-page_link.php:450
-#: includes/fields/class-acf-field-post_object.php:359
-#: includes/fields/class-acf-field-relationship.php:558
-msgid "All post types"
-msgstr "Todos os tipos de post"
 
 #: includes/fields/class-acf-field-page_link.php:442
 #: includes/fields/class-acf-field-post_object.php:351
@@ -5102,6 +5184,10 @@ msgctxt "Select2 JS matches_n"
 msgid "%d results are available, use up and down arrow keys to navigate."
 msgstr "%d resultados disponíveis, use as setas para cima ou baixo para navegar."
 
+#: includes/fields/class-acf-field-accordion.php:94
+msgid "Multi-Expand"
+msgstr "Multi-expansão"
+
 #: includes/fields/class-acf-field-accordion.php:106
 msgid "Define an endpoint for the previous accordion to stop. This accordion will not be visible."
 msgstr "Defina um endpoint para a sanfona anterior parar. Esta sanfona não será visível."
@@ -5214,10 +5300,6 @@ msgstr "Selecione os itens que deseja exportar e, em seguida, selecione o métod
 msgid "Null"
 msgstr "Em branco"
 
-#: includes/fields/class-acf-field-relationship.php:17
-msgid "Relationship"
-msgstr "Relacionamento"
-
 #: includes/fields/class-acf-field-relationship.php:76
 msgid "Maximum values reached ( {max} values )"
 msgstr "Máximo de valores alcançado ({max} valores)"
@@ -5239,6 +5321,28 @@ msgstr "Texto \"Inativo\""
 #: includes/fields/class-acf-field-user.php:132
 msgid "Allow Null"
 msgstr "Permitir \"em branco\""
+
+#: includes/fields/class-acf-field-page_link.php:450
+#: includes/fields/class-acf-field-post_object.php:359
+#: includes/fields/class-acf-field-relationship.php:558
+msgid "All post types"
+msgstr "Todos os tipos de posts"
+
+#: includes/fields/class-acf-field-relationship.php:17
+msgid "Relationship"
+msgstr "Relação"
+
+#: acf.php:429
+msgid "Field Group"
+msgstr "Grupo de campos"
+
+#: includes/fields/class-acf-field-wysiwyg.php:366
+msgid "Delay Initialization"
+msgstr "Atrasar inicialização"
+
+#: includes/fields/class-acf-field-wysiwyg.php:355
+msgid "Show Media Upload Buttons"
+msgstr "Mostrar botões de envio de mídia"
 
 #. Plugin Name of the plugin
 #: acf.php acf.php:93
