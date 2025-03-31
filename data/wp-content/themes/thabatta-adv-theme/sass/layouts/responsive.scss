@@ -1,0 +1,49 @@
+@use 'variables' as vars;
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+// Estilos para telas a partir de 'medium' (>= 768px)
+@media (width >= vars.$bp-medium) {
+  .container {
+    width: 85%;
+  }
+  body {
+    font-size: 17px;
+  }
+}
+
+// Estilos para telas estritamente menores que 'large' (< 1024px)
+@media (width < vars.$bp-large) {
+  .some-element {
+    display: block;
+  }
+}
+
+// Estilos para telas entre 'medium' e 'xlarge' (>= 768px E < 1280px)
+@media (width >= vars.$bp-medium) and (width < vars.$bp-xlarge) {
+  .another-element {
+    padding: 20px;
+  }
+}
+
+// Estilos para telas a partir de 'large' (>= 1024px)
+@media (width >= vars.$bp-large) {
+  .container {
+    width: 80%;
+  }
+  body {
+    font-size: 18px;
+  }
+  .some-element {
+    display: flex;
+  }
+}
