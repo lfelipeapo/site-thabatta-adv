@@ -1,10 +1,10 @@
 <?php
 
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+    exit;
 }
 
-// Include custom functions and hooks (mantido como estava)
+// Include custom functions and hooks
 require get_template_directory() . '/includes/custom-functions.php';
 require get_template_directory() . '/includes/hooks.php';
 
@@ -26,18 +26,17 @@ function thabatta_theme_setup()
     // Register navigation menus.
     register_nav_menus(array(
         'primary' => __('Menu Principal', 'thabatta'),
-        // 'footer'  => __( 'Menu Rodapé', 'thabatta' ), // Exemplo de outro menu
-    )); // É melhor registrar os menus aqui também
+        'footer'  => __( 'Menu Rodapé', 'thabatta' ),
+    ));
 
-    // Switch default core markup for search form, comment form, and comments to output valid HTML5.
     add_theme_support('html5', array(
         'search-form',
         'comment-form',
         'comment-list',
         'gallery',
         'caption',
-        'style', // Adicionado para scripts e estilos
-        'script', // Adicionado para scripts e estilos
+        'style',
+        'script',
     ));
 
     // Set up the WordPress core custom background feature.
@@ -67,7 +66,7 @@ function thabatta_theme_setup()
     add_theme_support('editor-styles');
 
     // Enqueue editor styles.
-    add_editor_style('style-editor.css'); // Certifique-se que este arquivo existe
+    //add_editor_style('style-editor.css');
 
     // Add support for responsive embedded content.
     add_theme_support('responsive-embeds');
@@ -77,15 +76,61 @@ add_action('after_setup_theme', 'thabatta_theme_setup');
 // --- Enqueue Scripts and Styles ---
 function thabatta_enqueue_scripts()
 {
-    wp_enqueue_style('thabatta-style', get_stylesheet_uri(), array(), wp_get_theme()->get('Version'));
-    wp_enqueue_script('thabatta-scripts', get_template_directory_uri() . '/js/content.js', array('jquery'), '1.0', true);
+    $dist_path = get_template_directory_uri() . '/dist';
+    $dist_dir = get_template_directory() . '/dist';
 
+    // Enqueue do CSS minificado pelo Gulp (style.min.css)
+    $css_file = '/css/style.min.css';
+    if (file_exists($dist_dir . $css_file)) {
+        wp_enqueue_style(
+            'thabatta-style', 
+            $dist_path . $css_file, 
+            array(),
+            filemtime($dist_dir . $css_file)
+        );
+    } else {
+        // Fallback para o style.css padrão se o arquivo dist não existir
+        wp_enqueue_style(
+            'thabatta-style-fallback',
+            get_stylesheet_uri(),
+            array(),
+            wp_get_theme()->get('Version')
+         );
+         // Adiciona um aviso no painel de admin se o arquivo não for encontrado
+         if (current_user_can('manage_options')) {
+            add_action('admin_notices', function() use ($css_file) {
+                 echo '<div class="notice notice-warning is-dismissible"><p><strong>Tema Thabatta:</strong> Arquivo CSS compilado (<code>dist' . esc_html($css_file) . '</code>) não encontrado. Execute o processo de build (ex: <code>gulp build</code> ou <code>gulp</code>).</p></div>';
+            });
+         }
+    }
+
+    // Enqueue do JS minificado pelo Gulp
+    $js_file = '/js/content.min.js';
+    if (file_exists($dist_dir . $js_file)) {
+        wp_enqueue_script(
+            'thabatta-scripts',
+            $dist_path . $js_file,
+            array('jquery'),
+            filemtime($dist_dir . $js_file),
+            true
+        );
+    } else {
+         // Adiciona um aviso no painel de admin se o arquivo não for encontrado
+         if (current_user_can('manage_options')) {
+            add_action('admin_notices', function() {
+                 echo '<div class="notice notice-warning"><p>Arquivo JS compilado (dist/js/content.min.js) não encontrado. Execute o processo de build (Gulp).</p></div>';
+            });
+         }
+    }
+
+    // Comentários aninhados
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
 }
 add_action('wp_enqueue_scripts', 'thabatta_enqueue_scripts');
 
+// --- Register Sidebars ---
 function thabatta_register_sidebars()
 {
     register_sidebar(array(
@@ -100,17 +145,19 @@ function thabatta_register_sidebars()
 }
 add_action('widgets_init', 'thabatta_register_sidebars');
 
+// --- Register Custom Post Types ---
 function thabatta_register_custom_post_types()
-{register_post_type('thabatta_custom_post', array(
+{
+    register_post_type('thabatta_custom_post', array(
         'labels' => array(
-            'name'          => __('Custom Posts', 'thabatta'),
-            'singular_name' => __('Custom Post', 'thabatta'),
-            'add_new_item'  => __('Adicionar Novo Custom Post', 'thabatta'),
-            'edit_item'     => __('Editar Custom Post', 'thabatta'),
-            'new_item'      => __('Novo Custom Post', 'thabatta'),
-            'view_item'     => __('Ver Custom Post', 'thabatta'),
-            'search_items'  => __('Buscar Custom Posts', 'thabatta'),
-            'not_found'     => __('Nenhum Custom Post encontrado', 'thabatta'),
+            'name'               => __('Custom Posts', 'thabatta'),
+            'singular_name'      => __('Custom Post', 'thabatta'),
+            'add_new_item'       => __('Adicionar Novo Custom Post', 'thabatta'),
+            'edit_item'          => __('Editar Custom Post', 'thabatta'),
+            'new_item'           => __('Novo Custom Post', 'thabatta'),
+            'view_item'          => __('Ver Custom Post', 'thabatta'),
+            'search_items'       => __('Buscar Custom Posts', 'thabatta'),
+            'not_found'          => __('Nenhum Custom Post encontrado', 'thabatta'),
             'not_found_in_trash' => __('Nenhum Custom Post encontrado na lixeira', 'thabatta'),
         ),
         'public'        => true,
@@ -122,3 +169,4 @@ function thabatta_register_custom_post_types()
     ));
 }
 add_action('init', 'thabatta_register_custom_post_types');
+?>
