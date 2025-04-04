@@ -458,92 +458,6 @@ function thabatta_save_related_posts_meta_box($post_id)
 add_action('save_post', 'thabatta_save_related_posts_meta_box');
 
 /**
- * Obter posts relacionados
- */
-function thabatta_get_related_posts($post_id = null, $limit = 3)
-{
-    if (!$post_id) {
-        $post_id = get_the_ID();
-    }
-
-    // Obter posts relacionados manualmente definidos
-    $manual_related = get_post_meta($post_id, '_thabatta_related_posts', true);
-
-    if (is_array($manual_related) && !empty($manual_related)) {
-        // Limitar número de posts
-        $manual_related = array_slice($manual_related, 0, $limit);
-
-        // Buscar posts
-        $related_posts = get_posts(array(
-            'post__in' => $manual_related,
-            'post_type' => array('post', 'page', 'area_atuacao'),
-            'posts_per_page' => $limit,
-            'orderby' => 'post__in'
-        ));
-
-        return $related_posts;
-    }
-
-    // Se não houver posts relacionados manualmente, buscar por categoria/tag
-    $current_post_type = get_post_type($post_id);
-
-    if ($current_post_type === 'post') {
-        // Obter categorias e tags do post atual
-        $categories = wp_get_post_categories($post_id);
-        $tags = wp_get_post_tags($post_id, array('fields' => 'ids'));
-
-        // Configurar argumentos para busca de posts relacionados
-        $args = array(
-            'post_type' => 'post',
-            'posts_per_page' => $limit,
-            'post__not_in' => array($post_id),
-            'orderby' => 'rand'
-        );
-
-        if (!empty($categories)) {
-            $args['category__in'] = $categories;
-        }
-
-        if (!empty($tags)) {
-            $args['tag__in'] = $tags;
-        }
-
-        // Buscar posts relacionados
-        $related_posts = get_posts($args);
-
-        return $related_posts;
-    } elseif ($current_post_type === 'area_atuacao') {
-        // Obter termos de especialidade
-        $especialidades = wp_get_object_terms($post_id, 'especialidade', array('fields' => 'ids'));
-
-        // Configurar argumentos para busca de posts relacionados
-        $args = array(
-            'post_type' => 'area_atuacao',
-            'posts_per_page' => $limit,
-            'post__not_in' => array($post_id),
-            'orderby' => 'rand'
-        );
-
-        if (!empty($especialidades)) {
-            $args['tax_query'] = array(
-                array(
-                    'taxonomy' => 'especialidade',
-                    'field' => 'id',
-                    'terms' => $especialidades
-                )
-            );
-        }
-
-        // Buscar posts relacionados
-        $related_posts = get_posts($args);
-
-        return $related_posts;
-    }
-
-    return array();
-}
-
-/**
  * Registrar scripts e estilos
  */
 function thabatta_enqueue_scripts()
@@ -683,21 +597,10 @@ function thabatta_content_image_class($content)
 }
 add_filter('the_content', 'thabatta_content_image_class');
 
-/**
- * Incluir arquivos de componentes
- */
-require get_template_directory() . '/inc/template-tags.php';
-require get_template_directory() . '/inc/template-functions.php';
-require get_template_directory() . '/inc/security-features.php';
-require get_template_directory() . '/inc/jetpack-integration.php';
-require get_template_directory() . '/inc/acf-fields.php';
-require get_template_directory() . '/inc/web-components.php';
-require get_template_directory() . '/inc/github-actions.php';
-
 // Verificar se o ACF está ativo
 if (class_exists('ACF')) {
-    require get_template_directory() . '/inc/admin/admin-features.php';
-    require get_template_directory() . '/inc/admin/jetpack-integration.php';
+    require THABATTA_THEME_DIR . '/inc/admin/admin-features.php';
+    require THABATTA_THEME_DIR . '/inc/admin/jetpack-integration.php';
 }
 
 /**

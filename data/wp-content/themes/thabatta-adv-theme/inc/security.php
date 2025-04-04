@@ -226,24 +226,26 @@ add_filter('comment_excerpt', 'thabatta_filter_comment_content');
 /**
  * Proteger contra ataques de injeção SQL
  */
-function thabatta_protect_against_sql_injection($query) {
-    // Verificar padrões suspeitos de SQL injection
+
+function thabatta_check_for_sql_injection()
+{
+    $inputs = array_merge($_GET, $_POST);
     $patterns = array(
         '/(\%27)|(\')|(\-\-)|(\%23)|(#)/i',
         '/((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(\;))/i',
         '/\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/i',
         '/((\%27)|(\'))union/i',
     );
-    
-    foreach ($patterns as $pattern) {
-        if (preg_match($pattern, $query)) {
-            wp_die(__('Consulta inválida detectada.', 'thabatta-adv'));
+
+    foreach ($inputs as $input) {
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern, $input)) {
+                wp_die(__('Requisição inválida detectada.', 'thabatta-adv'));
+            }
         }
     }
-    
-    return $query;
 }
-add_filter('query', 'thabatta_protect_against_sql_injection');
+add_action('init', 'thabatta_check_for_sql_injection');
 
 /**
  * Proteger uploads de arquivos

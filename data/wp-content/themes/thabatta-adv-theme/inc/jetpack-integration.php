@@ -435,22 +435,6 @@ function thabatta_add_browser_cache_headers()
 add_action('init', 'thabatta_add_browser_cache_headers');
 
 /**
- * Adicionar compressão GZIP
- */
-function thabatta_add_gzip_compression()
-{
-    // Verificar se a compressão GZIP está habilitada
-    if (get_option('thabatta_enable_gzip', 1)) {
-        // Verificar se a compressão já está ativa
-        if (extension_loaded('zlib') && !ini_get('zlib.output_compression') && !headers_sent()) {
-            // Iniciar compressão GZIP
-            ob_start('ob_gzhandler');
-        }
-    }
-}
-add_action('init', 'thabatta_add_gzip_compression');
-
-/**
  * Adicionar metabox para configurações de cache por página
  */
 function thabatta_add_cache_meta_box()
