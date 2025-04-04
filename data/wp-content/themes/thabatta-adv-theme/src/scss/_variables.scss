@@ -1,0 +1,56 @@
+// Cores principais baseadas na Themis
+$bordo: #800020;
+$bordo-escuro: #5C0000;
+$bordo-claro: #B30000;
+$dourado: #FFD700;
+$dourado-escuro: #917800;
+$vermelho-sangue: #8B0000;
+$branco: #FFFFFF;
+$cinza-claro: #f8f8f8;
+$cinza-medio: #e0e0e0;
+$cinza-escuro: #4a4a4a;
+
+// Cores de fundo
+$bg-100: $bordo-escuro;
+$bg-200: #701714;
+$bg-300: #8f342a;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Fontes
+$font-primary: 'Montserrat', sans-serif;
+$font-secondary: 'Playfair Display', serif;
+
+// Tamanhos de fonte
+$font-size-base: 16px;
+$font-size-sm: 14px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-xxl: 32px;
+$font-size-xxxl: 48px;
+
+// Espaçamentos
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-xxl: 3rem;
+
+// Bordas
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+// Sombras
+$box-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$box-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+$box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+// Transições
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
