@@ -652,9 +652,10 @@ function thabatta_featured_team_member($post_id = null)
     $areas = array();
     $redes_sociais = array();
 
+
     if (function_exists('get_field')) {
         $cargo = get_field('cargo', $post_id);
-        $oab = get_field('oab', $post_id);
+        $oab   = get_field('oab', $post_id);
         $areas = get_field('areas_atuacao', $post_id);
         $redes_sociais = get_field('redes_sociais', $post_id);
     }

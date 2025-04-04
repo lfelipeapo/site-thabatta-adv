@@ -140,22 +140,6 @@ function thabatta_widgets_init() {
 add_action('widgets_init', 'thabatta_widgets_init');
 
 /**
- * Limitar o tamanho do resumo
- */
-function thabatta_custom_excerpt_length($length) {
-    return 20;
-}
-add_filter('excerpt_length', 'thabatta_custom_excerpt_length', 999);
-
-/**
- * Alterar o sufixo do resumo
- */
-function thabatta_custom_excerpt_more($more) {
-    return '...';
-}
-add_filter('excerpt_more', 'thabatta_custom_excerpt_more');
-
-/**
  * Função para verificar se a página atual é a página inicial
  */
 function thabatta_is_frontpage() {
@@ -520,7 +504,7 @@ add_action('admin_enqueue_scripts', 'thabatta_admin_enqueue_scripts');
 /**
  * Adicionar classes ao body
  */
-function thabatta_body_classes($classes)
+function thabatta_body_classes($classes, $class = '')
 {
     // Adicionar classe para páginas com sidebar
     if (is_active_sidebar('sidebar-1') && !is_page_template('templates/full-width.php')) {
