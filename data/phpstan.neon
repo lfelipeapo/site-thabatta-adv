@@ -34,5 +34,7 @@ parameters:
     - '#File ends with a trailing whitespace\.#'
     # Ignorar problemas com offset nos arrays
     - '#Offset .* does not accept type#'
+    # Ignorar erros de callback em register_block_bindings_source
+    - '#Parameter \#[0-9]+ \$source_properties of function register_block_bindings_source expects#'
   reportUnmatchedIgnoredErrors: false
   treatPhpDocTypesAsCertain: false
