@@ -773,3 +773,20 @@ function thabatta_theme_options_page_content() {
         echo '</div>';
     }
 }
+
+/**
+ * Importar manipuladores AJAX
+ */
+require get_template_directory() . '/inc/ajax-handlers.php';
+
+/**
+ * Localiza e carrega scripts de JavaScript no front-end
+ */
+function thabatta_localize_scripts() {
+    wp_localize_script('thabatta-main', 'thabattaData', array(
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'siteUrl' => get_site_url(),
+        'themePath' => get_template_directory_uri(),
+    ));
+}
+add_action('wp_enqueue_scripts', 'thabatta_localize_scripts', 20);

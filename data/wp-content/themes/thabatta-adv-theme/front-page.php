@@ -393,6 +393,22 @@ get_header();
         </div>
     </section>
 
+    <!-- Botão de Consulta -->
+    <section class="consultation-cta">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8 text-center">
+                    <h2><?php echo esc_html_e('Precisa de orientação jurídica?', 'thabatta-adv'); ?></h2>
+                    <p><?php echo esc_html_e('Entre em contato para uma consulta especializada e descubra como podemos ajudar no seu caso.', 'thabatta-adv'); ?></p>
+                    <button class="btn btn-primary btn-lg open-consultation-form">
+                        <?php echo esc_html_e('Solicitar Consulta', 'thabatta-adv'); ?>
+                        <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Formulário de Consulta Multietapa -->
     <?php get_template_part('template-parts/form-consultation'); ?>
 </main>

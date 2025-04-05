@@ -63,5 +63,16 @@
                     </a>
                 </div>
             <?php endif; ?>
+
+            <div class="header-buttons">
+                <a href="<?php echo esc_url(get_theme_mod('header_contact_link', '#')); ?>" class="btn-contact">
+                    <i class="fas fa-phone-alt"></i>
+                    <span><?php echo esc_html(get_theme_mod('header_contact_text', __('Contato', 'thabatta-adv'))); ?></span>
+                </a>
+                <button type="button" class="open-consultation-form btn-consultation">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span><?php esc_html_e('Consulta', 'thabatta-adv'); ?></span>
+                </button>
+            </div>
         </div>
     </header><!-- #masthead -->

@@ -167,167 +167,180 @@
             });
         }
 
-        // Multi-step form functionality
-        const multiStepForm = {
-            init: function() {
-                // Form container and controls
-                this.consultationForm = $('#consultationForm');
-                this.form = $('#multiStepForm');
-                this.steps = $('.step');
-                this.stepIndicators = $('.step-indicator');
-                this.prevBtn = $('#prevBtn');
-                this.nextBtn = $('#nextBtn');
-                this.submitBtn = $('#submitBtn');
-                this.formSuccess = $('#formSuccess');
-                
-                // Open/Close form triggers
-                this.openFormBtn = $('.open-consultation-form');
-                this.closeFormBtn = $('.close-form');
-                this.formOverlay = $('.form-overlay');
-                this.closeSuccessBtn = $('.close-success');
-                
-                // Current step
-                this.currentStep = 0;
-                
-                // Initialize steps and events
-                this.showStep(this.currentStep);
-                this.bindEvents();
-            },
-            
-            bindEvents: function() {
-                const self = this;
-                
-                // Open form event
-                this.openFormBtn.on('click', function(e) {
-                    e.preventDefault();
-                    self.openForm();
-                });
-                
-                // Close form events
-                this.closeFormBtn.on('click', this.closeForm.bind(this));
-                this.formOverlay.on('click', this.closeForm.bind(this));
-                this.closeSuccessBtn.on('click', this.closeForm.bind(this));
-                
-                // Form navigation
-                this.prevBtn.on('click', this.prevStep.bind(this));
-                this.nextBtn.on('click', this.nextStep.bind(this));
-                
-                // Form submission
-                this.form.on('submit', function(e) {
-                    e.preventDefault();
-                    
-                    if (self.validateStep(self.currentStep)) {
-                        // Show loading state
-                        self.submitBtn.prop('disabled', true).text('Enviando...');
-                        
-                        // Simulate AJAX form submission (replace with actual AJAX)
-                        setTimeout(function() {
-                            self.showSuccess();
-                            self.submitBtn.prop('disabled', false).text('Enviar');
-                            self.resetForm();
-                        }, 1500);
-                    }
-                });
-                
-                // Input mask for phone and CPF/CNPJ if mask plugin is available
-                if ($.fn.mask) {
-                    $('.phone-mask').mask('(00) 00000-0000');
-                    $('.cpfcnpj-mask').mask('000.000.000-00', {
-                        onKeyPress: function(cpf, e, field, options) {
-                            const masks = ['000.000.000-00', '00.000.000/0000-00'];
-                            const mask = (cpf.length > 14) ? masks[1] : masks[0];
-                            $('.cpfcnpj-mask').mask(mask, options);
-                        }
-                    });
-                }
-            },
-            
-            openForm: function() {
-                this.consultationForm.addClass('active');
-                $('body').addClass('form-open');
-            },
-            
-            closeForm: function() {
-                this.consultationForm.removeClass('active');
-                this.formSuccess.addClass('hidden');
-                $('body').removeClass('form-open');
-            },
-            
-            showStep: function(stepIndex) {
-                // Hide all steps
-                this.steps.removeClass('active');
-                
-                // Show current step
-                this.steps.eq(stepIndex).addClass('active');
-                
-                // Update step indicators
-                this.stepIndicators.removeClass('active');
-                this.stepIndicators.eq(stepIndex).addClass('active');
-                
-                // Update navigation buttons
-                if (stepIndex === 0) {
-                    this.prevBtn.addClass('hidden');
-                } else {
-                    this.prevBtn.removeClass('hidden');
-                }
-                
-                if (stepIndex === this.steps.length - 1) {
-                    this.nextBtn.addClass('hidden');
-                    this.submitBtn.removeClass('hidden');
-                } else {
-                    this.nextBtn.removeClass('hidden');
-                    this.submitBtn.addClass('hidden');
-                }
-            },
-            
-            nextStep: function() {
-                if (this.validateStep(this.currentStep)) {
-                    this.currentStep++;
-                    if (this.currentStep < this.steps.length) {
-                        this.showStep(this.currentStep);
-                    }
-                }
-            },
-            
-            prevStep: function() {
-                this.currentStep--;
-                if (this.currentStep >= 0) {
-                    this.showStep(this.currentStep);
-                }
-            },
-            
-            validateStep: function(stepIndex) {
-                const inputs = this.steps.eq(stepIndex).find('input[required], select[required], textarea[required]');
-                let isValid = true;
-                
-                inputs.removeClass('error');
-                
-                inputs.each(function() {
-                    if (!$(this).val()) {
-                        $(this).addClass('error');
-                        isValid = false;
-                    }
-                });
-                
-                return isValid;
-            },
-            
-            showSuccess: function() {
-                this.form.addClass('hidden');
-                this.formSuccess.removeClass('hidden');
-            },
-            
-            resetForm: function() {
-                this.form[0].reset();
-                this.currentStep = 0;
-                this.showStep(this.currentStep);
-                this.form.removeClass('hidden');
+        // FORMULÁRIO DE CONSULTA
+        // Elementos do formulário
+        const consultationForm = document.getElementById('consultationForm');
+        const multiStepForm = document.getElementById('multiStepForm');
+        const steps = document.querySelectorAll('.step');
+        const stepIndicators = document.querySelectorAll('.step-indicator');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const formSuccess = document.getElementById('formSuccess');
+        
+        // IMPORTANTE: Gerenciar eventos de botões de abertura do formulário
+        $('.open-consultation-form').on('click', function(e) {
+            e.preventDefault();
+            if (consultationForm) {
+                $(consultationForm).addClass('active');
+                $('body').css('overflow', 'hidden');
+                console.log('Formulário de consulta aberto');
+            } else {
+                console.error('Elemento do formulário de consulta não encontrado');
             }
-        };
-
-        // Initialize components when DOM is ready
-        if ($('#multiStepForm').length) {
-            multiStepForm.init();
+        });
+        
+        // Fechar o formulário
+        $('.close-form, .form-overlay').on('click', function() {
+            $(consultationForm).removeClass('active');
+            $('body').css('overflow', '');
+            resetFormState();
+        });
+        
+        // Fechar mensagem de sucesso
+        $('.close-success').on('click', function() {
+            $(consultationForm).removeClass('active');
+            $('body').css('overflow', '');
+            resetFormState();
+        });
+        
+        // Resetar estado do formulário
+        function resetFormState() {
+            if (multiStepForm) {
+                multiStepForm.reset();
+                showFormStep(1);
+                
+                // Ocultar mensagem de sucesso
+                $(formSuccess).addClass('hidden');
+                
+                // Mostrar formulário
+                $(multiStepForm).show();
+            }
+        }
+        
+        // Mostrar etapa específica
+        function showFormStep(stepNumber) {
+            if (!steps.length) return;
+            
+            const currentStep = stepNumber;
+            
+            // Atualizar visibilidade dos botões
+            $(prevBtn).toggleClass('hidden', currentStep === 1);
+            $(nextBtn).toggleClass('hidden', currentStep === steps.length);
+            $(submitBtn).toggleClass('hidden', currentStep !== steps.length);
+            
+            // Atualizar classe ativa para a etapa atual
+            $(steps).removeClass('active');
+            $(steps[currentStep - 1]).addClass('active');
+            
+            // Atualizar indicadores de etapa
+            $(stepIndicators).each(function(index) {
+                if (index + 1 < currentStep) {
+                    $(this).addClass('completed').removeClass('active');
+                } else if (index + 1 === currentStep) {
+                    $(this).addClass('active').removeClass('completed');
+                } else {
+                    $(this).removeClass('active completed');
+                }
+            });
+        }
+        
+        // Validar etapa atual
+        function validateFormStep(stepIndex) {
+            const currentStepEl = steps[stepIndex - 1];
+            const requiredFields = currentStepEl.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                $(field).removeClass('invalid');
+                $('.error-message').remove();
+                
+                if (!field.value.trim()) {
+                    isValid = false;
+                    $(field).addClass('invalid');
+                    
+                    const errorMsg = $('<span class="error-message" style="color: red; font-size: 12px;">Este campo é obrigatório</span>');
+                    $(field).after(errorMsg);
+                }
+            });
+            
+            return isValid;
+        }
+        
+        // Botão Próximo
+        $(nextBtn).on('click', function() {
+            const currentStep = $(steps).index($(steps).filter('.active')) + 1;
+            if (validateFormStep(currentStep)) {
+                showFormStep(currentStep + 1);
+            }
+        });
+        
+        // Botão Anterior
+        $(prevBtn).on('click', function() {
+            const currentStep = $(steps).index($(steps).filter('.active')) + 1;
+            showFormStep(currentStep - 1);
+        });
+        
+        // Envio do formulário
+        $(multiStepForm).on('submit', function(e) {
+            e.preventDefault();
+            
+            const currentStep = $(steps).index($(steps).filter('.active')) + 1;
+            if (!validateFormStep(currentStep)) {
+                return;
+            }
+            
+            // Coleta dos dados do formulário
+            const formData = new FormData(multiStepForm);
+            formData.append('action', 'thabatta_submit_consultation');
+            
+            // Desabilita o botão de envio e mostra carregamento
+            $(submitBtn).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
+            
+            // Enviar dados via AJAX
+            $.ajax({
+                url: thabattaData.ajaxUrl,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $(submitBtn).prop('disabled', false).text('Enviar');
+                    
+                    if (response.success) {
+                        // Mostrar mensagem de sucesso
+                        $(multiStepForm).hide();
+                        $(formSuccess).removeClass('hidden');
+                        multiStepForm.reset();
+                    } else {
+                        // Mostrar erro
+                        alert(response.data || 'Ocorreu um erro ao enviar sua consulta. Por favor, tente novamente.');
+                    }
+                },
+                error: function() {
+                    $(submitBtn).prop('disabled', false).text('Enviar');
+                    alert('Ocorreu um erro ao enviar sua consulta. Por favor, tente novamente.');
+                }
+            });
+        });
+        
+        // Aplicar máscaras aos campos se jQuery.mask existe
+        if ($.fn.mask) {
+            $('.phone-mask').mask('(00) 00000-0000');
+            $('.cpfcnpj-mask').mask('000.000.000-000', {
+                onKeyPress: function(cpf, e, field, options) {
+                    let masks = ['000.000.000-000', '00.000.000/0000-00'];
+                    let mask = (cpf.length > 14) ? masks[1] : masks[0];
+                    $('.cpfcnpj-mask').mask(mask, options);
+                }
+            });
+        }
+        
+        // Inicializar formulário se existir
+        if (consultationForm && multiStepForm) {
+            // Verificar se os botões do formulário estão presentes
+            console.log('Formulário de consulta encontrado, inicializando...');
+            showFormStep(1);
         }
     });
 

@@ -117,5 +117,28 @@
 
 <?php wp_footer(); ?>
 
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        console.log('Debug: Verificando botões de consulta');
+        
+        // Forçar inicialização dos botões de consulta
+        $('.open-consultation-form').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Botão de consulta clicado');
+            $('#consultationForm').addClass('active');
+            $('body').css('overflow', 'hidden');
+        });
+        
+        // Fechar formulário
+        $('.close-form, .form-overlay').on('click', function() {
+            $('#consultationForm').removeClass('active');
+            $('body').css('overflow', '');
+        });
+        
+        console.log('Botões encontrados: ' + $('.open-consultation-form').length);
+    });
+</script>
+
 </body>
 </html>

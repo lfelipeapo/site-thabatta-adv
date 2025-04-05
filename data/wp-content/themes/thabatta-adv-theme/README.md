@@ -149,6 +149,64 @@ O tema inclui configuração para deploy automático no Infinity Free através d
 3. Gere o arquivo de workflow e adicione-o ao seu repositório no caminho `.github/workflows/deploy.yml`
 4. Adicione o segredo `INFINITY_FREE_PASSWORD` nas configurações do seu repositório no GitHub
 
+## Desenvolvimento
+
+### Requisitos
+- Node.js (versão 14 ou superior)
+- NPM (versão 6 ou superior)
+- Gulp CLI (`npm install -g gulp-cli`)
+
+### Configuração do ambiente
+1. Clone o repositório
+2. Execute `npm install` para instalar as dependências
+3. Execute `npm run dev` para iniciar o ambiente de desenvolvimento
+
+### Comandos disponíveis
+- `npm run dev` - Inicia o ambiente de desenvolvimento com watch e BrowserSync
+- `npm run build` - Gera os arquivos otimizados para produção
+- `npm run watch` - Observa mudanças nos arquivos e compila automaticamente
+- `npm run styles` - Compila apenas os arquivos SCSS
+- `npm run scripts` - Compila apenas os arquivos JavaScript
+- `npm run images` - Otimiza as imagens
+- `npm run clean` - Limpa os arquivos compilados
+
+### Estrutura do tema
+```
+thabatta-adv-theme/
+├── assets/
+│   ├── css/                  # Arquivos CSS compilados
+│   ├── images/               # Imagens otimizadas
+│   │   └── src/              # Imagens originais
+│   ├── js/                   # JavaScript compilado
+│   │   └── vendor/           # Bibliotecas de terceiros
+├── inc/                      # Funcionalidades do tema
+│   ├── ajax-handlers.php     # Manipuladores AJAX (formulários)
+│   └── custom-post-types.php # Tipos de post personalizados
+├── languages/                # Arquivos de tradução
+├── template-parts/           # Partes reutilizáveis do tema
+│   ├── content-page.php      # Conteúdo para páginas
+│   ├── content.php           # Conteúdo para posts
+│   └── form-consultation.php # Formulário de consulta
+├── functions.php             # Funcionalidades principais do tema
+├── index.php                 # Arquivo principal do tema
+├── front-page.php            # Template da página inicial
+├── style.css                 # Informações do tema
+└── screenshot.png            # Captura de tela do tema
+```
+
+### Formulário de Consulta
+O tema inclui um formulário de consulta multi-etapas que pode ser aberto através dos botões com a classe `.open-consultation-form`.
+
+Para adicionar um botão de consulta em qualquer parte do tema, use o seguinte código:
+
+```html
+<button type="button" class="open-consultation-form btn btn-primary">
+    <?php esc_html_e('Solicitar Consulta', 'thabatta-adv'); ?>
+</button>
+```
+
+O formulário de consulta é carregado automaticamente no footer do tema.
+
 ## Licença
 
 Este tema é licenciado sob a [GNU General Public License v2.0](https://www.gnu.org/licenses/gpl-2.0.html) ou posterior.
