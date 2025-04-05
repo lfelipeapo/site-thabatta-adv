@@ -101,4 +101,36 @@
         font-size: calc(variables.$font-size-base * 1.25);
         border-radius: calc(variables.$border-radius-botao * 1.25);
     }
+}
+
+/* Botão Back to Top */
+.back-to-top {
+    position: fixed;
+    right: 15px;
+    bottom: -60px;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: variables.$bordo;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    z-index: 999;
+    border: none;
+    outline: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+        background-color: darken(variables.$bordo, 10%);
+    }
+    
+    &.show {
+        bottom: 15px;
+        opacity: 1;
+    }
 } 

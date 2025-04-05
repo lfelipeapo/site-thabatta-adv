@@ -255,6 +255,303 @@ function thabatta_customize_register($wp_customize) {
         'type' => 'checkbox',
     ));
 
+    // Seção Hero
+    $wp_customize->add_section('thabatta_hero_section', array(
+        'title'    => __('Seção Hero (Banner)', 'thabatta-adv'),
+        'priority' => 25,
+    ));
+
+    // Título da Seção Hero
+    $wp_customize->add_setting('hero_title', array(
+        'default'           => 'Thabatta Apolinário Advocacia',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hero_title', array(
+        'label'    => __('Título', 'thabatta-adv'),
+        'section'  => 'thabatta_hero_section',
+        'type'     => 'text',
+    ));
+    
+    // Descrição da Seção Hero
+    $wp_customize->add_setting('hero_description', array(
+        'default'           => 'Advocacia especializada em Direito Civil, Empresarial e Trabalhista. Atendimento personalizado e soluções jurídicas eficientes.',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hero_description', array(
+        'label'    => __('Descrição', 'thabatta-adv'),
+        'section'  => 'thabatta_hero_section',
+        'type'     => 'textarea',
+    ));
+
+    // Imagem de fundo da Seção Hero
+    $wp_customize->add_setting('hero_background_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'hero_background_image', array(
+        'label'    => __('Imagem de Fundo', 'thabatta-adv'),
+        'section'  => 'thabatta_hero_section',
+    )));
+    
+    // Texto do botão Hero
+    $wp_customize->add_setting('hero_button_text', array(
+        'default'           => 'Fale Conosco',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hero_button_text', array(
+        'label'    => __('Texto do Botão', 'thabatta-adv'),
+        'section'  => 'thabatta_hero_section',
+        'type'     => 'text',
+    ));
+    
+    // URL do botão Hero
+    $wp_customize->add_setting('hero_button_url', array(
+        'default'           => '/contato',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hero_button_url', array(
+        'label'    => __('URL do Botão', 'thabatta-adv'),
+        'section'  => 'thabatta_hero_section',
+        'type'     => 'url',
+    ));
+
+    // Seção Serviços
+    $wp_customize->add_section('thabatta_services_section', array(
+        'title'    => __('Seção Serviços', 'thabatta-adv'),
+        'priority' => 28,
+    ));
+
+    // Título da Seção Serviços
+    $wp_customize->add_setting('services_title', array(
+        'default'           => 'Áreas de Atuação',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('services_title', array(
+        'label'    => __('Título', 'thabatta-adv'),
+        'section'  => 'thabatta_services_section',
+        'type'     => 'text',
+    ));
+    
+    // Descrição da Seção Serviços
+    $wp_customize->add_setting('services_description', array(
+        'default'           => 'Conheça as principais áreas em que atuamos com excelência e compromisso.',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('services_description', array(
+        'label'    => __('Descrição', 'thabatta-adv'),
+        'section'  => 'thabatta_services_section',
+        'type'     => 'textarea',
+    ));
+
+    // Número de serviços para mostrar
+    $wp_customize->add_setting('services_count', array(
+        'default'           => 6,
+        'sanitize_callback' => 'absint',
+    ));
+    $wp_customize->add_control('services_count', array(
+        'label'    => __('Quantidade de serviços para exibir', 'thabatta-adv'),
+        'section'  => 'thabatta_services_section',
+        'type'     => 'number',
+        'input_attrs' => array(
+            'min' => 3,
+            'max' => 12,
+            'step' => 1,
+        ),
+    ));
+
+    // Seção Depoimentos
+    $wp_customize->add_section('thabatta_testimonials_section', array(
+        'title'    => __('Seção Depoimentos', 'thabatta-adv'),
+        'priority' => 35,
+    ));
+
+    // Título da Seção Depoimentos
+    $wp_customize->add_setting('testimonials_title', array(
+        'default'           => 'Depoimentos de Clientes',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('testimonials_title', array(
+        'label'    => __('Título', 'thabatta-adv'),
+        'section'  => 'thabatta_testimonials_section',
+        'type'     => 'text',
+    ));
+    
+    // Descrição da Seção Depoimentos
+    $wp_customize->add_setting('testimonials_description', array(
+        'default'           => 'Veja o que nossos clientes dizem sobre nossos serviços e atendimento.',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('testimonials_description', array(
+        'label'    => __('Descrição', 'thabatta-adv'),
+        'section'  => 'thabatta_testimonials_section',
+        'type'     => 'textarea',
+    ));
+
+    // Número de depoimentos para mostrar
+    $wp_customize->add_setting('testimonials_count', array(
+        'default'           => 5,
+        'sanitize_callback' => 'absint',
+    ));
+    $wp_customize->add_control('testimonials_count', array(
+        'label'    => __('Quantidade de depoimentos para exibir', 'thabatta-adv'),
+        'section'  => 'thabatta_testimonials_section',
+        'type'     => 'number',
+        'input_attrs' => array(
+            'min' => 1,
+            'max' => 10,
+            'step' => 1,
+        ),
+    ));
+
+    // Seção CTA
+    $wp_customize->add_section('thabatta_cta_section', array(
+        'title'    => __('Seção CTA (Chamada para Ação)', 'thabatta-adv'),
+        'priority' => 40,
+    ));
+
+    // Título da Seção CTA
+    $wp_customize->add_setting('cta_title', array(
+        'default'           => 'Precisando de Orientação Jurídica?',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('cta_title', array(
+        'label'    => __('Título', 'thabatta-adv'),
+        'section'  => 'thabatta_cta_section',
+        'type'     => 'text',
+    ));
+    
+    // Descrição da Seção CTA
+    $wp_customize->add_setting('cta_description', array(
+        'default'           => 'Entre em contato conosco para uma consulta inicial. Nossos advogados estão prontos para ajudar você.',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('cta_description', array(
+        'label'    => __('Descrição', 'thabatta-adv'),
+        'section'  => 'thabatta_cta_section',
+        'type'     => 'textarea',
+    ));
+    
+    // Texto do botão CTA
+    $wp_customize->add_setting('cta_button_text', array(
+        'default'           => 'Agende uma Consulta',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('cta_button_text', array(
+        'label'    => __('Texto do Botão', 'thabatta-adv'),
+        'section'  => 'thabatta_cta_section',
+        'type'     => 'text',
+    ));
+    
+    // URL do botão CTA
+    $wp_customize->add_setting('cta_button_url', array(
+        'default'           => '/contato',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('cta_button_url', array(
+        'label'    => __('URL do Botão', 'thabatta-adv'),
+        'section'  => 'thabatta_cta_section',
+        'type'     => 'url',
+    ));
+
+    // Seção Equipe
+    $wp_customize->add_section('thabatta_team_section', array(
+        'title'    => __('Seção Equipe', 'thabatta-adv'),
+        'priority' => 42,
+    ));
+
+    // Título da Seção Equipe
+    $wp_customize->add_setting('team_title', array(
+        'default'           => 'Nossa Equipe',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('team_title', array(
+        'label'    => __('Título', 'thabatta-adv'),
+        'section'  => 'thabatta_team_section',
+        'type'     => 'text',
+    ));
+    
+    // Descrição da Seção Equipe
+    $wp_customize->add_setting('team_description', array(
+        'default'           => 'Conheça os profissionais dedicados a cuidar do seu caso com excelência.',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('team_description', array(
+        'label'    => __('Descrição', 'thabatta-adv'),
+        'section'  => 'thabatta_team_section',
+        'type'     => 'textarea',
+    ));
+    
+    // Número de membros para mostrar
+    $wp_customize->add_setting('team_count', array(
+        'default'           => 4,
+        'sanitize_callback' => 'absint',
+    ));
+    $wp_customize->add_control('team_count', array(
+        'label'    => __('Quantidade de membros para exibir', 'thabatta-adv'),
+        'section'  => 'thabatta_team_section',
+        'type'     => 'number',
+        'input_attrs' => array(
+            'min' => 1,
+            'max' => 8,
+            'step' => 1,
+        ),
+    ));
+
+    // Seção Blog
+    $wp_customize->add_section('thabatta_blog_section', array(
+        'title'    => __('Seção Blog', 'thabatta-adv'),
+        'priority' => 45,
+    ));
+
+    // Título da Seção Blog
+    $wp_customize->add_setting('blog_title', array(
+        'default'           => 'Últimas do Blog',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('blog_title', array(
+        'label'    => __('Título', 'thabatta-adv'),
+        'section'  => 'thabatta_blog_section',
+        'type'     => 'text',
+    ));
+    
+    // Descrição da Seção Blog
+    $wp_customize->add_setting('blog_description', array(
+        'default'           => 'Fique atualizado com nosso conteúdo jurídico e dicas relevantes.',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('blog_description', array(
+        'label'    => __('Descrição', 'thabatta-adv'),
+        'section'  => 'thabatta_blog_section',
+        'type'     => 'textarea',
+    ));
+    
+    // Número de posts para mostrar
+    $wp_customize->add_setting('blog_count', array(
+        'default'           => 3,
+        'sanitize_callback' => 'absint',
+    ));
+    $wp_customize->add_control('blog_count', array(
+        'label'    => __('Quantidade de posts para exibir', 'thabatta-adv'),
+        'section'  => 'thabatta_blog_section',
+        'type'     => 'number',
+        'input_attrs' => array(
+            'min' => 1,
+            'max' => 6,
+            'step' => 1,
+        ),
+    ));
+    
+    // Mostrar botão "Ver todos"
+    $wp_customize->add_setting('blog_show_all_button', array(
+        'default'           => true,
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('blog_show_all_button', array(
+        'label'    => __('Mostrar botão "Ver todos os posts"', 'thabatta-adv'),
+        'section'  => 'thabatta_blog_section',
+        'type'     => 'checkbox',
+    ));
+
     // Seção Sobre
     $wp_customize->add_section('thabatta_about_section', array(
         'title'    => __('Seção Sobre', 'thabatta-adv'),

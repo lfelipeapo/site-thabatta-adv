@@ -47,7 +47,7 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                 // Consulta para áreas de atuação
                 $args = array(
                     'post_type'      => 'area_atuacao',
-                    'posts_per_page' => 6,
+                    'posts_per_page' => get_theme_mod('services_count', 6),
                     'orderby'        => 'menu_order',
                     'order'          => 'ASC',
                 );
@@ -174,7 +174,7 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                 // Consulta para depoimentos
                 $args = array(
                     'post_type'      => 'depoimento',
-                    'posts_per_page' => 5,
+                    'posts_per_page' => get_theme_mod('testimonials_count', 5),
                     'orderby'        => 'date',
                     'order'          => 'DESC',
                 );
@@ -272,7 +272,7 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                 // Consulta para equipe
                 $args = array(
                     'post_type'      => 'equipe',
-                    'posts_per_page' => 4,
+                    'posts_per_page' => get_theme_mod('team_count', 4),
                     'orderby'        => 'menu_order',
                     'order'          => 'ASC',
                 );
@@ -337,7 +337,7 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                 // Consulta para posts recentes
                 $args = array(
                     'post_type'      => 'post',
-                    'posts_per_page' => 3,
+                    'posts_per_page' => get_theme_mod('blog_count', 3),
                     'orderby'        => 'date',
                     'order'          => 'DESC',
                 );
@@ -409,7 +409,9 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
             </div>
             
             <div class="section-cta">
-                <a href="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" class="btn btn-secondary">Ver Todos os Artigos</a>
+                <?php if (get_theme_mod('blog_show_all_button', true)) : ?>
+                <a href="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" class="btn btn-secondary">Ver todos os posts</a>
+                <?php endif; ?>
             </div>
         </div>
     </section>

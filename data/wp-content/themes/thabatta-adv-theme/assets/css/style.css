@@ -1794,6 +1794,36 @@ body {
   border-radius: 6.25px;
 }
 
+/* Botão Back to Top */
+.back-to-top {
+  position: fixed;
+  right: 15px;
+  bottom: -60px;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: #800020;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  z-index: 999;
+  border: none;
+  outline: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+.back-to-top:hover {
+  background-color: rgb(77, 0, 19.25);
+}
+.back-to-top.show {
+  bottom: 15px;
+  opacity: 1;
+}
+
 /* Estilos de formulários */
 input,
 textarea,
