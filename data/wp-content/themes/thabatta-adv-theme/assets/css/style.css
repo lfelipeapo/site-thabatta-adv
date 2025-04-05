@@ -3721,9 +3721,11 @@ input[type=checkbox] {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .services-section .service-item i {
-  font-size: 2.5rem;
+  font-size: 1rem;
   color: #800020;
   margin-bottom: 1.5rem;
+  margin-top: 2px;
+  margin-left: 2px;
 }
 .services-section .service-item h3 {
   color: #800020;
@@ -3733,6 +3735,18 @@ input[type=checkbox] {
 .services-section .service-item p {
   font-size: 0.95rem;
   color: #4a4a4a;
+}
+.services-section .section-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+@media (max-width: 768px) {
+  .services-section .section-cta {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
 /* Depoimentos Section */
