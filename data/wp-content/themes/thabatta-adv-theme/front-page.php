@@ -125,9 +125,15 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                     <?php else : ?>
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/about-placeholder.jpg" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" class="img-fluid">
                     <?php endif; ?>
+                    
+                    <div class="image-overlay">
+                        <h3><?php echo esc_html(get_theme_mod('about_overlay_title', 'Nossa Missão')); ?></h3>
+                        <p><?php echo esc_html(get_theme_mod('about_overlay_text', 'Justiça e excelência em cada caso.')); ?></p>
+                    </div>
                 </div>
                 <div class="about-text">
                     <h2><?php echo esc_html(get_theme_mod('about_title', 'Sobre Nosso Escritório')); ?></h2>
+                    <div class="about-subtitle"><?php echo esc_html(get_theme_mod('about_subtitle', 'Nossa História e Compromisso')); ?></div>
                     <div class="about-description">
                         <?php echo wpautop(wp_kses_post(get_theme_mod('about_description', 'Somos um escritório de advocacia comprometido com a excelência e resultados. Nossa equipe é formada por profissionais experientes, dedicados a oferecer soluções jurídicas personalizadas para cada cliente. Defendemos seus direitos com ética, competência e determinação.'))); ?>
                     </div>
@@ -137,15 +143,19 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                             <span><?php echo esc_html(get_theme_mod('about_feature_1', 'Atendimento Personalizado')); ?></span>
                         </div>
                         <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-certificate"></i>
                             <span><?php echo esc_html(get_theme_mod('about_feature_2', 'Profissionais Qualificados')); ?></span>
                         </div>
                         <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-bolt"></i>
                             <span><?php echo esc_html(get_theme_mod('about_feature_3', 'Soluções Eficientes')); ?></span>
                         </div>
+                        <div class="feature-item">
+                            <i class="fas fa-balance-scale"></i>
+                            <span><?php echo esc_html(get_theme_mod('about_feature_4', 'Compromisso com a Justiça')); ?></span>
+                        </div>
                     </div>
-                    <a href="<?php echo esc_url(get_permalink(get_page_by_path('sobre'))); ?>" class="btn btn-primary">Conheça Nossa História</a>
+                    <a href="<?php echo esc_url(get_permalink(get_page_by_path('sobre'))); ?>" class="btn"><?php echo esc_html(get_theme_mod('about_button_text', 'Conheça Nossa História')); ?></a>
                 </div>
             </div>
         </div>

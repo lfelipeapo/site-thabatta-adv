@@ -254,6 +254,132 @@ function thabatta_customize_register($wp_customize) {
         'section' => 'thabatta_footer',
         'type' => 'checkbox',
     ));
+
+    // Seção Sobre
+    $wp_customize->add_section('thabatta_about_section', array(
+        'title'    => __('Seção Sobre', 'thabatta-adv'),
+        'priority' => 30,
+    ));
+
+    // Título da Seção Sobre
+    $wp_customize->add_setting('about_title', array(
+        'default'           => 'Sobre Nosso Escritório',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_title', array(
+        'label'    => __('Título', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
+    
+    // Subtítulo da Seção Sobre
+    $wp_customize->add_setting('about_subtitle', array(
+        'default'           => 'Nossa História e Compromisso',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_subtitle', array(
+        'label'    => __('Subtítulo', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
+
+    // Descrição da Seção Sobre
+    $wp_customize->add_setting('about_description', array(
+        'default'           => 'Somos um escritório de advocacia comprometido com a excelência e resultados. Nossa equipe é formada por profissionais experientes, dedicados a oferecer soluções jurídicas personalizadas para cada cliente. Defendemos seus direitos com ética, competência e determinação.',
+        'sanitize_callback' => 'wp_kses_post',
+    ));
+    $wp_customize->add_control('about_description', array(
+        'label'    => __('Descrição', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'textarea',
+    ));
+
+    // Imagem da Seção Sobre
+    $wp_customize->add_setting('about_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'about_image', array(
+        'label'    => __('Imagem', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+    )));
+    
+    // Título do Overlay da Imagem
+    $wp_customize->add_setting('about_overlay_title', array(
+        'default'           => 'Nossa Missão',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_overlay_title', array(
+        'label'    => __('Título do Overlay da Imagem', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
+    
+    // Texto do Overlay da Imagem
+    $wp_customize->add_setting('about_overlay_text', array(
+        'default'           => 'Justiça e excelência em cada caso.',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_overlay_text', array(
+        'label'    => __('Texto do Overlay da Imagem', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
+
+    // Característica 1
+    $wp_customize->add_setting('about_feature_1', array(
+        'default'           => 'Atendimento Personalizado',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_feature_1', array(
+        'label'    => __('Característica 1', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
+
+    // Característica 2
+    $wp_customize->add_setting('about_feature_2', array(
+        'default'           => 'Profissionais Qualificados',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_feature_2', array(
+        'label'    => __('Característica 2', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
+
+    // Característica 3
+    $wp_customize->add_setting('about_feature_3', array(
+        'default'           => 'Soluções Eficientes',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_feature_3', array(
+        'label'    => __('Característica 3', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
+    
+    // Característica 4
+    $wp_customize->add_setting('about_feature_4', array(
+        'default'           => 'Compromisso com a Justiça',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_feature_4', array(
+        'label'    => __('Característica 4', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
+    
+    // Texto do botão
+    $wp_customize->add_setting('about_button_text', array(
+        'default'           => 'Conheça Nossa História',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('about_button_text', array(
+        'label'    => __('Texto do Botão', 'thabatta-adv'),
+        'section'  => 'thabatta_about_section',
+        'type'     => 'text',
+    ));
 }
 add_action('customize_register', 'thabatta_customize_register');
 
