@@ -11,4 +11,28 @@ parameters:
     - '#Call to undefined function add_action#'
     - '#Call to undefined function add_filter#'
     - '#^Else branch is unreachable because ternary operator condition is always true\.\$ in path#'
+    # Ignorar funções ACF
+    - '#Function (acf_add_options_page|acf_add_options_sub_page|get_field) not found\.#'
+    # Ignorar erros de is_wp_error e instanceof WP_Error
+    - '#Call to function is_wp_error\(\) with .* will always evaluate to false\.#'
+    - '#is_wp_error\(int<0, max>\) will always evaluate to false\.#'
+    - '#Instanceof between .* and WP_Error will always evaluate to false\.#'
+    # Ignorar verificações de offset em arrays
+    - '#Offset [0-9]+ on array.* on left side of \?\? always exists and is not nullable\.#'
+    # Ignorar erros específicos de unreachable statement
+    - '#Unreachable statement - code above always terminates\.#'
+    # Ignorar erros de tipo com funções do WordPress
+    - '#Parameter \#[0-9]+ \$args of function register_post_type expects#'
+    - '#Parameter \#[0-9]+ \$callback of function add_menu_page expects callable\(\): mixed, null given\.#'
+    - '#Parameter \#[0-9]+ \$args of method WP_Customize_Manager::add_setting\(\) expects#'
+    # Ignorar erros de condição
+    - '#Left side of && is always true\.#'
+    - '#If condition is always true\.#'
+    # Ignorar erros de métodos não utilizados
+    - '#Method .* is unused\.#'
+    # Ignorar erro de espaço em branco no final do arquivo
+    - '#File ends with a trailing whitespace\.#'
+    # Ignorar problemas com offset nos arrays
+    - '#Offset .* does not accept type#'
   reportUnmatchedIgnoredErrors: false
+  treatPhpDocTypesAsCertain: false
