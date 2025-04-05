@@ -14,49 +14,54 @@ if (!defined('ABSPATH')) {
  */
 function thabatta_submit_consultation() {
     // Verificar nonce para segurança
-    if (!isset($_POST['consultation_nonce']) || !wp_verify_nonce($_POST['consultation_nonce'], 'thabatta_nonce')) {
-        wp_send_json_error(__('Falha na verificação de segurança. Por favor, atualize a página e tente novamente.', 'thabatta-adv'));
+    if (!isset($_POST['security']) || !wp_verify_nonce($_POST['security'], 'thabatta_consultation_nonce')) {
+        wp_send_json_error(array(
+            'message' => __('Falha na verificação de segurança. Por favor, atualize a página e tente novamente.', 'thabatta-adv')
+        ));
         return;
     }
     
-    // Verificar campos obrigatórios
-    $required_fields = array('name', 'email', 'phone', 'cpf_cnpj', 'lawArea', 'caseDetails', 'privacy');
-    
-    foreach ($required_fields as $field) {
-        if (!isset($_POST[$field]) || empty($_POST[$field])) {
-            wp_send_json_error(__('Por favor, preencha todos os campos obrigatórios.', 'thabatta-adv'));
-            return;
-        }
-    }
-    
     // Sanitizar dados recebidos
-    $name = sanitize_text_field($_POST['name']);
-    $email = sanitize_email($_POST['email']);
-    $phone = sanitize_text_field($_POST['phone']);
-    $cpf_cnpj = sanitize_text_field($_POST['cpf_cnpj']);
-    $law_area = sanitize_text_field($_POST['lawArea']);
+    $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+    $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+    $phone = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
+    $cpf_cnpj = isset($_POST['cpfcnpj']) ? sanitize_text_field($_POST['cpfcnpj']) : '';
+    $law_area = isset($_POST['area']) ? sanitize_text_field($_POST['area']) : '';
     $urgency = isset($_POST['urgency']) ? sanitize_text_field($_POST['urgency']) : 'media';
-    $case_details = sanitize_textarea_field($_POST['caseDetails']);
-    $contact_preference = isset($_POST['contactPreference']) ? sanitize_text_field($_POST['contactPreference']) : 'phone';
+    $case_details = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
+    $contact_preference = isset($_POST['contact_preference']) ? sanitize_text_field($_POST['contact_preference']) : 'phone';
+    $confirmation = isset($_POST['confirmation']) && $_POST['confirmation'] === 'on';
+    
+    // Verificar campos obrigatórios
+    if (empty($name) || empty($email) || empty($phone) || empty($law_area) || !$confirmation) {
+        wp_send_json_error(array(
+            'message' => __('Por favor, preencha todos os campos obrigatórios.', 'thabatta-adv')
+        ));
+        return;
+    }
     
     // Validar formato de e-mail
     if (!is_email($email)) {
-        wp_send_json_error(__('Por favor, forneça um endereço de e-mail válido.', 'thabatta-adv'));
+        wp_send_json_error(array(
+            'message' => __('Por favor, forneça um endereço de e-mail válido.', 'thabatta-adv')
+        ));
         return;
     }
     
     // Criar post personalizado para a consulta
     $post_data = array(
-        'post_title'    => sprintf(__('Consulta: %s', 'thabatta-adv'), $name),
+        'post_title'    => sprintf(__('Consulta: %s (%s)', 'thabatta-adv'), $name, date_i18n('d/m/Y H:i')),
         'post_content'  => $case_details,
-        'post_status'   => 'publish',
+        'post_status'   => 'private', // Alterado para private para manter os dados seguros
         'post_type'     => 'consultation',
     );
     
     $post_id = wp_insert_post($post_data);
     
     if (is_wp_error($post_id)) {
-        wp_send_json_error(__('Erro ao registrar sua consulta. Por favor, tente novamente.', 'thabatta-adv'));
+        wp_send_json_error(array(
+            'message' => __('Erro ao registrar sua consulta. Por favor, tente novamente.', 'thabatta-adv')
+        ));
         return;
     }
     
@@ -75,26 +80,6 @@ function thabatta_submit_consultation() {
     $admin_email = get_option('admin_email');
     $site_name = get_bloginfo('name');
     $subject = sprintf(__('[%s] Nova solicitação de consulta', 'thabatta-adv'), $site_name);
-    
-    // Obter nome da área de atuação
-    $area_name = '';
-    if (is_numeric($law_area)) {
-        $area_post = get_post($law_area);
-        if ($area_post) {
-            $area_name = $area_post->post_title;
-        }
-    } else {
-        // Se não for numérico, usamos os valores padrão
-        $default_areas = array(
-            'civil' => __('Direito Civil', 'thabatta-adv'),
-            'empresarial' => __('Direito Empresarial', 'thabatta-adv'),
-            'trabalhista' => __('Direito Trabalhista', 'thabatta-adv'),
-            'consumidor' => __('Direito do Consumidor', 'thabatta-adv'),
-            'previdenciario' => __('Direito Previdenciário', 'thabatta-adv'),
-            'outro' => __('Outro', 'thabatta-adv')
-        );
-        $area_name = isset($default_areas[$law_area]) ? $default_areas[$law_area] : $law_area;
-    }
     
     // Formatar níveis de urgência
     $urgency_labels = array(
@@ -119,10 +104,14 @@ function thabatta_submit_consultation() {
     $message .= __('E-mail: ', 'thabatta-adv') . $email . "\n";
     $message .= __('Telefone: ', 'thabatta-adv') . $phone . "\n";
     $message .= __('CPF/CNPJ: ', 'thabatta-adv') . $cpf_cnpj . "\n";
-    $message .= __('Área de Atuação: ', 'thabatta-adv') . $area_name . "\n";
+    $message .= __('Área de Atuação: ', 'thabatta-adv') . $law_area . "\n";
     $message .= __('Urgência: ', 'thabatta-adv') . $urgency_text . "\n";
     $message .= __('Forma de Contato Preferida: ', 'thabatta-adv') . $contact_text . "\n\n";
-    $message .= __('Detalhes do Caso:', 'thabatta-adv') . "\n" . $case_details . "\n\n";
+    
+    if (!empty($case_details)) {
+        $message .= __('Detalhes do Caso:', 'thabatta-adv') . "\n" . $case_details . "\n\n";
+    }
+    
     $message .= __('Para gerenciar esta consulta, acesse o painel administrativo:', 'thabatta-adv') . "\n";
     $message .= admin_url('post.php?post=' . $post_id . '&action=edit');
     
@@ -138,7 +127,7 @@ function thabatta_submit_consultation() {
     $client_message .= __('Recebemos sua solicitação de consulta e agradecemos pelo seu interesse.', 'thabatta-adv') . "\n\n";
     $client_message .= __('Entraremos em contato em breve para agendar sua consulta.', 'thabatta-adv') . "\n\n";
     $client_message .= __('Resumo da sua solicitação:', 'thabatta-adv') . "\n";
-    $client_message .= __('Área de Atuação: ', 'thabatta-adv') . $area_name . "\n";
+    $client_message .= __('Área de Atuação: ', 'thabatta-adv') . $law_area . "\n";
     $client_message .= __('Urgência: ', 'thabatta-adv') . $urgency_text . "\n";
     $client_message .= __('Forma de Contato Preferida: ', 'thabatta-adv') . $contact_text . "\n\n";
     $client_message .= __('Atenciosamente,', 'thabatta-adv') . "\n";
@@ -147,7 +136,9 @@ function thabatta_submit_consultation() {
     wp_mail($email, $client_subject, $client_message, $headers);
     
     // Retornar sucesso
-    wp_send_json_success(__('Sua solicitação de consulta foi enviada com sucesso. Entraremos em contato em breve.', 'thabatta-adv'));
+    wp_send_json_success(array(
+        'message' => __('Sua solicitação de consulta foi enviada com sucesso. Entraremos em contato em breve.', 'thabatta-adv')
+    ));
 }
 add_action('wp_ajax_thabatta_submit_consultation', 'thabatta_submit_consultation');
 add_action('wp_ajax_nopriv_thabatta_submit_consultation', 'thabatta_submit_consultation');

@@ -393,24 +393,18 @@ get_header();
         </div>
     </section>
 
-    <!-- Botão de Consulta -->
+    <!-- Formulário de Consulta (via CTA) -->
     <section class="consultation-cta">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-8 text-center">
-                    <h2><?php echo esc_html_e('Precisa de orientação jurídica?', 'thabatta-adv'); ?></h2>
-                    <p><?php echo esc_html_e('Entre em contato para uma consulta especializada e descubra como podemos ajudar no seu caso.', 'thabatta-adv'); ?></p>
-                    <button class="btn btn-primary btn-lg open-consultation-form">
-                        <?php echo esc_html_e('Solicitar Consulta', 'thabatta-adv'); ?>
-                        <i class="fas fa-arrow-right ms-2"></i>
-                    </button>
-                </div>
+            <div class="cta-content text-center">
+                <h2><?php echo esc_html(get_theme_mod('consultation_cta_title', __('Precisa de Orientação Jurídica?', 'thabatta-adv'))); ?></h2>
+                <p><?php echo esc_html(get_theme_mod('consultation_cta_text', __('Entre em contato para uma primeira consulta e descubra como podemos ajudar no seu caso.', 'thabatta-adv'))); ?></p>
+                <button class="btn btn-primary btn-lg open-consultation-form">
+                    <?php esc_html_e('Agendar Consulta Online', 'thabatta-adv'); ?>
+                </button>
             </div>
         </div>
     </section>
-
-    <!-- Formulário de Consulta Multietapa -->
-    <?php get_template_part('template-parts/form-consultation'); ?>
 </main>
 
 <?php get_footer(); ?> 

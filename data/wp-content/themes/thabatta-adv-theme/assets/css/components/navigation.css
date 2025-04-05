@@ -48,7 +48,7 @@
 }
 .main-navigation ul li ul.sub-menu li a:hover, .main-navigation ul li ul.sub-menu li a:focus, li.current-menu-item > .main-navigation ul li ul.sub-menu li a, li.current_page_item > .main-navigation ul li ul.sub-menu li a {
   color: #800020;
-  background-color: rgb(250.55, 250.55, 250.55);
+  background-color: rgb(237.55, 237.55, 237.55);
 }
 .main-navigation ul li ul.sub-menu li ul.sub-menu {
   left: 100%;
@@ -157,7 +157,7 @@
 .pagination .page-numbers {
   padding: 0.5rem 1rem;
   margin: 0 0.25rem;
-  border: 1px solid #f8f8f8;
+  border: 1px solid #ebebeb;
   border-radius: 5px;
   color: #800020;
   text-decoration: none;
@@ -170,9 +170,9 @@
   cursor: default;
 }
 .pagination .page-numbers:hover:not(.current) {
-  background-color: #f8f8f8;
+  background-color: #ebebeb;
   color: #800020;
-  border-color: #f8f8f8;
+  border-color: #ebebeb;
 }
 .pagination .page-numbers.dots {
   border: none;
@@ -194,7 +194,7 @@
   color: #4a4a4a;
   margin-bottom: 1.5rem;
   padding: 0.5rem 1rem;
-  background-color: rgb(253.1, 253.1, 253.1);
+  background-color: rgb(240.1, 240.1, 240.1);
   border-radius: 3px;
 }
 .breadcrumbs a {

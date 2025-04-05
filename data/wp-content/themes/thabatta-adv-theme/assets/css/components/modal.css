@@ -60,7 +60,7 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid #f8f8f8;
+  border-bottom: 1px solid #ebebeb;
   border-top-left-radius: 9px;
   border-top-right-radius: 9px;
 }
@@ -101,7 +101,7 @@
   align-items: center;
   justify-content: flex-end;
   padding: 1rem 1.5rem;
-  border-top: 1px solid #f8f8f8;
+  border-top: 1px solid #ebebeb;
   border-bottom-right-radius: 9px;
   border-bottom-left-radius: 9px;
 }

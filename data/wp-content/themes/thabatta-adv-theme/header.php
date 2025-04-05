@@ -41,10 +41,11 @@
                 <?php endif; ?>
             </div><!-- .site-branding -->
 
+            <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+
             <nav id="site-navigation" class="main-navigation">
-                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <?php
                 wp_nav_menu(
                     array(
@@ -56,23 +57,25 @@
                 ?>
             </nav><!-- #site-navigation -->
             
-            <?php if (function_exists('get_field') && get_field('exibir_botao_contato', 'option')) : ?>
-                <div class="header-contact">
-                    <a href="<?php echo esc_url(get_field('link_botao_contato', 'option')); ?>" class="btn btn-primary">
-                        <?php echo esc_html(get_field('texto_botao_contato', 'option')); ?>
-                    </a>
-                </div>
-            <?php endif; ?>
+            <div class="header-actions">
+                <?php if (function_exists('get_field') && get_field('exibir_botao_contato', 'option')) : ?>
+                    <div class="header-contact">
+                        <a href="<?php echo esc_url(get_field('link_botao_contato', 'option')); ?>" class="btn btn-primary">
+                            <?php echo esc_html(get_field('texto_botao_contato', 'option')); ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
 
-            <div class="header-buttons">
-                <a href="<?php echo esc_url(get_theme_mod('header_contact_link', '#')); ?>" class="btn-contact">
-                    <i class="fas fa-phone-alt"></i>
-                    <span><?php echo esc_html(get_theme_mod('header_contact_text', __('Contato', 'thabatta-adv'))); ?></span>
-                </a>
-                <button type="button" class="open-consultation-form btn-consultation">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span><?php esc_html_e('Consulta', 'thabatta-adv'); ?></span>
-                </button>
+                <div class="header-buttons">
+                    <a href="<?php echo esc_url(get_theme_mod('header_contact_link', '#')); ?>" class="btn-contact">
+                        <i class="fas fa-phone-alt"></i>
+                        <span><?php echo esc_html(get_theme_mod('header_contact_text', __('Contato', 'thabatta-adv'))); ?></span>
+                    </a>
+                    <button type="button" class="open-consultation-form btn-consultation">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span><?php esc_html_e('Consulta', 'thabatta-adv'); ?></span>
+                    </button>
+                </div>
             </div>
         </div>
     </header><!-- #masthead -->

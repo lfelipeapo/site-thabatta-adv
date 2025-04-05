@@ -75,47 +75,53 @@ function thabatta_load_theme_textdomain() {
     // Método padrão (backup)
     load_theme_textdomain('thabatta-adv', THABATTA_THEME_DIR . '/languages');
 }
-add_action('init', 'thabatta_load_theme_textdomain');
+add_action('init', 'thabatta_load_theme_textdomain', 100);
 
 /**
  * Registrar e carregar scripts e estilos
  */
 function thabatta_scripts() {
     // Estilos
-    wp_enqueue_style('thabatta-style', get_stylesheet_uri(), array(), THABATTA_THEME_VERSION);
-    wp_enqueue_style('thabatta-main', THABATTA_THEME_URI . '/assets/css/style.min.css', array(), THABATTA_THEME_VERSION);
-    
-    // Google Fonts
-    wp_enqueue_style('thabatta-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap', array(), null);
+    wp_enqueue_style('thabatta-style', get_stylesheet_uri(), array(), THABATTA_VERSION);
+    wp_enqueue_style('thabatta-main-style', get_template_directory_uri() . '/assets/css/style.min.css', array(), THABATTA_VERSION);
     
     // Font Awesome
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', array(), '5.15.4');
+    wp_enqueue_style('fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', array(), '5.15.4');
+    
+    // Google Fonts
+    wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap', array(), null);
     
     // Scripts
     wp_enqueue_script('jquery');
-    wp_enqueue_script('slick-slider', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', array('jquery'), '1.8.1', true);
-    wp_enqueue_script('thabatta-navigation', THABATTA_THEME_URI . '/assets/js/navigation.min.js', array(), THABATTA_THEME_VERSION, true);
-    wp_enqueue_script('thabatta-main', THABATTA_THEME_URI . '/assets/js/main.min.js', array('jquery'), THABATTA_THEME_VERSION, true);
-
-    // Comentários
+    
+    // jQuery Mask Plugin (para máscaras de formulário)
+    wp_enqueue_script('jquery-mask', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js', array('jquery'), '1.14.16', true);
+    
+    // AOS - Animate on Scroll Library (opcional)
+    wp_enqueue_style('aos-css', 'https://unpkg.com/aos@2.3.1/dist/aos.css', array(), '2.3.1');
+    wp_enqueue_script('aos-js', 'https://unpkg.com/aos@2.3.1/dist/aos.js', array(), '2.3.1', true);
+    
+    // Slick Carousel (opcional)
+    wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), '1.8.1');
+    wp_enqueue_style('slick-theme-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css', array(), '1.8.1');
+    wp_enqueue_script('slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), '1.8.1', true);
+    
+    // Script principal do tema
+    wp_enqueue_script('thabatta-script', get_template_directory_uri() . '/assets/js/bundle.min.js', array('jquery', 'jquery-mask'), THABATTA_VERSION, true);
+    
+    // Localize script
+    wp_localize_script('thabatta-script', 'thabattaData', array(
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('thabatta_consultation_nonce'),
+        'homeUrl' => esc_url(home_url('/')),
+        'themeUrl' => esc_url(get_template_directory_uri()),
+    ));
+    
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
-
-    // Passar variáveis para o JavaScript
-    wp_localize_script('thabatta-main', 'thabattaData', array(
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('thabatta_nonce'),
-    ));
-    
-    // Adicionar variáveis adicionais para o script
-    wp_localize_script('thabatta-main', 'thabattaSettings', array(
-        'themeUrl' => get_template_directory_uri(),
-        'siteUrl' => site_url(),
-        'isHome' => is_home() || is_front_page() ? 1 : 0
-    ));
 }
-add_action('wp_enqueue_scripts', 'thabatta_scripts');
+add_action('wp_enqueue_scripts', 'thabatta_scripts', 100);
 
 /**
  * Registrar áreas de widgets
@@ -179,6 +185,14 @@ add_action('widgets_init', 'thabatta_widgets_init');
 function thabatta_is_frontpage() {
     return (is_front_page() && !is_home());
 }
+
+/**
+ * Incluir formulário de consulta em todas as páginas
+ */
+function thabatta_include_consultation_form() {
+    get_template_part('template-parts/form-consultation');
+}
+add_action('wp_footer', 'thabatta_include_consultation_form', 20);
 
 /**
  * Incluir arquivos adicionais
@@ -780,10 +794,10 @@ function thabatta_theme_options_page_content() {
 require get_template_directory() . '/inc/ajax-handlers.php';
 
 /**
- * Localiza e carrega scripts de JavaScript no front-end
+ * Adiciona dados localizados para scripts
  */
 function thabatta_localize_scripts() {
-    wp_localize_script('thabatta-main', 'thabattaData', array(
+    wp_localize_script('thabatta-script', 'thabattaData', array(
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'siteUrl' => get_site_url(),
         'themePath' => get_template_directory_uri(),

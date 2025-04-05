@@ -1,6 +1,6 @@
 /* Estilos das Tabs */
 .nav-tabs {
-  border-bottom: 1px solid #f8f8f8;
+  border-bottom: 1px solid #ebebeb;
   margin-bottom: 1rem;
   display: flex;
   list-style: none;
@@ -24,13 +24,13 @@
   transition: all 0.3s ease-in-out;
 }
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
-  border-color: rgb(235.25, 235.25, 235.25);
+  border-color: rgb(222.25, 222.25, 222.25);
   text-decoration: none;
 }
 .nav-tabs .nav-link.active {
   color: #800020;
   background-color: #ffffff;
-  border-color: #f8f8f8;
+  border-color: #ebebeb;
   border-bottom-color: transparent;
 }
 

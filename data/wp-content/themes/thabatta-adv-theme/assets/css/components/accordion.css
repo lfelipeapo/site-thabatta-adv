@@ -1,11 +1,11 @@
 /* Estilos do Accordion */
 .accordion {
   margin-bottom: 2rem;
-  border: 1px solid #f8f8f8;
+  border: 1px solid #ebebeb;
   border-radius: 5px;
 }
 .accordion .accordion-item {
-  border-bottom: 1px solid #f8f8f8;
+  border-bottom: 1px solid #ebebeb;
 }
 .accordion .accordion-item:last-child {
   border-bottom: none;

@@ -47,7 +47,7 @@
   color: #ffd700;
 }
 .single-post .entry-footer {
-  border-top: 1px solid #f8f8f8;
+  border-top: 1px solid #ebebeb;
   margin-top: 2rem;
   padding-top: 1rem;
   font-size: 0.875rem;
@@ -59,7 +59,7 @@
 }
 .single-post .entry-footer .tags-links a,
 .single-post .entry-footer .cat-links a {
-  background-color: #f8f8f8;
+  background-color: #ebebeb;
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
   color: #4a4a4a;
@@ -73,7 +73,7 @@
 }
 .single-post .comments-area {
   margin-top: 3rem;
-  border-top: 1px solid #f8f8f8;
+  border-top: 1px solid #ebebeb;
   padding-top: 2rem;
 }
 .single-post .comments-area .comments-title {
@@ -89,7 +89,7 @@
 .single-post .comments-area .comment {
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #f8f8f8;
+  border-bottom: 1px solid #ebebeb;
 }
 .single-post .comments-area .comment:last-child {
   border-bottom: none;

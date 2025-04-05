@@ -36,7 +36,7 @@
   margin-bottom: 2rem;
 }
 .page-areas .areas-nav {
-  background-color: #f8f8f8;
+  background-color: #ebebeb;
   padding: 1.5rem 0;
   margin-bottom: 3rem;
 }
@@ -79,7 +79,7 @@
   padding-top: 2rem;
 }
 .page-areas .area-section:not(:first-child) {
-  border-top: 1px solid #f8f8f8;
+  border-top: 1px solid #ebebeb;
 }
 .page-areas .area-section .area-header {
   margin-bottom: 2rem;

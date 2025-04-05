@@ -5,10 +5,13 @@ $bordo: #800020;
 $amarelo-dourado: #ffd700;
 $branco: #ffffff;
 $preto: #000000;
-$cinza-claro: #f8f8f8;
+$cinza-claro: #ebebeb;
 $cinza-claro-alt: #f0f0f0;
+$cinza-medio: #c4c4c4;
 $cinza-escuro: #4a4a4a;
 $vermelho-sangue: #8B0000;
+$vermelho: #d9534f;
+$verde: #28a745;
 $cor-texto-base: #333333;
 $cor-titulos: #222222;
 $cor-fundo-site: #FFFFFF;
@@ -18,6 +21,7 @@ $cor-texto-claro: $branco;
 $cor-titulos-claro: $branco;
 $link-color-claro: $amarelo-dourado;
 $link-hover-color-claro: color.adjust($amarelo-dourado, $lightness: 10%);
+$cor-borda: #ced4da;
 
 // Cores do rodapé
 $cor-rodape-fundo: #222222;

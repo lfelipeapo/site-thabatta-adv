@@ -16,7 +16,7 @@ section, .section {
   padding: 4rem 0;
 }
 section.bg-light, .section.bg-light {
-  background-color: #f8f8f8;
+  background-color: #ebebeb;
 }
 section.bg-dark, .section.bg-dark {
   background-color: #800020;
@@ -351,7 +351,7 @@ section.padding-half, .section.padding-half {
 }
 
 .bg-light {
-  background-color: #f8f8f8;
+  background-color: #ebebeb;
 }
 
 .bg-white {

@@ -115,30 +115,27 @@
     </footer><!-- #colophon -->
 </div><!-- #page -->
 
-<?php wp_footer(); ?>
+<button class="back-to-top">
+    <i class="fas fa-chevron-up"></i>
+</button>
 
-<script type="text/javascript">
+<script>
+    // Código para abrir o formulário de consulta
     jQuery(document).ready(function($) {
-        console.log('Debug: Verificando botões de consulta');
-        
-        // Forçar inicialização dos botões de consulta
+        // Função para abrir o modal do formulário de consulta
         $('.open-consultation-form').on('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('Botão de consulta clicado');
             $('#consultationForm').addClass('active');
             $('body').css('overflow', 'hidden');
+            setTimeout(function() {
+                $('.form-container').addClass('active');
+            }, 100);
         });
-        
-        // Fechar formulário
-        $('.close-form, .form-overlay').on('click', function() {
-            $('#consultationForm').removeClass('active');
-            $('body').css('overflow', '');
-        });
-        
-        console.log('Botões encontrados: ' + $('.open-consultation-form').length);
     });
 </script>
+
+<?php wp_footer(); ?>
 
 </body>
 </html>
