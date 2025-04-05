@@ -1,0 +1,43 @@
+/*!
+Theme Name: Thabatta Advocacia
+Theme URI: https://github.com/lfelipeapo/site-thabatta-adv
+Author: Desenvolvido por Manus
+Author URI: https://github.com/lfelipeapo
+Description: Tema exclusivo para o escritório de advocacia Thabatta Apolinário, com design elegante baseado nas cores da Themis.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: thabatta-adv
+Tags: advocacia, direito, elegante, responsivo, bordo, dourado
+*/
+
+// Importar variáveis
+@import 'variables';
+
+// Base
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/global';
+
+// Layouts
+@import 'layouts/header';
+@import 'layouts/footer';
+@import 'layouts/sidebar';
+@import 'layouts/grid';
+
+// Componentes
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/cards';
+@import 'components/accordion';
+@import 'components/modal';
+@import 'components/slider';
+@import 'components/navigation';
+
+// Páginas
+@import 'pages/home';
+@import 'pages/about';
+@import 'pages/areas';
+@import 'pages/equipe';
+@import 'pages/blog';
+@import 'pages/contato';

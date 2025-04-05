@@ -1,0 +1,362 @@
+/* Estilos globais */
+
+// Container
+.container {
+    width: 100%;
+    max-width: $container-width;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+// Seções
+.section {
+    padding: $padding-section 0;
+    
+    &.bg-light {
+        background-color: $cinza-claro;
+    }
+    
+    &.bg-primary {
+        background-color: $bordo;
+        color: $branco;
+    }
+    
+    &.bg-secondary {
+        background-color: $amarelo-dourado;
+        color: $bordo;
+    }
+    
+    &.section-sm {
+        padding: ($padding-section / 2) 0;
+    }
+    
+    &.section-lg {
+        padding: ($padding-section * 1.5) 0;
+    }
+}
+
+// Títulos de seção
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    h2 {
+        color: $bordo;
+        font-size: 2rem;
+        position: relative;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: $amarelo-dourado;
+        }
+    }
+    
+    p {
+        max-width: 700px;
+        margin: 0 auto;
+        color: $cinza-escuro;
+    }
+    
+    &.title-left {
+        text-align: left;
+        
+        h2 {
+            &::after {
+                left: 0;
+                transform: none;
+            }
+        }
+        
+        p {
+            margin: 0;
+        }
+    }
+    
+    &.light {
+        h2 {
+            color: $branco;
+        }
+        
+        p {
+            color: rgba($branco, 0.8);
+        }
+    }
+}
+
+// Grid
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+// Colunas
+.col {
+    padding: 0 15px;
+    width: 100%;
+    
+    &-md-6 {
+        @media (min-width: $breakpoint-md) {
+            width: 50%;
+        }
+    }
+    
+    &-md-4 {
+        @media (min-width: $breakpoint-md) {
+            width: 33.333333%;
+        }
+    }
+    
+    &-md-3 {
+        @media (min-width: $breakpoint-md) {
+            width: 25%;
+        }
+    }
+    
+    &-lg-4 {
+        @media (min-width: $breakpoint-lg) {
+            width: 33.333333%;
+        }
+    }
+    
+    &-lg-3 {
+        @media (min-width: $breakpoint-lg) {
+            width: 25%;
+        }
+    }
+}
+
+// Grids flexíveis
+.grid {
+    display: grid;
+    gap: $gutter;
+    
+    &-2 {
+        grid-template-columns: 1fr;
+        
+        @media (min-width: $breakpoint-md) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    &-3 {
+        grid-template-columns: 1fr;
+        
+        @media (min-width: $breakpoint-md) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        @media (min-width: $breakpoint-lg) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    &-4 {
+        grid-template-columns: 1fr;
+        
+        @media (min-width: $breakpoint-md) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        @media (min-width: $breakpoint-lg) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+// Flexbox
+.flex {
+    display: flex;
+    
+    &-center {
+        justify-content: center;
+        align-items: center;
+    }
+    
+    &-between {
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    &-column {
+        flex-direction: column;
+    }
+    
+    &-wrap {
+        flex-wrap: wrap;
+    }
+}
+
+// Margens e paddings
+.m {
+    &t-0 { margin-top: 0; }
+    &t-1 { margin-top: 0.25rem; }
+    &t-2 { margin-top: 0.5rem; }
+    &t-3 { margin-top: 1rem; }
+    &t-4 { margin-top: 1.5rem; }
+    &t-5 { margin-top: 3rem; }
+    
+    &b-0 { margin-bottom: 0; }
+    &b-1 { margin-bottom: 0.25rem; }
+    &b-2 { margin-bottom: 0.5rem; }
+    &b-3 { margin-bottom: 1rem; }
+    &b-4 { margin-bottom: 1.5rem; }
+    &b-5 { margin-bottom: 3rem; }
+    
+    &l-auto { margin-left: auto; }
+    &r-auto { margin-right: auto; }
+    &x-auto { margin-left: auto; margin-right: auto; }
+}
+
+.p {
+    &t-0 { padding-top: 0; }
+    &t-1 { padding-top: 0.25rem; }
+    &t-2 { padding-top: 0.5rem; }
+    &t-3 { padding-top: 1rem; }
+    &t-4 { padding-top: 1.5rem; }
+    &t-5 { padding-top: 3rem; }
+    
+    &b-0 { padding-bottom: 0; }
+    &b-1 { padding-bottom: 0.25rem; }
+    &b-2 { padding-bottom: 0.5rem; }
+    &b-3 { padding-bottom: 1rem; }
+    &b-4 { padding-bottom: 1.5rem; }
+    &b-5 { padding-bottom: 3rem; }
+}
+
+// Efeitos
+.shadow {
+    box-shadow: $box-shadow;
+    
+    &-lg {
+        box-shadow: $box-shadow-hover;
+    }
+}
+
+.rounded {
+    border-radius: $border-radius;
+    
+    &-lg {
+        border-radius: $border-radius-lg;
+    }
+    
+    &-circle {
+        border-radius: 50%;
+    }
+}
+
+// Utilitários
+.bg-cover {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-block {
+    display: block;
+}
+
+.d-inline-block {
+    display: inline-block;
+}
+
+@media (min-width: $breakpoint-md) {
+    .d-md-none {
+        display: none;
+    }
+    
+    .d-md-block {
+        display: block;
+    }
+    
+    .d-md-inline-block {
+        display: inline-block;
+    }
+}
+
+// Animações
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+// Cores de fundo
+.bg-primary {
+    background-color: $bordo;
+    color: $branco;
+}
+
+.bg-secondary {
+    background-color: $amarelo-dourado;
+    color: $bordo;
+}
+
+.bg-light {
+    background-color: $cinza-claro;
+}
+
+.bg-white {
+    background-color: $branco;
+}
+
+// Bordas
+.border {
+    border: 1px solid rgba($cinza-escuro, 0.1);
+    
+    &-top {
+        border-top: 1px solid rgba($cinza-escuro, 0.1);
+    }
+    
+    &-bottom {
+        border-bottom: 1px solid rgba($cinza-escuro, 0.1);
+    }
+    
+    &-left {
+        border-left: 1px solid rgba($cinza-escuro, 0.1);
+    }
+    
+    &-right {
+        border-right: 1px solid rgba($cinza-escuro, 0.1);
+    }
+} 

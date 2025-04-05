@@ -1,0 +1,191 @@
+/* Estilos do cabeçalho */
+.site-header {
+    background-color: $bordo;
+    color: $branco;
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 100;
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: $container-width;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .site-branding {
+        display: flex;
+        align-items: center;
+
+        .custom-logo-link {
+            max-width: 150px;
+            height: auto;
+            display: block;
+            
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .site-title {
+            margin: 0;
+            
+            a {
+                color: $amarelo-dourado;
+                font-family: $font-secondary;
+                font-size: 1.8rem;
+                text-decoration: none;
+                
+                &:hover {
+                    color: lighten($amarelo-dourado, 10%);
+                }
+            }
+        }
+
+        .site-description {
+            font-size: 0.85rem;
+            margin: 0;
+            color: darken($branco, 10%);
+        }
+    }
+}
+
+/* Navegação principal */
+.main-navigation {
+    @media (max-width: $breakpoint-md) {
+        display: none;
+        
+        &.toggled {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba($bordo, 0.95);
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+            
+            .menu-toggle {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            ul {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 80%;
+                
+                li {
+                    margin: 1rem 0;
+                    
+                    a {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+    
+    ul {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        
+        @media (min-width: $breakpoint-md) {
+            flex-direction: row;
+        }
+        
+        li {
+            position: relative;
+            margin: 0 1rem;
+            
+            a {
+                display: block;
+                padding: 0.5rem;
+                color: $branco;
+                text-decoration: none;
+                font-weight: 500;
+                transition: $transition-default;
+                
+                &:hover {
+                    color: $amarelo-dourado;
+                }
+            }
+            
+            &.current-menu-item, &.current_page_item {
+                a {
+                    color: $amarelo-dourado;
+                }
+            }
+        }
+    }
+}
+
+/* Botão de menu mobile */
+.menu-toggle {
+    background: transparent;
+    border: none;
+    color: $branco;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: block;
+    
+    @media (min-width: $breakpoint-md) {
+        display: none;
+    }
+    
+    &:hover {
+        color: $amarelo-dourado;
+    }
+    
+    .fa-times {
+        display: none;
+    }
+    
+    &.toggled {
+        .fa-bars {
+            display: none;
+        }
+        
+        .fa-times {
+            display: inline;
+        }
+    }
+}
+
+/* Botão de contato no cabeçalho */
+.header-contact {
+    display: none;
+    
+    @media (min-width: $breakpoint-lg) {
+        display: block;
+    }
+    
+    .btn-primary {
+        background-color: $amarelo-dourado;
+        color: $bordo;
+        padding: 0.5rem 1rem;
+        border-radius: $border-radius;
+        font-weight: 600;
+        transition: $transition-default;
+        border: none;
+        
+        &:hover {
+            background-color: lighten($amarelo-dourado, 10%);
+            transform: translateY(-2px);
+            box-shadow: $box-shadow;
+        }
+    }
+} 

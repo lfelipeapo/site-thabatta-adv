@@ -1,0 +1,136 @@
+/* Estilos do rodapé */
+.site-footer {
+    background-color: $bordo;
+    color: $branco;
+    padding: 3rem 0 1rem;
+    
+    .container {
+        width: 100%;
+        max-width: $container-width;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+    
+    .footer-widgets {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        
+        @media (min-width: $breakpoint-md) {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        @media (min-width: $breakpoint-lg) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    
+    .footer-widget {
+        .widget-title {
+            color: $amarelo-dourado;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.5rem;
+            
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 50px;
+                height: 2px;
+                background-color: $amarelo-dourado;
+            }
+        }
+        
+        p {
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        a {
+            color: $branco;
+            text-decoration: none;
+            transition: $transition-default;
+            
+            &:hover {
+                color: $amarelo-dourado;
+            }
+        }
+        
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            
+            li {
+                margin-bottom: 0.5rem;
+                
+                a {
+                    display: block;
+                    padding: 0.25rem 0;
+                    
+                    &:before {
+                        content: '\f105';
+                        font-family: 'Font Awesome 5 Free';
+                        font-weight: 900;
+                        margin-right: 0.5rem;
+                        color: $amarelo-dourado;
+                    }
+                }
+            }
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            
+            a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background-color: rgba($branco, 0.1);
+                transition: $transition-default;
+                
+                i {
+                    color: $branco;
+                    font-size: 1rem;
+                }
+                
+                &:hover {
+                    background-color: $amarelo-dourado;
+                    
+                    i {
+                        color: $bordo;
+                    }
+                }
+            }
+        }
+    }
+    
+    .footer-bottom {
+        border-top: 1px solid rgba($branco, 0.1);
+        padding-top: 1.5rem;
+        text-align: center;
+        
+        .copyright {
+            font-size: 0.85rem;
+            color: rgba($branco, 0.8);
+            
+            p {
+                margin-bottom: 0.5rem;
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+} 

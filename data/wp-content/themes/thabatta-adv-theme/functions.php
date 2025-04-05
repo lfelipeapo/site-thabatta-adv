@@ -326,7 +326,7 @@ function thabatta_reusable_blocks_admin_menu() {
         esc_html__('Blocos Reutilizáveis', 'thabatta-adv'),
         'edit_posts',
         'edit.php?post_type=wp_block',
-        '',
+        null,
         'dashicons-editor-table',
         22
     );
@@ -347,17 +347,19 @@ if (function_exists('acf_add_options_page')) {
         'position'   => 59,
     ));
 
-    acf_add_options_sub_page(array(
-        'page_title'  => esc_html__('Redes Sociais', 'thabatta-adv'),
-        'menu_title'  => esc_html__('Redes Sociais', 'thabatta-adv'),
-        'parent_slug' => 'theme-general-settings',
-    ));
+    if (function_exists('acf_add_options_sub_page')) {
+        acf_add_options_sub_page(array(
+            'page_title'  => esc_html__('Redes Sociais', 'thabatta-adv'),
+            'menu_title'  => esc_html__('Redes Sociais', 'thabatta-adv'),
+            'parent_slug' => 'theme-general-settings',
+        ));
 
-    acf_add_options_sub_page(array(
-        'page_title'  => esc_html__('Informações de Contato', 'thabatta-adv'),
-        'menu_title'  => esc_html__('Informações de Contato', 'thabatta-adv'),
-        'parent_slug' => 'theme-general-settings',
-    ));
+        acf_add_options_sub_page(array(
+            'page_title'  => esc_html__('Informações de Contato', 'thabatta-adv'),
+            'menu_title'  => esc_html__('Informações de Contato', 'thabatta-adv'),
+            'parent_slug' => 'theme-general-settings',
+        ));
+    }
 }
 
 /**

@@ -1,0 +1,237 @@
+/* Estilos de formulários */
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: $border-radius;
+    background-color: $branco;
+    color: $cinza-escuro;
+    transition: $transition-default;
+    margin-bottom: 1rem;
+    
+    &:focus {
+        outline: none;
+        border-color: $bordo;
+        box-shadow: 0 0 0 3px rgba($bordo, 0.1);
+    }
+    
+    &.error {
+        border-color: #e53935;
+    }
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: $cinza-escuro;
+}
+
+button,
+.button,
+input[type="button"],
+input[type="submit"] {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: $bordo;
+    color: $branco;
+    border: none;
+    border-radius: $border-radius;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition-default;
+    text-align: center;
+    
+    &:hover {
+        background-color: darken($bordo, 10%);
+        transform: translateY(-2px);
+        box-shadow: $box-shadow;
+    }
+    
+    &.secondary {
+        background-color: $amarelo-dourado;
+        color: $bordo;
+        
+        &:hover {
+            background-color: darken($amarelo-dourado, 10%);
+        }
+    }
+    
+    &.outline {
+        background-color: transparent;
+        border: 2px solid $bordo;
+        color: $bordo;
+        
+        &:hover {
+            background-color: $bordo;
+            color: $branco;
+        }
+    }
+    
+    &.disabled,
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+/* Formulário Multi-step */
+#consultationForm {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .form-container {
+        background-color: $branco;
+        border-radius: $border-radius-lg;
+        width: 100%;
+        max-width: 500px;
+        padding: 2rem;
+        position: relative;
+        box-shadow: $box-shadow-hover;
+    }
+    
+    .close-form {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: transparent;
+        border: none;
+        color: $cinza-escuro;
+        font-size: 1.25rem;
+        cursor: pointer;
+        padding: 0.25rem;
+        line-height: 1;
+        
+        &:hover {
+            color: $bordo;
+        }
+    }
+    
+    h3 {
+        color: $bordo;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .step {
+        display: none;
+        
+        &.active {
+            display: block;
+        }
+    }
+    
+    .step-indicators {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        position: relative;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e0e0e0;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .step-indicator {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $branco;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+            
+            &.active {
+                background-color: $bordo;
+            }
+            
+            &.completed {
+                background-color: $amarelo-dourado;
+            }
+        }
+    }
+    
+    .form-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        
+        button {
+            min-width: 100px;
+        }
+    }
+}
+
+/* Formulário de Comentários */
+.comment-form {
+    margin-top: 2rem;
+    
+    .form-submit {
+        margin-top: 1rem;
+    }
+}
+
+/* Formulário de Busca */
+.search-form {
+    display: flex;
+    flex-wrap: nowrap;
+    
+    label {
+        flex: 1;
+        margin-bottom: 0;
+    }
+    
+    .search-field {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        margin-bottom: 0;
+    }
+    
+    .search-submit {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        margin-left: -1px;
+    }
+} 

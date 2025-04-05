@@ -1051,3 +1051,107 @@ function thabatta_display_contact_form($form_id = null)
         }
     }
 }
+
+/**
+ * Obter posts relacionados
+ *
+ * @param int $post_id ID do post.
+ * @param int $count Número de posts para retornar.
+ * @return array|bool Array de posts relacionados ou false se não encontrar.
+ */
+function thabatta_get_related_posts($post_id, $count = 3) {
+    $post = get_post($post_id);
+    
+    if (!$post) {
+        return false;
+    }
+    
+    // Primeiro, verificar se existem posts relacionados selecionados manualmente
+    $manual_related = get_post_meta($post_id, '_thabatta_related_posts', true);
+    
+    if (is_array($manual_related) && !empty($manual_related)) {
+        $related_args = array(
+            'post__in'       => $manual_related,
+            'post_type'      => array('post', 'page', 'area_atuacao', 'equipe'),
+            'posts_per_page' => $count,
+            'post_status'    => 'publish',
+            'orderby'        => 'post__in'
+        );
+        
+        $related_query = new WP_Query($related_args);
+        
+        if ($related_query->have_posts()) {
+            return $related_query->posts;
+        }
+    }
+    
+    // Se não houver posts relacionados manualmente ou se a consulta não retornar resultados,
+    // buscar por taxonomia comum (categorias, tags)
+    
+    // Obter termos para o post atual
+    $taxonomies = get_object_taxonomies($post->post_type);
+    $term_ids = array();
+    
+    if (!empty($taxonomies)) {
+        foreach ($taxonomies as $taxonomy) {
+            $terms = get_the_terms($post_id, $taxonomy);
+            
+            if (is_array($terms) && !empty($terms)) {
+                foreach ($terms as $term) {
+                    $term_ids[] = $term->term_id;
+                }
+            }
+        }
+    }
+    
+    // Se houver termos, buscar posts relacionados
+    if (!empty($term_ids)) {
+        $related_args = array(
+            'post_type'      => $post->post_type,
+            'posts_per_page' => $count,
+            'post_status'    => 'publish',
+            'post__not_in'   => array($post_id),
+            'tax_query'      => array(
+                'relation' => 'OR'
+            )
+        );
+        
+        foreach ($taxonomies as $taxonomy) {
+            $terms = get_the_terms($post_id, $taxonomy);
+            
+            if (is_array($terms) && !empty($terms)) {
+                $term_ids = wp_list_pluck($terms, 'term_id');
+                
+                $related_args['tax_query'][] = array(
+                    'taxonomy' => $taxonomy,
+                    'field'    => 'term_id',
+                    'terms'    => $term_ids
+                );
+            }
+        }
+        
+        $related_query = new WP_Query($related_args);
+        
+        if ($related_query->have_posts()) {
+            return $related_query->posts;
+        }
+    }
+    
+    // Se ainda não encontrou, buscar posts recentes do mesmo tipo
+    $fallback_args = array(
+        'post_type'      => $post->post_type,
+        'posts_per_page' => $count,
+        'post_status'    => 'publish',
+        'post__not_in'   => array($post_id),
+        'orderby'        => 'date',
+        'order'          => 'DESC'
+    );
+    
+    $fallback_query = new WP_Query($fallback_args);
+    
+    if ($fallback_query->have_posts()) {
+        return $fallback_query->posts;
+    }
+    
+    return false;
+}

@@ -50,7 +50,7 @@
                     array(
                         'theme_location' => 'primary',
                         'menu_id'        => 'primary-menu',
-                        'container'      => false,
+                        'container'      => '',
                     )
                 );
                 ?>
