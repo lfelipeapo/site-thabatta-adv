@@ -56,51 +56,56 @@ if (!is_active_sidebar('sidebar-1')) {
     
     <?php
     // Exibir redes sociais
-    if (function_exists('get_field')) :
-        $facebook = get_field('facebook', 'option');
-        $instagram = get_field('instagram', 'option');
-        $linkedin = get_field('linkedin', 'option');
-        $twitter = get_field('twitter', 'option');
-        $youtube = get_field('youtube', 'option');
-        
-        if ($facebook || $instagram || $linkedin || $twitter || $youtube) :
+    $facebook_url = get_theme_mod('social_facebook_url');
+    $instagram_url = get_theme_mod('social_instagram_url');
+    $linkedin_url = get_theme_mod('social_linkedin_url');
+    $twitter_url = get_theme_mod('social_twitter_url');
+    $youtube_url = get_theme_mod('social_youtube_url');
+    $whatsapp_number = get_theme_mod('social_whatsapp_number');
+    
+    if ($facebook_url || $instagram_url || $linkedin_url || $twitter_url || $youtube_url || $whatsapp_number) :
     ?>
         <section class="widget widget-social">
             <h2 class="widget-title"><?php esc_html_e('Redes Sociais', 'thabatta-adv'); ?></h2>
             <div class="social-links">
-                <?php if ($facebook) : ?>
-                    <a href="<?php echo esc_url($facebook); ?>" target="_blank" rel="noopener noreferrer">
+                <?php if ($facebook_url) : ?>
+                    <a href="<?php echo esc_url($facebook_url); ?>" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 <?php endif; ?>
                 
-                <?php if ($instagram) : ?>
-                    <a href="<?php echo esc_url($instagram); ?>" target="_blank" rel="noopener noreferrer">
+                <?php if ($instagram_url) : ?>
+                    <a href="<?php echo esc_url($instagram_url); ?>" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-instagram"></i>
                     </a>
                 <?php endif; ?>
                 
-                <?php if ($linkedin) : ?>
-                    <a href="<?php echo esc_url($linkedin); ?>" target="_blank" rel="noopener noreferrer">
+                <?php if ($linkedin_url) : ?>
+                    <a href="<?php echo esc_url($linkedin_url); ?>" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
                 <?php endif; ?>
                 
-                <?php if ($twitter) : ?>
-                    <a href="<?php echo esc_url($twitter); ?>" target="_blank" rel="noopener noreferrer">
+                <?php if ($twitter_url) : ?>
+                    <a href="<?php echo esc_url($twitter_url); ?>" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-twitter"></i>
                     </a>
                 <?php endif; ?>
                 
-                <?php if ($youtube) : ?>
-                    <a href="<?php echo esc_url($youtube); ?>" target="_blank" rel="noopener noreferrer">
+                <?php if ($youtube_url) : ?>
+                    <a href="<?php echo esc_url($youtube_url); ?>" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-youtube"></i>
+                    </a>
+                <?php endif; ?>
+                
+                <?php if ($whatsapp_number) : ?>
+                    <a href="https://wa.me/<?php echo esc_attr($whatsapp_number); ?>" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i>
                     </a>
                 <?php endif; ?>
             </div>
         </section>
     <?php
-        endif;
     endif;
     ?>
 </aside><!-- #secondary -->

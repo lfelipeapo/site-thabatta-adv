@@ -396,12 +396,6 @@ if (function_exists('acf_add_options_page')) {
     ));
 
     acf_add_options_sub_page(array(
-        'page_title'  => esc_html__('Redes Sociais', 'thabatta-adv'),
-        'menu_title'  => esc_html__('Redes Sociais', 'thabatta-adv'),
-        'parent_slug' => 'theme-general-settings',
-    ));
-
-    acf_add_options_sub_page(array(
         'page_title'  => esc_html__('Informações de Contato', 'thabatta-adv'),
         'menu_title'  => esc_html__('Informações de Contato', 'thabatta-adv'),
         'parent_slug' => 'theme-general-settings',

@@ -92,6 +92,8 @@ class Thabatta_Admin_Features
             array($this, 'render_seo_settings_page')
         );
 
+        // Removido apenas o submenu de Personalização
+        /*
         add_submenu_page(
             'thabatta-theme-settings',
             __('Personalização', 'thabatta-adv'),
@@ -100,6 +102,7 @@ class Thabatta_Admin_Features
             'thabatta-customization',
             array($this, 'render_customization_page')
         );
+        */
     }
 
     /**
@@ -157,6 +160,17 @@ class Thabatta_Admin_Features
         ?>
         <div class="wrap">
             <h1><?php esc_html_e('Configurações do Tema', 'thabatta-adv'); ?></h1>
+            
+            <div class="notice notice-info is-dismissible">
+                <p>
+                    <strong><?php esc_html_e('Atenção:', 'thabatta-adv'); ?></strong>
+                    <?php esc_html_e('Todas as configurações desta página foram transferidas para o Customizer nativo do WordPress.', 'thabatta-adv'); ?>
+                    <?php esc_html_e('Recomendamos que você utilize o Customizer para configurar seu site a partir de agora.', 'thabatta-adv'); ?>
+                    <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=thabatta_general_settings')); ?>" class="button button-primary" style="margin-left: 10px;">
+                        <?php esc_html_e('Ir para o Customizer', 'thabatta-adv'); ?>
+                    </a>
+                </p>
+            </div>
             
             <form method="post" action="options.php">
                 <?php settings_fields('thabatta_theme_settings'); ?>
@@ -252,6 +266,17 @@ class Thabatta_Admin_Features
         <div class="wrap">
             <h1><?php esc_html_e('Configurações de Redes Sociais', 'thabatta-adv'); ?></h1>
             
+            <div class="notice notice-info is-dismissible">
+                <p>
+                    <strong><?php esc_html_e('Atenção:', 'thabatta-adv'); ?></strong>
+                    <?php esc_html_e('Todas as configurações desta página foram transferidas para o Customizer nativo do WordPress.', 'thabatta-adv'); ?>
+                    <?php esc_html_e('Recomendamos que você utilize o Customizer para configurar seu site a partir de agora.', 'thabatta-adv'); ?>
+                    <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=thabatta_social_networks')); ?>" class="button button-primary" style="margin-left: 10px;">
+                        <?php esc_html_e('Ir para o Customizer', 'thabatta-adv'); ?>
+                    </a>
+                </p>
+            </div>
+            
             <form method="post" action="options.php">
                 <?php settings_fields('thabatta_social_settings'); ?>
                 
@@ -333,6 +358,17 @@ class Thabatta_Admin_Features
         <div class="wrap">
             <h1><?php esc_html_e('Configurações de SEO', 'thabatta-adv'); ?></h1>
             
+            <div class="notice notice-info is-dismissible">
+                <p>
+                    <strong><?php esc_html_e('Atenção:', 'thabatta-adv'); ?></strong>
+                    <?php esc_html_e('Todas as configurações desta página foram transferidas para o Customizer nativo do WordPress.', 'thabatta-adv'); ?>
+                    <?php esc_html_e('Recomendamos que você utilize o Customizer para configurar seu site a partir de agora.', 'thabatta-adv'); ?>
+                    <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=thabatta_seo_settings')); ?>" class="button button-primary" style="margin-left: 10px;">
+                        <?php esc_html_e('Ir para o Customizer', 'thabatta-adv'); ?>
+                    </a>
+                </p>
+            </div>
+            
             <form method="post" action="options.php">
                 <?php settings_fields('thabatta_seo_settings'); ?>
                 
@@ -392,107 +428,6 @@ class Thabatta_Admin_Features
                         </td>
                     </tr>
                 </table>
-                
-                <?php submit_button(); ?>
-            </form>
-        </div>
-        <?php
-    }
-
-    /**
-     * Renderizar página de personalização
-     */
-    public function render_customization_page()
-    {
-        // Obter configurações
-        $primary_color = get_option('thabatta_primary_color', '#8B0000');
-        $secondary_color = get_option('thabatta_secondary_color', '#D4AF37');
-        $accent_color = get_option('thabatta_accent_color', '#4A0404');
-        $text_color = get_option('thabatta_text_color', '#333333');
-        $heading_font = get_option('thabatta_heading_font', 'Playfair Display');
-        $body_font = get_option('thabatta_body_font', 'Roboto');
-
-        ?>
-        <div class="wrap">
-            <h1><?php esc_html_e('Personalização', 'thabatta-adv'); ?></h1>
-            
-            <form method="post" action="options.php">
-                <?php settings_fields('thabatta_customization_settings'); ?>
-                
-                <table class="form-table">
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Cor Primária', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="text" name="thabatta_primary_color" id="thabatta_primary_color" value="<?php echo esc_attr($primary_color); ?>" class="thabatta-color-picker" data-default-color="#8B0000">
-                            <p class="description"><?php esc_html_e('Cor principal do tema (vinho/bordô).', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Cor Secundária', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="text" name="thabatta_secondary_color" id="thabatta_secondary_color" value="<?php echo esc_attr($secondary_color); ?>" class="thabatta-color-picker" data-default-color="#D4AF37">
-                            <p class="description"><?php esc_html_e('Cor secundária do tema (dourado).', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Cor de Destaque', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="text" name="thabatta_accent_color" id="thabatta_accent_color" value="<?php echo esc_attr($accent_color); ?>" class="thabatta-color-picker" data-default-color="#4A0404">
-                            <p class="description"><?php esc_html_e('Cor de destaque do tema (vermelho sangue).', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Cor do Texto', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="text" name="thabatta_text_color" id="thabatta_text_color" value="<?php echo esc_attr($text_color); ?>" class="thabatta-color-picker" data-default-color="#333333">
-                            <p class="description"><?php esc_html_e('Cor do texto principal.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Fonte dos Títulos', 'thabatta-adv'); ?></th>
-                        <td>
-                            <select name="thabatta_heading_font" id="thabatta_heading_font" class="regular-text">
-                                <option value="Playfair Display" <?php selected($heading_font, 'Playfair Display'); ?>>Playfair Display</option>
-                                <option value="Merriweather" <?php selected($heading_font, 'Merriweather'); ?>>Merriweather</option>
-                                <option value="Lora" <?php selected($heading_font, 'Lora'); ?>>Lora</option>
-                                <option value="Libre Baskerville" <?php selected($heading_font, 'Libre Baskerville'); ?>>Libre Baskerville</option>
-                                <option value="Cormorant Garamond" <?php selected($heading_font, 'Cormorant Garamond'); ?>>Cormorant Garamond</option>
-                            </select>
-                            <p class="description"><?php esc_html_e('Fonte utilizada para títulos.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Fonte do Corpo', 'thabatta-adv'); ?></th>
-                        <td>
-                            <select name="thabatta_body_font" id="thabatta_body_font" class="regular-text">
-                                <option value="Roboto" <?php selected($body_font, 'Roboto'); ?>>Roboto</option>
-                                <option value="Open Sans" <?php selected($body_font, 'Open Sans'); ?>>Open Sans</option>
-                                <option value="Lato" <?php selected($body_font, 'Lato'); ?>>Lato</option>
-                                <option value="Source Sans Pro" <?php selected($body_font, 'Source Sans Pro'); ?>>Source Sans Pro</option>
-                                <option value="Nunito" <?php selected($body_font, 'Nunito'); ?>>Nunito</option>
-                            </select>
-                            <p class="description"><?php esc_html_e('Fonte utilizada para o texto do corpo.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                </table>
-                
-                <div class="thabatta-preview-box">
-                    <h3><?php esc_html_e('Pré-visualização', 'thabatta-adv'); ?></h3>
-                    <div id="thabatta-color-preview" style="padding: 20px; border: 1px solid #ddd; margin-bottom: 20px;">
-                        <h2 style="font-family: <?php echo esc_attr($heading_font); ?>, serif; color: <?php echo esc_attr($primary_color); ?>;">
-                            <?php esc_html_e('Título de Exemplo', 'thabatta-adv'); ?>
-                        </h2>
-                        <p style="font-family: <?php echo esc_attr($body_font); ?>, sans-serif; color: <?php echo esc_attr($text_color); ?>;">
-                            <?php esc_html_e('Este é um texto de exemplo para mostrar como as cores e fontes serão exibidas no site. O texto principal usa a cor de texto padrão.', 'thabatta-adv'); ?>
-                        </p>
-                        <a href="#" style="color: <?php echo esc_attr($secondary_color); ?>; font-family: <?php echo esc_attr($body_font); ?>, sans-serif;">
-                            <?php esc_html_e('Este é um link de exemplo', 'thabatta-adv'); ?>
-                        </a>
-                        <div style="margin-top: 15px; padding: 10px; background-color: <?php echo esc_attr($accent_color); ?>; color: #fff; display: inline-block; font-family: <?php echo esc_attr($body_font); ?>, sans-serif;">
-                            <?php esc_html_e('Botão de Exemplo', 'thabatta-adv'); ?>
-                        </div>
-                    </div>
-                </div>
                 
                 <?php submit_button(); ?>
             </form>

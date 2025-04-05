@@ -24,6 +24,82 @@ function thabatta_customize_register($wp_customize) {
         'render_callback' => 'thabatta_customize_partial_blogdescription',
     ));
 
+    // Seção Configurações Gerais
+    $wp_customize->add_section('thabatta_general_settings', array(
+        'title' => __('Configurações Gerais', 'thabatta-adv'),
+        'priority' => 20,
+    ));
+
+    // Logo
+    $wp_customize->add_setting('general_logo', array(
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'general_logo', array(
+        'label' => __('Logo', 'thabatta-adv'),
+        'description' => __('Selecione o logo do site. Tamanho recomendado: 200x60px.', 'thabatta-adv'),
+        'section' => 'thabatta_general_settings',
+    )));
+
+    // Favicon
+    $wp_customize->add_setting('general_favicon', array(
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'general_favicon', array(
+        'label' => __('Favicon', 'thabatta-adv'),
+        'description' => __('Selecione o favicon do site. Tamanho recomendado: 32x32px.', 'thabatta-adv'),
+        'section' => 'thabatta_general_settings',
+    )));
+
+    // Texto do rodapé
+    $wp_customize->add_setting('general_footer_text', array(
+        'default' => '',
+        'sanitize_callback' => 'wp_kses_post',
+    ));
+    $wp_customize->add_control('general_footer_text', array(
+        'label' => __('Texto do Rodapé', 'thabatta-adv'),
+        'description' => __('Texto que será exibido no rodapé do site. Você pode usar HTML.', 'thabatta-adv'),
+        'section' => 'thabatta_general_settings',
+        'type' => 'textarea',
+    ));
+
+    // Google Analytics
+    $wp_customize->add_setting('general_google_analytics', array(
+        'default' => '',
+        'sanitize_callback' => 'wp_kses_post',
+    ));
+    $wp_customize->add_control('general_google_analytics', array(
+        'label' => __('Google Analytics', 'thabatta-adv'),
+        'description' => __('Cole o código de acompanhamento do Google Analytics aqui.', 'thabatta-adv'),
+        'section' => 'thabatta_general_settings',
+        'type' => 'textarea',
+    ));
+
+    // Preloader
+    $wp_customize->add_setting('general_enable_preloader', array(
+        'default' => true,
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('general_enable_preloader', array(
+        'label' => __('Ativar preloader', 'thabatta-adv'),
+        'description' => __('Exibe uma animação de carregamento enquanto a página está sendo carregada.', 'thabatta-adv'),
+        'section' => 'thabatta_general_settings',
+        'type' => 'checkbox',
+    ));
+
+    // Botão Voltar ao Topo
+    $wp_customize->add_setting('general_enable_back_to_top', array(
+        'default' => true,
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('general_enable_back_to_top', array(
+        'label' => __('Ativar botão voltar ao topo', 'thabatta-adv'),
+        'description' => __('Exibe um botão para voltar ao topo da página quando o usuário rolar para baixo.', 'thabatta-adv'),
+        'section' => 'thabatta_general_settings',
+        'type' => 'checkbox',
+    ));
+
     // Seção de cores do tema
     $wp_customize->add_section('thabatta_colors', array(
         'title' => __('Cores', 'thabatta-adv'),
@@ -32,7 +108,7 @@ function thabatta_customize_register($wp_customize) {
 
     // Cor primária
     $wp_customize->add_setting('primary_color', array(
-        'default' => '#a38b71',
+        'default' => '#8B0000',
         'sanitize_callback' => 'sanitize_hex_color',
         'transport' => 'postMessage',
     ));
@@ -45,7 +121,7 @@ function thabatta_customize_register($wp_customize) {
 
     // Cor secundária
     $wp_customize->add_setting('secondary_color', array(
-        'default' => '#d4af37',
+        'default' => '#D4AF37',
         'sanitize_callback' => 'sanitize_hex_color',
         'transport' => 'postMessage',
     ));
@@ -67,6 +143,19 @@ function thabatta_customize_register($wp_customize) {
         'label' => __('Cor do Texto Principal', 'thabatta-adv'),
         'section' => 'thabatta_colors',
         'setting' => 'text_color',
+    )));
+
+    // Cor de destaque
+    $wp_customize->add_setting('accent_color', array(
+        'default' => '#4A0404',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport' => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'accent_color', array(
+        'label' => __('Cor de Destaque (Vermelho Sangue)', 'thabatta-adv'),
+        'section' => 'thabatta_colors',
+        'setting' => 'accent_color',
     )));
 
     // Cor de fundo
@@ -677,6 +766,168 @@ function thabatta_customize_register($wp_customize) {
         'section'  => 'thabatta_about_section',
         'type'     => 'text',
     ));
+    
+    // Seção Redes Sociais
+    $wp_customize->add_section('thabatta_social_networks', array(
+        'title'    => __('Redes Sociais', 'thabatta-adv'),
+        'priority' => 95,
+    ));
+
+    // URL do Facebook
+    $wp_customize->add_setting('social_facebook_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('social_facebook_url', array(
+        'label'    => __('URL do Facebook', 'thabatta-adv'),
+        'section'  => 'thabatta_social_networks',
+        'type'     => 'url',
+    ));
+
+    // URL do Instagram
+    $wp_customize->add_setting('social_instagram_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('social_instagram_url', array(
+        'label'    => __('URL do Instagram', 'thabatta-adv'),
+        'section'  => 'thabatta_social_networks',
+        'type'     => 'url',
+    ));
+
+    // URL do LinkedIn
+    $wp_customize->add_setting('social_linkedin_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('social_linkedin_url', array(
+        'label'    => __('URL do LinkedIn', 'thabatta-adv'),
+        'section'  => 'thabatta_social_networks',
+        'type'     => 'url',
+    ));
+
+    // URL do Twitter
+    $wp_customize->add_setting('social_twitter_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('social_twitter_url', array(
+        'label'    => __('URL do Twitter', 'thabatta-adv'),
+        'section'  => 'thabatta_social_networks',
+        'type'     => 'url',
+    ));
+
+    // URL do YouTube
+    $wp_customize->add_setting('social_youtube_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('social_youtube_url', array(
+        'label'    => __('URL do YouTube', 'thabatta-adv'),
+        'section'  => 'thabatta_social_networks',
+        'type'     => 'url',
+    ));
+
+    // Número do WhatsApp
+    $wp_customize->add_setting('social_whatsapp_number', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('social_whatsapp_number', array(
+        'label'    => __('Número do WhatsApp', 'thabatta-adv'),
+        'description' => __('Formato: 5511999999999 (código do país + DDD + número)', 'thabatta-adv'),
+        'section'  => 'thabatta_social_networks',
+        'type'     => 'text',
+    ));
+
+    // Habilitar compartilhamento social
+    $wp_customize->add_setting('social_enable_sharing', array(
+        'default'           => true,
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('social_enable_sharing', array(
+        'label'    => __('Ativar botões de compartilhamento nos posts', 'thabatta-adv'),
+        'section'  => 'thabatta_social_networks',
+        'type'     => 'checkbox',
+    ));
+
+    // Seção SEO
+    $wp_customize->add_section('thabatta_seo_settings', array(
+        'title'    => __('SEO', 'thabatta-adv'),
+        'priority' => 96,
+    ));
+
+    // Meta Descrição Padrão
+    $wp_customize->add_setting('seo_default_meta_description', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('seo_default_meta_description', array(
+        'label'    => __('Meta Descrição Padrão', 'thabatta-adv'),
+        'description' => __('Descrição padrão para páginas sem descrição personalizada.', 'thabatta-adv'),
+        'section'  => 'thabatta_seo_settings',
+        'type'     => 'textarea',
+    ));
+
+    // Meta Palavras-chave Padrão
+    $wp_customize->add_setting('seo_default_meta_keywords', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('seo_default_meta_keywords', array(
+        'label'    => __('Meta Palavras-chave Padrão', 'thabatta-adv'),
+        'description' => __('Palavras-chave padrão separadas por vírgula.', 'thabatta-adv'),
+        'section'  => 'thabatta_seo_settings',
+        'type'     => 'text',
+    ));
+
+    // Ativar Marcação de Esquema
+    $wp_customize->add_setting('seo_enable_schema_markup', array(
+        'default'           => true,
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('seo_enable_schema_markup', array(
+        'label'    => __('Ativar Marcação de Esquema', 'thabatta-adv'),
+        'description' => __('Adiciona dados estruturados para melhor visibilidade nos motores de busca.', 'thabatta-adv'),
+        'section'  => 'thabatta_seo_settings',
+        'type'     => 'checkbox',
+    ));
+
+    // Ativar Breadcrumbs
+    $wp_customize->add_setting('seo_enable_breadcrumbs', array(
+        'default'           => true,
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('seo_enable_breadcrumbs', array(
+        'label'    => __('Ativar Breadcrumbs', 'thabatta-adv'),
+        'description' => __('Exibe navegação hierárquica nas páginas e posts.', 'thabatta-adv'),
+        'section'  => 'thabatta_seo_settings',
+        'type'     => 'checkbox',
+    ));
+
+    // Ativar Open Graph
+    $wp_customize->add_setting('seo_enable_open_graph', array(
+        'default'           => true,
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('seo_enable_open_graph', array(
+        'label'    => __('Ativar Open Graph', 'thabatta-adv'),
+        'description' => __('Adiciona metadados para melhor compartilhamento em redes sociais.', 'thabatta-adv'),
+        'section'  => 'thabatta_seo_settings',
+        'type'     => 'checkbox',
+    ));
+
+    // Ativar Twitter Cards
+    $wp_customize->add_setting('seo_enable_twitter_cards', array(
+        'default'           => true,
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('seo_enable_twitter_cards', array(
+        'label'    => __('Ativar Twitter Cards', 'thabatta-adv'),
+        'description' => __('Adiciona metadados para melhor exibição no Twitter.', 'thabatta-adv'),
+        'section'  => 'thabatta_seo_settings',
+        'type'     => 'checkbox',
+    ));
 }
 add_action('customize_register', 'thabatta_customize_register');
 
@@ -1011,3 +1262,62 @@ EOT;
     // Escrever o arquivo
     file_put_contents($script_file, $script_content);
 }
+
+/**
+ * Transfere as configurações do painel Tema Thabatta para o customizer
+ */
+function thabatta_migrate_theme_options_to_customizer() {
+    // Configurações Gerais
+    thabatta_migrate_option('thabatta_logo', 'general_logo');
+    thabatta_migrate_option('thabatta_favicon', 'general_favicon');
+    thabatta_migrate_option('thabatta_footer_text', 'general_footer_text');
+    thabatta_migrate_option('thabatta_google_analytics', 'general_google_analytics');
+    thabatta_migrate_option('thabatta_enable_preloader', 'general_enable_preloader');
+    thabatta_migrate_option('thabatta_enable_back_to_top', 'general_enable_back_to_top');
+    
+    // Cores e Tipografia
+    thabatta_migrate_option('thabatta_primary_color', 'primary_color');
+    thabatta_migrate_option('thabatta_secondary_color', 'secondary_color');
+    thabatta_migrate_option('thabatta_accent_color', 'accent_color');
+    thabatta_migrate_option('thabatta_text_color', 'text_color');
+    thabatta_migrate_option('thabatta_heading_font', 'heading_font');
+    thabatta_migrate_option('thabatta_body_font', 'body_font');
+    
+    // Redes Sociais
+    thabatta_migrate_option('thabatta_facebook_url', 'social_facebook_url');
+    thabatta_migrate_option('thabatta_instagram_url', 'social_instagram_url');
+    thabatta_migrate_option('thabatta_linkedin_url', 'social_linkedin_url');
+    thabatta_migrate_option('thabatta_twitter_url', 'social_twitter_url');
+    thabatta_migrate_option('thabatta_youtube_url', 'social_youtube_url');
+    thabatta_migrate_option('thabatta_whatsapp_number', 'social_whatsapp_number');
+    thabatta_migrate_option('thabatta_enable_social_sharing', 'social_enable_sharing');
+    
+    // SEO
+    thabatta_migrate_option('thabatta_default_meta_description', 'seo_default_meta_description');
+    thabatta_migrate_option('thabatta_default_meta_keywords', 'seo_default_meta_keywords');
+    thabatta_migrate_option('thabatta_enable_schema_markup', 'seo_enable_schema_markup');
+    thabatta_migrate_option('thabatta_enable_breadcrumbs', 'seo_enable_breadcrumbs');
+    thabatta_migrate_option('thabatta_enable_open_graph', 'seo_enable_open_graph');
+    thabatta_migrate_option('thabatta_enable_twitter_cards', 'seo_enable_twitter_cards');
+    
+    // Definir uma flag para indicar que a migração foi realizada
+    update_option('thabatta_options_migrated', true);
+}
+
+/**
+ * Função auxiliar para migrar uma opção para o customizer
+ */
+function thabatta_migrate_option($old_option, $new_theme_mod) {
+    $value = get_option($old_option);
+    if ($value !== false) {
+        set_theme_mod($new_theme_mod, $value);
+    }
+}
+
+// Executar a migração apenas uma vez
+function thabatta_maybe_migrate_options() {
+    if (!get_option('thabatta_options_migrated', false)) {
+        thabatta_migrate_theme_options_to_customizer();
+    }
+}
+add_action('after_setup_theme', 'thabatta_maybe_migrate_options');

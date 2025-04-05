@@ -44,39 +44,43 @@
                         <?php dynamic_sidebar('footer-3'); ?>
                     <?php else : ?>
                         <h3 class="widget-title"><?php esc_html_e('Redes Sociais', 'thabatta-adv'); ?></h3>
-                        <?php if (function_exists('get_field')) : ?>
-                            <div class="social-links">
-                                <?php if (get_field('facebook', 'option')) : ?>
-                                    <a href="<?php echo esc_url(get_field('facebook', 'option')); ?>" target="_blank" rel="noopener noreferrer">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                <?php endif; ?>
-                                
-                                <?php if (get_field('instagram', 'option')) : ?>
-                                    <a href="<?php echo esc_url(get_field('instagram', 'option')); ?>" target="_blank" rel="noopener noreferrer">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
-                                <?php endif; ?>
-                                
-                                <?php if (get_field('linkedin', 'option')) : ?>
-                                    <a href="<?php echo esc_url(get_field('linkedin', 'option')); ?>" target="_blank" rel="noopener noreferrer">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                <?php endif; ?>
-                                
-                                <?php if (get_field('twitter', 'option')) : ?>
-                                    <a href="<?php echo esc_url(get_field('twitter', 'option')); ?>" target="_blank" rel="noopener noreferrer">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                <?php endif; ?>
-                                
-                                <?php if (get_field('youtube', 'option')) : ?>
-                                    <a href="<?php echo esc_url(get_field('youtube', 'option')); ?>" target="_blank" rel="noopener noreferrer">
-                                        <i class="fab fa-youtube"></i>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
-                        <?php endif; ?>
+                        <div class="social-links">
+                            <?php if (get_theme_mod('social_facebook_url')) : ?>
+                                <a href="<?php echo esc_url(get_theme_mod('social_facebook_url')); ?>" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            <?php endif; ?>
+                            
+                            <?php if (get_theme_mod('social_instagram_url')) : ?>
+                                <a href="<?php echo esc_url(get_theme_mod('social_instagram_url')); ?>" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            <?php endif; ?>
+                            
+                            <?php if (get_theme_mod('social_linkedin_url')) : ?>
+                                <a href="<?php echo esc_url(get_theme_mod('social_linkedin_url')); ?>" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            <?php endif; ?>
+                            
+                            <?php if (get_theme_mod('social_twitter_url')) : ?>
+                                <a href="<?php echo esc_url(get_theme_mod('social_twitter_url')); ?>" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            <?php endif; ?>
+                            
+                            <?php if (get_theme_mod('social_youtube_url')) : ?>
+                                <a href="<?php echo esc_url(get_theme_mod('social_youtube_url')); ?>" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            <?php endif; ?>
+                            
+                            <?php if (get_theme_mod('social_whatsapp_number')) : ?>
+                                <a href="https://wa.me/<?php echo esc_attr(get_theme_mod('social_whatsapp_number')); ?>" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            <?php endif; ?>
+                        </div>
                     <?php endif; ?>
                 </div>
 
