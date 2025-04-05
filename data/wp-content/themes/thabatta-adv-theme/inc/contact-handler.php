@@ -16,7 +16,7 @@ function thabatta_handle_contact_form() {
     // Verificar nonce
     if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'thabatta_contact_nonce')) {
         wp_send_json_error(array('message' => esc_html__('Verificação de segurança falhou. Por favor, tente novamente.', 'thabatta-adv')));
-        return;
+        wp_die();
     }
     
     // Recuperar e sanitizar dados
@@ -32,13 +32,13 @@ function thabatta_handle_contact_form() {
     // Validar campos obrigatórios
     if (empty($name) || empty($email) || empty($subject) || empty($message) || !$privacy) {
         wp_send_json_error(array('message' => esc_html__('Por favor, preencha todos os campos obrigatórios.', 'thabatta-adv')));
-        return;
+        wp_die();
     }
     
     // Validar email
     if (!is_email($email)) {
         wp_send_json_error(array('message' => esc_html__('Por favor, insira um endereço de e-mail válido.', 'thabatta-adv')));
-        return;
+        wp_die();
     }
     
     // Enviar e-mail
@@ -49,6 +49,7 @@ function thabatta_handle_contact_form() {
     } else {
         wp_send_json_error(array('message' => esc_html__('Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.', 'thabatta-adv')));
     }
+    wp_die();
 }
 add_action('wp_ajax_thabatta_contact', 'thabatta_handle_contact_form');
 add_action('wp_ajax_nopriv_thabatta_contact', 'thabatta_handle_contact_form');

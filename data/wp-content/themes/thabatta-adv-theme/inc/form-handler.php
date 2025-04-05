@@ -187,7 +187,7 @@ function thabatta_handle_lead_form() {
     // Verificar nonce
     if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'thabatta_nonce')) {
         wp_send_json_error(array('message' => esc_html__('Verificação de segurança falhou. Por favor, tente novamente.', 'thabatta-adv')));
-        return;
+        wp_die();
     }
     
     // Recuperar e sanitizar dados
@@ -202,7 +202,7 @@ function thabatta_handle_lead_form() {
     // Validar campos obrigatórios
     if (empty($name) || empty($phone) || empty($cpf_cnpj) || empty($case_details) || empty($law_area)) {
         wp_send_json_error(array('message' => esc_html__('Por favor, preencha todos os campos obrigatórios.', 'thabatta-adv')));
-        return;
+        wp_die();
     }
     
     // Criar novo post de lead
@@ -215,9 +215,10 @@ function thabatta_handle_lead_form() {
     
     $lead_id = wp_insert_post($lead_data);
     
-    if (is_wp_error($lead_id)) {
+    // Verificar se houve erro na inserção do post
+    if ($lead_id === 0 || $lead_id === false) {
         wp_send_json_error(array('message' => esc_html__('Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente.', 'thabatta-adv')));
-        return;
+        wp_die();
     }
     
     // Salvar campos meta
@@ -230,6 +231,7 @@ function thabatta_handle_lead_form() {
     
     // Retornar sucesso
     wp_send_json_success(array('message' => esc_html__('Consulta enviada com sucesso!', 'thabatta-adv')));
+    wp_die();
 }
 add_action('wp_ajax_thabatta_lead', 'thabatta_handle_lead_form');
 add_action('wp_ajax_nopriv_thabatta_lead', 'thabatta_handle_lead_form');
