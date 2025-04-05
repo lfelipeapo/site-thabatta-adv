@@ -263,115 +263,6 @@ class Thabatta_Security_Features
     }
 
     /**
-     * Verificar consulta SQL para injeção
-     */
-    public function check_query_for_sql_injection($query)
-    {
-        // Lista de padrões suspeitos
-        $suspicious_patterns = array(
-            '/UNION\s+SELECT/i',
-            '/SELECT\s+.*\s+FROM/i',
-            '/INSERT\s+INTO/i',
-            '/UPDATE\s+.*\s+SET/i',
-            '/DELETE\s+FROM/i',
-            '/DROP\s+TABLE/i',
-            '/TRUNCATE\s+TABLE/i',
-            '/ALTER\s+TABLE/i',
-            '/EXEC\s+/i',
-            '/EXECUTE\s+/i',
-            '/DECLARE\s+/i',
-            '/CAST\s+/i',
-            '/CONVERT\s+/i',
-            '/CONCAT\s+/i',
-            '/CHAR\s+/i',
-            '/WAITFOR\s+DELAY/i',
-            '/BENCHMARK\s+/i',
-            '/SLEEP\s*\(/i',
-            '/ORDER\s+BY\s+[0-9]+/i',
-            '/GROUP\s+BY\s+[0-9]+/i',
-            '/HAVING\s+[0-9]+/i',
-            '/OR\s+1\s*=\s*1/i',
-            '/AND\s+1\s*=\s*1/i',
-            '/OR\s+\'1\'\s*=\s*\'1\'/i',
-            '/AND\s+\'1\'\s*=\s*\'1\'/i',
-            '/OR\s+[\'"][^\']*[\'"]\s*=\s*[\'"][^\']*[\'"]/',
-            '/AND\s+[\'"][^\']*[\'"]\s*=\s*[\'"][^\']*[\'"]/',
-            '/--\s+/',
-            '/;\s*--/',
-            '/;\s*#/',
-            '/\'\s*OR\s*\'1\'\s*=\s*\'1\'/i',
-            '/\'\s*AND\s*\'1\'\s*=\s*\'1\'/i',
-            '/\'\s*OR\s*1\s*=\s*1/i',
-            '/\'\s*AND\s*1\s*=\s*1/i',
-        );
-
-        // Verificar cada padrão
-        foreach ($suspicious_patterns as $pattern) {
-            if (preg_match($pattern, $query)) {
-                // Registrar tentativa de injeção SQL
-                $this->log_security_event('sql_injection', array(
-                    'query' => $query,
-                    'pattern' => $pattern,
-                ));
-
-                // Retornar consulta vazia para evitar a injeção
-                return '';
-            }
-        }
-
-        return $query;
-    }
-
-    /**
-     * Iniciar sessão para proteção CSRF
-     */
-    public function start_session()
-    {
-        if (!session_id()) {
-            session_start();
-        }
-
-        // Gerar token CSRF se não existir
-        if (!isset($_SESSION['thabatta_csrf_token'])) {
-            $_SESSION['thabatta_csrf_token'] = bin2hex(random_bytes(32));
-        }
-    }
-
-    /**
-     * Encerrar sessão
-     */
-    public function end_session()
-    {
-        if (session_id()) {
-            session_destroy();
-        }
-    }
-
-    /**
-     * Obter token CSRF
-     */
-    public function get_csrf_token()
-    {
-        if (isset($_SESSION['thabatta_csrf_token'])) {
-            return $_SESSION['thabatta_csrf_token'];
-        }
-
-        return '';
-    }
-
-    /**
-     * Verificar token CSRF
-     */
-    public function verify_csrf_token($token)
-    {
-        if (isset($_SESSION['thabatta_csrf_token']) && $token === $_SESSION['thabatta_csrf_token']) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Adicionar cabeçalhos de segurança
      */
     public function add_security_headers()
@@ -385,7 +276,8 @@ class Thabatta_Security_Features
         // Proteção XSS
         header('X-XSS-Protection: 1; mode=block');
 
-        // Política de segurança de conteúdo (CSP)
+        // Política de segurança de conteúdo (CSP) - TEMPORARIAMENTE COMENTADA PARA TESTE
+        
         $csp = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com *.google.com *.google-analytics.com *.googletagmanager.com *.jquery.com *.cloudflare.com cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' *.googleapis.com *.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com *.gravatar.com; font-src 'self' data: *.gstatic.com *.googleapis.com cdnjs.cloudflare.com; connect-src 'self' *.google-analytics.com *.googleapis.com; frame-src 'self' *.google.com *.youtube.com; object-src 'none'";
         header("Content-Security-Policy: $csp");
 

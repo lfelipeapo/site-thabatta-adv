@@ -22,9 +22,11 @@ function thabatta_security_headers() {
     // Proteção XSS
     header('X-XSS-Protection: 1; mode=block');
     
-    // Política de segurança de conteúdo (CSP)
+    // Política de segurança de conteúdo (CSP) - TEMPORARIAMENTE COMENTADA PARA TESTE
+    /*
     $csp = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com *.google.com *.google-analytics.com *.googletagmanager.com *.jquery.com *.cloudflare.com cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' *.googleapis.com *.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com *.gravatar.com; font-src 'self' data: *.gstatic.com *.googleapis.com cdnjs.cloudflare.com; connect-src 'self' *.google-analytics.com *.googleapis.com; frame-src 'self' *.google.com *.youtube.com; object-src 'none'";
     header("Content-Security-Policy: $csp");
+    */
     
     // Referrer Policy
     header('Referrer-Policy: strict-origin-when-cross-origin');
@@ -137,6 +139,11 @@ add_filter('preprocess_comment', 'thabatta_sanitize_comment_data');
  * Bloquear requisições suspeitas
  */
 function thabatta_block_suspicious_requests() {
+    // Não executar esta verificação no admin
+    if (is_admin()) {
+        return;
+    }
+
     // Verificar strings suspeitas na URL
     $request_uri = $_SERVER['REQUEST_URI'];
     $suspicious_strings = array(
@@ -193,16 +200,6 @@ function thabatta_add_nonce_to_forms($content) {
     return $content;
 }
 add_filter('the_content', 'thabatta_add_nonce_to_forms');
-
-/**
- * Verificar nonce nos formulários
- */
-function thabatta_verify_form_nonce() {
-    if (isset($_POST['thabatta_nonce']) && !wp_verify_nonce($_POST['thabatta_nonce'], 'thabatta_form_nonce')) {
-        wp_die(__('Verificação de segurança falhou. Por favor, tente novamente.', 'thabatta-adv'));
-    }
-}
-add_action('init', 'thabatta_verify_form_nonce');
 
 /**
  * Proteger contra ataques XSS em comentários
@@ -279,25 +276,26 @@ function thabatta_check_array_for_sql_injection($array, $patterns, $parent_key =
     }
 }
 */
-add_action('init', 'thabatta_check_for_sql_injection', 1); // Executar cedo
+// add_action('init', 'thabatta_check_for_sql_injection', 1); // Executar cedo
 
 /**
  * Proteger uploads de arquivos
  */
+/* // TEMPORARIAMENTE COMENTADO PARA TESTE
 function thabatta_secure_upload_files($file) {
     // Verificar extensão do arquivo
     $file_name = isset($file['name']) ? $file['name'] : '';
     $file_type = isset($file['type']) ? $file['type'] : '';
     
     // Lista de extensões permitidas
-    $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt');
+    $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt', 'svg'); // Adicione SVG se necessário
     
     // Obter extensão do arquivo
     $ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
     
     // Verificar se a extensão é permitida
     if (!in_array($ext, $allowed_extensions)) {
-        return array('error' => __('Tipo de arquivo não permitido.', 'thabatta-adv'));
+        return array('error' => __('Tipo de arquivo não permitido.', 'thabatta-adv') . ' (' . $ext . ')');
     }
     
     // Verificar mime type
@@ -305,6 +303,7 @@ function thabatta_secure_upload_files($file) {
         'image/jpeg',
         'image/png',
         'image/gif',
+        'image/svg+xml', // Adicione SVG MIME type
         'application/pdf',
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -316,12 +315,13 @@ function thabatta_secure_upload_files($file) {
     );
     
     if (!in_array($file_type, $allowed_mime_types)) {
-        return array('error' => __('Tipo de arquivo não permitido.', 'thabatta-adv'));
+        return array('error' => __('Tipo de MIME não permitido.', 'thabatta-adv') . ' (' . $file_type . ')');
     }
     
     return $file;
 }
 add_filter('wp_handle_upload_prefilter', 'thabatta_secure_upload_files');
+*/
 
 /**
  * Bloquear acesso a arquivos sensíveis
@@ -353,6 +353,7 @@ add_action('init', 'thabatta_block_sensitive_files');
 /**
  * Adicionar proteção contra CSRF
  */
+/* Comentado: Redundante/Conflitante com nonces do admin
 function thabatta_csrf_protection() {
     if (is_admin() && current_user_can('edit_posts')) {
         // Verificar nonce para ações de administração
@@ -362,6 +363,7 @@ function thabatta_csrf_protection() {
     }
 }
 add_action('admin_init', 'thabatta_csrf_protection');
+*/
 
 /**
  * Adicionar proteção contra ataques de força bruta no login
@@ -404,12 +406,14 @@ add_filter('widget_text_content', 'thabatta_protect_against_xss');
 /**
  * Proteger contra ataques de Cross-Site Request Forgery (CSRF)
  */
+/* Comentado: Redundante/Conflitante com nonces do admin
 function thabatta_protect_against_csrf() {
     if (is_admin() && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         check_admin_referer('thabatta_admin_action');
     }
 }
 add_action('admin_init', 'thabatta_protect_against_csrf');
+*/
 
 /**
  * Adicionar proteção contra ataques de clickjacking
