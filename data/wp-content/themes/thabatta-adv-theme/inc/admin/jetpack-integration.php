@@ -78,7 +78,7 @@ class Thabatta_Jetpack_Integration
         }
 
         // Verificar se o módulo Jetpack Boost está ativo
-        $boost_active = Jetpack::is_module_active('boost');
+        $boost_active = class_exists('Jetpack') && Jetpack::is_module_active('boost'); // Simplified check
 
         // Obter configurações
         $cache_enabled = get_option('thabatta_jetpack_cache_enabled', false);
@@ -92,26 +92,28 @@ class Thabatta_Jetpack_Integration
         ?>
         <div class="wrap">
             <h1><?php esc_html_e('Otimização do Site', 'thabatta-adv'); ?></h1>
-            
+
             <div class="notice notice-info">
                 <p><?php esc_html_e('Esta página permite gerenciar as configurações de otimização do site usando recursos do Jetpack.', 'thabatta-adv'); ?></p>
             </div>
-            
+
             <?php if (!$boost_active) : ?>
                 <div class="notice notice-warning">
-                    <p><?php esc_html_e('O módulo Jetpack Boost não está ativo. Algumas funcionalidades podem não estar disponíveis.', 'thabatta-adv'); ?></p>
-                    <p><a href="<?php echo esc_url(admin_url('admin.php?page=jetpack_modules')); ?>" class="button"><?php esc_html_e('Ativar Módulos do Jetpack', 'thabatta-adv'); ?></a></p>
+                    <p><?php esc_html_e('O módulo Jetpack Boost não está ativo. Algumas funcionalidades podem não estar disponíveis ou podem não funcionar como esperado.', 'thabatta-adv'); ?></p>
+                    <?php if (class_exists('Jetpack')) : // Only show link if Jetpack is active ?>
+                        <p><a href="<?php echo esc_url(admin_url('admin.php?page=jetpack_modules')); ?>" class="button"><?php esc_html_e('Ativar Módulos do Jetpack', 'thabatta-adv'); ?></a></p>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
-            
-            <div class="thabatta-admin-columns">
-                <div class="thabatta-admin-column">
-                    <div class="thabatta-admin-card">
-                        <h2><?php esc_html_e('Gerenciamento de Cache', 'thabatta-adv'); ?></h2>
-                        
-                        <form method="post" action="options.php">
-                            <?php settings_fields('thabatta_jetpack_options'); ?>
-                            
+
+            <form method="post" action="options.php">
+                <?php settings_fields('thabatta_jetpack_options'); ?>
+
+                <div class="thabatta-admin-columns">
+                    <div class="thabatta-admin-column">
+                        <div class="thabatta-admin-card">
+                            <h2><?php esc_html_e('Gerenciamento de Cache', 'thabatta-adv'); ?></h2>
+
                             <table class="form-table">
                                 <tr>
                                     <th scope="row"><?php esc_html_e('Ativar Cache', 'thabatta-adv'); ?></th>
@@ -120,6 +122,7 @@ class Thabatta_Jetpack_Integration
                                             <input type="checkbox" name="thabatta_jetpack_cache_enabled" id="thabatta_jetpack_cache_enabled" value="1" <?php checked($cache_enabled, true); ?>>
                                             <?php esc_html_e('Ativar cache de página para melhorar o desempenho', 'thabatta-adv'); ?>
                                         </label>
+                                        <p class="description"><?php esc_html_e('Requer o módulo "Site Accelerator" ou "Boost" do Jetpack ativo.', 'thabatta-adv'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -132,23 +135,19 @@ class Thabatta_Jetpack_Integration
                                             <option value="86400" <?php selected($cache_expiry, 86400); ?>><?php esc_html_e('1 dia', 'thabatta-adv'); ?></option>
                                             <option value="604800" <?php selected($cache_expiry, 604800); ?>><?php esc_html_e('1 semana', 'thabatta-adv'); ?></option>
                                         </select>
+                                        <p class="description"><?php esc_html_e('Define por quanto tempo as páginas ficam armazenadas em cache.', 'thabatta-adv'); ?></p>
                                     </td>
                                 </tr>
                             </table>
-                            
-                            <p class="submit">
-                                <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e('Salvar Configurações', 'thabatta-adv'); ?>">
+                            <p>
                                 <button type="button" id="thabatta-clear-cache" class="button"><?php esc_html_e('Limpar Cache Agora', 'thabatta-adv'); ?></button>
                             </p>
-                        </form>
-                    </div>
-                    
-                    <div class="thabatta-admin-card">
-                        <h2><?php esc_html_e('Otimização de Imagens', 'thabatta-adv'); ?></h2>
-                        
-                        <form method="post" action="options.php">
-                            <?php settings_fields('thabatta_jetpack_options'); ?>
-                            
+
+                        </div>
+
+                        <div class="thabatta-admin-card">
+                            <h2><?php esc_html_e('Otimização de Imagens', 'thabatta-adv'); ?></h2>
+
                             <table class="form-table">
                                 <tr>
                                     <th scope="row"><?php esc_html_e('Lazy Loading de Imagens', 'thabatta-adv'); ?></th>
@@ -157,6 +156,7 @@ class Thabatta_Jetpack_Integration
                                             <input type="checkbox" name="thabatta_jetpack_lazy_images" id="thabatta_jetpack_lazy_images" value="1" <?php checked($lazy_images, true); ?>>
                                             <?php esc_html_e('Ativar carregamento preguiçoso de imagens', 'thabatta-adv'); ?>
                                         </label>
+                                        <p class="description"><?php esc_html_e('Melhora o tempo de carregamento inicial adiando o carregamento de imagens fora da tela. Requer o módulo "Site Accelerator" ou "Boost" do Jetpack ativo.', 'thabatta-adv'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -166,24 +166,18 @@ class Thabatta_Jetpack_Integration
                                             <input type="checkbox" name="thabatta_jetpack_cdn" id="thabatta_jetpack_cdn" value="1" <?php checked($cdn_enabled, true); ?>>
                                             <?php esc_html_e('Usar CDN do Jetpack para imagens', 'thabatta-adv'); ?>
                                         </label>
+                                        <p class="description"><?php esc_html_e('Serve imagens através da rede global do Jetpack para carregamento mais rápido. Requer o módulo "Site Accelerator" do Jetpack ativo.', 'thabatta-adv'); ?></p>
                                     </td>
                                 </tr>
                             </table>
-                            
-                            <p class="submit">
-                                <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e('Salvar Configurações', 'thabatta-adv'); ?>">
-                            </p>
-                        </form>
+
+                        </div>
                     </div>
-                </div>
-                
-                <div class="thabatta-admin-column">
-                    <div class="thabatta-admin-card">
-                        <h2><?php esc_html_e('Otimização de Recursos', 'thabatta-adv'); ?></h2>
-                        
-                        <form method="post" action="options.php">
-                            <?php settings_fields('thabatta_jetpack_options'); ?>
-                            
+
+                    <div class="thabatta-admin-column">
+                        <div class="thabatta-admin-card">
+                            <h2><?php esc_html_e('Otimização de Recursos', 'thabatta-adv'); ?></h2>
+
                             <table class="form-table">
                                 <tr>
                                     <th scope="row"><?php esc_html_e('Otimização de CSS', 'thabatta-adv'); ?></th>
@@ -192,6 +186,7 @@ class Thabatta_Jetpack_Integration
                                             <input type="checkbox" name="thabatta_jetpack_optimize_css" id="thabatta_jetpack_optimize_css" value="1" <?php checked($optimize_css, true); ?>>
                                             <?php esc_html_e('Minificar e combinar arquivos CSS', 'thabatta-adv'); ?>
                                         </label>
+                                         <p class="description"><?php esc_html_e('Reduz o tamanho e o número de arquivos CSS. Requer o módulo "Boost" do Jetpack ativo.', 'thabatta-adv'); ?></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -201,128 +196,132 @@ class Thabatta_Jetpack_Integration
                                             <input type="checkbox" name="thabatta_jetpack_optimize_js" id="thabatta_jetpack_optimize_js" value="1" <?php checked($optimize_js, true); ?>>
                                             <?php esc_html_e('Minificar e combinar arquivos JavaScript', 'thabatta-adv'); ?>
                                         </label>
+                                         <p class="description"><?php esc_html_e('Reduz o tamanho e o número de arquivos JS. Requer o módulo "Boost" do Jetpack ativo.', 'thabatta-adv'); ?></p>
                                     </td>
                                 </tr>
                             </table>
+
+                        </div>
+
+                        <div class="thabatta-admin-card">
+                            <h2><?php esc_html_e('Status do Sistema', 'thabatta-adv'); ?></h2>
                             
-                            <p class="submit">
-                                <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e('Salvar Configurações', 'thabatta-adv'); ?>">
-                            </p>
-                        </form>
-                    </div>
-                    
-                    <div class="thabatta-admin-card">
-                        <h2><?php esc_html_e('Status do Sistema', 'thabatta-adv'); ?></h2>
-                        
-                        <table class="widefat">
-                            <tbody>
-                                <tr>
-                                    <td><?php esc_html_e('Status do Cache:', 'thabatta-adv'); ?></td>
-                                    <td>
-                                        <?php if ($cache_enabled) : ?>
-                                            <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
-                                        <?php else : ?>
-                                            <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php esc_html_e('Tempo de Expiração:', 'thabatta-adv'); ?></td>
-                                    <td>
-                                        <?php
-                                        switch ($cache_expiry) {
-                                            case 3600:
-                                                esc_html_e('1 hora', 'thabatta-adv');
-                                                break;
-                                            case 21600:
-                                                esc_html_e('6 horas', 'thabatta-adv');
-                                                break;
-                                            case 43200:
-                                                esc_html_e('12 horas', 'thabatta-adv');
-                                                break;
-                                            case 86400:
-                                                esc_html_e('1 dia', 'thabatta-adv');
-                                                break;
-                                            case 604800:
-                                                esc_html_e('1 semana', 'thabatta-adv');
-                                                break;
-                                            default:
-                                                echo esc_html(human_time_diff(0, $cache_expiry));
-                                        }
-        ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php esc_html_e('Lazy Loading de Imagens:', 'thabatta-adv'); ?></td>
-                                    <td>
-                                        <?php if ($lazy_images) : ?>
-                                            <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
-                                        <?php else : ?>
-                                            <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php esc_html_e('CDN:', 'thabatta-adv'); ?></td>
-                                    <td>
-                                        <?php if ($cdn_enabled) : ?>
-                                            <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
-                                        <?php else : ?>
-                                            <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php esc_html_e('Otimização de CSS:', 'thabatta-adv'); ?></td>
-                                    <td>
-                                        <?php if ($optimize_css) : ?>
-                                            <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
-                                        <?php else : ?>
-                                            <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php esc_html_e('Otimização de JavaScript:', 'thabatta-adv'); ?></td>
-                                    <td>
-                                        <?php if ($optimize_js) : ?>
-                                            <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
-                                        <?php else : ?>
-                                            <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                        <div class="thabatta-cache-stats">
-                            <h3><?php esc_html_e('Estatísticas de Cache', 'thabatta-adv'); ?></h3>
-                            <?php
-                            // Obter estatísticas de cache
-                            $cache_hits = intval(get_option('thabatta_cache_hits', 0));
-                            $cache_misses = intval(get_option('thabatta_cache_misses', 0));
-                            $total_requests = $cache_hits + $cache_misses;
-                            $hit_ratio = $total_requests > 0 ? round(($cache_hits / $total_requests) * 100, 2) : 0.0;
-                            ?>
-                            <div class="thabatta-cache-stats-grid">
-                                <div class="thabatta-cache-stat">
-                                    <span class="thabatta-cache-stat-number"><?php echo esc_html(strval($cache_hits)); ?></span>
-                                    <span class="thabatta-cache-stat-label"><?php esc_html_e('Cache Hits', 'thabatta-adv'); ?></span>
-                                </div>
-                                <div class="thabatta-cache-stat">
-                                    <span class="thabatta-cache-stat-number"><?php echo esc_html(strval($cache_misses)); ?></span>
-                                    <span class="thabatta-cache-stat-label"><?php esc_html_e('Cache Misses', 'thabatta-adv'); ?></span>
-                                </div>
-                                <div class="thabatta-cache-stat">
-                                    <span class="thabatta-cache-stat-number"><?php echo esc_html(number_format($hit_ratio, 2)); ?>%</span>
-                                    <span class="thabatta-cache-stat-label"><?php esc_html_e('Hit Ratio', 'thabatta-adv'); ?></span>
+                            <table class="widefat">
+                                <tbody>
+                                    <tr>
+                                        <td><?php esc_html_e('Status do Cache:', 'thabatta-adv'); ?></td>
+                                        <td>
+                                            <?php if ($cache_enabled) : ?>
+                                                <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
+                                            <?php else : ?>
+                                                <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php esc_html_e('Tempo de Expiração:', 'thabatta-adv'); ?></td>
+                                        <td>
+                                            <?php
+                                            switch ($cache_expiry) {
+                                                case 3600:
+                                                    esc_html_e('1 hora', 'thabatta-adv');
+                                                    break;
+                                                case 21600:
+                                                    esc_html_e('6 horas', 'thabatta-adv');
+                                                    break;
+                                                case 43200:
+                                                    esc_html_e('12 horas', 'thabatta-adv');
+                                                    break;
+                                                case 86400:
+                                                    esc_html_e('1 dia', 'thabatta-adv');
+                                                    break;
+                                                case 604800:
+                                                    esc_html_e('1 semana', 'thabatta-adv');
+                                                    break;
+                                                default:
+                                                    echo esc_html(human_time_diff(0, $cache_expiry));
+                                            }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php esc_html_e('Lazy Loading de Imagens:', 'thabatta-adv'); ?></td>
+                                        <td>
+                                            <?php if ($lazy_images) : ?>
+                                                <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
+                                            <?php else : ?>
+                                                <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php esc_html_e('CDN:', 'thabatta-adv'); ?></td>
+                                        <td>
+                                            <?php if ($cdn_enabled) : ?>
+                                                <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
+                                            <?php else : ?>
+                                                <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php esc_html_e('Otimização de CSS:', 'thabatta-adv'); ?></td>
+                                        <td>
+                                            <?php if ($optimize_css) : ?>
+                                                <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
+                                            <?php else : ?>
+                                                <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php esc_html_e('Otimização de JavaScript:', 'thabatta-adv'); ?></td>
+                                        <td>
+                                            <?php if ($optimize_js) : ?>
+                                                <span class="thabatta-status-active"><?php esc_html_e('Ativo', 'thabatta-adv'); ?></span>
+                                            <?php else : ?>
+                                                <span class="thabatta-status-inactive"><?php esc_html_e('Inativo', 'thabatta-adv'); ?></span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <div class="thabatta-cache-stats">
+                                <h3><?php esc_html_e('Estatísticas de Cache', 'thabatta-adv'); ?></h3>
+                                <?php
+                                // Obter estatísticas de cache
+                                $cache_hits = intval(get_option('thabatta_cache_hits', 0));
+                                $cache_misses = intval(get_option('thabatta_cache_misses', 0));
+                                $total_requests = $cache_hits + $cache_misses;
+                                $hit_ratio = $total_requests > 0 ? round(($cache_hits / $total_requests) * 100, 2) : 0.0;
+                                ?>
+                                <div class="thabatta-cache-stats-grid">
+                                    <div class="thabatta-cache-stat">
+                                        <span class="thabatta-cache-stat-number"><?php echo esc_html(strval($cache_hits)); ?></span>
+                                        <span class="thabatta-cache-stat-label"><?php esc_html_e('Cache Hits', 'thabatta-adv'); ?></span>
+                                    </div>
+                                    <div class="thabatta-cache-stat">
+                                        <span class="thabatta-cache-stat-number"><?php echo esc_html(strval($cache_misses)); ?></span>
+                                        <span class="thabatta-cache-stat-label"><?php esc_html_e('Cache Misses', 'thabatta-adv'); ?></span>
+                                    </div>
+                                    <div class="thabatta-cache-stat">
+                                        <span class="thabatta-cache-stat-number"><?php echo esc_html(number_format($hit_ratio, 2)); ?>%</span>
+                                        <span class="thabatta-cache-stat-label"><?php esc_html_e('Hit Ratio', 'thabatta-adv'); ?></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div> <!-- Fim thabatta-admin-columns -->
+
+                <p class="submit">
+                    <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e('Salvar Todas as Configurações', 'thabatta-adv'); ?>">
+                </p>
+
+            </form> <!-- Fim do formulário único -->
+
+        </div> <!-- Fim .wrap -->
         <?php
     }
 

@@ -1,0 +1,54 @@
+/* Estilos das Tabs */
+.nav-tabs {
+  border-bottom: 1px solid #f8f8f8;
+  margin-bottom: 1rem;
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+.nav-tabs .nav-item {
+  margin-bottom: -1px;
+  margin-right: 0.5rem;
+}
+.nav-tabs .nav-item:last-child {
+  margin-right: 0;
+}
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 0.75rem 1.25rem;
+  color: #4a4a4a;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease-in-out;
+}
+.nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+  border-color: rgb(235.25, 235.25, 235.25);
+  text-decoration: none;
+}
+.nav-tabs .nav-link.active {
+  color: #800020;
+  background-color: #ffffff;
+  border-color: #f8f8f8;
+  border-bottom-color: transparent;
+}
+
+.tab-content .tab-pane {
+  padding: 1.5rem 0;
+  display: none;
+}
+.tab-content .tab-pane.active {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/*# sourceMappingURL=tabs.css.map */

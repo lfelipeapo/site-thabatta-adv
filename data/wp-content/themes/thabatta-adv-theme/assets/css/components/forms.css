@@ -1,0 +1,353 @@
+@charset "UTF-8";
+/* Estilos de formulários */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #4a4a4a;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin-bottom: 1rem;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 0;
+  border-color: #800020;
+  box-shadow: 0 0 0 0.2rem rgba(128, 0, 32, 0.25);
+}
+input.error,
+textarea.error,
+select.error {
+  border-color: #e53935;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  color: #4a4a4a;
+}
+
+button,
+.button,
+input[type=button],
+input[type=submit] {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #800020;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+}
+button:hover,
+.button:hover,
+input[type=button]:hover,
+input[type=submit]:hover {
+  background-color: rgb(77, 0, 19.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+button.secondary,
+.button.secondary,
+input[type=button].secondary,
+input[type=submit].secondary {
+  background-color: #ffd700;
+  color: #800020;
+}
+button.secondary:hover,
+.button.secondary:hover,
+input[type=button].secondary:hover,
+input[type=submit].secondary:hover {
+  background-color: #ccac00;
+}
+button.outline,
+.button.outline,
+input[type=button].outline,
+input[type=submit].outline {
+  background-color: transparent;
+  border: 2px solid #800020;
+  color: #800020;
+}
+button.outline:hover,
+.button.outline:hover,
+input[type=button].outline:hover,
+input[type=submit].outline:hover {
+  background-color: #800020;
+  color: #ffffff;
+}
+button.disabled, button:disabled,
+.button.disabled,
+.button:disabled,
+input[type=button].disabled,
+input[type=button]:disabled,
+input[type=submit].disabled,
+input[type=submit]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+/* Formulário Multi-step */
+#consultationForm {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+#consultationForm.active {
+  opacity: 1;
+  visibility: visible;
+}
+#consultationForm .form-container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+#consultationForm .close-form {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  color: #4a4a4a;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+}
+#consultationForm .close-form:hover {
+  color: #800020;
+}
+#consultationForm h3 {
+  color: #800020;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+#consultationForm .step {
+  display: none;
+}
+#consultationForm .step.active {
+  display: block;
+}
+#consultationForm .step-indicators {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+}
+#consultationForm .step-indicators::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #e0e0e0;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+#consultationForm .step-indicators .step-indicator {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 600;
+  position: relative;
+  z-index: 2;
+}
+#consultationForm .step-indicators .step-indicator.active {
+  background-color: #800020;
+}
+#consultationForm .step-indicators .step-indicator.completed {
+  background-color: #ffd700;
+}
+#consultationForm .form-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+#consultationForm .form-navigation button {
+  padding: 0.5rem 1.25rem;
+}
+
+/* Checkbox e Radio */
+.custom-control {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 1rem;
+}
+.custom-control input {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+.custom-control input:checked ~ .custom-control-indicator {
+  background-color: #800020;
+  border-color: #800020;
+}
+.custom-control input:checked ~ .custom-control-indicator::after {
+  opacity: 1;
+}
+.custom-control input:focus ~ .custom-control-indicator {
+  box-shadow: 0 0 0 0.2rem rgba(128, 0, 32, 0.25);
+}
+.custom-control .custom-control-indicator {
+  position: absolute;
+  top: 0.25rem;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+.custom-control .custom-control-indicator::after {
+  content: "";
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.custom-control .custom-control-label {
+  margin-bottom: 0;
+}
+
+.custom-checkbox .custom-control-indicator {
+  border-radius: 3px;
+}
+.custom-checkbox .custom-control-indicator::after {
+  top: 3px;
+  left: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.custom-radio .custom-control-indicator {
+  border-radius: 50%;
+}
+.custom-radio .custom-control-indicator::after {
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+/* Validação de formulário */
+.invalid-feedback {
+  display: none;
+  color: #e53935;
+  font-size: 0.875rem;
+  margin-top: -0.75rem;
+  margin-bottom: 1rem;
+}
+
+input.is-invalid,
+textarea.is-invalid,
+select.is-invalid {
+  border-color: #e53935;
+}
+input.is-invalid:focus,
+textarea.is-invalid:focus,
+select.is-invalid:focus {
+  box-shadow: 0 0 0 0.2rem rgba(229, 57, 53, 0.25);
+}
+input.is-invalid ~ .invalid-feedback,
+textarea.is-invalid ~ .invalid-feedback,
+select.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+
+/* Campo de Busca */
+.search-form {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.search-form input[type=search] {
+  padding-right: 3rem;
+}
+.search-form button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  padding: 0 1rem;
+  background: transparent;
+  color: #4a4a4a;
+}
+.search-form button:hover {
+  color: #800020;
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Formulário de Comentários */
+.comment-form {
+  margin-top: 2rem;
+}
+.comment-form .form-submit {
+  margin-top: 1rem;
+}
+
+/* Formulário de Busca */
+.search-form {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.search-form label {
+  flex: 1;
+  margin-bottom: 0;
+}
+.search-form .search-field {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 0;
+}
+.search-form .search-submit {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px;
+}
+/*# sourceMappingURL=forms.css.map */

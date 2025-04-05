@@ -1,29 +1,31 @@
-/* Reset */
-*, 
-*::before, 
-*::after {
-  margin: 0;
-  padding: 0;
+@use '../variables'; // Importar variáveis
+
+/* Reset básico */
+html {
   box-sizing: border-box;
 }
 
-html {
-  font-size: 100%;
-  scroll-behavior: smooth;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
-  font-family: $font-primary;
-  font-size: $font-size-base;
+  margin: 0;
+  padding: 0;
+  font-family: variables.$font-primary; // Usar namespace
+  font-size: 16px;
   line-height: 1.6;
-  color: $cinza-escuro;
-  background-color: $cinza-claro;
+  color: variables.$cinza-escuro; // Usar namespace
+  background-color: variables.$cinza-claro; // Usar namespace
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $font-secondary;
+  font-family: variables.$font-secondary; // Usar namespace
+  margin-top: 0;
   margin-bottom: 1rem;
   font-weight: 700;
   line-height: 1.2;
@@ -34,19 +36,20 @@ p {
 }
 
 a {
-  color: $bordo;
+  color: variables.$bordo; // Usar namespace
   text-decoration: none;
-  transition: $transition-default;
+  transition: variables.$transition-default; // Usar namespace
   
   &:hover {
-    color: $amarelo-dourado;
+    color: variables.$amarelo-dourado; // Usar namespace
+    text-decoration: underline; // Manter sublinhado no hover
   }
 }
 
 img {
   max-width: 100%;
   height: auto;
-  display: block;
+  display: block; // Evitar espaço extra abaixo das imagens
 }
 
 button, 
@@ -57,7 +60,9 @@ select {
 }
 
 ul, ol {
-  list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none; // Resetar estilos de lista padrão
 }
 
 table {

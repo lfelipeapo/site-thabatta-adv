@@ -1,0 +1,163 @@
+@charset "UTF-8";
+/* Estilos da página de Blog e Arquivos */
+.blog .site-main, .archive .site-main {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 15px;
+}
+.blog article.post, .archive article.post {
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #f8f8f8;
+}
+.blog article.post:last-child, .archive article.post:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.blog article.post .entry-header, .archive article.post .entry-header {
+  margin-bottom: 1.5rem;
+}
+.blog article.post .entry-title, .archive article.post .entry-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.blog article.post .entry-title a, .archive article.post .entry-title a {
+  color: #800020;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.blog article.post .entry-title a:hover, .archive article.post .entry-title a:hover {
+  color: #ffd700;
+}
+.blog article.post .entry-meta, .archive article.post .entry-meta {
+  font-size: 0.875rem;
+  color: #4a4a4a;
+  margin-bottom: 1rem;
+}
+.blog article.post .entry-meta a, .archive article.post .entry-meta a {
+  color: #4a4a4a;
+}
+.blog article.post .entry-meta a:hover, .archive article.post .entry-meta a:hover {
+  color: #800020;
+}
+.blog article.post .entry-meta span, .archive article.post .entry-meta span {
+  margin-right: 1rem;
+}
+.blog article.post .entry-meta span:last-child, .archive article.post .entry-meta span:last-child {
+  margin-right: 0;
+}
+.blog article.post .entry-thumbnail, .archive article.post .entry-thumbnail {
+  margin-bottom: 1.5rem;
+}
+.blog article.post .entry-thumbnail img, .archive article.post .entry-thumbnail img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+.blog article.post .entry-summary, .archive article.post .entry-summary {
+  line-height: 1.7;
+  color: #333333;
+}
+.blog article.post .entry-footer, .archive article.post .entry-footer {
+  margin-top: 1.5rem;
+}
+.blog article.post .entry-footer .read-more, .archive article.post .entry-footer .read-more {
+  font-weight: 600;
+  color: #800020;
+  text-decoration: none;
+}
+.blog article.post .entry-footer .read-more:hover, .archive article.post .entry-footer .read-more:hover {
+  color: #ffd700;
+  text-decoration: underline;
+}
+.blog .pagination, .archive .pagination {
+  margin-top: 3rem;
+  text-align: center;
+}
+.blog .pagination .page-numbers, .archive .pagination .page-numbers {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  border: 1px solid #f8f8f8;
+  border-radius: 5px;
+  color: #800020;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.blog .pagination .page-numbers.current, .archive .pagination .page-numbers.current {
+  background-color: #800020;
+  color: #ffffff;
+  border-color: #800020;
+}
+.blog .pagination .page-numbers:hover:not(.current), .archive .pagination .page-numbers:hover:not(.current) {
+  background-color: #f8f8f8;
+  color: #800020;
+}
+.blog .pagination .prev, .blog .pagination .next, .archive .pagination .prev, .archive .pagination .next {
+  font-weight: bold;
+}
+.blog .pagination .prev::before, .blog .pagination .prev::after, .blog .pagination .next::before, .blog .pagination .next::after, .archive .pagination .prev::before, .archive .pagination .prev::after, .archive .pagination .next::before, .archive .pagination .next::after {
+  display: inline-block;
+  vertical-align: middle;
+}
+.blog .pagination .prev::before, .archive .pagination .prev::before {
+  content: "«";
+  margin-right: 0.5rem;
+}
+.blog .pagination .next::after, .archive .pagination .next::after {
+  content: "»";
+  margin-left: 0.5rem;
+}
+
+/* Estilos específicos para a página de Arquivo */
+.archive .page-title {
+  font-size: 1.5rem;
+  color: #800020;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #ffd700;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.widget-area {
+  padding: 1.5rem;
+  border: 1px solid #f8f8f8;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+.widget-area .widget {
+  margin-bottom: 2rem;
+}
+.widget-area .widget:last-child {
+  margin-bottom: 0;
+}
+.widget-area .widget .widget-title {
+  font-size: 1.25rem;
+  color: #800020;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #ffd700;
+}
+.widget-area .widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.widget-area .widget ul li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f8f8f8;
+}
+.widget-area .widget ul li:last-child {
+  border-bottom: none;
+}
+.widget-area .widget ul li a {
+  color: #4a4a4a;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.widget-area .widget ul li a:hover {
+  color: #800020;
+}
+/*# sourceMappingURL=blog.css.map */

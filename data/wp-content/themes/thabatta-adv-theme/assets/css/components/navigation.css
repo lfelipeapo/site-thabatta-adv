@@ -1,0 +1,236 @@
+@charset "UTF-8";
+/* Estilos gerais de navegação (principal, rodapé, etc.) */
+/* Navegação Principal (Estilos adicionais/específicos além do header.scss) */
+.main-navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.main-navigation ul li {
+  position: relative;
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+.main-navigation ul li:last-child {
+  margin-right: 0;
+}
+.main-navigation ul li a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+.main-navigation ul li a:hover, .main-navigation ul li a:focus, .main-navigation ul li a.active, li.current-menu-item > .main-navigation ul li a, li.current_page_item > .main-navigation ul li a {
+  color: #ffd700;
+}
+.main-navigation ul li ul.sub-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: #ffffff;
+  min-width: 200px;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  border-radius: 0 0 5px 5px;
+}
+.main-navigation ul li ul.sub-menu li {
+  display: block;
+  margin: 0;
+}
+.main-navigation ul li ul.sub-menu li a {
+  padding: 0.75rem 1.5rem;
+  color: #4a4a4a;
+  white-space: nowrap;
+}
+.main-navigation ul li ul.sub-menu li a:hover, .main-navigation ul li ul.sub-menu li a:focus, li.current-menu-item > .main-navigation ul li ul.sub-menu li a, li.current_page_item > .main-navigation ul li ul.sub-menu li a {
+  color: #800020;
+  background-color: rgb(250.55, 250.55, 250.55);
+}
+.main-navigation ul li ul.sub-menu li ul.sub-menu {
+  left: 100%;
+  top: 0;
+  border-radius: 5px;
+}
+.main-navigation ul li:hover > ul.sub-menu {
+  display: block;
+}
+.main-navigation .menu-item-has-children > a {
+  position: relative;
+  padding-right: 1.5em;
+}
+.main-navigation .menu-item-has-children > a::after {
+  content: "\f078";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7em;
+  color: inherit;
+  transition: transform 0.2s ease-in-out;
+}
+.main-navigation .menu-item-has-children:hover > a::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+.main-navigation ul.sub-menu .menu-item-has-children > a::after {
+  content: "\f054";
+  transform: translateY(-50%);
+  right: 0.75em;
+}
+.main-navigation ul.sub-menu .menu-item-has-children:hover > a::after {
+  transform: translateY(-50%);
+}
+
+/* Navegação no Rodapé */
+.footer-navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.footer-navigation ul li {
+  display: inline-block;
+  margin: 0 0.75rem;
+}
+.footer-navigation ul li a {
+  color: #f8f8f8;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: all 0.3s ease-in-out;
+}
+.footer-navigation ul li a:hover, .footer-navigation ul li a:focus {
+  color: #ffd700;
+  text-decoration: underline;
+}
+
+/* Navegação Mobile (se diferente da principal toggled) */
+.mobile-navigation {
+  display: none;
+}
+@media (max-width: 767px) {
+  .mobile-navigation {
+    display: block;
+  }
+}
+.mobile-navigation .mobile-menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background-color: #800020;
+}
+.mobile-navigation .mobile-menu li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.mobile-navigation .mobile-menu li:last-child {
+  border-bottom: none;
+}
+.mobile-navigation .mobile-menu li a {
+  display: block;
+  padding: 1rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.mobile-navigation .mobile-menu li a:hover, .mobile-navigation .mobile-menu li a:focus, .mobile-navigation .mobile-menu li a.active {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.mobile-navigation .mobile-menu li ul {
+  padding-left: 1.5rem;
+  list-style: none;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Paginação (Estilos adicionais ou específicos) */
+.pagination {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+.pagination .page-numbers {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  border: 1px solid #f8f8f8;
+  border-radius: 5px;
+  color: #800020;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+.pagination .page-numbers.current {
+  background-color: #800020;
+  color: #ffffff;
+  border-color: #800020;
+  cursor: default;
+}
+.pagination .page-numbers:hover:not(.current) {
+  background-color: #f8f8f8;
+  color: #800020;
+  border-color: #f8f8f8;
+}
+.pagination .page-numbers.dots {
+  border: none;
+  background: none;
+  color: #4a4a4a;
+  cursor: default;
+  padding: 0.5rem 0;
+}
+.pagination .page-numbers.prev, .pagination .page-numbers.next {
+  font-weight: bold;
+}
+.pagination .page-numbers.prev i, .pagination .page-numbers.next i {
+  margin: 0 0.25rem;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  font-size: 0.875rem;
+  color: #4a4a4a;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgb(253.1, 253.1, 253.1);
+  border-radius: 3px;
+}
+.breadcrumbs a {
+  color: #800020;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+.breadcrumbs a:hover {
+  color: #ffd700;
+  text-decoration: underline;
+}
+.breadcrumbs span {
+  margin: 0 0.5em;
+}
+.breadcrumbs .separator {
+  color: rgb(150.5, 150.5, 150.5);
+}
+
+.menu-toggle {
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: none;
+}
+@media (max-width: 767px) {
+  .menu-toggle {
+    display: block;
+  }
+}
+.menu-toggle .icon {
+  margin-right: 0.5rem;
+}
+.menu-toggle:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+/*# sourceMappingURL=navigation.css.map */

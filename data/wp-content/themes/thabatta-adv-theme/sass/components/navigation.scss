@@ -1,0 +1,287 @@
+@use '../variables'; // Importar variáveis
+@use 'sass:color'; // Importar módulo color
+
+/* Estilos gerais de navegação (principal, rodapé, etc.) */
+
+/* Navegação Principal (Estilos adicionais/específicos além do header.scss) */
+.main-navigation {
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            position: relative;
+            display: inline-block;
+            margin-right: variables.$nav-item-spacing;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            a {
+                display: block;
+                padding: variables.$nav-link-padding-y variables.$nav-link-padding-x;
+                color: variables.$nav-link-color;
+                text-decoration: none;
+                font-weight: variables.$nav-link-font-weight;
+                transition: variables.$transition-default;
+                
+                &:hover,
+                &:focus,
+                &.active,
+                li.current-menu-item > &,
+                li.current_page_item > & {
+                    color: variables.$nav-link-hover-color;
+                }
+            }
+
+            ul.sub-menu {
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 100%;
+                background-color: variables.$nav-submenu-bg;
+                min-width: 200px;
+                z-index: 100;
+                box-shadow: variables.$box-shadow;
+                padding: 0.5rem 0;
+                border-radius: 0 0 variables.$border-radius variables.$border-radius;
+
+                li {
+                    display: block;
+                    margin: 0;
+
+                    a {
+                        padding: 0.75rem 1.5rem;
+                        color: variables.$nav-submenu-link-color;
+                        white-space: nowrap;
+                        
+                        &:hover,
+                        &:focus,
+                        li.current-menu-item > &,
+                        li.current_page_item > & {
+                            color: variables.$nav-submenu-link-hover-color;
+                            background-color: variables.$nav-submenu-link-hover-bg;
+                        }
+                    }
+                    
+                    ul.sub-menu {
+                         left: 100%;
+                         top: 0;
+                         border-radius: variables.$border-radius;
+                    }
+                }
+            }
+
+            &:hover > ul.sub-menu {
+                display: block;
+            }
+        }
+    }
+    
+    .menu-item-has-children > a {
+        position: relative;
+        padding-right: 1.5em;
+        
+        &::after {
+            content: '\f078';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0.5em;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7em;
+            color: inherit;
+            transition: transform 0.2s ease-in-out;
+        }
+    }
+    
+    .menu-item-has-children:hover > a::after {
+        transform: translateY(-50%) rotate(180deg);
+    }
+    
+    ul.sub-menu .menu-item-has-children > a::after {
+        content: '\f054';
+        transform: translateY(-50%);
+        right: 0.75em;
+    }
+     ul.sub-menu .menu-item-has-children:hover > a::after {
+        transform: translateY(-50%);
+    }
+}
+
+/* Navegação no Rodapé */
+.footer-navigation {
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+
+        li {
+            display: inline-block;
+            margin: 0 0.75rem;
+
+            a {
+                color: variables.$footer-nav-link-color;
+                text-decoration: none;
+                font-size: variables.$font-size-small;
+                transition: variables.$transition-default;
+
+                &:hover,
+                &:focus {
+                    color: variables.$footer-nav-link-hover-color;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+/* Navegação Mobile (se diferente da principal toggled) */
+.mobile-navigation {
+    display: none;
+    
+    @media (max-width: #{variables.$breakpoint-md - 1px}) {
+        display: block;
+    }
+    
+    .mobile-menu {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        background-color: variables.$nav-mobile-bg;
+        
+        li {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            
+            &:last-child {
+                border-bottom: none;
+            }
+            
+            a {
+                display: block;
+                padding: 1rem;
+                color: variables.$nav-mobile-link-color;
+                text-decoration: none;
+                font-weight: 500;
+                
+                &:hover,
+                &:focus,
+                &.active {
+                    background-color: rgba(255, 255, 255, 0.05);
+                }
+            }
+            
+            ul {
+                padding-left: 1.5rem;
+                list-style: none;
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+}
+
+/* Paginação (Estilos adicionais ou específicos) */
+.pagination {
+    margin: variables.$pagination-margin-y 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+
+    .page-numbers {
+        padding: variables.$pagination-link-padding-y variables.$pagination-link-padding-x;
+        margin: 0 variables.$pagination-link-margin-x;
+        border: 1px solid variables.$pagination-border-color;
+        border-radius: variables.$pagination-border-radius;
+        color: variables.$pagination-link-color;
+        text-decoration: none;
+        transition: variables.$transition-default;
+
+        &.current {
+            background-color: variables.$pagination-active-bg;
+            color: variables.$pagination-active-color;
+            border-color: variables.$pagination-active-border-color;
+            cursor: default;
+        }
+
+        &:hover:not(.current) {
+            background-color: variables.$pagination-hover-bg;
+            color: variables.$pagination-hover-color;
+            border-color: variables.$pagination-hover-border-color;
+        }
+
+        &.dots {
+            border: none;
+            background: none;
+            color: variables.$cinza-escuro;
+            cursor: default;
+            padding: variables.$pagination-link-padding-y 0;
+        }
+
+        &.prev,
+        &.next {
+            font-weight: bold;
+            
+            i {
+                margin: 0 0.25rem;
+            }
+        }
+    }
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    font-size: variables.$font-size-small;
+    color: variables.$breadcrumbs-color;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 1rem;
+    background-color: variables.$breadcrumbs-bg;
+    border-radius: variables.$border-radius-sm;
+
+    a {
+        color: variables.$breadcrumbs-link-color;
+        text-decoration: none;
+        transition: variables.$transition-default;
+
+        &:hover {
+            color: variables.$breadcrumbs-link-hover-color;
+            text-decoration: underline;
+        }
+    }
+
+    span {
+        margin: 0 0.5em;
+    }
+    
+    .separator {
+        color: variables.$breadcrumbs-separator-color;
+    }
+}
+
+.menu-toggle {
+    background-color: variables.$cor-menu-toggle-fundo;
+    color: variables.$cor-menu-toggle-texto;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: none;
+    
+    @media (max-width: #{variables.$breakpoint-md - 1px}) {
+        display: block;
+    }
+    
+    .icon {
+        margin-right: 0.5rem;
+    }
+    
+    &:hover {
+        background-color: color.adjust(variables.$cor-menu-toggle-fundo, $blackness: 10%);
+    }
+}
+

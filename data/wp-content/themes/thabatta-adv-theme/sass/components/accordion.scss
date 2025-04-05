@@ -1,0 +1,66 @@
+@use '../variables'; // Importar variáveis
+@use 'sass:color'; // Importar módulo color
+
+/* Estilos do Accordion */
+.accordion {
+    margin-bottom: 2rem;
+    border: 1px solid variables.$cinza-claro;
+    border-radius: variables.$border-radius;
+
+    .accordion-item {
+        border-bottom: 1px solid variables.$cor-accordion-borda;
+        
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            button {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding: 1rem 1.25rem;
+                background-color: variables.$cor-accordion-header-fundo;
+                color: variables.$cor-accordion-header-texto;
+                font-weight: 500;
+                text-align: left;
+                border: none;
+                cursor: pointer;
+                transition: variables.$transition-default;
+                
+                &::after {
+                    content: '\f078';
+                    font-family: 'Font Awesome 5 Free';
+                    font-weight: 900;
+                    font-size: 0.8rem;
+                    color: inherit;
+                    transition: transform 0.2s ease;
+                }
+
+                &:not(.collapsed) {
+                    background-color: variables.$cor-accordion-header-fundo-active;
+                    color: variables.$cor-accordion-header-texto-active;
+                    
+                    &::after {
+                        transform: rotate(180deg);
+                    }
+                }
+                
+                &:hover, &:focus {
+                    background-color: color.adjust(variables.$cor-accordion-header-fundo, $blackness: 5%);
+                    outline: none;
+                }
+            }
+        }
+
+        .accordion-body {
+            padding: variables.$padding-accordion-body;
+            background-color: variables.$cor-accordion-body-fundo;
+            
+            p:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+} 

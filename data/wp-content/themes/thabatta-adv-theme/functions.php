@@ -23,9 +23,6 @@ define('THABATTA_THEME_VERSION', '1.0.0');
  * Configuração do tema
  */
 function thabatta_setup() {
-    // Carregar textdomain para traduções
-    load_theme_textdomain('thabatta-adv', THABATTA_THEME_DIR . '/languages');
-
     // Adicionar suporte a título automático para documentos
     add_theme_support('title-tag');
 
@@ -63,6 +60,14 @@ function thabatta_setup() {
     add_image_size('thabatta-thumbnail', 150, 150, true);
 }
 add_action('after_setup_theme', 'thabatta_setup');
+
+/**
+ * Carregar domínio de texto do tema
+ */
+function thabatta_load_theme_textdomain() {
+    load_theme_textdomain('thabatta-adv', THABATTA_THEME_DIR . '/languages');
+}
+add_action('init', 'thabatta_load_theme_textdomain');
 
 /**
  * Registrar e carregar scripts e estilos
@@ -459,7 +464,7 @@ function thabatta_enqueue_scripts()
 
     // Estilos
     wp_enqueue_style('thabatta-style', get_stylesheet_uri(), array(), $theme_version);
-    wp_enqueue_style('thabatta-main', get_template_directory_uri() . '/assets/css/main.css', array(), $theme_version);
+    wp_enqueue_style('thabatta-main', get_template_directory_uri() . '/assets/css/style.min.css', array(), $theme_version);
 
     // Google Fonts
     wp_enqueue_style('thabatta-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap', array(), null);
@@ -468,8 +473,8 @@ function thabatta_enqueue_scripts()
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', array(), '5.15.4');
 
     // Scripts
-    wp_enqueue_script('thabatta-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), $theme_version, true);
-    wp_enqueue_script('thabatta-main', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), $theme_version, true);
+    wp_enqueue_script('thabatta-navigation', get_template_directory_uri() . '/assets/js/navigation.min.js', array(), $theme_version, true);
+    wp_enqueue_script('thabatta-main', get_template_directory_uri() . '/assets/js/main.min.js', array('jquery'), $theme_version, true);
 
     // Comentários
     if (is_singular() && comments_open() && get_option('thread_comments')) {
@@ -489,25 +494,51 @@ add_action('wp_enqueue_scripts', 'thabatta_enqueue_scripts');
 /**
  * Registrar scripts e estilos para o admin
  */
-function thabatta_admin_enqueue_scripts()
-{
-    // Versão do tema
-    $theme_version = wp_get_theme()->get('Version');
+function thabatta_admin_scripts($hook_suffix) {
+    $theme_version = defined('THABATTA_THEME_VERSION') ? THABATTA_THEME_VERSION : '1.0.0';
 
-    // Estilos
+    // CSS de Administração
     wp_enqueue_style('thabatta-admin-style', get_template_directory_uri() . '/assets/css/admin.css', array(), $theme_version);
 
-    // Scripts
-    wp_enqueue_script('thabatta-admin-script', get_template_directory_uri() . '/assets/js/admin.js', array('jquery'), $theme_version, true);
+    // Obter informações da tela atual
+    $screen = get_current_screen();
 
-    // Adicionar variáveis para o script
-    wp_localize_script('thabatta-admin-script', 'thabattaAdminSettings', array(
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'themeUrl' => get_template_directory_uri(),
-        'nonce' => wp_create_nonce('thabatta_admin_nonce')
-    ));
+    // Carregar scripts JS apenas nas páginas de opções do tema e edição de posts/páginas (onde podem ter metaboxes do tema)
+    $load_admin_js = false;
+    if ($screen) {
+        // Páginas de Opções do Tema (baseadas no slug do menu ACF ou página de opções custom)
+        $theme_options_pages = array(
+            'toplevel_page_theme-general-settings', // Slug da página ACF principal
+            'opcoes-do-tema_page_theme-options-social', // Slug da subpágina ACF (exemplo, ajuste se necessário)
+            'opcoes-do-tema_page_theme-options-contact', // Slug da subpágina ACF (exemplo, ajuste se necessário)
+            'toplevel_page_thabatta-theme-options', // Slug da página de opções custom (se existir)
+            'appearance_page_thabatta-security-settings' // Página de segurança (exemplo, ajuste se necessário)
+        );
+        // Metaboxes em posts, páginas e CPTs relevantes
+        $post_edit_pages = array('post', 'page', 'lead', 'area_atuacao', 'membro_equipe'); // Adicione CPTs se necessário
+
+        if (in_array($screen->id, $theme_options_pages) || ($screen->base === 'post' && in_array($screen->post_type, $post_edit_pages))) {
+             $load_admin_js = true;
+        }
+    }
+
+    if ($load_admin_js) {
+        // Adicionar dependências para Media Uploader e Color Picker
+        wp_enqueue_media(); // Necessário para wp.media
+        wp_enqueue_style('wp-color-picker'); // Estilo do color picker
+        wp_enqueue_script('thabatta-admin-script', get_template_directory_uri() . '/assets/js/admin.min.js', array('jquery', 'wp-color-picker'), $theme_version, true);
+
+        // Passar dados para o script (Ajax URL, Nonces, traduções)
+        wp_localize_script('thabatta-admin-script', 'thabattaAdmin', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('thabatta_admin_nonce'), // Criar um nonce geral para admin AJAX
+            'mediaTitle' => esc_html__('Selecionar ou Enviar Mídia', 'thabatta-adv'),
+            'mediaButton' => esc_html__('Usar esta mídia', 'thabatta-adv'),
+            // Adicione outras strings traduzíveis ou dados aqui
+        ));
+    }
 }
-add_action('admin_enqueue_scripts', 'thabatta_admin_enqueue_scripts');
+add_action('admin_enqueue_scripts', 'thabatta_admin_scripts');
 
 /**
  * Adicionar classes ao body

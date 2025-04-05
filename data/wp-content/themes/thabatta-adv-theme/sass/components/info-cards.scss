@@ -1,0 +1,64 @@
+@use '../variables'; // Importar variáveis
+
+/* Estilos dos Info Cards */
+.info-card {
+    background-color: variables.$cor-card-fundo;
+    border: 1px solid variables.$cor-card-borda;
+    border-radius: variables.$border-radius-card;
+    padding: variables.$padding-card;
+    box-shadow: variables.$box-shadow-card;
+    transition: variables.$transition-default;
+    text-align: center;
+    margin-bottom: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: variables.$box-shadow-card-hover;
+    }
+
+    .info-card-icon {
+        font-size: variables.$font-size-card-icon;
+        color: variables.$cor-card-icon;
+        margin-bottom: variables.$espacamento-card-icon;
+        
+        img {
+            max-width: 64px;
+            height: auto;
+        }
+    }
+
+    h3 {
+        color: variables.$cor-card-titulo;
+        margin-bottom: variables.$espacamento-card-titulo;
+        font-size: 1.5rem;
+    }
+
+    p {
+        color: variables.$cor-card-texto;
+        margin-bottom: 0;
+        flex-grow: 1;
+    }
+    
+    .info-card-footer {
+        margin-top: 1.5rem;
+        
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: variables.$bordo;
+            color: variables.$branco;
+            text-decoration: none;
+            border-radius: variables.$border-radius;
+            transition: variables.$transition-default;
+            
+            &:hover {
+                background-color: variables.$amarelo-dourado;
+                color: variables.$bordo;
+            }
+        }
+    }
+} 

@@ -11,33 +11,50 @@ Text Domain: thabatta-adv
 Tags: advocacia, direito, elegante, responsivo, bordo, dourado
 */
 
-// Importar variáveis
-@import 'variables';
+/**
+ * Thabatta Advocacia Theme Stylesheet
+ */
 
-// Base
-@import 'base/reset';
-@import 'base/typography';
-@import 'base/global';
+// Baseado em Sass Boilerplate
+
+// Configuration and helpers
+@use 'variables'; // Usar @use em vez de @import
+
+// Vendor libraries (se houver)
+// @use 'vendor/normalize'; 
+
+// Base styles
+@use 'base/reset'; // Usar @use
+@use 'base/typography'; // Usar @use
+@use 'base/global'; // Usar @use
 
 // Layouts
-@import 'layouts/header';
-@import 'layouts/footer';
-@import 'layouts/sidebar';
-@import 'layouts/grid';
+@use 'layouts/header'; // Usar @use
+@use 'layouts/footer'; // Usar @use
+// @import 'layouts/sidebar'; // Arquivo não encontrado, remover importação
+@use 'layouts/grid';
 
-// Componentes
-@import 'components/buttons';
-@import 'components/forms';
-@import 'components/cards';
-@import 'components/accordion';
-@import 'components/modal';
-@import 'components/slider';
-@import 'components/navigation';
+// Components
+@use 'components/buttons'; // Usar @use
+@use 'components/forms'; // Usar @use
+@use 'components/cards';
+@use 'components/accordion'; // Usar @use
+@use 'components/modal'; // Usar @use
+@use 'components/slider'; // Usar @use
+@use 'components/navigation'; // Usar @use
+@use 'components/tabs'; // Usar @use
+@use 'components/cta'; // Usar @use
+@use 'components/testimonials'; // Usar @use
+@use 'components/info-cards'; // Usar @use
 
 // Páginas
-@import 'pages/home';
-@import 'pages/about';
-@import 'pages/areas';
-@import 'pages/equipe';
-@import 'pages/blog';
-@import 'pages/contato';
+@use 'pages/home'; // Usar @use
+@use 'pages/about';
+@use 'pages/areas';
+@use 'pages/equipe';
+@use 'pages/blog'; // Usar @use
+@use 'pages/contato'; // Usar @use
+@use 'pages/single-post'; // Usar @use
+
+// Utilities
+// @use 'utils/helpers';

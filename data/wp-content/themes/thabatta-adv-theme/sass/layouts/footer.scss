@@ -1,12 +1,15 @@
+@use '../variables';
+
 /* Estilos do rodapé */
 .site-footer {
-    background-color: $bordo;
-    color: $branco;
-    padding: 3rem 0 1rem;
+    background-color: variables.$cor-rodape-fundo;
+    color: variables.$cor-rodape-texto;
+    padding: variables.$padding-rodape 0;
+    font-size: variables.$font-size-small;
     
     .container {
         width: 100%;
-        max-width: $container-width;
+        max-width: variables.$container-width;
         margin: 0 auto;
         padding: 0 15px;
     }
@@ -17,18 +20,18 @@
         gap: 2rem;
         margin-bottom: 2rem;
         
-        @media (min-width: $breakpoint-md) {
+        @media (min-width: variables.$breakpoint-md) {
             grid-template-columns: 1fr 1fr;
         }
         
-        @media (min-width: $breakpoint-lg) {
+        @media (min-width: variables.$breakpoint-lg) {
             grid-template-columns: repeat(4, 1fr);
         }
     }
     
     .footer-widget {
         .widget-title {
-            color: $amarelo-dourado;
+            color: variables.$amarelo-dourado;
             font-size: 1.2rem;
             margin-bottom: 1.2rem;
             font-weight: 600;
@@ -42,7 +45,7 @@
                 left: 0;
                 width: 50px;
                 height: 2px;
-                background-color: $amarelo-dourado;
+                background-color: variables.$amarelo-dourado;
             }
         }
         
@@ -53,12 +56,13 @@
         }
         
         a {
-            color: $branco;
+            color: variables.$cor-rodape-link;
             text-decoration: none;
-            transition: $transition-default;
+            transition: variables.$transition-default;
             
-            &:hover {
-                color: $amarelo-dourado;
+            &:hover,
+            &:focus {
+                color: variables.$cor-rodape-link-hover;
             }
         }
         
@@ -79,7 +83,7 @@
                         font-family: 'Font Awesome 5 Free';
                         font-weight: 900;
                         margin-right: 0.5rem;
-                        color: $amarelo-dourado;
+                        color: variables.$amarelo-dourado;
                     }
                 }
             }
@@ -96,19 +100,19 @@
                 width: 36px;
                 height: 36px;
                 border-radius: 50%;
-                background-color: rgba($branco, 0.1);
-                transition: $transition-default;
+                background-color: rgba(variables.$branco, 0.1);
+                transition: variables.$transition-default;
                 
                 i {
-                    color: $branco;
+                    color: variables.$branco;
                     font-size: 1rem;
                 }
                 
                 &:hover {
-                    background-color: $amarelo-dourado;
+                    background-color: variables.$amarelo-dourado;
                     
                     i {
-                        color: $bordo;
+                        color: variables.$bordo;
                     }
                 }
             }
@@ -116,20 +120,17 @@
     }
     
     .footer-bottom {
-        border-top: 1px solid rgba($branco, 0.1);
-        padding-top: 1.5rem;
+        border-top: 1px solid variables.$cor-rodape-borda;
+        margin-top: variables.$espacamento-base;
+        padding-top: variables.$espacamento-base;
         text-align: center;
         
         .copyright {
             font-size: 0.85rem;
-            color: rgba($branco, 0.8);
+            color: rgba(variables.$branco, 0.8);
             
             p {
-                margin-bottom: 0.5rem;
-                
-                &:last-child {
-                    margin-bottom: 0;
-                }
+                margin-bottom: 0;
             }
         }
     }

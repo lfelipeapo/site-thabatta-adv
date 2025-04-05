@@ -1,0 +1,178 @@
+@use '../variables'; // Importar variáveis
+@use 'sass:color'; // Importar módulo color
+
+/* Estilos do componente Slider (ex: Swiper, Slick) */
+.main-slider {
+    position: relative;
+    overflow: hidden;
+
+    .swiper-container,
+    .slick-slider {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .slider-item {
+        height: 60vh;
+        min-height: 400px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        
+        @media (min-width: variables.$breakpoint-md) {
+            height: 80vh;
+            min-height: 500px;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(variables.$preto, 0.5);
+            z-index: 1;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            color: variables.$branco;
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+
+            .slide-subtitle {
+                font-size: 1.2rem;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+                opacity: 0.9;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+            }
+            
+            .slide-title {
+                font-family: variables.$font-secondary;
+                font-size: 2.5rem;
+                font-weight: 700;
+                line-height: 1.2;
+                margin-bottom: 1.5rem;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+                
+                @media (min-width: variables.$breakpoint-md) {
+                    font-size: 4rem;
+                }
+            }
+            
+            .slide-description {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+                opacity: 0.9;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .slide-button {
+                display: inline-block;
+                padding: 0.8rem 2rem;
+                background-color: variables.$amarelo-dourado;
+                color: variables.$bordo;
+                border: none;
+                border-radius: variables.$border-radius;
+                font-weight: 600;
+                cursor: pointer;
+                text-decoration: none;
+                text-align: center;
+                transition: variables.$transition-default;
+                
+                &:hover {
+                    background-color: color.adjust(variables.$amarelo-dourado, $blackness: 10%);
+                    transform: translateY(-2px);
+                    box-shadow: variables.$box-shadow;
+                }
+            }
+        }
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next,
+    .slick-prev,
+    .slick-next {
+        color: variables.$branco;
+        
+        &:hover {
+            color: variables.$amarelo-dourado;
+        }
+        
+        &::after {
+             font-size: 2.5rem;
+             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .swiper-pagination {
+        bottom: 20px !important;
+    }
+
+    .swiper-pagination-bullet,
+    .slick-dots li button:before {
+        background-color: rgba(variables.$branco, 0.5);
+        width: 12px;
+        height: 12px;
+        opacity: 1;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .swiper-pagination-bullet-active,
+    .slick-dots li.slick-active button:before {
+        background-color: variables.$amarelo-dourado;
+        transform: scale(1.2);
+    }
+}
+
+.slider-container {
+    position: relative;
+    margin-bottom: 3rem;
+
+    .slide-content {
+        h2 {
+            color: variables.$cor-slider-titulo;
+        }
+        p {
+            color: variables.$cor-slider-texto;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background-color: variables.$amarelo-dourado;
+            color: variables.$bordo;
+            border-radius: variables.$border-radius;
+            text-decoration: none;
+            font-weight: 600;
+            transition: variables.$transition-default;
+            
+            &:hover {
+                background-color: variables.$bordo;
+                color: variables.$branco;
+            }
+        }
+    }
+
+    .slick-dots li button:before {
+        color: variables.$cor-slider-dots;
+    }
+
+    .slick-dots li.slick-active button:before {
+        color: variables.$cor-slider-dots-active;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        color: variables.$cor-slider-arrows;
+    }
+} 

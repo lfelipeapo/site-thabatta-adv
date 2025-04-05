@@ -1,0 +1,104 @@
+@use '../variables'; // Importar variáveis
+
+/* Estilos dos botões */
+.btn {
+    display: inline-block;
+    font-weight: variables.$font-weight-normal; // Usar namespace
+    color: variables.$cor-botao-texto; // Usar namespace
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: variables.$cor-botao-fundo; // Usar namespace
+    border: 1px solid variables.$cor-botao-borda; // Usar namespace
+    padding: variables.$padding-botao-y variables.$padding-botao-x; // Usar namespace
+    font-size: variables.$font-size-base; // Usar namespace
+    line-height: variables.$line-height-base; // Usar namespace
+    border-radius: variables.$border-radius-botao; // Usar namespace
+    transition: variables.$transition-default; // Usar namespace
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        color: variables.$cor-botao-texto-hover; // Usar namespace
+        background-color: variables.$cor-botao-fundo-hover; // Usar namespace
+        border-color: variables.$cor-botao-borda-hover; // Usar namespace
+        text-decoration: none;
+        outline: 0;
+    }
+
+    &:disabled,
+    &.disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    // Botão primário
+    &.btn-primary {
+        color: variables.$cor-botao-primario-texto; // Usar namespace
+        background-color: variables.$cor-botao-primario-fundo; // Usar namespace
+        border-color: variables.$cor-botao-primario-borda; // Usar namespace
+
+        &:hover,
+        &:focus {
+            color: variables.$cor-botao-primario-texto-hover; // Usar namespace
+            background-color: variables.$cor-botao-primario-fundo-hover; // Usar namespace
+            border-color: variables.$cor-botao-primario-borda-hover; // Usar namespace
+        }
+    }
+
+    // Botão secundário
+    &.btn-secondary {
+        color: variables.$cor-botao-secundario-texto; // Usar namespace
+        background-color: variables.$cor-botao-secundario-fundo; // Usar namespace
+        border-color: variables.$cor-botao-secundario-borda; // Usar namespace
+
+        &:hover,
+        &:focus {
+            color: variables.$cor-botao-secundario-texto-hover; // Usar namespace
+            background-color: variables.$cor-botao-secundario-fundo-hover; // Usar namespace
+            border-color: variables.$cor-botao-secundario-borda-hover; // Usar namespace
+        }
+    }
+
+    // Botão outline primário
+    &.btn-outline-primary {
+        color: variables.$cor-botao-primario-fundo;
+        background-color: transparent;
+        border-color: variables.$cor-botao-primario-fundo;
+
+        &:hover,
+        &:focus {
+            color: variables.$cor-botao-primario-texto;
+            background-color: variables.$cor-botao-primario-fundo;
+            border-color: variables.$cor-botao-primario-borda;
+        }
+    }
+
+    // Botão outline secundário
+    &.btn-outline-secondary {
+        color: variables.$cor-botao-secundario-fundo;
+        background-color: transparent;
+        border-color: variables.$cor-botao-secundario-fundo;
+
+        &:hover,
+        &:focus {
+            color: variables.$cor-botao-secundario-texto;
+            background-color: variables.$cor-botao-secundario-fundo;
+            border-color: variables.$cor-botao-secundario-borda;
+        }
+    }
+
+    // Tamanhos de botões
+    &.btn-sm {
+        padding: calc(variables.$padding-botao-y * 0.5) calc(variables.$padding-botao-x * 0.5);
+        font-size: calc(variables.$font-size-base * 0.875);
+        border-radius: calc(variables.$border-radius-botao * 0.75);
+    }
+
+    &.btn-lg {
+        padding: calc(variables.$padding-botao-y * 1.5) calc(variables.$padding-botao-x * 1.5);
+        font-size: calc(variables.$font-size-base * 1.25);
+        border-radius: calc(variables.$border-radius-botao * 1.25);
+    }
+} 

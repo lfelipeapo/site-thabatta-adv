@@ -1,20 +1,63 @@
+@use 'sass:color'; // Importar o módulo de cor
+
 // Cores principais do tema
 $bordo: #800020;
 $amarelo-dourado: #ffd700;
 $branco: #ffffff;
+$preto: #000000;
 $cinza-claro: #f8f8f8;
+$cinza-claro-alt: #f0f0f0;
 $cinza-escuro: #4a4a4a;
 $vermelho-sangue: #8B0000;
+$cor-texto-base: #333333;
+$cor-titulos: #222222;
+$cor-fundo-site: #FFFFFF;
+$cor-fundo-claro: $cinza-claro;
+$cor-fundo-escuro: $bordo;
+$cor-texto-claro: $branco;
+$cor-titulos-claro: $branco;
+$link-color-claro: $amarelo-dourado;
+$link-hover-color-claro: color.adjust($amarelo-dourado, $lightness: 10%);
+
+// Cores do rodapé
+$cor-rodape-fundo: #222222;
+$cor-rodape-texto: #f8f8f8;
+$cor-rodape-link: #cccccc;
+$cor-rodape-link-hover: $amarelo-dourado;
+$cor-rodape-borda: rgba(255, 255, 255, 0.1);
+$padding-rodape: 3rem;
 
 // Fontes
 $font-primary: 'Montserrat', sans-serif;
 $font-secondary: 'Playfair Display', serif;
 $font-size-base: 16px;
+$font-size-small: 0.875rem;
+$line-height-base: 1.6;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Headings
+$h1-font-size: 2.5rem;
+$h2-font-size: 2rem;
+$h3-font-size: 1.5rem;
+$h4-font-size: 1.25rem;
+$h5-font-size: 1.1rem;
+$h6-font-size: 1rem;
+$paragraph-margin-bottom: 1rem;
+
+// Links
+$link-color: $bordo;
+$link-hover-color: $amarelo-dourado;
 
 // Tamanhos e espaçamentos
 $container-width: 1200px;
+$container-max-width: $container-width; // Alias para compatibilidade
+$container-padding: 15px; // Padding padrão para containers
 $gutter: 30px;
 $padding-section: 4rem;
+$espacamento-base: 1rem;
 
 // Breakpoints
 $breakpoint-sm: 576px;
@@ -25,6 +68,9 @@ $breakpoint-xl: 1200px;
 // Bordas e arredondamentos
 $border-radius: 5px;
 $border-radius-lg: 10px;
+$border-radius-botao: $border-radius;
+$border-radius-sm: 3px;
+$border-radius-tabs: $border-radius;
 
 // Sombras
 $box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -32,3 +78,141 @@ $box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
 
 // Transições
 $transition-default: all 0.3s ease-in-out;
+
+// Botões
+$padding-botao-y: 0.5rem;
+$padding-botao-x: 1rem;
+$cor-botao-texto: #333;
+$cor-botao-fundo: #f8f8f8;
+$cor-botao-borda: #ddd;
+$cor-botao-texto-hover: #333;
+$cor-botao-fundo-hover: #e9e9e9;
+$cor-botao-borda-hover: #ccc;
+
+// Botão primário
+$cor-botao-primario-texto: #fff;
+$cor-botao-primario-fundo: $bordo;
+$cor-botao-primario-borda: $bordo;
+$cor-botao-primario-texto-hover: #fff;
+$cor-botao-primario-fundo-hover: color.adjust($bordo, $lightness: -10%);
+$cor-botao-primario-borda-hover: color.adjust($bordo, $lightness: -10%);
+
+// Botão secundário
+$cor-botao-secundario-texto: $bordo;
+$cor-botao-secundario-fundo: $amarelo-dourado;
+$cor-botao-secundario-borda: $amarelo-dourado;
+$cor-botao-secundario-texto-hover: $bordo;
+$cor-botao-secundario-fundo-hover: color.adjust($amarelo-dourado, $lightness: -10%);
+$cor-botao-secundario-borda-hover: color.adjust($amarelo-dourado, $lightness: -10%);
+
+// Formulários
+$padding-input-y: 0.75rem;
+$padding-input-x: 1rem;
+$border-radius-input: $border-radius;
+$cor-input-texto: $cinza-escuro;
+$cor-input-fundo: $branco;
+$cor-input-borda: #ddd;
+$cor-input-borda-focus: $bordo;
+$form-group-margin-bottom: 1.5rem;
+
+// Accordion
+$cor-accordion-borda: $cinza-claro;
+$cor-accordion-header-fundo: $branco;
+$cor-accordion-header-texto: $cor-texto-base;
+$cor-accordion-header-fundo-active: $bordo;
+$cor-accordion-header-texto-active: $branco;
+$cor-accordion-body-fundo: $branco;
+$padding-accordion-body: 1.25rem;
+
+// Modal
+$cor-modal-backdrop: rgba($preto, 0.7);
+
+// Slider
+$cor-slider-titulo: $bordo;
+$cor-slider-texto: $cor-texto-base;
+$cor-slider-dots: $cinza-claro;
+$cor-slider-dots-active: $bordo;
+$cor-slider-arrows: $bordo;
+
+// Navegação
+$nav-item-spacing: 1.5rem;
+$nav-link-padding-y: 0.5rem;
+$nav-link-padding-x: 0.75rem;
+$nav-link-color: $branco;
+$nav-link-hover-color: $amarelo-dourado;
+$nav-link-font-weight: 500;
+$nav-submenu-bg: $branco;
+$nav-submenu-link-color: $cinza-escuro;
+$nav-submenu-link-hover-color: $bordo;
+$nav-submenu-link-hover-bg: color.adjust($cinza-claro, $lightness: 1%);
+$nav-mobile-bg: $bordo;
+$nav-mobile-link-color: $branco;
+$footer-nav-link-color: $cor-rodape-texto;
+$footer-nav-link-hover-color: $amarelo-dourado;
+
+// Paginação
+$pagination-margin-y: 2rem;
+$pagination-link-padding-y: 0.5rem;
+$pagination-link-padding-x: 1rem;
+$pagination-link-margin-x: 0.25rem;
+$pagination-border-color: $cinza-claro;
+$pagination-border-radius: $border-radius;
+$pagination-link-color: $bordo;
+$pagination-active-bg: $bordo;
+$pagination-active-color: $branco;
+$pagination-active-border-color: $bordo;
+$pagination-hover-bg: $cinza-claro;
+$pagination-hover-color: $bordo;
+$pagination-hover-border-color: $cinza-claro;
+
+// Breadcrumbs
+$breadcrumbs-color: $cinza-escuro;
+$breadcrumbs-bg: color.adjust($cinza-claro, $lightness: 2%);
+$breadcrumbs-link-color: $bordo;
+$breadcrumbs-link-hover-color: $amarelo-dourado;
+$breadcrumbs-separator-color: color.adjust($cinza-escuro, $lightness: 30%);
+
+// Menu Toggle
+$cor-menu-toggle-fundo: transparent;
+$cor-menu-toggle-texto: $branco;
+
+// Tabs
+$cor-tabs-borda: $cinza-claro;
+$cor-tabs-borda-hover: color.adjust($cinza-claro, $lightness: -5%);
+$cor-tabs-borda-active: $cinza-claro;
+$cor-tabs-link: $cinza-escuro;
+$cor-tabs-link-active: $bordo;
+$cor-tabs-fundo-active: $branco;
+$padding-tabs-link-y: 0.75rem;
+$padding-tabs-link-x: 1.25rem;
+$padding-tabs-content: 1.5rem 0;
+
+// CTA
+$cor-cta-fundo: $bordo;
+$cor-cta-texto: $branco;
+$cor-cta-titulo: $amarelo-dourado;
+$padding-cta-y: 4rem;
+$espacamento-cta-titulo: 1.5rem;
+$espacamento-cta-texto: 2rem;
+$espacamento-cta-botao: 1rem;
+
+// Cards
+$cor-card-fundo: $branco;
+$cor-card-borda: $cinza-claro;
+$cor-card-texto: $cor-texto-base;
+$cor-card-titulo: $bordo;
+$cor-card-icon: $amarelo-dourado;
+$padding-card: 1.5rem;
+$espacamento-card-icon: 1rem;
+$espacamento-card-titulo: 1rem;
+$border-radius-card: $border-radius;
+$font-size-card-icon: 2.5rem;
+$box-shadow-card: $box-shadow;
+$box-shadow-card-hover: $box-shadow-hover;
+
+// Single Post
+$cor-single-titulo: $bordo;
+$cor-single-meta: $cinza-escuro;
+$cor-single-borda-footer: $cinza-claro;
+$link-color-conteudo: $bordo;
+$link-hover-color-conteudo: $amarelo-dourado;

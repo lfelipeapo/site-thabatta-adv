@@ -1,0 +1,199 @@
+@use '../variables'; // Importar variáveis
+
+/* Estilos da página de Blog e Arquivos */
+.blog, .archive {
+    .site-main {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 15px;
+    }
+
+    article.post {
+        margin-bottom: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid variables.$cinza-claro;
+        
+        &:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .entry-header {
+            margin-bottom: 1.5rem;
+        }
+        
+        .entry-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            
+            a {
+                color: variables.$bordo;
+                text-decoration: none;
+                transition: color 0.3s ease;
+                
+                &:hover {
+                    color: variables.$amarelo-dourado;
+                }
+            }
+        }
+        
+        .entry-meta {
+            font-size: variables.$font-size-small;
+            color: variables.$cinza-escuro;
+            margin-bottom: 1rem;
+            
+            a {
+                color: variables.$cinza-escuro;
+                &:hover {
+                    color: variables.$bordo;
+                }
+            }
+            
+            span {
+                margin-right: 1rem;
+                
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+        
+        .entry-thumbnail {
+            margin-bottom: 1.5rem;
+            
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: variables.$border-radius;
+            }
+        }
+        
+        .entry-summary {
+            line-height: 1.7;
+            color: variables.$cor-texto-base;
+        }
+        
+        .entry-footer {
+            margin-top: 1.5rem;
+            
+            .read-more {
+                font-weight: 600;
+                color: variables.$bordo;
+                text-decoration: none;
+                
+                &:hover {
+                    color: variables.$amarelo-dourado;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    
+    .pagination {
+        margin-top: 3rem;
+        text-align: center;
+        
+        .page-numbers {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            border: 1px solid variables.$cinza-claro;
+            border-radius: variables.$border-radius;
+            color: variables.$bordo;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            
+            &.current {
+                background-color: variables.$bordo;
+                color: variables.$branco;
+                border-color: variables.$bordo;
+            }
+            
+            &:hover:not(.current) {
+                background-color: variables.$cinza-claro;
+                color: variables.$bordo;
+            }
+        }
+        
+        .prev, .next {
+            font-weight: bold;
+            
+            &::before, &::after {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+        
+        .prev::before {
+            content: "«";
+            margin-right: 0.5rem;
+        }
+        
+        .next::after {
+            content: "»";
+            margin-left: 0.5rem;
+        }
+    }
+}
+
+/* Estilos específicos para a página de Arquivo */
+.archive {
+    .page-title {
+        font-size: 1.5rem;
+        color: variables.$bordo;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid variables.$amarelo-dourado;
+        padding-bottom: 0.5rem;
+        display: inline-block;
+    }
+}
+
+.widget-area {
+    padding: 1.5rem;
+    border: 1px solid variables.$cinza-claro;
+    border-radius: variables.$border-radius;
+    background-color: variables.$cinza-claro-alt;
+    
+    .widget {
+        margin-bottom: 2rem;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+        
+        .widget-title {
+            font-size: 1.25rem;
+            color: variables.$bordo;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid variables.$amarelo-dourado;
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            
+            li {
+                padding: 0.5rem 0;
+                border-bottom: 1px solid variables.$cinza-claro;
+                
+                &:last-child {
+                    border-bottom: none;
+                }
+                
+                a {
+                    color: variables.$cinza-escuro;
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+                    
+                    &:hover {
+                        color: variables.$bordo;
+                    }
+                }
+            }
+        }
+    }
+} 

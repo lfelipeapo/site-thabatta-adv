@@ -1,0 +1,41 @@
+.container {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@media (width >= 768px) {
+  .container {
+    width: 85%;
+  }
+  body {
+    font-size: 17px;
+  }
+}
+@media (width < 1024px) {
+  .some-element {
+    display: block;
+  }
+}
+@media (width >= 768px) and (width < 1280px) {
+  .another-element {
+    padding: 20px;
+  }
+}
+@media (width >= 1024px) {
+  .container {
+    width: 80%;
+  }
+  body {
+    font-size: 18px;
+  }
+  .some-element {
+    display: flex;
+  }
+}
+/*# sourceMappingURL=responsive.css.map */

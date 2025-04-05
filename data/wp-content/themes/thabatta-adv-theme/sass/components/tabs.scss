@@ -1,0 +1,60 @@
+@use '../variables'; // Importar variáveis
+
+/* Estilos das Tabs */
+.nav-tabs {
+    border-bottom: 1px solid variables.$cor-tabs-borda;
+    margin-bottom: variables.$espacamento-base;
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+
+    .nav-item {
+        margin-bottom: -1px;
+        margin-right: 0.5rem;
+        
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .nav-link {
+        border: 1px solid transparent;
+        border-top-left-radius: variables.$border-radius-tabs;
+        border-top-right-radius: variables.$border-radius-tabs;
+        padding: variables.$padding-tabs-link-y variables.$padding-tabs-link-x;
+        color: variables.$cor-tabs-link;
+        text-decoration: none;
+        display: block;
+        transition: variables.$transition-default;
+
+        &:hover,
+        &:focus {
+            border-color: variables.$cor-tabs-borda-hover;
+            text-decoration: none;
+        }
+
+        &.active {
+            color: variables.$cor-tabs-link-active;
+            background-color: variables.$cor-tabs-fundo-active;
+            border-color: variables.$cor-tabs-borda-active;
+            border-bottom-color: transparent;
+        }
+    }
+}
+
+.tab-content {
+    .tab-pane {
+        padding: variables.$padding-tabs-content;
+        display: none;
+        
+        &.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+} 

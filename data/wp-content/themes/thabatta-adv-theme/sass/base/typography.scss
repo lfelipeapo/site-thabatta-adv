@@ -1,71 +1,75 @@
+@use '../variables'; // Importar variáveis
+
 /* Tipografia */
 
 // Importando as fontes necessárias
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 body {
-    font-family: $font-primary;
-    font-size: $font-size-base;
-    line-height: 1.6;
-    color: $cinza-escuro;
+    font-family: variables.$font-primary;
+    font-size: variables.$font-size-base;
+    line-height: variables.$line-height-base;
+    color: variables.$cor-texto-base;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: $font-secondary;
-    font-weight: 700;
+    font-family: variables.$font-secondary;
+    font-weight: variables.$font-weight-bold;
     line-height: 1.2;
+    margin-top: 0; // Garantir que não haja margem no topo por padrão
     margin-bottom: 1rem;
-    color: $bordo;
+    color: variables.$cor-titulos;
 }
 
-h1 {
-    font-size: 2.5rem;
+h1, .h1 {
+    font-size: variables.$h1-font-size;
     
-    @media (min-width: $breakpoint-md) {
+    @media (min-width: variables.$breakpoint-md) {
         font-size: 3rem;
     }
 }
 
-h2 {
-    font-size: 2rem;
+h2, .h2 {
+    font-size: variables.$h2-font-size;
     
-    @media (min-width: $breakpoint-md) {
+    @media (min-width: variables.$breakpoint-md) {
         font-size: 2.5rem;
     }
 }
 
-h3 {
-    font-size: 1.5rem;
+h3, .h3 {
+    font-size: variables.$h3-font-size;
     
-    @media (min-width: $breakpoint-md) {
+    @media (min-width: variables.$breakpoint-md) {
         font-size: 1.75rem;
     }
 }
 
-h4 {
-    font-size: 1.25rem;
+h4, .h4 {
+    font-size: variables.$h4-font-size;
 }
 
-h5 {
-    font-size: 1.1rem;
+h5, .h5 {
+    font-size: variables.$h5-font-size;
 }
 
-h6 {
-    font-size: 1rem;
+h6, .h6 {
+    font-size: variables.$h6-font-size;
 }
 
 p {
-    margin-bottom: 1.5rem;
+    margin-top: 0; // Garantir que não haja margem no topo por padrão
+    margin-bottom: variables.$paragraph-margin-bottom;
 }
 
 a {
-    color: $bordo;
+    color: variables.$link-color;
     text-decoration: none;
-    transition: $transition-default;
+    transition: color 0.3s ease;
     
     &:hover, &:focus {
-        color: $amarelo-dourado;
-        text-decoration: none;
+        color: variables.$link-hover-color;
+        text-decoration: underline;
     }
 }
 
@@ -90,19 +94,19 @@ em, i {
 }
 
 .text-primary {
-    color: $bordo;
+    color: variables.$bordo;
 }
 
 .text-secondary {
-    color: $amarelo-dourado;
+    color: variables.$amarelo-dourado;
 }
 
 .text-light {
-    color: $branco;
+    color: variables.$branco;
 }
 
 .text-muted {
-    color: rgba($cinza-escuro, 0.6);
+    color: rgba(variables.$cinza-escuro, 0.6);
 }
 
 .text-small {
@@ -114,7 +118,7 @@ em, i {
 }
 
 .font-secondary {
-    font-family: $font-secondary;
+    font-family: variables.$font-secondary;
 }
 
 .font-weight-light {
@@ -165,7 +169,7 @@ li {
 // Outros elementos tipográficos
 blockquote {
     font-style: italic;
-    border-left: 4px solid $amarelo-dourado;
+    border-left: 4px solid variables.$amarelo-dourado;
     padding-left: 1.5rem;
     margin: 1.5rem 0;
     
@@ -190,14 +194,14 @@ blockquote {
 hr {
     border: 0;
     height: 1px;
-    background-color: rgba($cinza-escuro, 0.1);
+    background-color: rgba(variables.$cinza-escuro, 0.1);
     margin: 2rem 0;
 }
 
 code, pre {
     font-family: monospace;
-    background-color: $cinza-claro;
-    border-radius: $border-radius;
+    background-color: variables.$cinza-claro;
+    border-radius: variables.$border-radius;
 }
 
 code {

@@ -1,20 +1,23 @@
+@use '../variables'; // Importar variáveis
+@use 'sass:color'; // Importar módulo de cor
+
 /* Estilos de formulários */
 input,
 textarea,
 select {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #e0e0e0;
-    border-radius: $border-radius;
-    background-color: $branco;
-    color: $cinza-escuro;
-    transition: $transition-default;
+    padding: variables.$padding-input-y variables.$padding-input-x;
+    border: 1px solid variables.$cor-input-borda;
+    border-radius: variables.$border-radius-input;
+    background-color: variables.$cor-input-fundo;
+    color: variables.$cor-input-texto;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-bottom: 1rem;
     
     &:focus {
-        outline: none;
-        border-color: $bordo;
-        box-shadow: 0 0 0 3px rgba($bordo, 0.1);
+        outline: 0;
+        border-color: variables.$cor-input-borda-focus;
+        box-shadow: 0 0 0 0.2rem rgba(variables.$cor-input-borda-focus, 0.25);
     }
     
     &.error {
@@ -30,8 +33,8 @@ textarea {
 label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: $cinza-escuro;
+    font-weight: variables.$font-weight-normal;
+    color: variables.$cor-input-texto;
 }
 
 button,
@@ -40,38 +43,38 @@ input[type="button"],
 input[type="submit"] {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background-color: $bordo;
-    color: $branco;
+    background-color: variables.$bordo;
+    color: variables.$branco;
     border: none;
-    border-radius: $border-radius;
+    border-radius: variables.$border-radius;
     font-weight: 600;
     cursor: pointer;
-    transition: $transition-default;
+    transition: variables.$transition-default;
     text-align: center;
     
     &:hover {
-        background-color: darken($bordo, 10%);
+        background-color: color.adjust(variables.$bordo, $lightness: -10%);
         transform: translateY(-2px);
-        box-shadow: $box-shadow;
+        box-shadow: variables.$box-shadow;
     }
     
     &.secondary {
-        background-color: $amarelo-dourado;
-        color: $bordo;
+        background-color: variables.$amarelo-dourado;
+        color: variables.$bordo;
         
         &:hover {
-            background-color: darken($amarelo-dourado, 10%);
+            background-color: color.adjust(variables.$amarelo-dourado, $lightness: -10%);
         }
     }
     
     &.outline {
         background-color: transparent;
-        border: 2px solid $bordo;
-        color: $bordo;
+        border: 2px solid variables.$bordo;
+        color: variables.$bordo;
         
         &:hover {
-            background-color: $bordo;
-            color: $branco;
+            background-color: variables.$bordo;
+            color: variables.$branco;
         }
     }
     
@@ -84,7 +87,7 @@ input[type="submit"] {
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: variables.$form-group-margin-bottom;
 }
 
 .form-actions {
@@ -112,13 +115,13 @@ input[type="submit"] {
     }
     
     .form-container {
-        background-color: $branco;
-        border-radius: $border-radius-lg;
+        background-color: variables.$branco;
+        border-radius: variables.$border-radius-lg;
         width: 100%;
         max-width: 500px;
         padding: 2rem;
         position: relative;
-        box-shadow: $box-shadow-hover;
+        box-shadow: variables.$box-shadow-hover;
     }
     
     .close-form {
@@ -127,19 +130,19 @@ input[type="submit"] {
         right: 0.75rem;
         background: transparent;
         border: none;
-        color: $cinza-escuro;
+        color: variables.$cinza-escuro;
         font-size: 1.25rem;
         cursor: pointer;
         padding: 0.25rem;
         line-height: 1;
         
         &:hover {
-            color: $bordo;
+            color: variables.$bordo;
         }
     }
     
     h3 {
-        color: $bordo;
+        color: variables.$bordo;
         margin-bottom: 1.5rem;
         text-align: center;
     }
@@ -178,17 +181,17 @@ input[type="submit"] {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: $branco;
+            color: variables.$branco;
             font-weight: 600;
             position: relative;
             z-index: 2;
             
             &.active {
-                background-color: $bordo;
+                background-color: variables.$bordo;
             }
             
             &.completed {
-                background-color: $amarelo-dourado;
+                background-color: variables.$amarelo-dourado;
             }
         }
     }
@@ -196,10 +199,140 @@ input[type="submit"] {
     .form-navigation {
         display: flex;
         justify-content: space-between;
-        margin-top: 1.5rem;
+        margin-top: 2rem;
         
         button {
-            min-width: 100px;
+            padding: 0.5rem 1.25rem;
+        }
+    }
+}
+
+/* Checkbox e Radio */
+.custom-control {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 1rem;
+    
+    input {
+        position: absolute;
+        opacity: 0;
+        height: 0;
+        width: 0;
+        
+        &:checked ~ .custom-control-indicator {
+            background-color: variables.$bordo;
+            border-color: variables.$bordo;
+            
+            &::after {
+                opacity: 1;
+            }
+        }
+        
+        &:focus ~ .custom-control-indicator {
+            box-shadow: 0 0 0 0.2rem rgba(variables.$bordo, 0.25);
+        }
+    }
+    
+    .custom-control-indicator {
+        position: absolute;
+        top: 0.25rem;
+        left: 0;
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 1px solid variables.$cor-input-borda;
+        background-color: variables.$branco;
+        transition: all 0.3s ease;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    }
+    
+    .custom-control-label {
+        margin-bottom: 0;
+    }
+}
+
+.custom-checkbox {
+    .custom-control-indicator {
+        border-radius: 3px;
+        
+        &::after {
+            top: 3px;
+            left: 7px;
+            width: 5px;
+            height: 10px;
+            border: solid variables.$branco;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    }
+}
+
+.custom-radio {
+    .custom-control-indicator {
+        border-radius: 50%;
+        
+        &::after {
+            top: 4px;
+            left: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: variables.$branco;
+        }
+    }
+}
+
+/* Validação de formulário */
+.invalid-feedback {
+    display: none;
+    color: #e53935;
+    font-size: 0.875rem;
+    margin-top: -0.75rem;
+    margin-bottom: 1rem;
+}
+
+input.is-invalid,
+textarea.is-invalid,
+select.is-invalid {
+    border-color: #e53935;
+    
+    &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(229, 57, 53, 0.25);
+    }
+    
+    ~ .invalid-feedback {
+        display: block;
+    }
+}
+
+/* Campo de Busca */
+.search-form {
+    position: relative;
+    margin-bottom: 1.5rem;
+    
+    input[type="search"] {
+        padding-right: 3rem;
+    }
+    
+    button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 1rem;
+        background: transparent;
+        color: variables.$cinza-escuro;
+        
+        &:hover {
+            color: variables.$bordo;
+            background: transparent;
+            transform: none;
+            box-shadow: none;
         }
     }
 }
