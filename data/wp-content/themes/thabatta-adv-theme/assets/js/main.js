@@ -7,9 +7,9 @@
     // Document ready
     $(document).ready(function() {
         // Smooth scrolling for anchor links
-        $('a[href*="#"]:not([href="#"])').click(function() {
-            if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
-                let target = $(this.hash);
+        $('a[href*="#"]:not([href="#"]):not([href="#0"])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                var target = $(this.hash);
                 target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
                 if (target.length) {
                     $('html, body').animate({
@@ -26,7 +26,7 @@
         const $body = $('body');
 
         $(window).scroll(function() {
-            if ($(window).scrollTop() > headerHeight) {
+            if ($(this).scrollTop() > 100) {
                 $header.addClass('sticky');
                 $body.css('padding-top', headerHeight + 'px');
             } else {
@@ -36,11 +36,10 @@
         });
 
         // Mobile menu toggle
-        $('.menu-toggle').on('click', function() {
+        $('.menu-toggle').on('click', function(e) {
+            e.preventDefault();
             $('.main-navigation').toggleClass('toggled');
-            $(this).attr('aria-expanded', function(index, attr) {
-                return attr === 'true' ? 'false' : 'true';
-            });
+            $('body').toggleClass('menu-open');
         });
 
         // Dropdown menus for mobile
@@ -166,6 +165,169 @@
                 easing: 'ease-in-out',
                 once: true
             });
+        }
+
+        // Multi-step form functionality
+        const multiStepForm = {
+            init: function() {
+                // Form container and controls
+                this.consultationForm = $('#consultationForm');
+                this.form = $('#multiStepForm');
+                this.steps = $('.step');
+                this.stepIndicators = $('.step-indicator');
+                this.prevBtn = $('#prevBtn');
+                this.nextBtn = $('#nextBtn');
+                this.submitBtn = $('#submitBtn');
+                this.formSuccess = $('#formSuccess');
+                
+                // Open/Close form triggers
+                this.openFormBtn = $('.open-consultation-form');
+                this.closeFormBtn = $('.close-form');
+                this.formOverlay = $('.form-overlay');
+                this.closeSuccessBtn = $('.close-success');
+                
+                // Current step
+                this.currentStep = 0;
+                
+                // Initialize steps and events
+                this.showStep(this.currentStep);
+                this.bindEvents();
+            },
+            
+            bindEvents: function() {
+                const self = this;
+                
+                // Open form event
+                this.openFormBtn.on('click', function(e) {
+                    e.preventDefault();
+                    self.openForm();
+                });
+                
+                // Close form events
+                this.closeFormBtn.on('click', this.closeForm.bind(this));
+                this.formOverlay.on('click', this.closeForm.bind(this));
+                this.closeSuccessBtn.on('click', this.closeForm.bind(this));
+                
+                // Form navigation
+                this.prevBtn.on('click', this.prevStep.bind(this));
+                this.nextBtn.on('click', this.nextStep.bind(this));
+                
+                // Form submission
+                this.form.on('submit', function(e) {
+                    e.preventDefault();
+                    
+                    if (self.validateStep(self.currentStep)) {
+                        // Show loading state
+                        self.submitBtn.prop('disabled', true).text('Enviando...');
+                        
+                        // Simulate AJAX form submission (replace with actual AJAX)
+                        setTimeout(function() {
+                            self.showSuccess();
+                            self.submitBtn.prop('disabled', false).text('Enviar');
+                            self.resetForm();
+                        }, 1500);
+                    }
+                });
+                
+                // Input mask for phone and CPF/CNPJ if mask plugin is available
+                if ($.fn.mask) {
+                    $('.phone-mask').mask('(00) 00000-0000');
+                    $('.cpfcnpj-mask').mask('000.000.000-00', {
+                        onKeyPress: function(cpf, e, field, options) {
+                            const masks = ['000.000.000-00', '00.000.000/0000-00'];
+                            const mask = (cpf.length > 14) ? masks[1] : masks[0];
+                            $('.cpfcnpj-mask').mask(mask, options);
+                        }
+                    });
+                }
+            },
+            
+            openForm: function() {
+                this.consultationForm.addClass('active');
+                $('body').addClass('form-open');
+            },
+            
+            closeForm: function() {
+                this.consultationForm.removeClass('active');
+                this.formSuccess.addClass('hidden');
+                $('body').removeClass('form-open');
+            },
+            
+            showStep: function(stepIndex) {
+                // Hide all steps
+                this.steps.removeClass('active');
+                
+                // Show current step
+                this.steps.eq(stepIndex).addClass('active');
+                
+                // Update step indicators
+                this.stepIndicators.removeClass('active');
+                this.stepIndicators.eq(stepIndex).addClass('active');
+                
+                // Update navigation buttons
+                if (stepIndex === 0) {
+                    this.prevBtn.addClass('hidden');
+                } else {
+                    this.prevBtn.removeClass('hidden');
+                }
+                
+                if (stepIndex === this.steps.length - 1) {
+                    this.nextBtn.addClass('hidden');
+                    this.submitBtn.removeClass('hidden');
+                } else {
+                    this.nextBtn.removeClass('hidden');
+                    this.submitBtn.addClass('hidden');
+                }
+            },
+            
+            nextStep: function() {
+                if (this.validateStep(this.currentStep)) {
+                    this.currentStep++;
+                    if (this.currentStep < this.steps.length) {
+                        this.showStep(this.currentStep);
+                    }
+                }
+            },
+            
+            prevStep: function() {
+                this.currentStep--;
+                if (this.currentStep >= 0) {
+                    this.showStep(this.currentStep);
+                }
+            },
+            
+            validateStep: function(stepIndex) {
+                const inputs = this.steps.eq(stepIndex).find('input[required], select[required], textarea[required]');
+                let isValid = true;
+                
+                inputs.removeClass('error');
+                
+                inputs.each(function() {
+                    if (!$(this).val()) {
+                        $(this).addClass('error');
+                        isValid = false;
+                    }
+                });
+                
+                return isValid;
+            },
+            
+            showSuccess: function() {
+                this.form.addClass('hidden');
+                this.formSuccess.removeClass('hidden');
+            },
+            
+            resetForm: function() {
+                this.form[0].reset();
+                this.currentStep = 0;
+                this.showStep(this.currentStep);
+                this.form.removeClass('hidden');
+            }
+        };
+
+        // Initialize components when DOM is ready
+        if ($('#multiStepForm').length) {
+            multiStepForm.init();
         }
     });
 

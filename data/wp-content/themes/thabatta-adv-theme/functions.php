@@ -65,6 +65,14 @@ add_action('after_setup_theme', 'thabatta_setup');
  * Carregar domínio de texto do tema
  */
 function thabatta_load_theme_textdomain() {
+    // Garantir que o diretório de idiomas existe
+    $locale = apply_filters('theme_locale', determine_locale(), 'thabatta-adv');
+    $mofile = get_template_directory() . '/languages/thabatta-adv-' . $locale . '.mo';
+    
+    // Carregar a tradução
+    load_textdomain('thabatta-adv', $mofile);
+    
+    // Método padrão (backup)
     load_theme_textdomain('thabatta-adv', THABATTA_THEME_DIR . '/languages');
 }
 add_action('init', 'thabatta_load_theme_textdomain');
@@ -75,24 +83,37 @@ add_action('init', 'thabatta_load_theme_textdomain');
 function thabatta_scripts() {
     // Estilos
     wp_enqueue_style('thabatta-style', get_stylesheet_uri(), array(), THABATTA_THEME_VERSION);
-    wp_enqueue_style('thabatta-main', THABATTA_THEME_URI . '/assets/css/main.min.css', array(), THABATTA_THEME_VERSION);
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0');
+    wp_enqueue_style('thabatta-main', THABATTA_THEME_URI . '/assets/css/style.min.css', array(), THABATTA_THEME_VERSION);
+    
+    // Google Fonts
+    wp_enqueue_style('thabatta-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap', array(), null);
+    
+    // Font Awesome
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', array(), '5.15.4');
     
     // Scripts
     wp_enqueue_script('jquery');
     wp_enqueue_script('slick-slider', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', array('jquery'), '1.8.1', true);
+    wp_enqueue_script('thabatta-navigation', THABATTA_THEME_URI . '/assets/js/navigation.min.js', array(), THABATTA_THEME_VERSION, true);
     wp_enqueue_script('thabatta-main', THABATTA_THEME_URI . '/assets/js/main.min.js', array('jquery'), THABATTA_THEME_VERSION, true);
+
+    // Comentários
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 
     // Passar variáveis para o JavaScript
     wp_localize_script('thabatta-main', 'thabattaData', array(
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'nonce'   => wp_create_nonce('thabatta_nonce'),
     ));
-
-    // Adicionar script de comentários apenas quando necessário
-    if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
-    }
+    
+    // Adicionar variáveis adicionais para o script
+    wp_localize_script('thabatta-main', 'thabattaSettings', array(
+        'themeUrl' => get_template_directory_uri(),
+        'siteUrl' => site_url(),
+        'isHome' => is_home() || is_front_page() ? 1 : 0
+    ));
 }
 add_action('wp_enqueue_scripts', 'thabatta_scripts');
 
@@ -453,43 +474,6 @@ function thabatta_save_related_posts_meta_box($post_id)
     }
 }
 add_action('save_post', 'thabatta_save_related_posts_meta_box');
-
-/**
- * Registrar scripts e estilos
- */
-function thabatta_enqueue_scripts()
-{
-    // Versão do tema
-    $theme_version = wp_get_theme()->get('Version');
-
-    // Estilos
-    wp_enqueue_style('thabatta-style', get_stylesheet_uri(), array(), $theme_version);
-    wp_enqueue_style('thabatta-main', get_template_directory_uri() . '/assets/css/style.min.css', array(), $theme_version);
-
-    // Google Fonts
-    wp_enqueue_style('thabatta-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap', array(), null);
-
-    // Font Awesome
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', array(), '5.15.4');
-
-    // Scripts
-    wp_enqueue_script('thabatta-navigation', get_template_directory_uri() . '/assets/js/navigation.min.js', array(), $theme_version, true);
-    wp_enqueue_script('thabatta-main', get_template_directory_uri() . '/assets/js/main.min.js', array('jquery'), $theme_version, true);
-
-    // Comentários
-    if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
-    }
-
-    // Adicionar variáveis para o script
-    wp_localize_script('thabatta-main', 'thabattaSettings', array(
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'themeUrl' => get_template_directory_uri(),
-        'siteUrl' => site_url(),
-        'isHome' => is_home() || is_front_page() ? 1 : 0
-    ));
-}
-add_action('wp_enqueue_scripts', 'thabatta_enqueue_scripts');
 
 /**
  * Registrar scripts e estilos para o admin
