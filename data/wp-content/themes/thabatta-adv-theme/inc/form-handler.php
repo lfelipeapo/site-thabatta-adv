@@ -216,8 +216,8 @@ function thabatta_handle_lead_form() {
     $lead_id = wp_insert_post($lead_data);
     
     // Verificar se houve erro na inserção do post
-    if ($lead_id === 0 || $lead_id === false) {
-        wp_send_json_error(array('message' => esc_html__('Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente.', 'thabatta-adv')));
+    if (is_wp_error($lead_id) || $lead_id === 0) {
+        wp_send_json_error(array('message' => esc_html__('Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente.', 'thabatta-adv') . ' (Erro: ' . ($lead_id instanceof WP_Error ? $lead_id->get_error_message() : 'ID 0') . ')'));
         wp_die();
     }
     
