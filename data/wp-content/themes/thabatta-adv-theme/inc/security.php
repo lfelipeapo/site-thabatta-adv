@@ -226,26 +226,60 @@ add_filter('comment_excerpt', 'thabatta_filter_comment_content');
 /**
  * Proteger contra ataques de injeção SQL
  */
-
 function thabatta_check_for_sql_injection()
 {
-    $inputs = array_merge($_GET, $_POST);
+    // Não executar esta verificação ampla em páginas de admin; 
+    // Confiar nas nonces e sanitização do core.
+    if (is_admin()) {
+        return;
+    }
+
+    $inputs = array_merge($_GET, $_POST, $_REQUEST, $_COOKIE);
     $patterns = array(
-        '/(\%27)|(\')|(\-\-)|(\%23)|(#)/i',
-        '/((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(\;))/i',
-        '/\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/i',
-        '/((\%27)|(\'))union/i',
+        '/(\%27)|(\')|(\-\-)|(\%23)|(#)/i', // Aspas simples, comentários SQL
+        '/((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(\;))/i', // Condições maliciosas (ex: OR '1'='1')
+        '/\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/i', // Tentativas de ' OR '
+        '/((\%27)|(\'))union/i', // Ataques UNION
+        '/\b(ALTER|CREATE|DELETE|DROP|EXEC|INSERT|MERGE|SELECT|UPDATE|UNION)\b/i', // Palavras-chave SQL
+        '/\b(sleep|benchmark)\s*\(/i' // Funções de tempo
     );
 
-    foreach ($inputs as $input) {
-        foreach ($patterns as $pattern) {
-            if (preg_match($pattern, $input)) {
-                wp_die(__('Requisição inválida detectada.', 'thabatta-adv'));
+    foreach ($inputs as $key => $value) {
+        // Processar apenas strings
+        if (is_string($value)) {
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $value)) {
+                    // Log da tentativa de ataque (opcional)
+                    error_log('Tentativa de SQL Injection detectada: IP ' . $_SERVER['REMOTE_ADDR'] . ', Chave: ' . $key . ', Valor: ' . $value);
+                    wp_die(__('Requisição inválida detectada. Tentativa de SQL Injection.', 'thabatta-adv'), __('Erro de Segurança', 'thabatta-adv'), array('response' => 403));
+                }
             }
+        } elseif (is_array($value)) {
+            // Se for um array, verificar recursivamente (opcional, pode ser complexo)
+            // thabatta_check_array_for_sql_injection($value, $patterns, $key);
         }
     }
 }
-add_action('init', 'thabatta_check_for_sql_injection');
+
+// Função auxiliar para verificar arrays (se necessário)
+/*
+function thabatta_check_array_for_sql_injection($array, $patterns, $parent_key = '') {
+    foreach ($array as $key => $value) {
+        $current_key = $parent_key ? $parent_key . '[' . $key . ']' : $key;
+        if (is_string($value)) {
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $value)) {
+                    error_log('Tentativa de SQL Injection detectada (array): IP ' . $_SERVER['REMOTE_ADDR'] . ', Chave: ' . $current_key . ', Valor: ' . $value);
+                    wp_die(__('Requisição inválida detectada. Tentativa de SQL Injection.', 'thabatta-adv'), __('Erro de Segurança', 'thabatta-adv'), array('response' => 403));
+                }
+            }
+        } elseif (is_array($value)) {
+            thabatta_check_array_for_sql_injection($value, $patterns, $current_key);
+        }
+    }
+}
+*/
+add_action('init', 'thabatta_check_for_sql_injection', 1); // Executar cedo
 
 /**
  * Proteger uploads de arquivos

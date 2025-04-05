@@ -148,3 +148,7 @@ define('FTP_PLUGIN_DIR', '/home/wp-user/data/wp-content/plugins'); // Diretório
 @ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 set_time_limit(120);
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+
+
+define('WP_MEMORY_LIMIT', '512M');
+set_time_limit(300);
