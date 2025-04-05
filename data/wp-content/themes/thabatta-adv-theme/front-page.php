@@ -6,11 +6,22 @@
  */
 
 get_header();
+
+// Verifica se há uma imagem de banner definida no admin
+$banner_image = '';
+if (function_exists('get_field') && get_field('hero_background_image', 'option')) {
+    $banner_image = get_field('hero_background_image', 'option');
+} elseif (get_theme_mod('hero_background_image')) {
+    $banner_image = get_theme_mod('hero_background_image');
+} else {
+    // Imagem de fallback da Unsplash
+    $banner_image = 'https://images.unsplash.com/photo-1589578527966-fdac0f44566c?q=80&w=1974&auto=format&fit=crop';
+}
 ?>
 
 <main id="primary" class="site-main front-page">
     <!-- Hero Section -->
-    <section class="hero-section" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/hero-bg.jpg');">
+    <section class="hero-section" style="background-image: url('<?php echo esc_url($banner_image); ?>');">
         <div class="container">
             <div class="hero-content">
                 <h1><?php echo esc_html(get_theme_mod('hero_title', 'Thabatta Apolinário Advocacia')); ?></h1>
