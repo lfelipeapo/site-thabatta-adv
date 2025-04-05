@@ -11,31 +11,24 @@ if (!is_active_sidebar('sidebar-1')) {
 ?>
 
 <aside id="secondary" class="widget-area sidebar">
-    <?php dynamic_sidebar('sidebar-1'); ?>
-    
     <?php
-    // Exibir posts relacionados se existirem
-    if (is_singular() && function_exists('thabatta_get_related_posts')) {
-        $related_posts = thabatta_get_related_posts();
-        
-        if (!empty($related_posts)) :
-    ?>
-        <section class="widget widget-related-posts">
-            <h2 class="widget-title"><?php esc_html_e('Posts Relacionados', 'thabatta-adv'); ?></h2>
-            <ul>
-                <?php foreach ($related_posts as $related_post) : ?>
-                    <li>
-                        <a href="<?php echo esc_url(get_permalink($related_post->ID)); ?>">
-                            <?php echo esc_html(get_the_title($related_post->ID)); ?>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </section>
-    <?php
-        endif;
+    // Exibe posts relacionados
+    if (function_exists('thabatta_get_related_posts')) {
+        $related_posts = thabatta_get_related_posts(get_the_ID(), 3);
+        if ($related_posts) {
+            echo '<section class="widget widget_related_posts">';
+            echo '<h2 class="widget-title">' . esc_html__('Relacionados', 'thabatta-adv') . '</h2>';
+            echo '<ul>';
+            foreach ($related_posts as $related_post) {
+                echo '<li><a href="' . esc_url(get_permalink($related_post->ID)) . '">' . esc_html(get_the_title($related_post->ID)) . '</a></li>';
+            }
+            echo '</ul>';
+            echo '</section>';
+        }
     }
     ?>
+    
+    <?php dynamic_sidebar('sidebar-1'); ?>
     
     <?php
     // Exibir categorias relacionadas se for um post

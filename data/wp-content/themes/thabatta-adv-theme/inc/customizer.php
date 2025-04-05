@@ -301,11 +301,12 @@ function thabatta_sanitize_select($input, $setting) {
 /**
  * Sanitize checkbox field
  *
- * @param bool $checked Whether the checkbox is checked
- * @return bool Whether the checkbox is checked
+ * @param string $checked Whether the checkbox is checked ('1' or '0')
+ * @return string '1' if checked, '0' otherwise
  */
 function thabatta_sanitize_checkbox($checked) {
-    return (true === $checked) ? '1' : '0';
+    // Ensure it's either '1' or '0'
+    return ($checked === true || $checked === '1') ? '1' : '0';
 }
 
 /**

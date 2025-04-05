@@ -55,7 +55,7 @@
     <?php endif; ?>
     
     <?php if (function_exists('thabatta_get_related_posts')) : 
-        $related_posts = thabatta_get_related_posts();
+        $related_posts = thabatta_get_related_posts(get_the_ID());
         
         if (!empty($related_posts)) : ?>
             <div class="related-posts">

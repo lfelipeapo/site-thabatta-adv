@@ -849,6 +849,20 @@ function thabatta_get_areas_atuacao($count = -1, $orderby = 'title', $order = 'A
         'order' => $order
     );
 
+    // Obter campos ACF
+    if (function_exists('get_field')) {
+        $areas = get_field('areas_atuacao_destaque', 'option');
+        $order = get_field('ordem_areas_atuacao', 'option');
+
+        if (!empty($areas)) {
+            $args['post__in'] = $areas;
+        }
+
+        if ($order) {
+            $args['orderby'] = $order;
+        }
+    }
+
     return get_posts($args);
 }
 
@@ -865,6 +879,21 @@ function thabatta_get_team_members($count = -1, $orderby = 'menu_order', $order 
         'order' => $order
     );
 
+    // Obter campos ACF
+    if (function_exists('get_field')) {
+        $members = get_field('membros_equipe_destaque', 'option');
+        $order = get_field('ordem_membros_equipe', 'option');
+        $count = get_field('numero_membros_destaque', 'option') ?: $count; // Permitir override
+
+        if (!empty($members)) {
+            $args['post__in'] = $members;
+        }
+
+        if ($order) {
+            $args['orderby'] = $order;
+        }
+    }
+
     return get_posts($args);
 }
 
@@ -880,6 +909,21 @@ function thabatta_get_testimonials($count = 3, $orderby = 'rand', $order = 'DESC
         'orderby' => $orderby,
         'order' => $order
     );
+
+    // Obter campos ACF
+    if (function_exists('get_field')) {
+        $testimonials = get_field('depoimentos_destaque', 'option');
+        $order = get_field('ordem_depoimentos', 'option');
+        $count = get_field('numero_depoimentos_destaque', 'option') ?: $count; // Permitir override
+
+        if (!empty($testimonials)) {
+            $args['post__in'] = $testimonials;
+        }
+
+        if ($order) {
+            $args['orderby'] = $order;
+        }
+    }
 
     return get_posts($args);
 }

@@ -150,8 +150,8 @@ function thabatta_ajax_clear_all_cache()
     }
 
     // Limpar cache do Jetpack
-    if (class_exists('Jetpack') && method_exists('Jetpack', 'flush_cache')) {
-        Jetpack::flush_cache();
+    if (class_exists('Jetpack') && function_exists('jetpack_page_cache_invalidate_all')) {
+        jetpack_page_cache_invalidate_all();
     }
 
     // Limpar cache do WordPress
@@ -183,8 +183,8 @@ function thabatta_ajax_clear_page_cache()
     }
 
     // Limpar cache de páginas do Jetpack
-    if (class_exists('Jetpack') && method_exists('Jetpack', 'flush_cache')) {
-        Jetpack::flush_cache('pages');
+    if (class_exists('Jetpack') && function_exists('jetpack_page_cache_invalidate_all')) {
+        jetpack_page_cache_invalidate_all();
     }
 
     wp_send_json_success(__('Cache de páginas limpo com sucesso!', 'thabatta-adv'));
@@ -207,8 +207,8 @@ function thabatta_ajax_clear_assets_cache()
     }
 
     // Limpar cache de assets do Jetpack
-    if (class_exists('Jetpack') && method_exists('Jetpack', 'flush_cache')) {
-        Jetpack::flush_cache('assets');
+    if (class_exists('Jetpack') && function_exists('jetpack_page_cache_invalidate_all')) {
+        jetpack_page_cache_invalidate_all();
     }
 
     wp_send_json_success(__('Cache de assets limpo com sucesso!', 'thabatta-adv'));
