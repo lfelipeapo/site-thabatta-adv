@@ -388,11 +388,13 @@ function thabatta_breadcrumbs()
         echo $separator;
 
         if (is_category()) {
-            $cat = get_category(get_query_var('cat'), false);
-            echo '<span property="itemListElement" typeof="ListItem">';
-            echo '<span property="name">' . esc_html($cat->name) . '</span>';
-            echo '<meta property="position" content="2">';
-            echo '</span>';
+            $cat = get_category(get_query_var('cat'));
+            if ($cat) {
+                echo '<span property="itemListElement" typeof="ListItem">';
+                echo '<span property="name">' . esc_html($cat->name) . '</span>';
+                echo '<meta property="position" content="2">';
+                echo '</span>';
+            }
         } elseif (is_tag()) {
             $tag = get_term_by('slug', get_query_var('tag'), 'post_tag');
             echo '<span property="itemListElement" typeof="ListItem">';

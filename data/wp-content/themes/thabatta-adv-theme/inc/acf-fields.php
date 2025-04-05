@@ -1396,23 +1396,6 @@ function thabatta_register_acf_fields()
 add_action('acf/init', 'thabatta_register_acf_fields');
 
 /**
- * Adicionar página de opções do tema
- */
-function thabatta_add_options_page()
-{
-    acf_add_options_page(array(
-        'page_title' => 'Configurações do Tema',
-        'menu_title' => 'Configurações do Tema',
-        'menu_slug' => 'theme-general-settings',
-        'capability' => 'edit_posts',
-        'redirect' => false,
-        'icon_url' => 'dashicons-admin-customizer',
-        'position' => 59,
-    ));
-}
-add_action('acf/init', 'thabatta_add_options_page');
-
-/**
  * Obter valor de campo ACF com fallback
  */
 function thabatta_get_field($field_name, $post_id = false, $default = '')

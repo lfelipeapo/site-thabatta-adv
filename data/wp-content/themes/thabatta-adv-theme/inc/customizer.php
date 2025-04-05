@@ -305,8 +305,8 @@ function thabatta_sanitize_select($input, $setting) {
  * @return string '1' if checked, '0' otherwise
  */
 function thabatta_sanitize_checkbox($checked) {
-    // Ensure it's either '1' or '0'
-    return ($checked === true || $checked === '1') ? '1' : '0';
+    // Ensure it's either '1' or '0'. Handle boolean true explicitly.
+    return ($checked == '1' || $checked === true) ? '1' : '0';
 }
 
 /**

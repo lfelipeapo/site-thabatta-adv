@@ -334,7 +334,7 @@ function thabatta_reusable_blocks_admin_menu() {
         esc_html__('Blocos Reutilizáveis', 'thabatta-adv'),
         'edit_posts',
         'edit.php?post_type=wp_block',
-        '', // Callback pode ser vazio
+        null, // Callback pode ser null
         'dashicons-editor-table',
         22
     );
