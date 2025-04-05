@@ -1400,17 +1400,15 @@ add_action('acf/init', 'thabatta_register_acf_fields');
  */
 function thabatta_add_options_page()
 {
-    if (function_exists('acf_add_options_page')) {
-        acf_add_options_page(array(
-            'page_title' => 'Configurações do Tema',
-            'menu_title' => 'Configurações do Tema',
-            'menu_slug' => 'theme-general-settings',
-            'capability' => 'edit_posts',
-            'redirect' => false,
-            'icon_url' => 'dashicons-admin-customizer',
-            'position' => 59,
-        ));
-    }
+    acf_add_options_page(array(
+        'page_title' => 'Configurações do Tema',
+        'menu_title' => 'Configurações do Tema',
+        'menu_slug' => 'theme-general-settings',
+        'capability' => 'edit_posts',
+        'redirect' => false,
+        'icon_url' => 'dashicons-admin-customizer',
+        'position' => 59,
+    ));
 }
 add_action('acf/init', 'thabatta_add_options_page');
 
@@ -1546,74 +1544,6 @@ function thabatta_get_seo_meta_tags($post_id = false)
     }
 
     return $meta_tags;
-}
-
-/**
- * Obter posts relacionados
- */
-function thabatta_get_related_posts($post_id = false, $count = 3)
-{
-    if (!$post_id) {
-        $post_id = get_the_ID();
-    }
-
-    // Verificar se há posts relacionados definidos manualmente
-    $related_posts = thabatta_get_field('posts_relacionados', $post_id);
-
-    if (is_array($related_posts) && !empty($related_posts)) {
-        // Limitar ao número desejado
-        $related_posts = array_slice($related_posts, 0, $count);
-        return $related_posts;
-    }
-
-    // Se não houver posts relacionados definidos manualmente, buscar automaticamente
-    $post_type = get_post_type($post_id);
-    $taxonomies = get_object_taxonomies($post_type);
-    $terms = array();
-
-    // Obter todos os termos do post atual
-    foreach ($taxonomies as $taxonomy) {
-        $post_terms = wp_get_post_terms($post_id, $taxonomy, array('fields' => 'ids'));
-        if (!empty($post_terms) && !is_wp_error($post_terms)) {
-            $terms = array_merge($terms, $post_terms);
-        }
-    }
-
-    // Se não houver termos, retornar posts recentes
-    if (empty($terms)) {
-        $args = array(
-            'post_type' => $post_type,
-            'posts_per_page' => $count,
-            'post__not_in' => array($post_id),
-            'orderby' => 'date',
-            'order' => 'DESC',
-        );
-    } else {
-        // Buscar posts com os mesmos termos
-        $args = array(
-            'post_type' => $post_type,
-            'posts_per_page' => $count,
-            'post__not_in' => array($post_id),
-            'tax_query' => array(
-                'relation' => 'OR',
-            ),
-        );
-
-        foreach ($taxonomies as $taxonomy) {
-            $post_terms = wp_get_post_terms($post_id, $taxonomy, array('fields' => 'ids'));
-            if (!empty($post_terms) && !is_wp_error($post_terms)) {
-                $args['tax_query'][] = array(
-                    'taxonomy' => $taxonomy,
-                    'field' => 'term_id',
-                    'terms' => $post_terms,
-                );
-            }
-        }
-    }
-
-    $query = new WP_Query($args);
-
-    return $query->posts;
 }
 
 /**

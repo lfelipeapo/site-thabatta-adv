@@ -41,10 +41,11 @@ function thabatta_posted_on()
  */
 function thabatta_posted_by()
 {
+    $author_id = get_the_author_meta('ID');
     $byline = sprintf(
         /* translators: %s: nome do autor do post. */
         esc_html_x('por %s', 'nome do autor do post', 'thabatta-adv'),
-        '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '">' . esc_html(get_the_author()) . '</a></span>'
+        '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url($author_id)) . '">' . esc_html(get_the_author()) . '</a></span>'
     );
 
     echo '<span class="byline"><i class="far fa-user"></i> ' . $byline . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -226,7 +227,11 @@ function thabatta_related_posts_display()
         return;
     }
 
-    $related_posts = thabatta_get_related_posts();
+    // Obter o ID do post atual e o número de posts a exibir
+    $current_post_id = get_the_ID();
+    $related_posts_count = 3; // Ou obter de uma opção do tema, se houver
+
+    $related_posts = thabatta_get_related_posts($current_post_id, $related_posts_count);
 
     if (!empty($related_posts)) :
         ?>

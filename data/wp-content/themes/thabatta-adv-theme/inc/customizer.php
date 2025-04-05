@@ -15,34 +15,32 @@ function thabatta_customize_register($wp_customize) {
     $wp_customize->get_setting('blogdescription')->transport = 'postMessage';
     $wp_customize->get_setting('header_textcolor')->transport = 'postMessage';
 
-    if (isset($wp_customize->selective_refresh)) {
-        $wp_customize->selective_refresh->add_partial('blogname', array(
-            'selector' => '.site-title a',
-            'render_callback' => 'thabatta_customize_partial_blogname',
-        ));
-        $wp_customize->selective_refresh->add_partial('blogdescription', array(
-            'selector' => '.site-description',
-            'render_callback' => 'thabatta_customize_partial_blogdescription',
-        ));
-    }
+    $wp_customize->selective_refresh->add_partial('blogname', array(
+        'selector' => '.site-title a',
+        'render_callback' => 'thabatta_customize_partial_blogname',
+    ));
+    $wp_customize->selective_refresh->add_partial('blogdescription', array(
+        'selector' => '.site-description',
+        'render_callback' => 'thabatta_customize_partial_blogdescription',
+    ));
 
     // Seção de cores do tema
     $wp_customize->add_section('thabatta_colors', array(
-        'title' => __('Cores do Tema', 'thabatta-adv'),
+        'title' => __('Cores', 'thabatta-adv'),
         'priority' => 30,
     ));
 
     // Cor primária
     $wp_customize->add_setting('primary_color', array(
-        'default' => '#8b0000',
+        'default' => '#a38b71',
         'sanitize_callback' => 'sanitize_hex_color',
         'transport' => 'postMessage',
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'primary_color', array(
-        'label' => __('Cor Primária', 'thabatta-adv'),
+        'label' => __('Cor Primária (Bordô)', 'thabatta-adv'),
         'section' => 'thabatta_colors',
-        'settings' => 'primary_color',
+        'setting' => 'primary_color',
     )));
 
     // Cor secundária
@@ -55,7 +53,7 @@ function thabatta_customize_register($wp_customize) {
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'secondary_color', array(
         'label' => __('Cor Secundária (Dourado)', 'thabatta-adv'),
         'section' => 'thabatta_colors',
-        'settings' => 'secondary_color',
+        'setting' => 'secondary_color',
     )));
 
     // Cor de texto
@@ -66,9 +64,9 @@ function thabatta_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'text_color', array(
-        'label' => __('Cor de Texto', 'thabatta-adv'),
+        'label' => __('Cor do Texto Principal', 'thabatta-adv'),
         'section' => 'thabatta_colors',
-        'settings' => 'text_color',
+        'setting' => 'text_color',
     )));
 
     // Cor de fundo
@@ -79,9 +77,9 @@ function thabatta_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'background_color', array(
-        'label' => __('Cor de Fundo', 'thabatta-adv'),
+        'label' => __('Cor de Fundo Principal', 'thabatta-adv'),
         'section' => 'thabatta_colors',
-        'settings' => 'background_color',
+        'setting' => 'background_color',
     )));
 
     // Seção de layout
@@ -124,6 +122,37 @@ function thabatta_customize_register($wp_customize) {
             'max' => 1600,
             'step' => 10,
         ),
+    ));
+
+    // Largura do Conteúdo
+    $wp_customize->add_setting('content_width', array(
+        'default' => '1170',
+        'sanitize_callback' => 'absint',
+        'transport' => 'postMessage',
+    ));
+
+    $wp_customize->add_control('content_width', array(
+        'label' => __('Largura Máxima do Conteúdo (px)', 'thabatta-adv'),
+        'section' => 'thabatta_layout',
+        'type' => 'number',
+        'input_attrs' => array(
+            'min' => 600,
+            'max' => 1600,
+            'step' => 10,
+        ),
+    ));
+
+    // Opção para ativar/desativar animações
+    $wp_customize->add_setting('enable_animations', array(
+        'default' => '1',
+        'sanitize_callback' => 'thabatta_sanitize_checkbox',
+        'transport' => 'postMessage',
+    ));
+
+    $wp_customize->add_control('enable_animations', array(
+        'label' => __('Ativar Animações de Scroll?', 'thabatta-adv'),
+        'section' => 'thabatta_layout',
+        'type' => 'checkbox',
     ));
 
     // Seção de tipografia
@@ -276,7 +305,7 @@ function thabatta_sanitize_select($input, $setting) {
  * @return bool Whether the checkbox is checked
  */
 function thabatta_sanitize_checkbox($checked) {
-    return ((isset($checked) && true == $checked) ? true : false);
+    return (true === $checked) ? '1' : '0';
 }
 
 /**
@@ -534,8 +563,6 @@ function thabatta_generate_customizer_js() {
     
     /**
      * Helper function to adjust brightness of a hex color
-     */
-         * Helper function to adjust brightness of a hex color
      */
     function adjustBrightness(hex, steps) {
         // Remove # if present

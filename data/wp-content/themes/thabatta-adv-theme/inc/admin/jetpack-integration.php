@@ -299,22 +299,22 @@ class Thabatta_Jetpack_Integration
                             <h3><?php esc_html_e('Estatísticas de Cache', 'thabatta-adv'); ?></h3>
                             <?php
                             // Obter estatísticas de cache
-                            $cache_hits = get_option('thabatta_cache_hits', 0);
-        $cache_misses = get_option('thabatta_cache_misses', 0);
-        $total_requests = $cache_hits + $cache_misses;
-        $hit_ratio = $total_requests > 0 ? round(($cache_hits / $total_requests) * 100, 2) : 0;
-        ?>
+                            $cache_hits = intval(get_option('thabatta_cache_hits', 0));
+                            $cache_misses = intval(get_option('thabatta_cache_misses', 0));
+                            $total_requests = $cache_hits + $cache_misses;
+                            $hit_ratio = $total_requests > 0 ? round(($cache_hits / $total_requests) * 100, 2) : 0.0;
+                            ?>
                             <div class="thabatta-cache-stats-grid">
                                 <div class="thabatta-cache-stat">
-                                    <span class="thabatta-cache-stat-number"><?php echo esc_html($cache_hits); ?></span>
+                                    <span class="thabatta-cache-stat-number"><?php echo esc_html(strval($cache_hits)); ?></span>
                                     <span class="thabatta-cache-stat-label"><?php esc_html_e('Cache Hits', 'thabatta-adv'); ?></span>
                                 </div>
                                 <div class="thabatta-cache-stat">
-                                    <span class="thabatta-cache-stat-number"><?php echo esc_html($cache_misses); ?></span>
+                                    <span class="thabatta-cache-stat-number"><?php echo esc_html(strval($cache_misses)); ?></span>
                                     <span class="thabatta-cache-stat-label"><?php esc_html_e('Cache Misses', 'thabatta-adv'); ?></span>
                                 </div>
                                 <div class="thabatta-cache-stat">
-                                    <span class="thabatta-cache-stat-number"><?php echo esc_html($hit_ratio); ?>%</span>
+                                    <span class="thabatta-cache-stat-number"><?php echo esc_html(number_format($hit_ratio, 2)); ?>%</span>
                                     <span class="thabatta-cache-stat-label"><?php esc_html_e('Hit Ratio', 'thabatta-adv'); ?></span>
                                 </div>
                             </div>

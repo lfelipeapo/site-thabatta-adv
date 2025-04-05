@@ -322,7 +322,7 @@ add_action('init', 'thabatta_block_sensitive_files');
 function thabatta_csrf_protection() {
     if (is_admin() && current_user_can('edit_posts')) {
         // Verificar nonce para ações de administração
-        if (isset($_POST) && !empty($_POST) && !isset($_POST['_wpnonce'])) {
+        if (!empty($_POST) && !isset($_POST['_wpnonce'])) {
             wp_die(__('Verificação de segurança falhou. Por favor, tente novamente.', 'thabatta-adv'));
         }
     }

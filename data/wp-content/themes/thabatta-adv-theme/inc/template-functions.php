@@ -184,8 +184,8 @@ function thabatta_add_meta_tags()
             $image_data = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
             if ($image_data) {
                 echo '<meta property="og:image" content="' . esc_url($image_data[0]) . '" />' . "\n";
-                echo '<meta property="og:image:width" content="' . esc_attr($image_data[1]) . '" />' . "\n";
-                echo '<meta property="og:image:height" content="' . esc_attr($image_data[2]) . '" />' . "\n";
+                echo '<meta property="og:image:width" content="' . esc_attr(strval($image_data[1])) . '" />' . "\n";
+                echo '<meta property="og:image:height" content="' . esc_attr(strval($image_data[2])) . '" />' . "\n";
             }
         }
 

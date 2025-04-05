@@ -124,7 +124,7 @@ class Thabatta_Web_Components
             <?php foreach ($matches as $match) : ?>
                 <?php
                 $item_title = $match[1];
-                $item_open = isset($match[3]) && $match[3] === 'true' ? 'true' : 'false';
+                $item_open = $match[3] === 'true' ? 'true' : 'false';
                 $item_content = $match[4];
                 $item_id = sanitize_title($item_title) . '-' . uniqid();
                 ?>
@@ -173,7 +173,7 @@ class Thabatta_Web_Components
                 <?php foreach ($matches as $index => $match) : ?>
                     <?php
                     $tab_title = $match[1];
-                    $tab_active = isset($match[3]) && $match[3] === 'true' ? 'true' : 'false';
+                    $tab_active = $match[3] === 'true' ? 'true' : 'false';
                     if ($index === 0 && $tab_active !== 'true') {
                         $tab_active = 'true';
                     }
@@ -192,7 +192,7 @@ class Thabatta_Web_Components
                 <?php foreach ($matches as $index => $match) : ?>
                     <?php
                     $tab_title = $match[1];
-                    $tab_active = isset($match[3]) && $match[3] === 'true' ? 'true' : 'false';
+                    $tab_active = $match[3] === 'true' ? 'true' : 'false';
                     if ($index === 0 && $tab_active !== 'true') {
                         $tab_active = 'true';
                     }
@@ -242,7 +242,7 @@ class Thabatta_Web_Components
             <div class="thabatta-slider-container">
                 <?php foreach ($matches as $index => $match) : ?>
                     <?php
-                    $slide_image = isset($match[2]) ? $match[2] : '';
+                    $slide_image = $match[2] ?? '';
                     $slide_content = $match[3];
                     $slide_id = 'slide-' . $index . '-' . uniqid();
                     ?>
@@ -275,7 +275,7 @@ class Thabatta_Web_Components
                     <?php foreach ($matches as $index => $match) : ?>
                         <button class="thabatta-slider-dot <?php echo $index === 0 ? 'active' : ''; ?>" 
                                 aria-label="<?php printf(esc_attr__('Slide %d', 'thabatta-adv'), $index + 1); ?>" 
-                                data-slide="<?php echo esc_attr($index); ?>"></button>
+                                data-slide="<?php echo esc_attr(strval($index)); ?>"></button>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
@@ -593,7 +593,7 @@ class Thabatta_Web_Components
         ), $atts);
 
         // Processar conteúdo para extrair itens
-        $pattern = '/\[timeline_item date="([^"]*)"( title="([^"]*)")?\](.*?)\[\/timeline_item\]/s';
+        $pattern = '/\[timeline_item date="([^"]*)"( title="([^"]*)")?( icon="([^"]*)")?\](.*?)\[\/timeline_item\]/s';
         preg_match_all($pattern, $content, $matches, PREG_SET_ORDER);
 
         ob_start();
@@ -602,8 +602,9 @@ class Thabatta_Web_Components
             <?php foreach ($matches as $index => $match) : ?>
                 <?php
                 $item_date = $match[1];
-                $item_title = isset($match[3]) ? $match[3] : '';
-                $item_content = $match[4];
+                $item_title = $match[3] ?? '';
+                $item_icon = $match[5] ?? '';
+                $item_content = $match[6];
                 $item_id = 'timeline-item-' . $index . '-' . uniqid();
                 ?>
                 <div class="thabatta-timeline-item" id="<?php echo esc_attr($item_id); ?>">

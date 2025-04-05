@@ -803,11 +803,11 @@ class Thabatta_Admin_Features
                 <h4><?php _e('Comentários', 'thabatta-adv'); ?></h4>
                 <div class="thabatta-comment-stats">
                     <div class="thabatta-stat-item">
-                        <span class="thabatta-stat-number"><?php echo esc_html($approved_comments); ?></span>
+                        <span class="thabatta-stat-number"><?php echo esc_html(strval($approved_comments)); ?></span>
                         <span class="thabatta-stat-label"><?php _e('Aprovados', 'thabatta-adv'); ?></span>
                     </div>
                     <div class="thabatta-stat-item">
-                        <span class="thabatta-stat-number"><?php echo esc_html($pending_comments); ?></span>
+                        <span class="thabatta-stat-number"><?php echo esc_html(strval($pending_comments)); ?></span>
                         <span class="thabatta-stat-label"><?php _e('Pendentes', 'thabatta-adv'); ?></span>
                     </div>
                 </div>
