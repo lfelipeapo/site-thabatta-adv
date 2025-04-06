@@ -29,41 +29,33 @@ function thabatta_customize_register($wp_customize) {
         'title' => __('Configurações Gerais', 'thabatta-adv'),
         'priority' => 20,
     ));
-
-    // Logo
-    $wp_customize->add_setting('general_logo', array(
+    
+    // Nota: Logo e favicon estão disponíveis na seção "Identidade do Site" nativa do WordPress
+    
+    // Telefone
+    $wp_customize->add_setting('general_phone', array(
         'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
+        'sanitize_callback' => 'sanitize_text_field',
     ));
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'general_logo', array(
-        'label' => __('Logo', 'thabatta-adv'),
-        'description' => __('Selecione o logo do site. Tamanho recomendado: 200x60px.', 'thabatta-adv'),
+    $wp_customize->add_control('general_phone', array(
+        'label' => __('Telefone', 'thabatta-adv'),
+        'description' => __('Número de telefone principal para contato.', 'thabatta-adv'),
         'section' => 'thabatta_general_settings',
-    )));
-
-    // Favicon
-    $wp_customize->add_setting('general_favicon', array(
+        'type' => 'text',
+    ));
+    
+    // E-mail
+    $wp_customize->add_setting('general_email', array(
         'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
+        'sanitize_callback' => 'sanitize_email',
     ));
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'general_favicon', array(
-        'label' => __('Favicon', 'thabatta-adv'),
-        'description' => __('Selecione o favicon do site. Tamanho recomendado: 32x32px.', 'thabatta-adv'),
+    $wp_customize->add_control('general_email', array(
+        'label' => __('E-mail', 'thabatta-adv'),
+        'description' => __('E-mail principal para contato.', 'thabatta-adv'),
         'section' => 'thabatta_general_settings',
-    )));
-
-    // Texto do rodapé
-    $wp_customize->add_setting('general_footer_text', array(
-        'default' => '',
-        'sanitize_callback' => 'wp_kses_post',
+        'type' => 'email',
     ));
-    $wp_customize->add_control('general_footer_text', array(
-        'label' => __('Texto do Rodapé', 'thabatta-adv'),
-        'description' => __('Texto que será exibido no rodapé do site. Você pode usar HTML.', 'thabatta-adv'),
-        'section' => 'thabatta_general_settings',
-        'type' => 'textarea',
-    ));
-
+    
     // Google Analytics
     $wp_customize->add_setting('general_google_analytics', array(
         'default' => '',
@@ -342,6 +334,19 @@ function thabatta_customize_register($wp_customize) {
         'label' => __('Mostrar Créditos do Tema', 'thabatta-adv'),
         'section' => 'thabatta_footer',
         'type' => 'checkbox',
+    ));
+    
+    // Horário de Atendimento
+    $wp_customize->add_setting('footer_horario_atendimento', array(
+        'default' => "Segunda - Sexta: 9:00 - 18:00\nSábado: Com agendamento\nDomingo: Fechado",
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+
+    $wp_customize->add_control('footer_horario_atendimento', array(
+        'label' => __('Horário de Atendimento', 'thabatta-adv'),
+        'description' => __('Informe os horários de atendimento que serão exibidos no rodapé do site.', 'thabatta-adv'),
+        'section' => 'thabatta_footer',
+        'type' => 'textarea',
     ));
 
     // Seção Hero
@@ -1268,12 +1273,11 @@ EOT;
  */
 function thabatta_migrate_theme_options_to_customizer() {
     // Configurações Gerais
-    thabatta_migrate_option('thabatta_logo', 'general_logo');
-    thabatta_migrate_option('thabatta_favicon', 'general_favicon');
-    thabatta_migrate_option('thabatta_footer_text', 'general_footer_text');
     thabatta_migrate_option('thabatta_google_analytics', 'general_google_analytics');
     thabatta_migrate_option('thabatta_enable_preloader', 'general_enable_preloader');
     thabatta_migrate_option('thabatta_enable_back_to_top', 'general_enable_back_to_top');
+    thabatta_migrate_option('thabatta_phone', 'general_phone');
+    thabatta_migrate_option('thabatta_email', 'general_email');
     
     // Cores e Tipografia
     thabatta_migrate_option('thabatta_primary_color', 'primary_color');
@@ -1299,6 +1303,14 @@ function thabatta_migrate_theme_options_to_customizer() {
     thabatta_migrate_option('thabatta_enable_breadcrumbs', 'seo_enable_breadcrumbs');
     thabatta_migrate_option('thabatta_enable_open_graph', 'seo_enable_open_graph');
     thabatta_migrate_option('thabatta_enable_twitter_cards', 'seo_enable_twitter_cards');
+    
+    // Rodapé e ACF Options
+    if (function_exists('get_field')) {
+        $horario_atendimento = get_field('horario_atendimento', 'option');
+        if ($horario_atendimento) {
+            set_theme_mod('footer_horario_atendimento', $horario_atendimento);
+        }
+    }
     
     // Definir uma flag para indicar que a migração foi realizada
     update_option('thabatta_options_migrated', true);

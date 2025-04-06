@@ -77,12 +77,28 @@
                 a {
                     display: block;
                     padding: 0.25rem 0;
+                }
+            }
+        }
+        
+        .contact-info {
+            li {
+                display: flex;
+                align-items: center;
+                margin-bottom: 0.8rem;
+                
+                i {
+                    color: variables.$amarelo-dourado;
+                    margin-right: 0.75rem;
+                    min-width: 16px;
+                    text-align: center;
+                }
+                
+                a {
+                    color: variables.$cor-rodape-link;
+                    transition: variables.$transition-default;
                     
-                    &:before {
-                        content: '\f105';
-                        font-family: 'Font Awesome 5 Free';
-                        font-weight: 900;
-                        margin-right: 0.5rem;
+                    &:hover {
                         color: variables.$amarelo-dourado;
                     }
                 }

@@ -59,50 +59,44 @@ class Thabatta_Admin_Features
             __('Configurações do Tema', 'thabatta-adv'),
             __('Tema Thabatta', 'thabatta-adv'),
             'manage_options',
-            'thabatta-theme-settings',
-            array($this, 'render_theme_settings_page'),
+            'thabatta-redirect-to-customizer',
+            array($this, 'redirect_to_customizer'),
             'dashicons-admin-customizer',
             60
         );
 
-        add_submenu_page(
-            'thabatta-theme-settings',
-            __('Configurações Gerais', 'thabatta-adv'),
-            __('Configurações Gerais', 'thabatta-adv'),
-            'manage_options',
-            'thabatta-theme-settings',
-            array($this, 'render_theme_settings_page')
-        );
+        // Redirecionar todas as páginas antigas para o customizer
+        add_action('admin_init', array($this, 'handle_old_settings_redirect'));
+    }
 
-        add_submenu_page(
-            'thabatta-theme-settings',
-            __('Redes Sociais', 'thabatta-adv'),
-            __('Redes Sociais', 'thabatta-adv'),
-            'manage_options',
-            'thabatta-social-settings',
-            array($this, 'render_social_settings_page')
-        );
+    /**
+     * Redireciona qualquer tentativa de acessar as antigas páginas de configuração para o customizer
+     */
+    public function handle_old_settings_redirect() 
+    {
+        global $pagenow;
+        
+        if ($pagenow === 'admin.php' && isset($_GET['page'])) {
+            $old_pages = array(
+                'thabatta-theme-settings',
+                'thabatta-social-settings',
+                'thabatta-seo-settings'
+            );
+            
+            if (in_array($_GET['page'], $old_pages)) {
+                wp_redirect(admin_url('customize.php'));
+                exit;
+            }
+        }
+    }
 
-        add_submenu_page(
-            'thabatta-theme-settings',
-            __('SEO', 'thabatta-adv'),
-            __('SEO', 'thabatta-adv'),
-            'manage_options',
-            'thabatta-seo-settings',
-            array($this, 'render_seo_settings_page')
-        );
-
-        // Removido apenas o submenu de Personalização
-        /*
-        add_submenu_page(
-            'thabatta-theme-settings',
-            __('Personalização', 'thabatta-adv'),
-            __('Personalização', 'thabatta-adv'),
-            'manage_options',
-            'thabatta-customization',
-            array($this, 'render_customization_page')
-        );
-        */
+    /**
+     * Função de redirecionamento para o customizer
+     */
+    public function redirect_to_customizer()
+    {
+        wp_redirect(admin_url('customize.php'));
+        exit;
     }
 
     /**
@@ -110,6 +104,9 @@ class Thabatta_Admin_Features
      */
     public function register_settings()
     {
+        // Mantendo apenas o registro para compatibilidade com código legado
+        // As configurações reais agora são gerenciadas pelo customizer
+        
         // Configurações gerais
         register_setting('thabatta_theme_settings', 'thabatta_logo');
         register_setting('thabatta_theme_settings', 'thabatta_favicon');
@@ -142,297 +139,6 @@ class Thabatta_Admin_Features
         register_setting('thabatta_customization_settings', 'thabatta_text_color', array('default' => '#333333'));
         register_setting('thabatta_customization_settings', 'thabatta_heading_font', array('default' => 'Playfair Display'));
         register_setting('thabatta_customization_settings', 'thabatta_body_font', array('default' => 'Roboto'));
-    }
-
-    /**
-     * Renderizar página de configurações do tema
-     */
-    public function render_theme_settings_page()
-    {
-        // Obter configurações
-        $logo = get_option('thabatta_logo');
-        $favicon = get_option('thabatta_favicon');
-        $footer_text = get_option('thabatta_footer_text');
-        $google_analytics = get_option('thabatta_google_analytics');
-        $enable_preloader = get_option('thabatta_enable_preloader', '1');
-        $enable_back_to_top = get_option('thabatta_enable_back_to_top', '1');
-
-        ?>
-        <div class="wrap">
-            <h1><?php esc_html_e('Configurações do Tema', 'thabatta-adv'); ?></h1>
-            
-            <div class="notice notice-info is-dismissible">
-                <p>
-                    <strong><?php esc_html_e('Atenção:', 'thabatta-adv'); ?></strong>
-                    <?php esc_html_e('Todas as configurações desta página foram transferidas para o Customizer nativo do WordPress.', 'thabatta-adv'); ?>
-                    <?php esc_html_e('Recomendamos que você utilize o Customizer para configurar seu site a partir de agora.', 'thabatta-adv'); ?>
-                    <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=thabatta_general_settings')); ?>" class="button button-primary" style="margin-left: 10px;">
-                        <?php esc_html_e('Ir para o Customizer', 'thabatta-adv'); ?>
-                    </a>
-                </p>
-            </div>
-            
-            <form method="post" action="options.php">
-                <?php settings_fields('thabatta_theme_settings'); ?>
-                
-                <table class="form-table">
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Logo', 'thabatta-adv'); ?></th>
-                        <td>
-                            <div class="thabatta-media-uploader">
-                                <input type="text" name="thabatta_logo" id="thabatta_logo" value="<?php echo esc_attr($logo); ?>" class="regular-text">
-                                <input type="button" class="button button-secondary thabatta-media-button" value="<?php esc_attr_e('Selecionar Imagem', 'thabatta-adv'); ?>" data-target="#thabatta_logo">
-                                <?php if ($logo) : ?>
-                                    <div class="thabatta-media-preview">
-                                        <img src="<?php echo esc_url($logo); ?>" alt="<?php esc_attr_e('Logo Preview', 'thabatta-adv'); ?>">
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <p class="description"><?php esc_html_e('Selecione o logo do site. Tamanho recomendado: 200x60px.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Favicon', 'thabatta-adv'); ?></th>
-                        <td>
-                            <div class="thabatta-media-uploader">
-                                <input type="text" name="thabatta_favicon" id="thabatta_favicon" value="<?php echo esc_attr($favicon); ?>" class="regular-text">
-                                <input type="button" class="button button-secondary thabatta-media-button" value="<?php esc_attr_e('Selecionar Imagem', 'thabatta-adv'); ?>" data-target="#thabatta_favicon">
-                                <?php if ($favicon) : ?>
-                                    <div class="thabatta-media-preview">
-                                        <img src="<?php echo esc_url($favicon); ?>" alt="<?php esc_attr_e('Favicon Preview', 'thabatta-adv'); ?>">
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <p class="description"><?php esc_html_e('Selecione o favicon do site. Tamanho recomendado: 32x32px.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Texto do Rodapé', 'thabatta-adv'); ?></th>
-                        <td>
-                            <textarea name="thabatta_footer_text" id="thabatta_footer_text" class="large-text" rows="3"><?php echo esc_textarea($footer_text); ?></textarea>
-                            <p class="description"><?php esc_html_e('Texto que será exibido no rodapé do site. Você pode usar HTML.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Google Analytics', 'thabatta-adv'); ?></th>
-                        <td>
-                            <textarea name="thabatta_google_analytics" id="thabatta_google_analytics" class="large-text code" rows="5"><?php echo esc_textarea($google_analytics); ?></textarea>
-                            <p class="description"><?php esc_html_e('Cole o código de acompanhamento do Google Analytics aqui.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Preloader', 'thabatta-adv'); ?></th>
-                        <td>
-                            <label for="thabatta_enable_preloader">
-                                <input type="checkbox" name="thabatta_enable_preloader" id="thabatta_enable_preloader" value="1" <?php checked($enable_preloader, '1'); ?>>
-                                <?php esc_html_e('Ativar preloader', 'thabatta-adv'); ?>
-                            </label>
-                            <p class="description"><?php esc_html_e('Exibe uma animação de carregamento enquanto a página está sendo carregada.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Botão Voltar ao Topo', 'thabatta-adv'); ?></th>
-                        <td>
-                            <label for="thabatta_enable_back_to_top">
-                                <input type="checkbox" name="thabatta_enable_back_to_top" id="thabatta_enable_back_to_top" value="1" <?php checked($enable_back_to_top, '1'); ?>>
-                                <?php esc_html_e('Ativar botão voltar ao topo', 'thabatta-adv'); ?>
-                            </label>
-                            <p class="description"><?php esc_html_e('Exibe um botão para voltar ao topo da página quando o usuário rolar para baixo.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                </table>
-                
-                <?php submit_button(); ?>
-            </form>
-        </div>
-        <?php
-    }
-
-    /**
-     * Renderizar página de configurações de redes sociais
-     */
-    public function render_social_settings_page()
-    {
-        // Obter configurações
-        $facebook_url = get_option('thabatta_facebook_url');
-        $instagram_url = get_option('thabatta_instagram_url');
-        $linkedin_url = get_option('thabatta_linkedin_url');
-        $twitter_url = get_option('thabatta_twitter_url');
-        $youtube_url = get_option('thabatta_youtube_url');
-        $whatsapp_number = get_option('thabatta_whatsapp_number');
-        $enable_social_sharing = get_option('thabatta_enable_social_sharing', '1');
-
-        ?>
-        <div class="wrap">
-            <h1><?php esc_html_e('Configurações de Redes Sociais', 'thabatta-adv'); ?></h1>
-            
-            <div class="notice notice-info is-dismissible">
-                <p>
-                    <strong><?php esc_html_e('Atenção:', 'thabatta-adv'); ?></strong>
-                    <?php esc_html_e('Todas as configurações desta página foram transferidas para o Customizer nativo do WordPress.', 'thabatta-adv'); ?>
-                    <?php esc_html_e('Recomendamos que você utilize o Customizer para configurar seu site a partir de agora.', 'thabatta-adv'); ?>
-                    <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=thabatta_social_networks')); ?>" class="button button-primary" style="margin-left: 10px;">
-                        <?php esc_html_e('Ir para o Customizer', 'thabatta-adv'); ?>
-                    </a>
-                </p>
-            </div>
-            
-            <form method="post" action="options.php">
-                <?php settings_fields('thabatta_social_settings'); ?>
-                
-                <table class="form-table">
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Facebook', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="url" name="thabatta_facebook_url" id="thabatta_facebook_url" value="<?php echo esc_url($facebook_url); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e('URL da página do Facebook.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Instagram', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="url" name="thabatta_instagram_url" id="thabatta_instagram_url" value="<?php echo esc_url($instagram_url); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e('URL do perfil do Instagram.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('LinkedIn', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="url" name="thabatta_linkedin_url" id="thabatta_linkedin_url" value="<?php echo esc_url($linkedin_url); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e('URL do perfil do LinkedIn.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Twitter', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="url" name="thabatta_twitter_url" id="thabatta_twitter_url" value="<?php echo esc_url($twitter_url); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e('URL do perfil do Twitter.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('YouTube', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="url" name="thabatta_youtube_url" id="thabatta_youtube_url" value="<?php echo esc_url($youtube_url); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e('URL do canal do YouTube.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('WhatsApp', 'thabatta-adv'); ?></th>
-                        <td>
-                            <input type="text" name="thabatta_whatsapp_number" id="thabatta_whatsapp_number" value="<?php echo esc_attr($whatsapp_number); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e('Número do WhatsApp com código do país (ex: 5511999999999).', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Compartilhamento Social', 'thabatta-adv'); ?></th>
-                        <td>
-                            <label for="thabatta_enable_social_sharing">
-                                <input type="checkbox" name="thabatta_enable_social_sharing" id="thabatta_enable_social_sharing" value="1" <?php checked($enable_social_sharing, '1'); ?>>
-                                <?php esc_html_e('Ativar botões de compartilhamento social', 'thabatta-adv'); ?>
-                            </label>
-                            <p class="description"><?php esc_html_e('Exibe botões para compartilhar o conteúdo nas redes sociais.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                </table>
-                
-                <?php submit_button(); ?>
-            </form>
-        </div>
-        <?php
-    }
-
-    /**
-     * Renderizar página de configurações de SEO
-     */
-    public function render_seo_settings_page()
-    {
-        // Obter configurações
-        $default_meta_description = get_option('thabatta_default_meta_description');
-        $default_meta_keywords = get_option('thabatta_default_meta_keywords');
-        $enable_schema_markup = get_option('thabatta_enable_schema_markup', '1');
-        $enable_breadcrumbs = get_option('thabatta_enable_breadcrumbs', '1');
-        $enable_open_graph = get_option('thabatta_enable_open_graph', '1');
-        $enable_twitter_cards = get_option('thabatta_enable_twitter_cards', '1');
-
-        ?>
-        <div class="wrap">
-            <h1><?php esc_html_e('Configurações de SEO', 'thabatta-adv'); ?></h1>
-            
-            <div class="notice notice-info is-dismissible">
-                <p>
-                    <strong><?php esc_html_e('Atenção:', 'thabatta-adv'); ?></strong>
-                    <?php esc_html_e('Todas as configurações desta página foram transferidas para o Customizer nativo do WordPress.', 'thabatta-adv'); ?>
-                    <?php esc_html_e('Recomendamos que você utilize o Customizer para configurar seu site a partir de agora.', 'thabatta-adv'); ?>
-                    <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=thabatta_seo_settings')); ?>" class="button button-primary" style="margin-left: 10px;">
-                        <?php esc_html_e('Ir para o Customizer', 'thabatta-adv'); ?>
-                    </a>
-                </p>
-            </div>
-            
-            <form method="post" action="options.php">
-                <?php settings_fields('thabatta_seo_settings'); ?>
-                
-                <table class="form-table">
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Meta Descrição Padrão', 'thabatta-adv'); ?></th>
-                        <td>
-                            <textarea name="thabatta_default_meta_description" id="thabatta_default_meta_description" class="large-text" rows="3"><?php echo esc_textarea($default_meta_description); ?></textarea>
-                            <p class="description"><?php esc_html_e('Descrição padrão para páginas sem descrição específica. Máximo de 160 caracteres.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Meta Keywords Padrão', 'thabatta-adv'); ?></th>
-                        <td>
-                            <textarea name="thabatta_default_meta_keywords" id="thabatta_default_meta_keywords" class="large-text" rows="2"><?php echo esc_textarea($default_meta_keywords); ?></textarea>
-                            <p class="description"><?php esc_html_e('Palavras-chave padrão separadas por vírgula.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Schema.org Markup', 'thabatta-adv'); ?></th>
-                        <td>
-                            <label for="thabatta_enable_schema_markup">
-                                <input type="checkbox" name="thabatta_enable_schema_markup" id="thabatta_enable_schema_markup" value="1" <?php checked($enable_schema_markup, '1'); ?>>
-                                <?php esc_html_e('Ativar marcação Schema.org', 'thabatta-adv'); ?>
-                            </label>
-                            <p class="description"><?php esc_html_e('Adiciona marcação estruturada Schema.org para melhorar a exibição nos resultados de pesquisa.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Breadcrumbs', 'thabatta-adv'); ?></th>
-                        <td>
-                            <label for="thabatta_enable_breadcrumbs">
-                                <input type="checkbox" name="thabatta_enable_breadcrumbs" id="thabatta_enable_breadcrumbs" value="1" <?php checked($enable_breadcrumbs, '1'); ?>>
-                                <?php esc_html_e('Ativar breadcrumbs', 'thabatta-adv'); ?>
-                            </label>
-                            <p class="description"><?php esc_html_e('Exibe navegação estrutural (breadcrumbs) nas páginas.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Open Graph', 'thabatta-adv'); ?></th>
-                        <td>
-                            <label for="thabatta_enable_open_graph">
-                                <input type="checkbox" name="thabatta_enable_open_graph" id="thabatta_enable_open_graph" value="1" <?php checked($enable_open_graph, '1'); ?>>
-                                <?php esc_html_e('Ativar tags Open Graph', 'thabatta-adv'); ?>
-                            </label>
-                            <p class="description"><?php esc_html_e('Adiciona tags Open Graph para melhorar o compartilhamento nas redes sociais.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Twitter Cards', 'thabatta-adv'); ?></th>
-                        <td>
-                            <label for="thabatta_enable_twitter_cards">
-                                <input type="checkbox" name="thabatta_enable_twitter_cards" id="thabatta_enable_twitter_cards" value="1" <?php checked($enable_twitter_cards, '1'); ?>>
-                                <?php esc_html_e('Ativar Twitter Cards', 'thabatta-adv'); ?>
-                            </label>
-                            <p class="description"><?php esc_html_e('Adiciona suporte para Twitter Cards para melhorar o compartilhamento no Twitter.', 'thabatta-adv'); ?></p>
-                        </td>
-                    </tr>
-                </table>
-                
-                <?php submit_button(); ?>
-            </form>
-        </div>
-        <?php
     }
 
     /**

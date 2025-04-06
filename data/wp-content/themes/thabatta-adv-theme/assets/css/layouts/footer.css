@@ -70,11 +70,22 @@
   display: block;
   padding: 0.25rem 0;
 }
-.site-footer .footer-widget ul li a:before {
-  content: "\f105";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  margin-right: 0.5rem;
+.site-footer .footer-widget .contact-info li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.site-footer .footer-widget .contact-info li i {
+  color: #ffd700;
+  margin-right: 0.75rem;
+  min-width: 16px;
+  text-align: center;
+}
+.site-footer .footer-widget .contact-info li a {
+  color: #cccccc;
+  transition: all 0.3s ease-in-out;
+}
+.site-footer .footer-widget .contact-info li a:hover {
   color: #ffd700;
 }
 .site-footer .footer-widget .social-links {

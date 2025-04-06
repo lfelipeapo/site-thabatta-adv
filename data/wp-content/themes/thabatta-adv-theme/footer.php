@@ -25,17 +25,35 @@
                     <?php if (is_active_sidebar('footer-2')) : ?>
                         <?php dynamic_sidebar('footer-2'); ?>
                     <?php else : ?>
-                        <h3 class="widget-title"><?php esc_html_e('Contato', 'thabatta-adv'); ?></h3>
-                        <?php if (function_exists('get_field')) : ?>
-                            <p>
-                                <?php echo esc_html(get_field('endereco', 'option')); ?><br>
-                                <?php echo esc_html(get_field('cidade_estado_cep', 'option')); ?>
-                            </p>
-                            <p>
-                                <?php esc_html_e('Telefone:', 'thabatta-adv'); ?> <?php echo esc_html(get_field('telefone', 'option')); ?><br>
-                                <?php esc_html_e('Email:', 'thabatta-adv'); ?> <?php echo esc_html(get_field('email', 'option')); ?>
-                            </p>
-                        <?php endif; ?>
+                        <h3 class="widget-title"><?php echo esc_html__('Contato', 'thabatta-adv'); ?></h3>
+                        <ul class="contact-info">
+                            <?php if (get_theme_mod('general_phone')) : ?>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', get_theme_mod('general_phone'))); ?>">
+                                    <?php echo esc_html(get_theme_mod('general_phone')); ?>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            
+                            <?php if (get_theme_mod('general_email')) : ?>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:<?php echo esc_attr(get_theme_mod('general_email')); ?>">
+                                    <?php echo esc_html(get_theme_mod('general_email')); ?>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            
+                            <?php if (get_theme_mod('social_whatsapp_number')) : ?>
+                            <li>
+                                <i class="fab fa-whatsapp"></i>
+                                <a href="https://wa.me/<?php echo esc_attr(get_theme_mod('social_whatsapp_number')); ?>" target="_blank">
+                                    WhatsApp
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
                     <?php endif; ?>
                 </div>
 
@@ -89,17 +107,12 @@
                         <?php dynamic_sidebar('footer-4'); ?>
                     <?php else : ?>
                         <h3 class="widget-title"><?php esc_html_e('Horário de Atendimento', 'thabatta-adv'); ?></h3>
-                        <?php if (function_exists('get_field')) : ?>
-                            <p>
-                                <?php echo wp_kses_post(get_field('horario_atendimento', 'option')); ?>
-                            </p>
-                        <?php else : ?>
-                            <p>
-                                <?php esc_html_e('Segunda - Sexta: 9:00 - 18:00', 'thabatta-adv'); ?><br>
-                                <?php esc_html_e('Sábado: Com agendamento', 'thabatta-adv'); ?><br>
-                                <?php esc_html_e('Domingo: Fechado', 'thabatta-adv'); ?>
-                            </p>
-                        <?php endif; ?>
+                        <p>
+                            <?php 
+                            $horario_atendimento = get_theme_mod('footer_horario_atendimento', "Segunda - Sexta: 9:00 - 18:00\nSábado: Com agendamento\nDomingo: Fechado");
+                            echo nl2br(esc_html($horario_atendimento));
+                            ?>
+                        </p>
                     <?php endif; ?>
                 </div>
             </div>
