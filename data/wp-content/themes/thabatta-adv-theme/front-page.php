@@ -183,11 +183,21 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                 
                 if ($testimonials_query->have_posts()) :
                     while ($testimonials_query->have_posts()) : $testimonials_query->the_post();
+                    // Obter avaliação (estrelas) - padrão é 5
+                    $rating = 5;
+                    if (function_exists('get_field') && get_field('avaliacao')) {
+                        $rating = get_field('avaliacao');
+                    }
                 ?>
                     <div class="testimonial-item">
+                        <div class="testimonial-rating">
+                            <?php for ($i = 1; $i <= 5; $i++) : ?>
+                                <i class="fas fa-star"></i>
+                            <?php endfor; ?>
+                        </div>
                         <div class="testimonial-content">
                             <i class="fas fa-quote-left quote-icon"></i>
-                            <?php echo get_the_content(); ?>
+                            <p><?php echo get_the_content(); ?></p>
                         </div>
                         <div class="client-info">
                             <div class="client-img">
@@ -211,6 +221,13 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                 else :
                 ?>
                     <div class="testimonial-item">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
                         <div class="testimonial-content">
                             <i class="fas fa-quote-left quote-icon"></i>
                             <p>"Excelente escritório de advocacia, com atendimento personalizado e resultados consistentes. Recomendo fortemente o trabalho da Dra. Thabatta."</p>
@@ -226,6 +243,13 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                         </div>
                     </div>
                     <div class="testimonial-item">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
                         <div class="testimonial-content">
                             <i class="fas fa-quote-left quote-icon"></i>
                             <p>"Dra. Thabatta conduziu meu caso com profissionalismo e dedicação. O resultado superou minhas expectativas. Muito grata pelo trabalho realizado."</p>
