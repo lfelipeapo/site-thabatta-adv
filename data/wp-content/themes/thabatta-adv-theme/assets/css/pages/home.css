@@ -464,15 +464,7 @@
   font-style: italic;
   margin-bottom: 1.5rem;
   position: relative;
-  padding: 0 10px;
-}
-.testimonials-section .testimonial-carousel .testimonial-item p::before, .testimonials-section .testimonial-carousel .testimonial-item p::after {
-  content: "“";
-  font-size: 2rem;
-  color: #ffd700;
-  position: absolute;
-  top: -10px;
-  left: -15px;
+  padding: 0;
 }
 .testimonials-section .testimonial-carousel .testimonial-item p::after {
   content: "”";

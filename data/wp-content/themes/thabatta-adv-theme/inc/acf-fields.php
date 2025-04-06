@@ -1244,22 +1244,21 @@ function thabatta_register_acf_fields()
                     'required' => 0,
                 ),
                 array(
-                    'key' => 'field_contato_info',
+                    'key' => 'field_contato_informacoes',
                     'label' => 'Informações de Contato',
-                    'name' => 'contato_info',
+                    'name' => 'contato_informacoes',
                     'type' => 'group',
-                    'instructions' => 'Configure as informações de contato exibidas na página.',
+                    'instructions' => 'Configure as informações de contato a serem exibidas na página.',
                     'required' => 0,
                     'layout' => 'block',
                     'sub_fields' => array(
                         array(
                             'key' => 'field_contato_info_titulo',
-                            'label' => 'Título',
+                            'label' => 'Título da Seção',
                             'name' => 'titulo',
                             'type' => 'text',
-                            'instructions' => '',
+                            'instructions' => 'Insira o título da seção de informações de contato.',
                             'required' => 0,
-                            'default_value' => 'Entre em Contato',
                         ),
                         array(
                             'key' => 'field_contato_info_mostrar_telefone',
@@ -1283,7 +1282,7 @@ function thabatta_register_acf_fields()
                         ),
                         array(
                             'key' => 'field_contato_info_mostrar_email',
-                            'label' => 'Mostrar E-mail',
+                            'label' => 'Mostrar Email',
                             'name' => 'mostrar_email',
                             'type' => 'true_false',
                             'instructions' => '',
@@ -1341,6 +1340,70 @@ function thabatta_register_acf_fields()
             'hide_on_screen' => array(
                 0 => 'the_content',
             ),
+            'active' => true,
+            'description' => '',
+        ));
+
+        // Grupo de campos para Depoimentos
+        acf_add_local_field_group(array(
+            'key' => 'group_depoimento',
+            'title' => 'Informações do Depoimento',
+            'fields' => array(
+                array(
+                    'key' => 'field_depoimento_image',
+                    'label' => 'Foto do Cliente',
+                    'name' => 'image',
+                    'type' => 'image',
+                    'instructions' => 'Selecione uma foto da pessoa que deu o depoimento (opcional).',
+                    'required' => 0,
+                    'return_format' => 'array',
+                    'preview_size' => 'thumbnail',
+                    'library' => 'all',
+                ),
+                array(
+                    'key' => 'field_depoimento_empresa_cargo',
+                    'label' => 'Empresa',
+                    'name' => 'empresa_cargo',
+                    'type' => 'text',
+                    'instructions' => 'Insira a empresa da pessoa.',
+                    'required' => 0,
+                ),
+                array(
+                    'key' => 'field_depoimento_cargo',
+                    'label' => 'Cargo',
+                    'name' => 'cargo',
+                    'type' => 'text',
+                    'instructions' => 'Insira o cargo da pessoa.',
+                    'required' => 0,
+                ),
+                array(
+                    'key' => 'field_depoimento_avaliacao',
+                    'label' => 'Avaliação',
+                    'name' => 'avaliacao',
+                    'type' => 'number',
+                    'instructions' => 'Insira a avaliação em estrelas (de 1 a 5).',
+                    'required' => 0,
+                    'default_value' => 5,
+                    'min' => 1,
+                    'max' => 5,
+                    'step' => 1,
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'depoimento',
+                    ),
+                ),
+            ),
+            'menu_order' => 0,
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'hide_on_screen' => '',
             'active' => true,
             'description' => '',
         ));

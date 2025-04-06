@@ -515,17 +515,7 @@
                 font-style: italic;
                 margin-bottom: 1.5rem;
                 position: relative;
-                padding: 0 10px;
-                
-                &::before,
-                &::after {
-                    content: '\201C';
-                    font-size: 2rem;
-                    color: variables.$amarelo-dourado;
-                    position: absolute;
-                    top: -10px;
-                    left: -15px;
-                }
+                padding: 0;
                 
                 &::after {
                     content: '\201D';

@@ -201,16 +201,37 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
                         </div>
                         <div class="client-info">
                             <div class="client-img">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <?php the_post_thumbnail('thumbnail'); ?>
-                                <?php else : ?>
+                                <?php 
+                                // Verifica se tem imagem destacada no WordPress
+                                if (has_post_thumbnail()) : 
+                                    the_post_thumbnail('thumbnail');
+                                // Verifica se tem imagem no campo ACF (se disponível)
+                                elseif (function_exists('get_field') && get_field('image')) : 
+                                    $imagem = get_field('image');
+                                    if (is_array($imagem)) :
+                                        echo wp_get_attachment_image($imagem['ID'], 'thumbnail');
+                                    else :
+                                        echo wp_get_attachment_image($imagem, 'thumbnail');
+                                    endif;
+                                else : 
+                                ?>
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/client-placeholder.jpg" alt="Cliente">
                                 <?php endif; ?>
                             </div>
                             <div class="client-name">
                                 <h4><?php the_title(); ?></h4>
-                                <?php if (function_exists('get_field') && get_field('empresa_cargo')) : ?>
-                                    <p><?php echo esc_html(get_field('empresa_cargo')); ?></p>
+                                <?php if (function_exists('get_field')) : ?>
+                                    <?php 
+                                    $empresa = get_field('empresa_cargo');
+                                    $cargo = get_field('cargo');
+                                    
+                                    if (!empty($empresa) && !empty($cargo)) : ?>
+                                        <p><?php echo esc_html($cargo); ?>, <?php echo esc_html($empresa); ?></p>
+                                    <?php elseif (!empty($empresa)) : ?>
+                                        <p><?php echo esc_html($empresa); ?></p>
+                                    <?php elseif (!empty($cargo)) : ?>
+                                        <p><?php echo esc_html($cargo); ?></p>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             </div>
                         </div>

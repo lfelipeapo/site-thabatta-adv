@@ -3500,7 +3500,7 @@ input[type=checkbox] {
   opacity: 0.6;
   position: absolute;
   top: -0.5rem;
-  left: -0.5rem;
+  left: -0.1rem;
 }
 .testimonial-item .testimonial-content p {
   color: #4a4a4a;
@@ -4063,15 +4063,7 @@ input[type=checkbox] {
   font-style: italic;
   margin-bottom: 1.5rem;
   position: relative;
-  padding: 0 10px;
-}
-.testimonials-section .testimonial-carousel .testimonial-item p::before, .testimonials-section .testimonial-carousel .testimonial-item p::after {
-  content: "“";
-  font-size: 2rem;
-  color: #ffd700;
-  position: absolute;
-  top: -10px;
-  left: -15px;
+  padding: 0;
 }
 .testimonials-section .testimonial-carousel .testimonial-item p::after {
   content: "”";
