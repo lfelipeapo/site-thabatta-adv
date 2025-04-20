@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Jetpack &#8211; WP Security, Backup, Speed, &amp; Growth - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-04-03 13:54:09+0000\n"
+"PO-Revision-Date: 2025-04-09 20:54:09+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,14 +36,46 @@ msgstr "Parâmetros de consulta adicionais"
 msgid "The message path to fetch JITMs for"
 msgstr "O caminho da mensagem para o qual buscar JITMs"
 
+#: _inc/lib/core-api/wpcom-endpoints/class-wpcom-rest-api-v2-endpoint-unauth-file-upload.php:116
+#: _inc/lib/core-api/wpcom-endpoints/class-wpcom-rest-api-v2-endpoint-unauth-file-upload.php:126
+msgid "No file was uploaded."
+msgstr "Nenhum arquivo foi enviado."
+
+#: _inc/lib/core-api/wpcom-endpoints/class-wpcom-rest-api-v2-endpoint-unauth-file-upload.php:78
+msgid "Upload token is required."
+msgstr "É obrigatório fazer upload do token."
+
 #: _inc/lib/class.core-rest-api-endpoints.php:3102
 msgid "Automatically generate SEO title, SEO description, and image alt text for new posts."
 msgstr "Gere automaticamente título de SEO, descrição de SEO e texto alternativo de imagem para novos posts."
+
+#: modules/module-info.php:843
+msgid "Enabling this setting enhances account security by detecting compromised passwords and enforcing additional verification when needed."
+msgstr "Ao ativar essa configuração, você aumenta a segurança da conta detectando senhas comprometidas e aplicando verificações adicionais quando necessário."
+
+#: modules/module-headings.php:262
+msgctxt "Module Tag"
+msgid "Account Protection"
+msgstr "Proteção de conta"
+
+#: modules/module-headings.php:21
+msgctxt "Module Description"
+msgid "When enabled, users can only set passwords that meet strong security standards, helping protect their accounts and your site."
+msgstr "Quando essa opção é ativada, os usuários só podem definir senhas que atendam a padrões de segurança rigorosos, ajudando a proteger suas contas e seu site."
+
+#: modules/module-headings.php:20
+msgctxt "Module Name"
+msgid "Account protection"
+msgstr "Proteção de conta"
 
 #: jetpack_vendor/automattic/jetpack-subscribers-dashboard/src/class-dashboard.php:77
 msgctxt "product name shown in menu"
 msgid "Subscribers"
 msgstr "Assinantes"
+
+#: jetpack_vendor/automattic/jetpack-stats-admin/src/class-admin-post-list-column.php:115
+msgid "Views for the last thirty days. Click for detailed stats"
+msgstr "Visualizações dos últimos trinta dias. Clique para ver estatísticas detalhadas"
 
 #: jetpack_vendor/automattic/jetpack-publicize/src/rest-api/class-social-image-generator-controller.php:72
 msgid "The template slug."
@@ -108,6 +140,56 @@ msgstr "Data/hora em Unix GMT/UTC em segundos para a ação."
 msgid "The post ID to filter the items by."
 msgstr "A ID do post pela qual filtrar os itens."
 
+#: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-protect.php:236
+msgid "Account protection"
+msgstr "Proteção de conta"
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form.php:1775
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form.php:2042
+msgid "Failed to upload file."
+msgstr "Não foi possível fazer upload do arquivo."
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-field.php:910
+msgid "Remove file"
+msgstr "Remover arquivo"
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-field.php:906
+msgid "Uploaded"
+msgstr "Enviado"
+
+#. translators: %s is the formatted maximum file size.
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-field.php:861
+msgid "File is too large. Maximum allowed size is %s."
+msgstr "O arquivo é grande demais. O tamanho máximo permitido é %s."
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-field.php:859
+msgid "Folder uploads are not supported"
+msgstr "Uploads de pasta não são compatíveis"
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-field.php:858
+msgid "Error uploading file"
+msgstr "Erro ao fazer upload do arquivo"
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-field.php:857
+msgid "0 Bytes"
+msgstr "0 bytes"
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-field.php:794
+msgid "File upload field requires Jetpack to be active."
+msgstr "O campo de upload de arquivo requer que o Jetpack esteja ativo."
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-endpoint.php:518
+msgid "You must be logged in with appropriate permissions to view this file."
+msgstr "Você precisa efetuar login com as permissões apropriadas para visualizar este arquivo."
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-endpoint.php:393
+msgid "Limit result set to all items except those of a particular parent ID."
+msgstr "Limite resultados para todos os itens, com exceção daqueles com determinado ID principal."
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-endpoint.php:385
+msgid "Limit result set to items with particular parent IDs."
+msgstr "Limite resultados para itens com determinados IDs principais."
+
 #: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-endpoint.php:286
 msgid "The custom form fields and their submitted values."
 msgstr "Os campos de formulário personalizados e os valores enviados."
@@ -152,6 +234,19 @@ msgstr "O nome da pessoa que enviou o formulário."
 msgid "Unique identifier for the form response."
 msgstr "Identificador único da resposta do formulário."
 
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-endpoint.php:179
+msgid "The ID for the parent of the post. This refers to the post/page where the feedback was created."
+msgstr "A ID do post principal. Isso se refere ao post/página onde o feedback foi criado."
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-endpoint.php:111
+msgid "Invalid or missing file access token."
+msgstr "Token de acesso a arquivos inválido ou ausente."
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-contact-form-endpoint.php:97
+#: _inc/lib/core-api/wpcom-endpoints/class-wpcom-rest-api-v2-endpoint-unauth-file-upload.php:156
+msgid "File ID is required."
+msgstr "A ID do arquivo é obrigatória."
+
 #: jetpack_vendor/automattic/jetpack-connection/src/sso/class-sso.php:625
 msgid "Log in with another WordPress.com account"
 msgstr "Fazer login com outra conta do WordPress.com"
@@ -164,6 +259,10 @@ msgstr "Formato de endereço de e-mail inválido."
 msgid "Email address is required for magic link authentication."
 msgstr "O endereço de e-mail é obrigatório para a autenticação do link mágico."
 
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:289
+msgid "Optional \"from\" arg to distinguish where (which flow) the user is coming from when connecting"
+msgstr "Argumento \"from\" opcional para diferenciar de onde (qual fluxo) o usuário está vindo ao se conectar"
+
 #: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:284
 msgid "Email address for magic link authentication"
 msgstr "Endereço de e-mail para autenticação do link mágico"
@@ -171,6 +270,197 @@ msgstr "Endereço de e-mail para autenticação do link mágico"
 #: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:274
 msgid "Authentication provider (google, github, apple, link)"
 msgstr "Provedor de autenticação (Google, GitHub, Apple, link)"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:165
+msgid "<strong>Error:</strong> The password was used recently."
+msgstr "<strong>Erro:</strong> a senha foi usada recentemente."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:162
+msgid "<strong>Error:</strong> The password matches new user data."
+msgstr "<strong>Erro:</strong> a senha corresponde aos dados do novo usuário."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:155
+msgid "<strong>Error:</strong> The password was found in a public leak."
+msgstr "<strong>Erro:</strong> a senha foi encontrada em um vazamento público."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:151
+msgid "<strong>Error:</strong> The password must be between 6 and 150 characters."
+msgstr "<strong>Erro:</strong> a senha deve ter entre 6 e 150 caracteres."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:147
+msgid "<strong>Error:</strong> Passwords may not contain the character \"\\\"."
+msgstr "<strong>Erro:</strong> senhas não podem conter o caractere \"\\\"."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:143
+msgid "<strong>Error:</strong> The password cannot be a space or all spaces."
+msgstr "<strong>Erro:</strong> a senha não pode ser um espaço ou ter apenas espaços."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:96
+msgid "Reusing old passwords may increase security risks. A fresh password improves protection."
+msgstr "Reutilizar senhas antigas pode aumentar os riscos de segurança. Uma nova senha melhora a proteção."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:95
+msgid "Not used recently"
+msgstr "Não usada recentemente"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:91
+msgid "Using a password similar to your username or email makes it easier to guess."
+msgstr "É mais fácil adivinhar uma senha que seja semelhante ao seu nome de usuário ou e-mail."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:90
+msgid "Doesn't match existing user data"
+msgstr "Não corresponde aos dados de usuário atual"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:79
+msgid "If found in a public breach, this password may already be known to attackers."
+msgstr "Se essa senha foi encontrada em um vazamento de dados, é possível que os invasores já a conheçam."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:78
+msgid "Not a leaked password"
+msgstr "Não é uma senha vazada"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:73
+msgid "Between 6 and 150 characters"
+msgstr "Entre 6 e 150 caracteres"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:68
+msgid "Doesn't contain a backslash (\\) character"
+msgstr "Não contém barra invertida (\\)"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:64
+msgid "Passwords should meet WordPress core security requirements to enhance account protection."
+msgstr "As senhas devem atender aos principais requisitos de segurança do WordPress para reforçar a proteção da conta."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-validation-service.php:63
+msgid "Strong password"
+msgstr "Senha forte"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-strength-meter.php:79
+msgid "Invalid nonce."
+msgstr "Uso único inválido."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-strength-meter.php:74
+msgid "No password provided."
+msgstr "Nenhuma senha fornecida."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:488
+msgid "Authentication code verification failed. Please try again."
+msgstr "Falha na verificação do código de autenticação. Tente novamente."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:475
+msgid "Authentication code verified successfully."
+msgstr "Código de autenticação verificado com sucesso."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:363
+msgid "Resend email"
+msgstr "Reenviar e-mail"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:361
+msgid "Didn't get the code?"
+msgstr "Não recebeu o código?"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:355
+msgid "reset your password"
+msgstr "redefina sua senha"
+
+#. translators: %s: Jetpack support link
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:354
+msgid "If you did not receive your authentication code, please try again later or %s now."
+msgstr "Se você não recebeu seu código de autenticação, tente novamente mais tarde ou %s agora."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:346
+msgid "Verify"
+msgstr "Verificar"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:338
+msgid "Enter verification code"
+msgstr "Digite o código de verificação"
+
+#. translators: %s: Masked email address
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:326
+msgid "We've sent a code to %s. Please check your inbox and enter the code below to verify it's really you."
+msgstr "Enviamos um código para %s. Verifique sua caixa de entrada e insira o código abaixo para confirmar que é realmente você."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:321
+msgid "We've noticed that your current password may have been compromised in a public leak. To keep your account safe, we've added an extra layer of security."
+msgstr "Percebemos que sua senha atual pode ter sido comprometida em um vazamento público. Para manter sua conta segura, adicionamos uma camada extra de segurança."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:316
+msgid "risks of using weak passwords"
+msgstr "riscos de usar senhas fracas"
+
+#. translators: %s: Risks of using weak passwords link
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:315
+msgid "Learn more about the %s and how to protect your account."
+msgstr "Saiba mais sobre os %s e como proteger sua conta."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:307
+msgid "Proceed without updating"
+msgstr "Continuar sem atualizar"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:304
+msgid "Create a new password"
+msgstr "Criar nova senha"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:301
+msgid "Please keep in mind that your current password was found in a public leak, which means your account might be at risk. It is highly recommended that you update your password."
+msgstr "Sua senha atual foi encontrada em um vazamento de dados. Isso significa que sua conta pode estar vulnerável. É altamente recomendado que você atualize sua senha."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:300
+msgid "You're all set! You can now access your account."
+msgstr "Tudo pronto! Agora você pode acessar sua conta."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:288
+msgid "Verify your identity"
+msgstr "Verifique sua identidade"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:288
+msgid "Take action to stay secure"
+msgstr "Tome medidas para manter sua conta segura"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:278
+msgid "Jetpack - Secure Your Account"
+msgstr "Jetpack: proteja sua conta"
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:227
+msgid "Verify nonce verification failed. Please try again."
+msgstr "Falha na verificação de uso único. Tente novamente."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:210
+msgid "Resend nonce verification failed. Please try again."
+msgstr "Falha ao reenviar verificação de uso único. Tente novamente."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:197
+msgid "Authentication email resent successfully."
+msgstr "E-mail de autenticação reenviado com sucesso."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:108
+msgid "Failed to update authentication token. Please try again."
+msgstr "Falha ao atualizar o token de autenticação. Tente novamente."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-email-service.php:118
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:431
+msgid "Failed to set transient data. Please try again."
+msgstr "Falha ao definir dados transientes. Tente novamente."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-email-service.php:104
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-password-detection.php:75
+msgid "Email request limit exceeded. Please try again later."
+msgstr "Limite de solicitação de e-mail excedido. Tente novamente mais tarde."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-email-service.php:58
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-email-service.php:64
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-email-service.php:68
+msgid "Failed to send authentication code. Please try again."
+msgstr "Falha ao enviar o código de autenticação. Tente novamente."
+
+#: jetpack_vendor/automattic/jetpack-account-protection/src/class-email-service.php:48
+msgid "Jetpack is not connected. Please connect and try again."
+msgstr "O Jetpack não está conectado. Conecte-o e tente novamente."
+
+#: class.jetpack.php:1510
+msgid "The jetpack_offline_mode option is set to true."
+msgstr "A opção jetpack_offline_mode está definida como true."
 
 #: modules/copy-post.php:348
 msgid "Duplicate"
@@ -4810,6 +5100,11 @@ msgstr "WAF"
 msgctxt "Module Tag"
 msgid "Firewall"
 msgstr "Firewall"
+
+#: modules/module-headings.php:216
+msgctxt "Module Description"
+msgid "Protect your site with Jetpack's Web Application Firewall."
+msgstr "Proteja seu site com o firewall de aplicativo da Web do Jetpack."
 
 #: modules/module-headings.php:215
 msgctxt "Module Name"
