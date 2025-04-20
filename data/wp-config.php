@@ -129,6 +129,12 @@ if (!defined('ABSPATH')) {
     define('ABSPATH', __DIR__ . '/');
 }
 
+// Configurações de memória e tempo limite
+@ini_set('memory_limit', '512M');
+if (!ini_get('max_execution_time') || ini_get('max_execution_time') < 300) {
+    set_time_limit(300);
+}
+
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
 
@@ -147,14 +153,4 @@ define('FTP_PLUGIN_DIR', '/home/wp-user/data/wp-content/plugins'); // Diretório
 @ini_set('display_errors', 1);
 @ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 set_time_limit(120);
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-
-// Definir limite de memória apenas se ainda não estiver definido
-if (!defined('WP_MEMORY_LIMIT')) {
-    define('WP_MEMORY_LIMIT', '512M');
-}
-
-// Definir tempo limite apenas se ainda não estiver definido
-if (!ini_get('max_execution_time') || ini_get('max_execution_time') < 300) {
-    set_time_limit(300);
-}
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);
