@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Advanced Custom Fields (ACF®) - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-03-26 11:39:02+0000\n"
+"PO-Revision-Date: 2025-04-07 16:11:07+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,10 +21,6 @@ msgstr "são desenvolvidos e mantidos por"
 msgid "Learn more"
 msgstr "Saiba mais"
 
-#: includes/class-acf-site-health.php:291
-msgid "Update Source"
-msgstr "Atualizar origem"
-
 #: includes/admin/views/acf-post-type/advanced-settings.php:850
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:810
 msgid "By default only admin users can edit this setting."
@@ -33,10 +29,6 @@ msgstr "Por padrão, somente usuários administradores podem editar esta configu
 #: includes/admin/views/acf-field-group/field.php:322
 msgid "Close and Add Field"
 msgstr "Fechar e adicionar campo"
-
-#: includes/class-acf-site-health.php:292
-msgid "wordpress.org"
-msgstr "wordpress.org"
 
 #: includes/fields/class-acf-field.php:341
 msgid "Learn more."
@@ -174,7 +166,7 @@ msgstr "Renovar a licença PRO"
 msgid "PRO fields cannot be edited without an active license."
 msgstr "Campos PRO não podem ser editados sem uma licença ativa."
 
-#: includes/Blocks/Bindings.php:35
+#: src/Blocks/Bindings.php:38
 msgctxt "The core ACF block binding source name for fields on the current page"
 msgid "ACF Fields"
 msgstr "Campos do ACF"
@@ -642,8 +634,8 @@ msgstr "Permite a seleção de um ou mais usuários que podem ser usados para cr
 msgid "A dual-column interface to select one or more posts, pages, or custom post type items to create a relationship with the item that you're currently editing. Includes options to search and filter."
 msgstr "Uma interface de coluna dupla para selecionar uma ou mais postagens, páginas ou itens de tipo de postagem personalizados para criar uma relação com o item que você está editando no momento. Inclui opções para pesquisar e filtrar."
 
-#: includes/admin/views/global/navigation.php:86
-#: includes/class-acf-site-health.php:286 includes/fields.php:331
+#: includes/admin/views/global/navigation.php:86 includes/fields.php:331
+#: src/Site_Health/Site_Health.php:290
 msgid "PRO"
 msgstr "PRO"
 
@@ -810,7 +802,7 @@ msgid "Post type submitted."
 msgstr "Tipo de post enviado."
 
 #: includes/admin/admin.php:46 includes/admin/admin.php:361
-#: includes/class-acf-site-health.php:250
+#: src/Site_Health/Site_Health.php:254
 msgid "ACF"
 msgstr "ACF"
 
@@ -2682,7 +2674,7 @@ msgid_plural "%s field groups activated."
 msgstr[0] "Grupo de campos ativado."
 msgstr[1] "%s grupos de campos ativados."
 
-#: acf.php:504 includes/admin/admin-internal-post-type-list.php:264
+#: acf.php:519 includes/admin/admin-internal-post-type-list.php:264
 #: includes/admin/post-types/admin-field-group.php:304
 #: includes/admin/post-types/admin-post-type.php:282
 #: includes/admin/post-types/admin-taxonomy.php:284
@@ -2724,18 +2716,13 @@ msgid_plural "%s field groups deactivated."
 msgstr[0] "Grupo de campos desativado."
 msgstr[1] "%s grupos de campos desativados."
 
-#: acf.php:562
+#: acf.php:577
 msgid "Advanced Custom Fields and Advanced Custom Fields PRO should not be active at the same time. We've automatically deactivated Advanced Custom Fields PRO."
 msgstr "O Advanced Custom Fields e o Advanced Custom Fields PRO não devem estar ativos ao mesmo tempo. Desativamos automaticamente o Advanced Custom Fields PRO."
 
-#: acf.php:560
+#: acf.php:575
 msgid "Advanced Custom Fields and Advanced Custom Fields PRO should not be active at the same time. We've automatically deactivated Advanced Custom Fields."
 msgstr "O Advanced Custom Fields e o Advanced Custom Fields PRO não devem estar ativos ao mesmo tempo. Desativamos automaticamente o Advanced Custom Fields."
-
-#. translators: %1 plugin name, %2 the URL to the documentation on this error
-#: includes/acf-value-functions.php:376
-msgid "<strong>%1$s</strong> - We've detected one or more calls to retrieve ACF field values before ACF has been initialized. This is not supported and can result in malformed or missing data. <a href=\"%2$s\" target=\"_blank\">Learn how to fix this</a>."
-msgstr "<strong>%1$s</strong> - Detectamos uma ou mais chamadas para recuperar os valores de campos do ACF antes de o ACF ser inicializado. Isso não é suportado e pode resultar em dados malformados ou ausentes. <a href=\"%2$s\" target=\"_blank\">Saiba como corrigir isso</a>."
 
 #: includes/fields/class-acf-field-file.php:447
 msgid "%s requires a valid attachment ID."
@@ -3130,18 +3117,18 @@ msgstr "Adicionar arquivo"
 msgid "Add Image"
 msgstr "Adicionar imagem"
 
-#: acf.php:430 acf.php:464
+#: acf.php:445 acf.php:479
 #: includes/admin/views/acf-post-type/advanced-settings.php:224
 #: includes/post-types/class-acf-post-type.php:93
 #: includes/post-types/class-acf-taxonomy.php:92
 msgid "Add New"
 msgstr "Adicionar novo"
 
-#: acf.php:465
+#: acf.php:480
 msgid "Add New Field"
 msgstr "Adicionar novo campo"
 
-#: acf.php:431
+#: acf.php:446
 msgid "Add New Field Group"
 msgstr "Adicionar novo grupo de campos"
 
@@ -3380,7 +3367,7 @@ msgstr "Comentários"
 msgid "Conditional Logic"
 msgstr "Lógica condicional"
 
-#: includes/fields.php:326 includes/forms/form-front.php:46
+#: includes/fields.php:326 includes/forms/form-front.php:55
 msgid "Content"
 msgstr "Conteúdo"
 
@@ -3593,24 +3580,24 @@ msgstr "Desconhecido"
 msgid "Field type does not exist"
 msgstr "Tipo de campo não existe"
 
-#: includes/forms/form-front.php:217
+#: includes/forms/form-front.php:220
 msgid "Spam Detected"
 msgstr "Spam detectado"
 
-#: includes/forms/form-front.php:100
+#: includes/forms/form-front.php:103
 msgid "Post updated"
 msgstr "Post atualizado"
 
-#: includes/forms/form-front.php:99
+#: includes/forms/form-front.php:102
 msgid "Update"
 msgstr "Atualizar"
 
-#: includes/forms/form-front.php:54
+#: includes/forms/form-front.php:63
 msgid "Validate Email"
 msgstr "Validar e-mail"
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:21
-#: includes/forms/form-front.php:37
+#: includes/forms/form-front.php:46
 msgid "Title"
 msgstr "Título"
 
@@ -3922,13 +3909,13 @@ msgid "Display Format"
 msgstr "Formato de exibição"
 
 #. translators: counts for inactive field groups
-#: acf.php:510
+#: acf.php:525
 msgid "Inactive <span class=\"count\">(%s)</span>"
 msgid_plural "Inactive <span class=\"count\">(%s)</span>"
 msgstr[0] "Desativado <span class=\"count\">(%s)</span>"
 msgstr[1] "Desativados <span class=\"count\">(%s)</span>"
 
-#: acf.php:428 includes/admin/post-types/admin-field-groups.php:55
+#: acf.php:443 includes/admin/post-types/admin-field-groups.php:55
 #: includes/admin/post-types/admin-post-types.php:113
 #: includes/admin/post-types/admin-taxonomies.php:112
 msgid "Field Groups"
@@ -3939,45 +3926,45 @@ msgstr "Grupos de campos"
 msgid "https://www.advancedcustomfields.com"
 msgstr "https://www.advancedcustomfields.com"
 
-#: acf.php:469
+#: acf.php:484
 msgid "Search Fields"
 msgstr "Pesquisar campos"
 
-#: acf.php:468
+#: acf.php:483
 msgid "View Field"
 msgstr "Ver campo"
 
-#: acf.php:467 includes/admin/views/acf-field-group/fields.php:113
+#: acf.php:482 includes/admin/views/acf-field-group/fields.php:113
 msgid "New Field"
 msgstr "Novo campo"
 
-#: acf.php:466
+#: acf.php:481
 msgid "Edit Field"
 msgstr "Editar campo"
 
-#: acf.php:463
+#: acf.php:478
 msgid "Field"
 msgstr "Campo"
 
-#: acf.php:462 includes/admin/post-types/admin-field-group.php:179
+#: acf.php:477 includes/admin/post-types/admin-field-group.php:179
 #: includes/admin/post-types/admin-field-groups.php:93
 #: includes/admin/views/acf-field-group/fields.php:32
 msgid "Fields"
 msgstr "Campos"
 
-#: acf.php:435
+#: acf.php:450
 msgid "Search Field Groups"
 msgstr "Pesquisar grupos de campos"
 
-#: acf.php:434
+#: acf.php:449
 msgid "View Field Group"
 msgstr "Ver grupo de campos"
 
-#: acf.php:433
+#: acf.php:448
 msgid "New Field Group"
 msgstr "Novo grupo de campos"
 
-#: acf.php:432
+#: acf.php:447
 msgid "Edit Field Group"
 msgstr "Editar grupo de campos"
 
@@ -3992,17 +3979,15 @@ msgstr "Interface estilizada"
 msgid "Message"
 msgstr "Mensagem"
 
-#: includes/assets.php:352 includes/class-acf-site-health.php:277
-#: includes/class-acf-site-health.php:339
-#: includes/fields/class-acf-field-true_false.php:79
+#: includes/assets.php:352 includes/fields/class-acf-field-true_false.php:79
 #: includes/fields/class-acf-field-true_false.php:175
+#: src/Site_Health/Site_Health.php:281 src/Site_Health/Site_Health.php:338
 msgid "No"
 msgstr "Não"
 
-#: includes/assets.php:351 includes/class-acf-site-health.php:276
-#: includes/class-acf-site-health.php:339
-#: includes/fields/class-acf-field-true_false.php:76
+#: includes/assets.php:351 includes/fields/class-acf-field-true_false.php:76
 #: includes/fields/class-acf-field-true_false.php:159
+#: src/Site_Health/Site_Health.php:280 src/Site_Health/Site_Health.php:338
 msgid "Yes"
 msgstr "Sim"
 
@@ -4616,19 +4601,19 @@ msgstr "Atualização do banco de dados concluída. <a href=\"%s\">Retornar para
 msgid "Site requires database upgrade from %1$s to %2$s"
 msgstr "O site requer a atualização do banco de dados de %1$s para %2$s"
 
-#: acf.php:470
+#: acf.php:485
 msgid "No Fields found"
 msgstr "Não foi possível encontrar campos"
 
-#: acf.php:437
+#: acf.php:452
 msgid "No Field Groups found in Trash"
 msgstr "Não foi possível encontrar grupos de campos na lixeira"
 
-#: acf.php:436
+#: acf.php:451
 msgid "No Field Groups found"
 msgstr "Não foi possível encontrar grupos de campos"
 
-#: acf.php:471
+#: acf.php:486
 msgid "No Fields found in Trash"
 msgstr "Não foi possível encontrar campos na lixeira"
 
@@ -5332,7 +5317,7 @@ msgstr "Todos os tipos de posts"
 msgid "Relationship"
 msgstr "Relação"
 
-#: acf.php:429
+#: acf.php:444
 msgid "Field Group"
 msgstr "Grupo de campos"
 
@@ -5345,6 +5330,6 @@ msgid "Show Media Upload Buttons"
 msgstr "Mostrar botões de envio de mídia"
 
 #. Plugin Name of the plugin
-#: acf.php acf.php:93
+#: acf.php acf.php:289
 msgid "Advanced Custom Fields"
 msgstr "Advanced Custom Fields"

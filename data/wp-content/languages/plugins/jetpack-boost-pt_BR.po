@@ -19,11 +19,11 @@ msgstr "Argumento \"from\" opcional para diferenciar de onde (qual fluxo) o usu�
 msgid "Account protection"
 msgstr "Proteção de conta"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1174
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1121
 msgid "Invalid email address format."
 msgstr "Formato de endereço de e-mail inválido."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1164
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1111
 msgid "Email address is required for magic link authentication."
 msgstr "O endereço de e-mail é obrigatório para a autenticação do link mágico."
 
@@ -55,15 +55,15 @@ msgstr "Este usuário conectou sua conta do WordPress.com."
 msgid "WordPress.com account"
 msgstr "Conta do WordPress.com"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1052
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:999
 msgid "Was not able to unlink the user. Please try again."
 msgstr "Não foi possível desconectar o usuário. Tente novamente."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1032
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:979
 msgid "Unable to unlink the connection owner."
 msgstr "Não foi possível desvincular o proprietário da conexão."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1022
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:969
 msgid "Invalid Parameter"
 msgstr "Parâmetro inválido"
 
@@ -220,7 +220,7 @@ msgstr "O relatório está incompleto. Estão faltando grupos."
 msgid "Report not found."
 msgstr "O relatório não foi encontrado."
 
-#: app/lib/critical-css/source-providers/providers/class-cornerstone-provider.php:95
+#: app/lib/critical-css/source-providers/providers/class-cornerstone-provider.php:99
 msgid "Cornerstone page"
 msgstr "Página fundamental"
 
@@ -333,11 +333,11 @@ msgstr "O login com o WordPress.com está desativado para os sites que estão no
 msgid "Jetpack Force 2FA requires Jetpack’s SSO feature."
 msgstr "O Jetpack Force 2FA requer as funcionalidades de SSO do Jetpack."
 
-#: app/modules/optimizations/page-cache/class-page-cache-setup.php:182
+#: app/modules/optimizations/page-cache/class-page-cache-setup.php:183
 msgid "To ensure optimal performance, WP Super Cache has been automatically deactivated because Jetpack Boost's Cache is now active. Only one caching system can be used at a time."
 msgstr "Para garantir melhor desempenho, o WP Super Cache foi automaticamente desativado porque o cache do Jetpack Boost agora está ativo. Apenas um sistema de armazenamento em cache pode ser usado por vez."
 
-#: app/modules/optimizations/page-cache/class-page-cache-setup.php:181
+#: app/modules/optimizations/page-cache/class-page-cache-setup.php:182
 msgid "WP Super Cache Has Been Deactivated"
 msgstr "O WP Super Cache foi desativado"
 
@@ -676,17 +676,17 @@ msgstr "O armazenamento em cache de página acelera o tempo de carregamento, sal
 msgid "Powerful, automated site security"
 msgstr "Segurança de site eficiente e automatizada"
 
-#: app/modules/optimizations/page-cache/data-sync-actions/class-clear-page-cache.php:36
+#: app/modules/optimizations/page-cache/data-sync-actions/class-clear-page-cache.php:35
 #: app/assets/dist/jetpack-boost.js:56
 msgid "Unable to clear cache."
 msgstr "Não é possível limpar o cache."
 
-#: app/modules/optimizations/page-cache/data-sync-actions/class-clear-page-cache.php:32
+#: app/modules/optimizations/page-cache/data-sync-actions/class-clear-page-cache.php:31
 #: app/assets/dist/jetpack-boost.js:56
 msgid "Cache cleared."
 msgstr "Cache limpo."
 
-#: app/modules/optimizations/page-cache/data-sync-actions/class-clear-page-cache.php:26
+#: app/modules/optimizations/page-cache/data-sync-actions/class-clear-page-cache.php:25
 msgid "Cache already cleared."
 msgstr "Cache já limpo."
 
@@ -907,7 +907,7 @@ msgid "Jetpack Boost Cloud Error: \"%s\""
 msgstr "Erro na nuvem do Jetpack Boost: \"%s\""
 
 #. translators: %1$s is a domain name.
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2395
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2412
 msgid "IP address `%1$s` just failed is_usable_domain check as it is in the private network."
 msgstr "Falha do endereço de IP \"%1$s\" na verificação is_usable_domain porque ele está na rede privada."
 
@@ -1188,7 +1188,7 @@ msgstr "Segurança abrangente para seu site, incluindo VaultPress Backup, Scan e
 msgid "Akismet Anti-spam"
 msgstr "Akismet Anti-Spam"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2748
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2770
 msgid "Sorry, something is wrong with your Jetpack connection."
 msgstr "Desculpe, há algo errado em sua conexão com o Jetpack."
 
@@ -1785,19 +1785,19 @@ msgstr "O parâmetro obrigatório \"%s\" está malformado."
 msgid "The required \"%s\" parameter is missing."
 msgstr "O parâmetro obrigatório \"%s\" está ausente."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:1005
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:952
 msgid "Failed to disconnect the site as it appears already disconnected."
 msgstr "Ocorreu uma falha ao desconectar o site, pois ele já está desconectado."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:962
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:909
 msgid "Site is not connected"
 msgstr "O site não está conectado"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:956
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:903
 msgid "Invalid user id is provided"
 msgstr "A ID de usuário fornecida é inválida"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:950
+#: jetpack_vendor/automattic/jetpack-connection/src/class-rest-connector.php:897
 msgid "Invalid user token is provided"
 msgstr "O token de usuário fornecido é inválido"
 
@@ -1857,95 +1857,95 @@ msgid "You cannot call this method until Jetpack Config is configured"
 msgstr "Não é possível chamar este método até que o Jetpack Config esteja configurado"
 
 #. translators: Error description string.
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2673
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2690
 #: jetpack_vendor/automattic/jetpack-connection/src/class-tokens.php:225
 msgid "Error Details: %s"
 msgstr "Detalhes do erro: %s"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2524
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2541
 msgid "The Client ID/WP.com Blog ID of this site"
 msgstr "A ID do cliente ID/ID do blog WP.com deste site"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2518
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2535
 msgid "Jetpack Plugin Version"
 msgstr "Versão do plugin Jetpack"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2496
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2513
 msgid "The number of sites of the connected WP.com user"
 msgstr "O número de sites do usuário conectado ao WP.com"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2491
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2508
 msgid "The WP.com user email of the connected user"
 msgstr "O e-mail WP.com do usuário conectado"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2486
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2503
 msgid "The WP.com username of the connected user"
 msgstr "O nome de usuário no WP.com do usuário conectado"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2481
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2498
 msgid "The WP.com user ID of the connected user"
 msgstr "O ID no WP.com do usuário conectado"
 
 #. translators: %1$s is a domain name.
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2371
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2388
 msgid "Domain `%1$s` just failed is_usable_domain check as it is a subdomain of WordPress.com."
 msgstr "Falha na verificação is_usable_domain do domínio `%1$s` porque ele é um subdomínio do WordPress.com."
 
 #. translators: %1$s is a domain name.
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2356
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2373
 msgid "Domain `%1$s` just failed is_usable_domain check as it uses an invalid top level domain."
 msgstr "Falha na verificação is_usable_domain do domínio `%1$s` porque ele usa um domínio primário inválido."
 
 #. translators: %1$s is a domain name.
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2341
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2358
 msgid "Domain `%1$s` just failed is_usable_domain check as it is in the forbidden array."
 msgstr "Falha na verificação is_usable_domain do domínio `%1$s` porque ele está em um array proibido."
 
 #. translators: %1$s is a domain name.
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2308
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:2325
 msgid "Domain `%1$s` just failed is_usable_domain check as it is empty."
 msgstr "Falha na verificação is_usable_domain do domínio `%1$s` porque ele está vazio."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1934
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1951
 msgid "Invalid Registration State"
 msgstr "Estado de registro inválido"
 
 #. translators: %s is an error message string
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1524
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1541
 msgid "Error Details: Jetpack ID begins with a numeral. Do not publicly post this error message! %s"
 msgstr "Detalhes do erro: A ID do Jetpack começa com números. Não publique esta mensagem de erro! %s"
 
 #. translators: %s is an error message string
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1517
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1534
 msgid "Error Details: Jetpack ID is not a scalar. Do not publicly post this error message! %s"
 msgstr "Detalhes do erro: A ID do Jetpack não é escalar. Não publique esta mensagem de erro! %s"
 
 #. translators: %s is an error message string
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1510
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1527
 msgid "Error Details: Jetpack ID is empty. Do not publicly post this error message! %s"
 msgstr "Detalhes do erro: A ID do Jetpack esta vazia. Não publique esta mensagem de erro! %s"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1489
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1506
 msgid "PHP's XML extension is not available. Jetpack requires the XML extension to communicate with WordPress.com. Please contact your hosting provider to enable PHP's XML extension."
 msgstr "A extensão XML do PHP não está disponível. O Jetpack exige a extensão XML para se comunicar com o WordPress.com. Entre em contato com seu provedor de hospedagem para ativar a extensão XML do PHP."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1216
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1233
 msgid "Jetpack experienced an issue trying to save options (cannot_save_secrets). We suggest that you contact your hosting provider, and ask them for help checking that the options table is writable on your site."
 msgstr "Ocorreu um erro no Jetpack ao tentar salvar as opções (cannot_save_secrets). Sugerimos que você entre em contato com seu provedor de hospedagem e solicite que ele confira se a tabela de opções é editável no seu site."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1120
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1137
 msgid "Could not confirm new owner."
 msgstr "Não foi possível confirmar o novo proprietário."
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1100
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1117
 msgid "New owner is not connected"
 msgstr "O novo proprietário não está conectado"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1092
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1109
 msgid "New owner is same as existing owner"
 msgstr "O novo proprietário e o proprietário existente são iguais"
 
-#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1082
+#: jetpack_vendor/automattic/jetpack-connection/src/class-manager.php:1099
 msgid "New owner is not admin"
 msgstr "O novo proprietário não é administrador"
 
@@ -2161,6 +2161,7 @@ msgid "Jetpack Boost - Settings"
 msgstr "Jetpack Boost - Configurações"
 
 #: app/rest-api/endpoints/class-update-cloud-css.php:57
+#: app/rest-api/endpoints/class-update-lcp.php:55
 msgid "An unknown error occurred"
 msgstr "Um erro desconhecido ocorreu"
 
