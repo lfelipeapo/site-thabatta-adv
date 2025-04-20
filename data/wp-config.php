@@ -135,6 +135,14 @@ if (!ini_get('max_execution_time') || ini_get('max_execution_time') < 300) {
     set_time_limit(300);
 }
 
+// Suprimir avisos específicos
+if (!function_exists('suppress_jwt_auth_notice')) {
+    function suppress_jwt_auth_notice() {
+        remove_action('admin_notices', array('JWT_AUTH_Public', 'admin_notices'));
+    }
+    add_action('init', 'suppress_jwt_auth_notice', 1);
+}
+
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
 
