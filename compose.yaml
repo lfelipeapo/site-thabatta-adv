@@ -34,7 +34,7 @@ services:
         define('WP_HOME', 'https://localhost');
     volumes:
       - ./data/wp-content:/var/www/html/wp-content
-      - ./data/wp-content/themes/mytheme:/var/www/html/wp-content/themes/mytheme
+      - ./data/wp-content/themes/thabatta-adv-theme:/var/www/html/wp-content/themes/thabatta-adv-theme
       - caddy_data:/data
       - caddy_config:/config
     depends_on:

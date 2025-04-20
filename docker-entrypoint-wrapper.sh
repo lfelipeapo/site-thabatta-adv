@@ -49,5 +49,9 @@ echo "Instalando outros plugins..."
 wp plugin install classic-editor custom-post-type-ui advanced-custom-fields acf-to-rest-api acf-extended advanced-custom-fields-table-field acf-quickedit-fields acf-better-search advanced-forms navz-photo-gallery admin-columns-for-acf-fields acf-rgba-color-picker pages-with-category-and-tag jwt-auth \
   --activate --allow-root --path=/var/www/html
 
+# Ativar o tema thabatta-adv-theme
+echo "Ativando o tema thabatta-adv-theme..."
+wp theme activate thabatta-adv-theme --allow-root --path=/var/www/html
+
 # Executa o entrypoint original
 exec docker-entrypoint.sh "$@"
