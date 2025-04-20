@@ -149,6 +149,12 @@ define('FTP_PLUGIN_DIR', '/home/wp-user/data/wp-content/plugins'); // Diretório
 set_time_limit(120);
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 
+// Definir limite de memória apenas se ainda não estiver definido
+if (!defined('WP_MEMORY_LIMIT')) {
+    define('WP_MEMORY_LIMIT', '512M');
+}
 
-define('WP_MEMORY_LIMIT', '512M');
-set_time_limit(300);
+// Definir tempo limite apenas se ainda não estiver definido
+if (!ini_get('max_execution_time') || ini_get('max_execution_time') < 300) {
+    set_time_limit(300);
+}

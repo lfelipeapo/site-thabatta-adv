@@ -30,8 +30,23 @@ if ! wp core is-installed --path=/var/www/html; then
     --path=/var/www/html
 fi
 
-# Instala os plugins desejados
-wp plugin install jetpack jetpack-boost classic-editor custom-post-type-ui advanced-custom-fields acf-to-rest-api acf-extended advanced-custom-fields-table-field acf-quickedit-fields acf-better-search advanced-forms navz-photo-gallery admin-columns-for-acf-fields acf-rgba-color-picker jetpack-protect pages-with-category-and-tag jwt-auth \
+# Instalar Jetpack apenas se não existir
+if ! wp plugin is-installed jetpack --allow-root --path=/var/www/html; then
+    wp plugin install jetpack --activate --allow-root --path=/var/www/html
+fi
+
+# Instalar Jetpack Boost e Protect apenas se não existirem
+if ! wp plugin is-installed jetpack-boost --allow-root --path=/var/www/html; then
+    wp plugin install jetpack-boost --activate --allow-root --path=/var/www/html
+fi
+
+if ! wp plugin is-installed jetpack-protect --allow-root --path=/var/www/html; then
+    wp plugin install jetpack-protect --activate --allow-root --path=/var/www/html
+fi
+
+# Instala os demais plugins
+echo "Instalando outros plugins..."
+wp plugin install classic-editor custom-post-type-ui advanced-custom-fields acf-to-rest-api acf-extended advanced-custom-fields-table-field acf-quickedit-fields acf-better-search advanced-forms navz-photo-gallery admin-columns-for-acf-fields acf-rgba-color-picker pages-with-category-and-tag jwt-auth \
   --activate --allow-root --path=/var/www/html
 
 # Executa o entrypoint original
