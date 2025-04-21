@@ -78,48 +78,52 @@ function thabatta_render_web_component_meta_box($post) {
     }
 }
 
-/**
- * Salva os metadados do Web Component
- */
-function thabatta_save_web_component_meta($post_id) {
-    $keys = ['tag_name', 'html_code', 'css_code', 'js_code', 'use_shadow_dom', 'shadow_dom_mode'];
-    foreach ($keys as $key) {
-        if (isset($_POST[$key])) {
-            if ( in_array($key, ['html_code','css_code','js_code'], true) ) {
-                $value = sanitize_textarea_field( $_POST[$key] );
+function thabatta_save_web_component_meta( $post_id ) {
+
+    /* ─────── aborta autosave ou falta de permissão ─────── */
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    $keys = [ 'tag_name', 'html_code', 'css_code', 'js_code', 'use_shadow_dom', 'shadow_dom_mode' ];
+
+    $extra_allowed = [
+        'template' => [ 'id' => true ],
+        'style'    => [ 'type' => true, 'media' => true ],
+        'script'   => [ 'type' => true, 'src' => true, 'defer' => true ],
+        'data-*' => true,
+    ];
+    $allowed_html = array_merge(
+        wp_kses_allowed_html( 'post' ),
+        $extra_allowed
+    );
+
+    foreach ( $keys as $key ) {
+
+        if ( isset( $_POST[ $key ] ) ) {
+
+            $raw   = wp_unslash( $_POST[ $key ] );
+            $value = $raw;
+
+            if ( $key === 'js_code' ) {
+                $value = wp_slash( $raw );
+            } elseif ( in_array( $key, [ 'html_code', 'css_code' ], true ) ) {
+                $value = wp_kses( $raw, $allowed_html );
             } else {
-                $value = sanitize_text_field( $_POST[$key] );
+                $value = sanitize_text_field( $raw );
             }
-            update_post_meta($post_id, $key, $value);
-        } elseif ($key === 'use_shadow_dom') {
-            update_post_meta($post_id, $key, '0');
+
+            update_post_meta( $post_id, $key, $value );
+
+        } elseif ( 'use_shadow_dom' === $key ) {
+            update_post_meta( $post_id, $key, '0' );
         }
     }
 }
-add_action('save_post', 'thabatta_save_web_component_meta');
-
-/**
- * Função para decodificar e limpar HTML de forma segura
- */
-function thabatta_decode_html($html) {
-    // Primeiro decodifica entidades HTML
-    $html = html_entity_decode(stripslashes($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-    return $html;
-}
-
-/**
- * Função para escapar JavaScript de forma segura
- */
-function thabatta_escape_js($js) {
-    // Remove comentários de uma linha e múltiplas linhas
-    $js = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $js);
-    $js = preg_replace('/\/\/.*?(\r\n|\r|\n|$)/', '', $js);
-    
-    // Remove quebras de linha e espaços extras
-    $js = preg_replace('/\s+/', ' ', $js);
-    
-    return trim($js);
-}
+add_action( 'save_post', 'thabatta_save_web_component_meta' );
 
 /**
  * Função para registrar um componente específico
@@ -132,43 +136,47 @@ function thabatta_register_single_component($component) {
     $registered_components[$component->ID] = true;
 
     add_action('wp_footer', function() use ($component) {
-        $tag         = esc_attr( get_post_meta($component->ID, 'tag_name', true) );
-        $html        = thabatta_decode_html( get_post_meta($component->ID, 'html_code', true) );
-        $css         = thabatta_decode_html( get_post_meta($component->ID, 'css_code', true) );
-        $js          = thabatta_escape_js( get_post_meta($component->ID, 'js_code', true) );
+        $tag         = get_post_meta($component->ID, 'tag_name', true);
+        $html        = get_post_meta($component->ID, 'html_code', true);
+        $css         = get_post_meta($component->ID, 'css_code', true);
+        $js          = get_post_meta($component->ID, 'js_code', true);
         $use_shadow  = get_post_meta($component->ID, 'use_shadow_dom', true ) === '1';
-        $mode        = esc_attr( get_post_meta($component->ID, 'shadow_dom_mode', true) ?: 'open' );
+        $mode        = get_post_meta($component->ID, 'shadow_dom_mode', true) ?: 'open';
+        $class       = str_replace('-', '', ucwords($tag));
+        ?>
+        <template id="<?= esc_attr($tag); ?>">
+            <?= $html; ?>
+            <style>
+                <?= $css; ?>
+            </style>
+        </template>
+        <script type="module">
+            class <?= $class; ?> extends HTMLElement {
+                constructor () {
+                    super();
 
-        echo "<script type='module'>\n";
-        echo "if (!customElements.get('{$tag}')) {\n";
-        echo "  customElements.define('{$tag}', class extends HTMLElement {\n";
-        echo "    constructor() {\n";
-        echo "      super();\n";
-        if ($use_shadow) {
-            echo "      const root = this.attachShadow({ mode: '{$mode}' });\n";
-            echo "      const style = document.createElement('style');\n";
-            echo "      style.textContent = `{$css}`;\n";
-            echo "      root.appendChild(style);\n";
-            echo "      const wrapper = document.createElement('div');\n";
-            echo "      wrapper.innerHTML = `{$html}`;\n";
-            echo "      root.appendChild(wrapper);\n";
-        } else {
-            echo "      const style = document.createElement('style');\n";
-            echo "      style.textContent = `{$css}`;\n";
-            echo "      this.appendChild(style);\n";
-            echo "      const wrapper = document.createElement('div');\n";
-            echo "      wrapper.innerHTML = `{$html}`;\n";
-            echo "      this.appendChild(wrapper);\n";
-        }
-        echo "    }\n";
-        echo "    connectedCallback() {\n";
-        if (trim($js) !== '') {
-            echo "      {$js}\n";
-        }
-        echo "    }\n";
-        echo "  });\n";
-        echo "}\n";
-        echo "</script>\n";
+                    let scope;
+                    const tpl = document.getElementById('<?= $tag; ?>').content.cloneNode(true);
+                    if ( <?= $use_shadow; ?> ) {
+                        scope = this.attachShadow({ mode: '<?= $mode; ?>' });
+                        scope.append(tpl);            
+                    } else {
+                        this.append(tpl);
+                        scope = this;                       
+                    }
+
+                    ((host, root) => {
+                        <?= str_replace(
+                            'this.querySelector', 'root.querySelector',
+                            html_entity_decode($js, ENT_QUOTES | ENT_HTML5, 'UTF-8')
+                        ); ?>
+
+                    })(this, scope);
+                };
+            }
+            customElements.define('<?= $tag; ?>', <?= $class; ?>);
+        </script>
+        <?php
     }, 20);
 }
 
@@ -217,7 +225,20 @@ function thabatta_web_component_shortcode($atts) {
     
     wp_reset_postdata();
     
-    return "<{$tag_name}></{$tag_name}>";
+    $extra = '';
+    foreach ( $atts as $k => $v ) {
+
+        // WP troca - por _ ; aceite os dois formatos
+        if ( str_starts_with( $k, 'data-' ) || str_starts_with( $k, 'data_' ) ) {
+
+            // volta a colocar hífens para aparecer no HTML
+            $attr = str_replace( '_', '-', $k );
+
+            $extra .= ' ' . esc_attr( $attr ) . '="' . esc_attr( $v ) . '"';
+        }
+    }
+
+    return "<{$tag_name}{$extra}></{$tag_name}>";
 }
 
 /**
@@ -406,815 +427,221 @@ class Thabatta_Web_Components_Importer {
         $results = array();
         
         // Componentes disponíveis e seus detalhes
-        $available_components = array(
-            'card' => array(
-                'tag_name' => 'thabatta-card',
-                'html_code' => '<div class="thabatta-card-image">
+        $available_components = [
+/* ════════════════════════════════════════  CARD  ════════════════════════════════════════ */
+'card' => [
+  'tag_name' => 'thabatta-card',
+  'html_code' => '<div class="thabatta-card-image">
     <img src="{{image}}" alt="{{title}}">
-</div>
-<div class="thabatta-card-content">
+  </div>
+  <div class="thabatta-card-content">
     <h3 class="thabatta-card-title">{{title}}</h3>
     <div class="thabatta-card-text">{{content}}</div>
     <a href="{{link}}" class="thabatta-card-button">{{button_text}}</a>
-</div>',
-                'css_code' => '.thabatta-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.thabatta-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-.thabatta-card-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-.thabatta-card-content {
-    padding: 20px;
-}
-.thabatta-card-title {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-}
-.thabatta-card-text {
-    margin-bottom: 20px;
-}
-.thabatta-card-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-.thabatta-card-button:hover {
-    background-color: #0056b3;
-}',
-                'js_code' => '// Código JavaScript para o componente Card
-console.log("Card component connected");',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'accordion' => array(
-                'tag_name' => 'thabatta-accordion',
-                'html_code' => '<div class="thabatta-accordion">
+  </div>',
+  'css_code'  => '.thabatta-card{display:flex;flex-direction:column;border-radius:8px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,.1);transition:transform .3s,box-shadow .3s}.thabatta-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,.15)}.thabatta-card-image img{width:100%;display:block}.thabatta-card-content{padding:20px}.thabatta-card-title{margin:0 0 10px;font-size:1.5rem}.thabatta-card-text{margin-bottom:20px}.thabatta-card-button{display:inline-block;padding:10px 20px;background:#007bff;color:#fff;text-decoration:none;border-radius:4px;transition:background .3s}.thabatta-card-button:hover{background:#0056b3}',
+  'js_code'   => '/* preencher placeholders */(root=>{root.querySelectorAll("*").forEach(e=>{[...e.attributes].forEach(a=>a.value=a.value.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||""));e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")});})})(root);
+console.log("Card component ready");',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
+
+/* ═════════════════════════════════════ ACCORDION ═════════════════════════════════════ */
+'accordion' => [
+  'tag_name'=>'thabatta-accordion',
+  'html_code'=>'<div class="thabatta-accordion">
     <div class="thabatta-accordion-item">
-        <h3 class="thabatta-accordion-header">
-            <button class="thabatta-accordion-button" type="button">
-                {{title}}
-                <span class="thabatta-accordion-icon"></span>
-            </button>
-        </h3>
-        <div class="thabatta-accordion-collapse">
-            <div class="thabatta-accordion-body">{{content}}</div>
-        </div>
+      <h3 class="thabatta-accordion-header">
+        <button class="thabatta-accordion-button" type="button">
+          {{title}}
+          <span class="thabatta-accordion-icon"></span>
+        </button>
+      </h3>
+      <div class="thabatta-accordion-collapse">
+        <div class="thabatta-accordion-body">{{content}}</div>
+      </div>
     </div>
-</div>',
-                'css_code' => '.thabatta-accordion {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    overflow: hidden;
-}
-.thabatta-accordion-item {
-    border-bottom: 1px solid #ddd;
-}
-.thabatta-accordion-item:last-child {
-    border-bottom: none;
-}
-.thabatta-accordion-header {
-    margin: 0;
-}
-.thabatta-accordion-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.thabatta-accordion-button:hover {
-    background-color: #e9ecef;
-}
-.thabatta-accordion-icon {
-    width: 10px;
-    height: 10px;
-    border-right: 2px solid #333;
-    border-bottom: 2px solid #333;
-    transform: rotate(45deg);
-    transition: transform 0.3s ease;
-}
-.thabatta-accordion-button[aria-expanded="true"] .thabatta-accordion-icon {
-    transform: rotate(-135deg);
-}
-.thabatta-accordion-collapse {
-    display: none;
-}
-.thabatta-accordion-collapse[aria-hidden="false"] {
-    display: block;
-}
-.thabatta-accordion-body {
-    padding: 15px;
-}',
-                'js_code' => '// Código JavaScript para o componente Accordion
-const buttons = this.querySelectorAll(".thabatta-accordion-button");
-buttons.forEach(button => {
-    button.addEventListener("click", () => {
-        const expanded = button.getAttribute("aria-expanded") === "true";
-        button.setAttribute("aria-expanded", !expanded);
-        
-        const target = button.parentElement.nextElementSibling;
-        target.hidden = expanded;
-    });
-});',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'tabs' => array(
-                'tag_name' => 'thabatta-tabs',
-                'html_code' => '<div class="thabatta-tabs">
+  </div>',
+  'css_code'=>'.thabatta-accordion{border:1px solid #ddd;border-radius:4px;overflow:hidden}.thabatta-accordion-item{border-bottom:1px solid #ddd}.thabatta-accordion-item:last-child{border-bottom:none}.thabatta-accordion-button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:15px;background:#f8f9fa;border:none;text-align:left;cursor:pointer;transition:background .3s}.thabatta-accordion-button:hover{background:#e9ecef}.thabatta-accordion-icon{width:10px;height:10px;border-right:2px solid #333;border-bottom:2px solid #333;transform:rotate(45deg);transition:transform .3s}.thabatta-accordion-button[aria-expanded=true] .thabatta-accordion-icon{transform:rotate(-135deg)}.thabatta-accordion-collapse{display:none}.thabatta-accordion-collapse[aria-hidden=false]{display:block}.thabatta-accordion-body{padding:15px}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")})})})(root);
+const buttons=root.querySelectorAll(".thabatta-accordion-button");
+buttons.forEach(btn=>btn.addEventListener("click",()=>{const ex=btn.getAttribute("aria-expanded")==="true";btn.setAttribute("aria-expanded",!ex);btn.parentElement.nextElementSibling.hidden=ex;}));',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
+
+/* ════════════════════════════════════════  TABS  ══════════════════════════════════════ */
+'tabs'=>[
+  'tag_name'=>'thabatta-tabs',
+  'html_code'=>'<div class="thabatta-tabs">
     <div class="thabatta-tabs-nav" role="tablist">
-        <button class="thabatta-tab-button active" role="tab" aria-selected="true">Tab 1</button>
-        <button class="thabatta-tab-button" role="tab" aria-selected="false">Tab 2</button>
+      <button class="thabatta-tab-button active" role="tab" aria-selected="true">Tab 1</button>
+      <button class="thabatta-tab-button" role="tab" aria-selected="false">Tab 2</button>
     </div>
     <div class="thabatta-tabs-content">
-        <div class="thabatta-tab-panel active" role="tabpanel">Conteúdo da Tab 1</div>
-        <div class="thabatta-tab-panel" role="tabpanel" hidden>Conteúdo da Tab 2</div>
+      <div class="thabatta-tab-panel active" role="tabpanel">Conteúdo da Tab 1</div>
+      <div class="thabatta-tab-panel" role="tabpanel" hidden>Conteúdo da Tab 2</div>
     </div>
-</div>',
-                'css_code' => '.thabatta-tabs {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    overflow: hidden;
-}
-.thabatta-tabs-nav {
-    display: flex;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
-}
-.thabatta-tab-button {
-    padding: 12px 20px;
-    background: none;
-    border: none;
-    border-right: 1px solid #ddd;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.thabatta-tab-button:last-child {
-    border-right: none;
-}
-.thabatta-tab-button:hover {
-    background-color: #e9ecef;
-}
-.thabatta-tab-button.active {
-    background-color: #fff;
-    border-bottom: 2px solid #007bff;
-}
-.thabatta-tab-panel {
-    padding: 20px;
-    display: none;
-}
-.thabatta-tab-panel.active {
-    display: block;
-}',
-                'js_code' => '// Código JavaScript para o componente Tabs
-const buttons = this.querySelectorAll(".thabatta-tab-button");
-const panels = this.querySelectorAll(".thabatta-tab-panel");
+  </div>',
+  'css_code'=>'.thabatta-tabs{border:1px solid #ddd;border-radius:4px;overflow:hidden}.thabatta-tabs-nav{display:flex;background:#f8f9fa;border-bottom:1px solid #ddd}.thabatta-tab-button{padding:12px 20px;background:0 0;border:none;border-right:1px solid #ddd;cursor:pointer;transition:background .3s}.thabatta-tab-button:last-child{border-right:none}.thabatta-tab-button:hover{background:#e9ecef}.thabatta-tab-button.active{background:#fff;border-bottom:2px solid #007bff}.thabatta-tab-panel{padding:20px;display:none}.thabatta-tab-panel.active{display:block}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")})})})(root);
+const btns=root.querySelectorAll(".thabatta-tab-button"),panels=root.querySelectorAll(".thabatta-tab-panel");
+btns.forEach((b,i)=>b.addEventListener("click",()=>{btns.forEach(x=>{x.classList.remove("active");x.setAttribute("aria-selected","false")});panels.forEach(p=>{p.classList.remove("active");p.hidden=true});b.classList.add("active");b.setAttribute("aria-selected","true");panels[i].classList.add("active");panels[i].hidden=false;}));',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
 
-buttons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-        // Desativar todos os botões e painéis
-        buttons.forEach(btn => {
-            btn.classList.remove("active");
-            btn.setAttribute("aria-selected", "false");
-        });
-        panels.forEach(panel => {
-            panel.classList.remove("active");
-            panel.hidden = true;
-        });
-        
-        // Ativar o botão e painel clicados
-        button.classList.add("active");
-        button.setAttribute("aria-selected", "true");
-        panels[index].classList.add("active");
-        panels[index].hidden = false;
-    });
-});',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'slider' => array(
-                'tag_name' => 'thabatta-slider',
-                'html_code' => '<div class="thabatta-slider">
+/* ═══════════════════════════════════════  SLIDER  ═════════════════════════════════════ */
+'slider'=>[
+  'tag_name'=>'thabatta-slider',
+  'html_code'=>'<div class="thabatta-slider">
     <div class="thabatta-slider-container">
-        <div class="thabatta-slide active">
-            <div class="thabatta-slide-image">
-                <img src="{{image1}}" alt="">
-            </div>
-            <div class="thabatta-slide-content">{{content1}}</div>
-        </div>
-        <div class="thabatta-slide">
-            <div class="thabatta-slide-image">
-                <img src="{{image2}}" alt="">
-            </div>
-            <div class="thabatta-slide-content">{{content2}}</div>
-        </div>
+      <div class="thabatta-slide active">
+        <div class="thabatta-slide-image"><img src="{{image1}}" alt=""></div>
+        <div class="thabatta-slide-content">{{content1}}</div>
+      </div>
+      <div class="thabatta-slide">
+        <div class="thabatta-slide-image"><img src="{{image2}}" alt=""></div>
+        <div class="thabatta-slide-content">{{content2}}</div>
+      </div>
     </div>
     <div class="thabatta-slider-arrows">
-        <button class="thabatta-slider-arrow thabatta-slider-prev">←</button>
-        <button class="thabatta-slider-arrow thabatta-slider-next">→</button>
+      <button class="thabatta-slider-arrow thabatta-slider-prev">←</button>
+      <button class="thabatta-slider-arrow thabatta-slider-next">→</button>
     </div>
     <div class="thabatta-slider-dots">
-        <button class="thabatta-slider-dot active" data-slide="0"></button>
-        <button class="thabatta-slider-dot" data-slide="1"></button>
+      <button class="thabatta-slider-dot active" data-slide="0"></button>
+      <button class="thabatta-slider-dot" data-slide="1"></button>
     </div>
-</div>',
-                'css_code' => '.thabatta-slider {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-}
-.thabatta-slider-container {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-.thabatta-slide {
-    flex: 0 0 100%;
-    display: none;
-}
-.thabatta-slide.active {
-    display: block;
-}
-.thabatta-slide-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-.thabatta-slide-content {
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-}
-.thabatta-slider-arrows {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
-    z-index: 1;
-}
-.thabatta-slider-arrow {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.thabatta-slider-arrow:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-.thabatta-slider-dots {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-.thabatta-slider-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.thabatta-slider-dot.active {
-    background-color: white;
-}',
-                'js_code' => '// Código JavaScript para o componente Slider
-const slides = this.querySelectorAll(".thabatta-slide");
-const dots = this.querySelectorAll(".thabatta-slider-dot");
-const prevButton = this.querySelector(".thabatta-slider-prev");
-const nextButton = this.querySelector(".thabatta-slider-next");
-let currentSlide = 0;
+  </div>',
+  'css_code'=>'.thabatta-slider{position:relative;overflow:hidden;border-radius:8px}.thabatta-slider-container{display:flex;transition:transform .5s}.thabatta-slide{flex:0 0 100%;display:none}.thabatta-slide.active{display:block}.thabatta-slide-image img{width:100%;display:block}.thabatta-slide-content{padding:20px;background:rgba(0,0,0,.7);color:#fff}.thabatta-slider-arrows{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;transform:translateY(-50%);z-index:1}.thabatta-slider-arrow{background:rgba(0,0,0,.5);color:#fff;border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;transition:background .3s}.thabatta-slider-arrow:hover{background:rgba(0,0,0,.8)}.thabatta-slider-dots{position:absolute;bottom:20px;left:0;right:0;display:flex;justify-content:center;gap:10px}.thabatta-slider-dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.5);border:none;cursor:pointer;transition:background .3s}.thabatta-slider-dot.active{background:#fff}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{[...e.attributes].forEach(a=>a.value=a.value.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||""));})})(root);
+const slides=root.querySelectorAll(".thabatta-slide"),dots=root.querySelectorAll(".thabatta-slider-dot"),prev=root.querySelector(".thabatta-slider-prev"),next=root.querySelector(".thabatta-slider-next");let idx=0;
+const show=i=>{slides.forEach(s=>s.classList.remove("active"));dots.forEach(d=>d.classList.remove("active"));slides[i].classList.add("active");dots[i].classList.add("active");idx=i;};
+prev.addEventListener("click",()=>show((idx-1+slides.length)%slides.length));
+next.addEventListener("click",()=>show((idx+1)%slides.length));
+dots.forEach((d,i)=>d.addEventListener("click",()=>show(i)));
+if(host.getAttribute("data-autoplay")==="true"){const int=parseInt(host.getAttribute("data-interval")||"5000");setInterval(()=>show((idx+1)%slides.length),int);}',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
 
-function showSlide(index) {
-    slides.forEach(slide => slide.classList.remove("active"));
-    dots.forEach(dot => dot.classList.remove("active"));
-    
-    slides[index].classList.add("active");
-    dots[index].classList.add("active");
-    currentSlide = index;
-}
-
-prevButton.addEventListener("click", () => {
-    let index = currentSlide - 1;
-    if (index < 0) index = slides.length - 1;
-    showSlide(index);
-});
-
-nextButton.addEventListener("click", () => {
-    let index = currentSlide + 1;
-    if (index >= slides.length) index = 0;
-    showSlide(index);
-});
-
-dots.forEach((dot, index) => {
-    dot.addEventListener("click", () => {
-        showSlide(index);
-    });
-});
-
-// Autoplay se configurado
-const autoplay = this.getAttribute("data-autoplay") === "true";
-const interval = parseInt(this.getAttribute("data-interval") || "5000");
-
-if (autoplay) {
-    setInterval(() => {
-        let index = currentSlide + 1;
-        if (index >= slides.length) index = 0;
-        showSlide(index);
-    }, interval);
-}',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'testimonial' => array(
-                'tag_name' => 'thabatta-testimonial',
-                'html_code' => '<div class="thabatta-testimonial">
+/* ═══════════════════════════════════  TESTIMONIAL  ═══════════════════════════════════ */
+'testimonial'=>[
+  'tag_name'=>'thabatta-testimonial',
+  'html_code'=>'<div class="thabatta-testimonial">
     <div class="thabatta-testimonial-content">
-        <div class="thabatta-testimonial-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+      <div class="thabatta-testimonial-rating">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+      <div class="thabatta-testimonial-text">{{content}}</div>
+      <div class="thabatta-testimonial-author">
+        <div class="thabatta-testimonial-image"><img src="{{image}}" alt="{{author}}"></div>
+        <div class="thabatta-testimonial-info">
+          <div class="thabatta-testimonial-name">{{author}}</div>
+          <div class="thabatta-testimonial-position">{{position}}, {{company}}</div>
         </div>
-        <div class="thabatta-testimonial-text">{{content}}</div>
-        <div class="thabatta-testimonial-author">
-            <div class="thabatta-testimonial-image">
-                <img src="{{image}}" alt="{{author}}">
-            </div>
-            <div class="thabatta-testimonial-info">
-                <div class="thabatta-testimonial-name">{{author}}</div>
-                <div class="thabatta-testimonial-position">{{position}}, {{company}}</div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>',
-                'css_code' => '.thabatta-testimonial {
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-}
-.thabatta-testimonial-rating {
-    margin-bottom: 15px;
-    color: #ffc107;
-}
-.thabatta-testimonial-text {
-    font-style: italic;
-    margin-bottom: 20px;
-    position: relative;
-}
-.thabatta-testimonial-text::before {
-    content: """;
-    font-size: 60px;
-    color: #f0f0f0;
-    position: absolute;
-    top: -20px;
-    left: -10px;
-    z-index: -1;
-}
-.thabatta-testimonial-author {
-    display: flex;
-    align-items: center;
-}
-.thabatta-testimonial-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-right: 15px;
-}
-.thabatta-testimonial-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.thabatta-testimonial-name {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-.thabatta-testimonial-position {
-    font-size: 0.9em;
-    color: #6c757d;
-}',
-                'js_code' => '// Código JavaScript para o componente Testimonial
-console.log("Testimonial component connected");',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'cta' => array(
-                'tag_name' => 'thabatta-cta',
-                'html_code' => '<div class="thabatta-cta">
+  </div>',
+  'css_code'=>'.thabatta-testimonial{padding:30px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,.1);background:#fff}.thabatta-testimonial-rating{margin-bottom:15px;color:#ffc107}.thabatta-testimonial-text{font-style:italic;margin-bottom:20px;position:relative}.thabatta-testimonial-author{display:flex;align-items:center}.thabatta-testimonial-image{width:60px;height:60px;border-radius:50%;overflow:hidden;margin-right:15px}.thabatta-testimonial-image img{width:100%;height:100%;object-fit:cover}.thabatta-testimonial-name{font-weight:bold;margin-bottom:5px}.thabatta-testimonial-position{font-size:.9em;color:#6c757d}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{[...e.attributes].forEach(a=>a.value=a.value.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||""));e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")});})})(root);',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
+
+/* ════════════════════════════════════════  CTA  ═══════════════════════════════════════ */
+'cta'=>[
+  'tag_name'=>'thabatta-cta',
+  'html_code'=>'<div class="thabatta-cta">
     <div class="thabatta-cta-content">
-        <h2 class="thabatta-cta-title">{{title}}</h2>
-        <div class="thabatta-cta-text">{{content}}</div>
-        <a href="{{button_url}}" class="thabatta-cta-button">{{button_text}}</a>
+      <h2 class="thabatta-cta-title">{{title}}</h2>
+      <div class="thabatta-cta-text">{{content}}</div>
+      <a href="{{button_url}}" class="thabatta-cta-button">{{button_text}}</a>
     </div>
-</div>',
-                'css_code' => '.thabatta-cta {
-    padding: 60px 30px;
-    text-align: center;
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-.thabatta-cta::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 8px;
-}
-.thabatta-cta-content {
-    position: relative;
-    z-index: 1;
-    max-width: 800px;
-    margin: 0 auto;
-}
-.thabatta-cta-title {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-.thabatta-cta-text {
-    margin-bottom: 30px;
-    font-size: 1.2rem;
-}
-.thabatta-cta-button {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: white;
-    color: #007bff;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-.thabatta-cta-button:hover {
-    background-color: #f8f9fa;
-    transform: translateY(-3px);
-}',
-                'js_code' => '// Código JavaScript para o componente CTA
-console.log("CTA component connected");',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'icon_box' => array(
-                'tag_name' => 'thabatta-icon-box',
-                'html_code' => '<div class="thabatta-icon-box">
-    <div class="thabatta-icon-box-icon">
-        <i class="{{icon}}"></i>
-    </div>
+  </div>',
+  'css_code'=>'.thabatta-cta{padding:60px 30px;text-align:center;background:#007bff;color:#fff;border-radius:8px;background-size:cover;background-position:center;position:relative}.thabatta-cta::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5);border-radius:8px}.thabatta-cta-content{position:relative;z-index:1;max-width:800px;margin:0 auto}.thabatta-cta-title{font-size:2.5rem;margin-bottom:20px}.thabatta-cta-text{margin-bottom:30px;font-size:1.2rem}.thabatta-cta-button{display:inline-block;padding:12px 30px;background:#fff;color:#007bff;text-decoration:none;border-radius:4px;font-weight:bold;transition:background .3s,transform .3s}.thabatta-cta-button:hover{background:#f8f9fa;transform:translateY(-3px)}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{[...e.attributes].forEach(a=>a.value=a.value.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||""));e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")});})})(root);',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
+
+/* ════════════════════════════════════  ICON BOX  ════════════════════════════════════ */
+'icon_box'=>[
+  'tag_name'=>'thabatta-icon-box',
+  'html_code'=>'<div class="thabatta-icon-box">
+    <div class="thabatta-icon-box-icon"><i class="{{icon}}"></i></div>
     <div class="thabatta-icon-box-content">
-        <h3 class="thabatta-icon-box-title">{{title}}</h3>
-        <div class="thabatta-icon-box-text">{{content}}</div>
-        <a href="{{link}}" class="thabatta-icon-box-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+      <h3 class="thabatta-icon-box-title">{{title}}</h3>
+      <div class="thabatta-icon-box-text">{{content}}</div>
+      <a href="{{link}}" class="thabatta-icon-box-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
     </div>
-</div>',
-                'css_code' => '.thabatta-icon-box {
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.thabatta-icon-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-.thabatta-icon-box-icon {
-    font-size: 3rem;
-    color: #007bff;
-    margin-bottom: 20px;
-    text-align: center;
-}
-.thabatta-icon-box-title {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-.thabatta-icon-box-text {
-    margin-bottom: 20px;
-}
-.thabatta-icon-box-link {
-    display: inline-flex;
-    align-items: center;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-.thabatta-icon-box-link i {
-    margin-left: 5px;
-    transition: transform 0.3s ease;
-}
-.thabatta-icon-box-link:hover {
-    color: #0056b3;
-}
-.thabatta-icon-box-link:hover i {
-    transform: translateX(5px);
-}',
-                'js_code' => '// Código JavaScript para o componente Icon Box
-console.log("Icon Box component connected");',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'team_member' => array(
-                'tag_name' => 'thabatta-team-member',
-                'html_code' => '<div class="thabatta-team-member">
-    <div class="thabatta-team-member-image">
-        <img src="{{image}}" alt="{{name}}">
-    </div>
+  </div>',
+  'css_code'=>'.thabatta-icon-box{padding:30px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,.1);background:#fff;transition:transform .3s,box-shadow .3s}.thabatta-icon-box:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,.15)}.thabatta-icon-box-icon{font-size:3rem;color:#007bff;margin-bottom:20px;text-align:center}.thabatta-icon-box-title{margin:0 0 15px;font-size:1.5rem}.thabatta-icon-box-text{margin-bottom:20px}.thabatta-icon-box-link{display:inline-flex;align-items:center;color:#007bff;text-decoration:none;font-weight:bold;transition:color .3s}.thabatta-icon-box-link i{margin-left:5px;transition:transform .3s}.thabatta-icon-box-link:hover{color:#0056b3}.thabatta-icon-box-link:hover i{transform:translateX(5px)}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{[...e.attributes].forEach(a=>a.value=a.value.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||""));e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")});})})(root);',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
+
+/* ═══════════════════════════════════  TEAM MEMBER  ═══════════════════════════════════ */
+'team_member'=>[
+  'tag_name'=>'thabatta-team-member',
+  'html_code'=>'<div class="thabatta-team-member">
+    <div class="thabatta-team-member-image"><img src="{{image}}" alt="{{name}}"></div>
     <div class="thabatta-team-member-content">
-        <h3 class="thabatta-team-member-name">{{name}}</h3>
-        <div class="thabatta-team-member-position">{{position}}</div>
-        <div class="thabatta-team-member-bio">{{content}}</div>
-        <div class="thabatta-team-member-social">
-            <a href="{{facebook}}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="{{twitter}}" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="{{linkedin}}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="{{instagram}}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-        </div>
+      <h3 class="thabatta-team-member-name">{{name}}</h3>
+      <div class="thabatta-team-member-position">{{position}}</div>
+      <div class="thabatta-team-member-bio">{{content}}</div>
+      <div class="thabatta-team-member-social">
+        <a href="{{facebook}}" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="{{twitter}}" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="{{linkedin}}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="{{instagram}}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
     </div>
-</div>',
-                'css_code' => '.thabatta-team-member {
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.thabatta-team-member:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-.thabatta-team-member-image {
-    position: relative;
-    overflow: hidden;
-}
-.thabatta-team-member-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.5s ease;
-}
-.thabatta-team-member:hover .thabatta-team-member-image img {
-    transform: scale(1.1);
-}
-.thabatta-team-member-content {
-    padding: 20px;
-}
-.thabatta-team-member-name {
-    margin-top: 0;
-    margin-bottom: 5px;
-    font-size: 1.5rem;
-}
-.thabatta-team-member-position {
-    color: #6c757d;
-    margin-bottom: 15px;
-    font-style: italic;
-}
-.thabatta-team-member-bio {
-    margin-bottom: 20px;
-}
-.thabatta-team-member-social {
-    display: flex;
-    gap: 10px;
-}
-.thabatta-team-member-social a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #f8f9fa;
-    color: #6c757d;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-.thabatta-team-member-social a:hover {
-    background-color: #007bff;
-    color: white;
-}',
-                'js_code' => '// Código JavaScript para o componente Team Member
-console.log("Team Member component connected");',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'counter' => array(
-                'tag_name' => 'thabatta-counter',
-                'html_code' => '<div class="thabatta-counter">
-    <div class="thabatta-counter-icon">
-        <i class="{{icon}}"></i>
-    </div>
+  </div>',
+  'css_code'=>'.thabatta-team-member{border-radius:8px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,.1);background:#fff;transition:transform .3s,box-shadow .3s}.thabatta-team-member:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,.15)}.thabatta-team-member-image{position:relative;overflow:hidden}.thabatta-team-member-image img{width:100%;transition:transform .5s}.thabatta-team-member:hover .thabatta-team-member-image img{transform:scale(1.1)}.thabatta-team-member-content{padding:20px}.thabatta-team-member-name{margin:0 0 5px;font-size:1.5rem}.thabatta-team-member-position{color:#6c757d;margin-bottom:15px;font-style:italic}.thabatta-team-member-bio{margin-bottom:20px}.thabatta-team-member-social{display:flex;gap:10px}.thabatta-team-member-social a{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#f8f9fa;color:#6c757d;transition:background .3s,color .3s}.thabatta-team-member-social a:hover{background:#007bff;color:#fff}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{[...e.attributes].forEach(a=>a.value=a.value.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||""));e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")});})})(root);',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
+
+/* ═════════════════════════════════════  COUNTER  ═════════════════════════════════════ */
+'counter'=>[
+  'tag_name'=>'thabatta-counter',
+  'html_code'=>'<div class="thabatta-counter">
+    <div class="thabatta-counter-icon"><i class="{{icon}}"></i></div>
     <div class="thabatta-counter-content">
-        <div class="thabatta-counter-number">
-            <span class="thabatta-counter-prefix">{{prefix}}</span>
-            <span class="thabatta-counter-value">0</span>
-            <span class="thabatta-counter-suffix">{{suffix}}</span>
-        </div>
-        <h3 class="thabatta-counter-title">{{title}}</h3>
-        <div class="thabatta-counter-text">{{content}}</div>
+      <div class="thabatta-counter-number">
+        <span class="thabatta-counter-prefix">{{prefix}}</span>
+        <span class="thabatta-counter-value">0</span>
+        <span class="thabatta-counter-suffix">{{suffix}}</span>
+      </div>
+      <h3 class="thabatta-counter-title">{{title}}</h3>
+      <div class="thabatta-counter-text">{{content}}</div>
     </div>
-</div>',
-                'css_code' => '.thabatta-counter {
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    text-align: center;
-}
-.thabatta-counter-icon {
-    font-size: 3rem;
-    color: #007bff;
-    margin-bottom: 20px;
-}
-.thabatta-counter-number {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #343a40;
-    margin-bottom: 10px;
-}
-.thabatta-counter-title {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-.thabatta-counter-text {
-    color: #6c757d;
-}',
-                'js_code' => '// Código JavaScript para o componente Counter
-const counterValue = this.querySelector(".thabatta-counter-value");
-const startValue = parseInt(this.getAttribute("data-start") || "0");
-const endValue = parseInt(this.getAttribute("data-end") || "100");
-const duration = parseInt(this.getAttribute("data-duration") || "2000");
+  </div>',
+  'css_code'=>'.thabatta-counter{padding:30px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,.1);background:#fff;text-align:center}.thabatta-counter-icon{font-size:3rem;color:#007bff;margin-bottom:20px}.thabatta-counter-number{font-size:3rem;font-weight:bold;color:#343a40;margin-bottom:10px}.thabatta-counter-title{margin:0 0 15px;font-size:1.5rem}.thabatta-counter-text{color:#6c757d}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{[...e.attributes].forEach(a=>a.value=a.value.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||""));e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")});})})(root);
+const val=root.querySelector(".thabatta-counter-value"),start=parseInt(host.getAttribute("data-start")||"0"),end=parseInt(host.getAttribute("data-end")||"100"),dur=parseInt(host.getAttribute("data-duration")||"2000");
+const anim=(s,e,d)=>{let t0;const step=t=>{if(!t0)t0=t;const p=Math.min((t-t0)/d,1);val.textContent=Math.floor(p*(e-s)+s);if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);};
+(new IntersectionObserver(ents=>{ents.forEach(e=>{if(e.isIntersecting){anim(start,end,dur);obs.unobserve(e.target);}}},{threshold:.1})).observe(host);',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
 
-// Função para animar o contador
-function animateCounter(start, end, duration) {
-    let startTimestamp = null;
-    const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const value = Math.floor(progress * (end - start) + start);
-        counterValue.textContent = value;
-        if (progress < 1) {
-            window.requestAnimationFrame(step);
-        } else {
-            counterValue.textContent = end;
-        }
-    };
-    window.requestAnimationFrame(step);
-}
-
-// Iniciar animação quando o elemento estiver visível
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateCounter(startValue, endValue, duration);
-            observer.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1 });
-
-observer.observe(this);',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-            'timeline' => array(
-                'tag_name' => 'thabatta-timeline',
-                'html_code' => '<div class="thabatta-timeline">
+/* ════════════════════════════════════  TIMELINE  ═════════════════════════════════════ */
+'timeline'=>[
+  'tag_name'=>'thabatta-timeline',
+  'html_code'=>'<div class="thabatta-timeline">
     <div class="thabatta-timeline-item">
-        <div class="thabatta-timeline-marker"></div>
-        <div class="thabatta-timeline-content">
-            <div class="thabatta-timeline-date">{{date}}</div>
-            <h3 class="thabatta-timeline-title">{{title}}</h3>
-            <div class="thabatta-timeline-text">{{content}}</div>
-        </div>
+      <div class="thabatta-timeline-marker"></div>
+      <div class="thabatta-timeline-content">
+        <div class="thabatta-timeline-date">{{date}}</div>
+        <h3 class="thabatta-timeline-title">{{title}}</h3>
+        <div class="thabatta-timeline-text">{{content}}</div>
+      </div>
     </div>
-</div>',
-                'css_code' => '.thabatta-timeline {
-    position: relative;
-    padding: 20px 0;
-}
-.thabatta-timeline::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 20px;
-    width: 4px;
-    background-color: #e9ecef;
-}
-.thabatta-timeline-item {
-    position: relative;
-    padding-left: 50px;
-    margin-bottom: 30px;
-}
-.thabatta-timeline-item:last-child {
-    margin-bottom: 0;
-}
-.thabatta-timeline-marker {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #007bff;
-    z-index: 1;
-}
-.thabatta-timeline-content {
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-}
-.thabatta-timeline-date {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #f8f9fa;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-.thabatta-timeline-title {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-}
-.thabatta-timeline-text {
-    color: #6c757d;
-}',
-                'js_code' => '// Código JavaScript para o componente Timeline
-console.log("Timeline component connected");
+  </div>',
+  'css_code'=>'.thabatta-timeline{position:relative;padding:20px 0}.thabatta-timeline::before{content:"";position:absolute;top:0;bottom:0;left:20px;width:4px;background:#e9ecef}.thabatta-timeline-item{position:relative;padding-left:50px;margin-bottom:30px}.thabatta-timeline-item:last-child{margin-bottom:0}.thabatta-timeline-marker{position:absolute;top:0;left:0;width:40px;height:40px;border-radius:50%;background:#007bff;z-index:1}.thabatta-timeline-content{padding:20px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,.1);background:#fff}.thabatta-timeline-date{display:inline-block;padding:5px 10px;background:#f8f9fa;border-radius:4px;margin-bottom:10px;font-weight:bold}.thabatta-timeline-title{margin:0 0 10px;font-size:1.5rem}.thabatta-timeline-text{color:#6c757d}',
+  'js_code'=>'(root=>{root.querySelectorAll("*").forEach(e=>{e.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent=n.textContent.replace(/{{(\w+)}}/g,(_,k)=>host.getAttribute("data-"+k)||"")})})})(root);
+const items=root.querySelectorAll(".thabatta-timeline-item");const obs=new IntersectionObserver(ents=>{ents.forEach(e=>{if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="translateX(0)";obs.unobserve(e.target);}}},{threshold:.1});items.forEach(it=>{it.style.opacity="0";it.style.transform="translateX(-20px)";it.style.transition="opacity .5s,transform .5s";obs.observe(it);});',
+  'use_shadow_dom'=>'1','shadow_dom_mode'=>'open',
+],
 
-// Adicionar animação de entrada quando os itens ficam visíveis
-const timelineItems = this.querySelectorAll(".thabatta-timeline-item");
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateX(0)";
-            observer.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1 });
-
-timelineItems.forEach(item => {
-    item.style.opacity = "0";
-    item.style.transform = "translateX(-20px)";
-    item.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-    observer.observe(item);
-});',
-                'use_shadow_dom' => '1',
-                'shadow_dom_mode' => 'open',
-            ),
-        );
-        
+];
+   
         // Importar componentes selecionados
         foreach ($components as $component) {
             if (!isset($available_components[$component])) {
@@ -1368,6 +795,9 @@ function thabatta_web_component_orderby($query) {
 }
 add_action('pre_get_posts', 'thabatta_web_component_orderby');
 
+/**
+ * Permite <thabatta-*> e TODOS os atributos data-* nelas
+ */
 function thabatta_allow_web_component_tags( $allowed, $context ) {
     if ( 'post' === $context || 'pre_user_description' === $context ) {
         $components = get_posts([
@@ -1377,7 +807,11 @@ function thabatta_allow_web_component_tags( $allowed, $context ) {
         foreach ( $components as $comp ) {
             $tag = get_post_meta( $comp->ID, 'tag_name', true );
             if ( $tag ) {
-                $allowed[ $tag ] = [];
+                // mantém qualquer configuração anterior e adiciona data-*
+                $allowed[ $tag ] = array_merge(
+                    isset( $allowed[ $tag ] ) ? $allowed[ $tag ] : [],
+                    [ 'data-*' => true ]
+                );
             }
         }
     }
