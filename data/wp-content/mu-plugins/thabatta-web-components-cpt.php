@@ -90,23 +90,19 @@ function thabatta_save_web_component_meta( $post_id ) {
 
     $keys = [ 'tag_name', 'html_code', 'css_code', 'js_code', 'use_shadow_dom', 'shadow_dom_mode' ];
 
-    $extra_allowed = [
-        'template' => [ 'id' => true ],
-        'style'    => [ 'type' => true, 'media' => true ],
-        'script'   => [ 'type' => true, 'src' => true, 'defer' => true ],
-        'data-*' => true,
-    ];
-    $allowed_html = array_merge(
-        wp_kses_allowed_html( 'post' ),
-        $extra_allowed
-    );
+    $allowed_html = wp_kses_allowed_html( 'post' );
+
+    $allowed_html['template'] = [ 'id' => true ];
+    $allowed_html['style']    = [ 'type' => true, 'media' => true ];
+    $allowed_html['script']   = [ 'type' => true, 'src' => true, 'defer' => true ];
+
+    $allowed_html['*']['data-*'] = true;
 
     foreach ( $keys as $key ) {
 
         if ( isset( $_POST[ $key ] ) ) {
 
-            $raw   = wp_unslash( $_POST[ $key ] );
-            $value = $raw;
+            $raw = wp_unslash( $_POST[ $key ] );
 
             if ( $key === 'js_code' ) {
                 $value = wp_slash( $raw );
@@ -818,3 +814,10 @@ function thabatta_allow_web_component_tags( $allowed, $context ) {
     return $allowed;
 }
 add_filter( 'wp_kses_allowed_html', 'thabatta_allow_web_component_tags', 10, 2 );
+
+function thabatta_disable_kses_for_web_components( $post_id ) {
+    if ( get_post_type( $post_id ) === 'web_component' ) {
+        remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+    }
+}
+add_action( 'save_post', 'thabatta_disable_kses_for_web_components', 1, 1 );
