@@ -96,8 +96,22 @@ function thabatta_save_web_component_meta( $post_id ) {
     $allowed_html['mark']     = [ 'id' => true, 'class' => true, 'style' => true ];
     $allowed_html['slot']     = [ 'name' => true, 'id' => true, 'class' => true, 'style' => true ];
 
+    // Adiciona slot em todos os elementos
     foreach ( $allowed_html as $tag => $attrs ) {
+        $allowed_html[ $tag ]['slot'] = true;
         $allowed_html[ $tag ]['data-*'] = true;
+    }
+
+    // Elementos básicos que também precisam de slot
+    $basic_elements = ['div', 'span', 'p', 'button', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'li'];
+    foreach ($basic_elements as $tag) {
+        if (!isset($allowed_html[$tag])) {
+            $allowed_html[$tag] = [];
+        }
+        $allowed_html[$tag]['slot'] = true;
+        $allowed_html[$tag]['class'] = true;
+        $allowed_html[$tag]['id'] = true;
+        $allowed_html[$tag]['style'] = true;
     }
 
     foreach ( $keys as $key ) {
