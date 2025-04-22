@@ -79,31 +79,24 @@ function thabatta_render_web_component_meta_box($post) {
 }
 
 function thabatta_save_web_component_meta( $post_id ) {
-
-    /* ─────── aborta autosave ou falta de permissão ─────── */
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-        return;
-    }
-    if ( ! current_user_can( 'edit_post', $post_id ) ) {
-        return;
-    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
     $keys = [ 'tag_name', 'html_code', 'css_code', 'js_code', 'use_shadow_dom', 'shadow_dom_mode' ];
-
+    // pega a lista padrão
     $allowed_html = wp_kses_allowed_html( 'post' );
-
+    // libera template, style e script
     $allowed_html['template'] = [ 'id' => true ];
     $allowed_html['style']    = [ 'type' => true, 'media' => true ];
     $allowed_html['script']   = [ 'type' => true, 'src' => true, 'defer' => true ];
 
-    $allowed_html['*']['data-*'] = true;
+    foreach ( $allowed_html as $tag => $attrs ) {
+        $allowed_html[ $tag ]['data-*'] = true;
+    }
 
     foreach ( $keys as $key ) {
-
         if ( isset( $_POST[ $key ] ) ) {
-
             $raw = wp_unslash( $_POST[ $key ] );
-
             if ( $key === 'js_code' ) {
                 $value = wp_slash( $raw );
             } elseif ( in_array( $key, [ 'html_code', 'css_code' ], true ) ) {
@@ -111,10 +104,8 @@ function thabatta_save_web_component_meta( $post_id ) {
             } else {
                 $value = sanitize_text_field( $raw );
             }
-
             update_post_meta( $post_id, $key, $value );
-
-        } elseif ( 'use_shadow_dom' === $key ) {
+        } elseif ( $key === 'use_shadow_dom' ) {
             update_post_meta( $post_id, $key, '0' );
         }
     }
@@ -153,7 +144,7 @@ function thabatta_register_single_component($component) {
 
                     let scope;
                     const tpl = document.getElementById('<?= $tag; ?>').content.cloneNode(true);
-                    if ( <?= $use_shadow; ?> ) {
+                    if ( '<?= $use_shadow; ?>' ) {
                         scope = this.attachShadow({ mode: '<?= $mode; ?>' });
                         scope.append(tpl);            
                     } else {
