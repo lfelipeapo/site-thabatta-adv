@@ -94,6 +94,7 @@ function thabatta_save_web_component_meta( $post_id ) {
     $allowed_html['summary']  = [ 'id' => true, 'class' => true, 'style' => true ];
     $allowed_html['time']     = [ 'datetime' => true, 'id' => true, 'class' => true ];
     $allowed_html['mark']     = [ 'id' => true, 'class' => true, 'style' => true ];
+    $allowed_html['slot']     = [ 'name' => true, 'id' => true, 'class' => true, 'style' => true ];
 
     foreach ( $allowed_html as $tag => $attrs ) {
         $allowed_html[ $tag ]['data-*'] = true;
