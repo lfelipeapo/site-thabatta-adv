@@ -89,6 +89,11 @@ function thabatta_save_web_component_meta( $post_id ) {
     $allowed_html['template'] = [ 'id' => true ];
     $allowed_html['style']    = [ 'type' => true, 'media' => true ];
     $allowed_html['script']   = [ 'type' => true, 'src' => true, 'defer' => true ];
+    $allowed_html['dialog']   = [ 'open' => true, 'id' => true, 'class' => true, 'style' => true ];
+    $allowed_html['details']  = [ 'open' => true, 'id' => true, 'class' => true, 'style' => true ];
+    $allowed_html['summary']  = [ 'id' => true, 'class' => true, 'style' => true ];
+    $allowed_html['time']     = [ 'datetime' => true, 'id' => true, 'class' => true ];
+    $allowed_html['mark']     = [ 'id' => true, 'class' => true, 'style' => true ];
 
     foreach ( $allowed_html as $tag => $attrs ) {
         $allowed_html[ $tag ]['data-*'] = true;
