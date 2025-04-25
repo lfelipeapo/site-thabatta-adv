@@ -29,6 +29,57 @@
 	root * /var/www/html/
 	encode br zstd gzip
 	
+	# Cabeçalhos de segurança
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Frame-Options "SAMEORIGIN"
+		X-Content-Type-Options "nosniff"
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy "no-referrer-when-downgrade"
+	}
+
+	# Bloquear XML-RPC e trackbacks
+	respond /xmlrpc.php 403
+	respond /wp-trackback.php 403
+
+	# Limite de tentativas de login (POST em wp-login.php)
+	@loginPOST {
+		method POST
+		path /wp-login.php
+	}
+	rate_limit @loginPOST 10 1m
+
+	# Bloquear enumeração de usuários via querystring ?author=
+	@enumUsers {
+		path_regexp enum ^/\?author=\d+
+	}
+	respond @enumUsers 404
+
+	# Bloquear acesso à REST API de usuários
+	@restUsers {
+		path_regexp restUsers ^/wp-json/wp/v2/users
+	}
+	respond @restUsers 403
+
+	# Bloquear WP-Admin apenas para tentativas POST (brute force), permitindo GET e admin-ajax.php
+	@adminPOST {
+		method POST
+		path /wp-admin/*
+	}
+	respond @adminPOST 403
+
+	# Bloquear execução de PHP em wp-content subdiretórios sensíveis
+	@blockContentPHP {
+		path_regexp blockContentPHP ^/wp-content/(plugins|themes|mu-plugins|uploads)/.*\.php$
+	}
+	respond @blockContentPHP 403
+
+	# Bloquear acesso a arquivos sensíveis e ocultos
+	@denyConfig {
+		path /composer.json /composer.lock /wp-config.php /wp-config-docker.php /readme.html /.htaccess
+	}
+	respond @denyConfig 404
+
 	wp_cache {
 		loc {$CACHE_LOC:/var/www/html/wp-content/cache}
 		cache_response_codes {$CACHE_RESPONSE_CODES:2XX,404,405}
