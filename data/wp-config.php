@@ -140,6 +140,10 @@ if (!function_exists('suppress_jwt_auth_notice')) {
     function suppress_jwt_auth_notice() {
         remove_action('admin_notices', array('JWT_AUTH_Public', 'admin_notices'));
     }
+}
+
+// Adiciona o hook somente se a função add_action existir (não em WP-CLI)
+if (function_exists('add_action') && !defined('WP_CLI')) {
     add_action('init', 'suppress_jwt_auth_notice', 1);
 }
 

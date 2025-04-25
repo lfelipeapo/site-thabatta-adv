@@ -69,7 +69,7 @@ RUN install-php-extensions \
 RUN cp $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 COPY php.ini $PHP_INI_DIR/conf.d/wp.ini
 
-COPY --from=wp /usr/src/wordpress /usr/src/wordpress
+COPY --from=wp /usr/src/wordpress/ /var/www/html/
 COPY --from=wp /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d/
 COPY --from=wp /usr/local/bin/docker-entrypoint.sh /usr/local/bin/
 
@@ -137,7 +137,6 @@ RUN useradd -D ${USER} && \
 RUN chown -R ${USER}:${USER} /data/caddy && \
     chown -R ${USER}:${USER} /config/caddy && \
     chown -R ${USER}:${USER} /var/www/html && \
-    chown -R ${USER}:${USER} /usr/src/wordpress && \
     chown -R ${USER}:${USER} /usr/local/bin/docker-entrypoint.sh && \
     chown -R ${USER}:${USER} /usr/local/bin/docker-entrypoint-wrapper.sh
 

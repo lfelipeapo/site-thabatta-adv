@@ -1,4 +1,6 @@
 #!/bin/bash
+export WP_CLI_ALLOW_ROOT=1
+alias wp='wp --allow-root --skip-plugins --skip-themes --path=/var/www/html'
 set -e
 
 # Aguarda o banco de dados ficar disponível
@@ -17,7 +19,7 @@ if [ -n "$WORDPRESS_DB_HOST" ]; then
 fi
 
 # Checa se o WordPress já está instalado
-if ! wp core is-installed --path=/var/www/html; then
+if ! wp core is-installed --path=/var/www/html --allow-root; then
   echo "WordPress não está instalado. Executando wp core install..."
   wp core install \
     --url="$SERVER_NAME" \
