@@ -55,9 +55,10 @@
 	}
 	respond @enumUsers 404
 
-	# Bloquear acesso à REST API de usuários
+	# Bloquear enumeração de usuários apenas no endpoint exato /wp-json/wp/v2/users
 	@restUsers {
-		path_regexp restUsers ^/wp-json/wp/v2/users
+		method GET
+		path /wp-json/wp/v2/users
 	}
 	respond @restUsers 403
 
