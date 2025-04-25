@@ -77,6 +77,17 @@ function thabatta_load_theme_textdomain() {
 }
 add_action('init', 'thabatta_load_theme_textdomain', 100);
 
+// Corrigir aviso de carregamento precoce de tradução do jwt-auth
+add_action('init', function() {
+    if ( function_exists('load_plugin_textdomain') ) {
+        load_plugin_textdomain(
+            'jwt-auth', 
+            false, 
+            WP_PLUGIN_DIR . '/jwt-auth/languages'
+        );
+    }
+}, 5);
+
 /**
  * Registrar e carregar scripts e estilos
  */
