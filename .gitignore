@@ -25,3 +25,5 @@ node_modules/*
 data/wp-content/cache/sidekick-cache/*
 data/wp-content/cache/sidekick-cache/br::+/*
 data/wp-content/cache/sidekick-cache/br::+/0
+data/wp-content/debug.log
+data/wp-content/uploads/wc-logs/fatal-errors-2025-04-27-cb9444894815b96a02b088e47e77c954.log
