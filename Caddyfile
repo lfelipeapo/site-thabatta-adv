@@ -47,7 +47,6 @@
 		method POST
 		path /wp-login.php
 	}
-	rate_limit @loginPOST 10 1m
 
 	# Bloquear enumeração de usuários via querystring ?author=
 	@enumUsers {
@@ -62,16 +61,15 @@
 	}
 	respond @restUsers 403
 
-	# Bloquear WP-Admin apenas para tentativas POST (brute force), permitindo GET e admin-ajax.php
-	@adminPOST {
-		method POST
-		path /wp-admin/*
+	# Permitir execução de PHP no plugin webradio-manager
+	@webradioManagerPHP {
+		path_regexp webradioManager ^/wp-content/plugins/webradio-manager/.*\.php$
 	}
-	respond @adminPOST 403
 
-	# Bloquear execução de PHP em wp-content subdiretórios sensíveis
+	# Bloquear execução de PHP em wp-content subdiretórios sensíveis (exceto webradio-manager)
 	@blockContentPHP {
 		path_regexp blockContentPHP ^/wp-content/(plugins|themes|mu-plugins|uploads)/.*\.php$
+		not path_regexp ^/wp-content/plugins/webradio-manager/.*\.php$
 	}
 	respond @blockContentPHP 403
 
