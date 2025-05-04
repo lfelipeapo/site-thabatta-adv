@@ -3,9 +3,9 @@ Contributors: mateuszgbiorczyk
 Donate link: https://ko-fi.com/gbiorczyk/?utm_source=acf-better-search&utm_medium=readme-donate
 Tags: acf search, advanced custom fields, better search, extended search, search
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 4.2.1
+Stable tag: 4.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,7 +33,7 @@ If you would like to appreciate it, you can [provide us a coffee](https://ko-fi.
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/acf-better-search` directory, or install plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to `/wp-content/plugins/acf-better-search` directory, or install plugin through the WordPress plugins screen directly.
 2. Activate plugin through `Plugins` screen in WordPress Admin Panel.
 3. Use `Settings -> ACF: Better Search` screen to configure the plugin.
 
@@ -94,6 +94,10 @@ This is all very important to us and allows us to do even better things for you!
 1. Screenshot of the options panel
 
 == Changelog ==
+
+= 4.3.0 (2025-04-29) =
+* `[Security]` Update of Axios HTTP client
+* `[Added]` Support for WordPress 6.8
 
 = 4.2.1 (2024-04-12) =
 * `[Fixed]` Searching for content in file field when Lite Mode is active

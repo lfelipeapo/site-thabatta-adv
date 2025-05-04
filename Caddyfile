@@ -61,18 +61,6 @@
 	}
 	respond @restUsers 403
 
-	# Permitir execução de PHP no plugin webradio-manager
-	@webradioManagerPHP {
-		path_regexp webradioManager ^/wp-content/plugins/webradio-manager/.*\.php$
-	}
-
-	# Bloquear execução de PHP em wp-content subdiretórios sensíveis (exceto webradio-manager)
-	@blockContentPHP {
-		path_regexp blockContentPHP ^/wp-content/(plugins|themes|mu-plugins|uploads)/.*\.php$
-		not path_regexp ^/wp-content/plugins/webradio-manager/.*\.php$
-	}
-	respond @blockContentPHP 403
-
 	# Bloquear acesso a arquivos sensíveis e ocultos
 	@denyConfig {
 		path /composer.json /composer.lock /wp-config.php /wp-config-docker.php /readme.html /.htaccess
