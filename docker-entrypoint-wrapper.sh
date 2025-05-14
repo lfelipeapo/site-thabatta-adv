@@ -1,9 +1,13 @@
 #!/bin/bash
-export WP_CLI_ALLOW_ROOT=1
-alias wp='wp --allow-root --skip-plugins --skip-themes --path=/var/www/html'
+
 set -e
 
-# Aguarda o banco de dados ficar disponível
+export WP_CLI_ALLOW_ROOT=1
+WP_CMD="wp --allow-root --skip-plugins --skip-themes --path=/var/www/html --url=dev.local"
+
+echo "⏳ Aguardando o banco de dados em ${WORDPRESS_DB_HOST:-db}:3306..."
+
+# Extrai host e porta do DB
 if [ -n "$WORDPRESS_DB_HOST" ]; then
   if echo "$WORDPRESS_DB_HOST" | grep -q ":"; then
     host=$(echo "$WORDPRESS_DB_HOST" | cut -d: -f1)
@@ -12,42 +16,64 @@ if [ -n "$WORDPRESS_DB_HOST" ]; then
     host="$WORDPRESS_DB_HOST"
     port=3306
   fi
-  echo "Esperando o banco de dados em $host:$port..."
-  while ! nc -z "$host" "$port"; do
+
+  # Espera o banco de dados ficar acessível
+  until nc -z "$host" "$port"; do
+    echo "⏳ Aguardando $host:$port..."
     sleep 5
   done
 fi
 
-# Checa se o WordPress já está instalado
-if ! wp core is-installed --path=/var/www/html --allow-root; then
-  echo "WordPress não está instalado. Executando wp core install..."
-  wp core install \
-    --url="$SERVER_NAME" \
+echo "✅ Banco de dados disponível em $host:$port"
+
+# Verifica se o WordPress multisite está instalado
+if ! $WP_CMD core is-installed >/dev/null 2>&1; then
+  echo "⚠️ WordPress ainda não está instalado. Instalando em modo multisite..."
+
+  $WP_CMD core multisite-install \
+    --url="dev.local" \
     --title="Thabatta Apolinário Advocacia" \
     --admin_user="admin" \
     --admin_password="2212" \
     --admin_email="lfelipeapo@gmail.com" \
-    --skip-email \
-    --allow-root \
-    --path=/var/www/html
+    --skip-email
+
+  echo "✅ WordPress multisite instalado com sucesso!"
+else
+  echo "✅ WordPress já está instalado, seguindo com os plugins e tema..."
 fi
 
-# Instalar Jetpack apenas se não existir
-wp plugin install jetpack --activate --allow-root --path=/var/www/html
+# Plugins essenciais
+PLUGINS=(
+  jetpack
+  jetpack-boost
+  jetpack-protect
+  classic-editor
+  custom-post-type-ui
+  advanced-custom-fields
+  acf-to-rest-api
+  acf-extended
+  advanced-custom-fields-table-field
+  acf-quickedit-fields
+  acf-better-search
+  advanced-forms
+  navz-photo-gallery
+  admin-columns-for-acf-fields
+  acf-rgba-color-picker
+  pages-with-category-and-tag
+  jwt-auth
+  woocommerce
+)
 
-# Instalar Jetpack Boost e Protect
-wp plugin install jetpack-boost --activate --allow-root --path=/var/www/html
+echo "🔌 Instalando e ativando plugins..."
+for plugin in "${PLUGINS[@]}"; do
+  $WP_CMD plugin install "$plugin" --activate || echo "⚠️ Erro ao instalar plugin: $plugin"
+done
 
-wp plugin install jetpack-protect --activate --allow-root --path=/var/www/html
+# Ativar tema
+echo "🎨 Ativando o tema thabatta-adv-theme..."
+$WP_CMD theme activate thabatta-adv-theme
 
-# Instala os demais plugins
-echo "Instalando outros plugins..."
-wp plugin install classic-editor custom-post-type-ui advanced-custom-fields acf-to-rest-api acf-extended advanced-custom-fields-table-field acf-quickedit-fields acf-better-search advanced-forms navz-photo-gallery admin-columns-for-acf-fields acf-rgba-color-picker pages-with-category-and-tag jwt-auth woocommerce \
-  --activate --allow-root --path=/var/www/html
-
-# Ativar o tema thabatta-adv-theme
-echo "Ativando o tema thabatta-adv-theme..."
-wp theme activate thabatta-adv-theme --allow-root --path=/var/www/html
-
-# Executa o entrypoint original
+# Executar entrypoint padrão do container
+echo "🚀 Iniciando WordPress com entrypoint oficial..."
 exec docker-entrypoint.sh "$@"

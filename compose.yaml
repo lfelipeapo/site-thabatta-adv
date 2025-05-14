@@ -30,8 +30,8 @@ services:
         auto_https disable_redirects
         debug
       WORDPRESS_CONFIG_EXTRA: |
-        define('WP_SITEURL', 'https://localhost');
-        define('WP_HOME', 'https://localhost');
+        define('WP_SITEURL', 'https://dev.local');
+        define('WP_HOME', 'https://dev.local');
     volumes:
       - ./data/wp-content:/var/www/html/wp-content
       - ./data/wp-content/themes/thabatta-adv-theme:/var/www/html/wp-content/themes/thabatta-adv-theme
