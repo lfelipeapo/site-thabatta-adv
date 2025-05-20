@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Advanced Custom Fields (ACF®) - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-04-07 16:11:07+0000\n"
+"PO-Revision-Date: 2025-05-08 11:50:56+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,6 +21,10 @@ msgstr "são desenvolvidos e mantidos por"
 msgid "Learn more"
 msgstr "Saiba mais"
 
+#: src/Site_Health/Site_Health.php:295
+msgid "Update Source"
+msgstr "Atualizar origem"
+
 #: includes/admin/views/acf-post-type/advanced-settings.php:850
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:810
 msgid "By default only admin users can edit this setting."
@@ -29,6 +33,10 @@ msgstr "Por padrão, somente usuários administradores podem editar esta configu
 #: includes/admin/views/acf-field-group/field.php:322
 msgid "Close and Add Field"
 msgstr "Fechar e adicionar campo"
+
+#: src/Site_Health/Site_Health.php:296
+msgid "wordpress.org"
+msgstr "wordpress.org"
 
 #: includes/fields/class-acf-field.php:341
 msgid "Learn more."
@@ -46,87 +54,87 @@ msgstr "[O shortcode do ACF não pode exibir campos de posts não públicos]"
 msgid "[The ACF shortcode is disabled on this site]"
 msgstr "[O shortcode do ACF está desativado neste site]"
 
-#: includes/fields/class-acf-field-icon_picker.php:451
+#: includes/fields/class-acf-field-icon_picker.php:476
 msgid "Businessman Icon"
 msgstr "Ícone de homem de negócios"
 
-#: includes/fields/class-acf-field-icon_picker.php:443
+#: includes/fields/class-acf-field-icon_picker.php:468
 msgid "Forums Icon"
 msgstr "Ícone de fórum"
 
-#: includes/fields/class-acf-field-icon_picker.php:722
+#: includes/fields/class-acf-field-icon_picker.php:747
 msgid "YouTube Icon"
 msgstr "Ícone do Youtube"
 
-#: includes/fields/class-acf-field-icon_picker.php:721
+#: includes/fields/class-acf-field-icon_picker.php:746
 msgid "Yes (alt) Icon"
 msgstr "Ícone Sim (alt)"
 
-#: includes/fields/class-acf-field-icon_picker.php:716
+#: includes/fields/class-acf-field-icon_picker.php:741
 msgid "WhatsApp Icon"
 msgstr "Ícone do WhatsApp"
 
-#: includes/fields/class-acf-field-icon_picker.php:714
+#: includes/fields/class-acf-field-icon_picker.php:739
 msgid "Widgets Menus Icon"
 msgstr "Ícone de widgets"
 
-#: includes/fields/class-acf-field-icon_picker.php:718
+#: includes/fields/class-acf-field-icon_picker.php:743
 msgid "WordPress (alt) Icon"
 msgstr "Ícone WordPress (alt)"
 
-#: includes/fields/class-acf-field-icon_picker.php:713
+#: includes/fields/class-acf-field-icon_picker.php:738
 msgid "View Site Icon"
 msgstr "Ícone de Ver Site"
 
-#: includes/fields/class-acf-field-icon_picker.php:712
+#: includes/fields/class-acf-field-icon_picker.php:737
 msgid "Learn More Icon"
 msgstr "Ícone de saiba mais"
 
-#: includes/fields/class-acf-field-icon_picker.php:715
+#: includes/fields/class-acf-field-icon_picker.php:740
 msgid "Write Blog Icon"
 msgstr "Ícone de escrever"
 
-#: includes/fields/class-acf-field-icon_picker.php:710
+#: includes/fields/class-acf-field-icon_picker.php:735
 msgid "Add Page Icon"
 msgstr "Ícone de adicionar página"
 
-#: includes/fields/class-acf-field-icon_picker.php:707
+#: includes/fields/class-acf-field-icon_picker.php:732
 msgid "Video (alt3) Icon"
 msgstr "Ícone de vídeo (alt3)"
 
-#: includes/fields/class-acf-field-icon_picker.php:706
+#: includes/fields/class-acf-field-icon_picker.php:731
 msgid "Video (alt2) Icon"
 msgstr "Ícone de vídeo (alt2)"
 
-#: includes/fields/class-acf-field-icon_picker.php:705
+#: includes/fields/class-acf-field-icon_picker.php:730
 msgid "Video (alt) Icon"
 msgstr "Ícone de vídeo (alt)"
 
-#: includes/fields/class-acf-field-icon_picker.php:702
+#: includes/fields/class-acf-field-icon_picker.php:727
 msgid "Update (alt) Icon"
 msgstr "Ícone de atualizar"
 
-#: includes/fields/class-acf-field-icon_picker.php:699
+#: includes/fields/class-acf-field-icon_picker.php:724
 msgid "Universal Access (alt) Icon"
 msgstr "Ícone de acesso universal (alt)"
 
-#: includes/fields/class-acf-field-icon_picker.php:694
+#: includes/fields/class-acf-field-icon_picker.php:719
 msgid "Twitch Icon"
 msgstr "Ícone do Twitch"
 
-#: includes/fields/class-acf-field-icon_picker.php:696
+#: includes/fields/class-acf-field-icon_picker.php:721
 msgid "Twitter (alt) Icon"
 msgstr "Ícone do Twitter (alt)"
 
-#: includes/fields/class-acf-field-icon_picker.php:690
+#: includes/fields/class-acf-field-icon_picker.php:715
 msgid "Tickets (alt) Icon"
 msgstr "Ícone de tickets (alt)"
 
-#: includes/fields/class-acf-field-icon_picker.php:686
+#: includes/fields/class-acf-field-icon_picker.php:711
 msgid "Text Page Icon"
 msgstr "Ícone de texto de página"
 
-#: includes/fields/class-acf-field-icon_picker.php:680
+#: includes/fields/class-acf-field-icon_picker.php:705
 msgid "Table Row Delete Icon"
 msgstr "Ícone de deletar linha da tabela"
 
@@ -214,7 +222,7 @@ msgstr "%1$s (%2$s) - renderizado mediante %3$s"
 msgid "Manage License"
 msgstr "Gerenciar licença"
 
-#: includes/admin/views/global/navigation.php:226
+#: includes/admin/views/global/navigation.php:229
 msgid "Renew ACF PRO License"
 msgstr "Renovar a licença ACF PRO"
 
@@ -586,7 +594,7 @@ msgstr "Um grupo de entradas de caixa de seleção que permite ao usuário selec
 msgid "A group of buttons with values that you specify, users can choose one option from the values provided."
 msgstr "Um grupo de botões com valores que você especifica, os usuários podem escolher uma opção entre os valores fornecidos."
 
-#: includes/fields/class-acf-field-select.php:24
+#: includes/fields/class-acf-field-select.php:18
 msgid "A dropdown list with a selection of choices that you specify."
 msgstr "Uma lista suspensa com uma seleção de escolhas que você especifica."
 
@@ -651,7 +659,7 @@ msgstr "Original"
 msgid "Invalid post ID."
 msgstr "ID de post inválido."
 
-#: includes/admin/views/global/navigation.php:189
+#: includes/admin/views/global/navigation.php:192
 msgid "More"
 msgstr "Mais"
 
@@ -669,7 +677,7 @@ msgstr "Campos populares"
 
 #. translators: %s: The invalid search term
 #: includes/admin/views/browse-fields-modal.php:50
-#: includes/fields/class-acf-field-icon_picker.php:155
+#: includes/fields/class-acf-field-icon_picker.php:97
 msgid "No search results for '%s'"
 msgstr "Nenhum resultado de pesquisa para '%s'"
 
@@ -1604,7 +1612,7 @@ msgid "At the top of the editor screen when editing a term."
 msgstr "Na parte superior da tela do editor durante a edição de um termo."
 
 #: includes/admin/views/acf-post-type/advanced-settings.php:822
-#: includes/fields/class-acf-field-icon_picker.php:611
+#: includes/fields/class-acf-field-icon_picker.php:636
 msgid "Menu Icon"
 msgstr "Ícone do menu"
 
@@ -2508,7 +2516,7 @@ msgstr "Exportar como JSON"
 msgid "Save Changes"
 msgstr "Salvar alterações"
 
-#: includes/admin/views/global/navigation.php:253
+#: includes/admin/views/global/navigation.php:256
 msgid "Updates"
 msgstr "Atualizações"
 
@@ -2597,7 +2605,7 @@ msgstr "Salvar valores personalizados"
 msgid "Allow Custom Values"
 msgstr "Permitir valores personalizados"
 
-#: includes/admin/views/global/navigation.php:215
+#: includes/admin/views/global/navigation.php:218
 msgid "Unlock Extra Features with ACF PRO"
 msgstr "Desbloqueie recursos extras com o ACF PRO"
 
@@ -2642,15 +2650,15 @@ msgstr "Salvar outra escolha"
 msgid "Repeater Field"
 msgstr "Campo repetidor"
 
-#: includes/admin/views/global/navigation.php:177
-#: includes/admin/views/global/navigation.php:181
+#: includes/admin/views/global/navigation.php:180
+#: includes/admin/views/global/navigation.php:184
 msgid "Advanced Custom Fields logo"
 msgstr "Logo do Advanced Custom Fields"
 
 #: includes/admin/admin-options-pages-preview.php:28
 #: includes/admin/views/acf-field-group/pro-features.php:58
 #: includes/admin/views/global/navigation.php:86
-#: includes/admin/views/global/navigation.php:255
+#: includes/admin/views/global/navigation.php:258
 msgid "Options Pages"
 msgstr "Páginas de opções"
 
@@ -2674,7 +2682,7 @@ msgid_plural "%s field groups activated."
 msgstr[0] "Grupo de campos ativado."
 msgstr[1] "%s grupos de campos ativados."
 
-#: acf.php:519 includes/admin/admin-internal-post-type-list.php:264
+#: acf.php:520 includes/admin/admin-internal-post-type-list.php:264
 #: includes/admin/post-types/admin-field-group.php:304
 #: includes/admin/post-types/admin-post-type.php:282
 #: includes/admin/post-types/admin-taxonomy.php:284
@@ -2705,7 +2713,7 @@ msgid "Move field group to trash?"
 msgstr "Mover grupo de campos para a lixeira?"
 
 #. Author of the plugin
-#: acf.php
+#: acf.php includes/admin/views/global/navigation.php:240
 msgid "WP Engine"
 msgstr "WP Engine"
 
@@ -2716,11 +2724,11 @@ msgid_plural "%s field groups deactivated."
 msgstr[0] "Grupo de campos desativado."
 msgstr[1] "%s grupos de campos desativados."
 
-#: acf.php:577
+#: acf.php:578
 msgid "Advanced Custom Fields and Advanced Custom Fields PRO should not be active at the same time. We've automatically deactivated Advanced Custom Fields PRO."
 msgstr "O Advanced Custom Fields e o Advanced Custom Fields PRO não devem estar ativos ao mesmo tempo. Desativamos automaticamente o Advanced Custom Fields PRO."
 
-#: acf.php:575
+#: acf.php:576
 msgid "Advanced Custom Fields and Advanced Custom Fields PRO should not be active at the same time. We've automatically deactivated Advanced Custom Fields."
 msgstr "O Advanced Custom Fields e o Advanced Custom Fields PRO não devem estar ativos ao mesmo tempo. Desativamos automaticamente o Advanced Custom Fields."
 
@@ -2746,7 +2754,7 @@ msgid_plural "%1$s must be of one of the following post types: %2$s"
 msgstr[0] "%1$s deve ser do tipo de post %2$s."
 msgstr[1] "%1$s deve ser de um dos seguintes tipos de post: %2$s"
 
-#: includes/fields/class-acf-field-select.php:635
+#: includes/fields/class-acf-field-select.php:689
 msgid "%1$s is not one of %2$s"
 msgstr "%1$s não é um de %2$s"
 
@@ -3117,18 +3125,18 @@ msgstr "Adicionar arquivo"
 msgid "Add Image"
 msgstr "Adicionar imagem"
 
-#: acf.php:445 acf.php:479
+#: acf.php:446 acf.php:480
 #: includes/admin/views/acf-post-type/advanced-settings.php:224
 #: includes/post-types/class-acf-post-type.php:93
 #: includes/post-types/class-acf-taxonomy.php:92
 msgid "Add New"
 msgstr "Adicionar novo"
 
-#: acf.php:480
+#: acf.php:481
 msgid "Add New Field"
 msgstr "Adicionar novo campo"
 
-#: acf.php:446
+#: acf.php:447
 msgid "Add New Field Group"
 msgstr "Adicionar novo grupo de campos"
 
@@ -3685,17 +3693,17 @@ msgstr "Arquivo"
 msgid "Password"
 msgstr "Senha"
 
-#: includes/fields/class-acf-field-select.php:227 includes/media.php:48
+#: includes/fields/class-acf-field-select.php:217 includes/media.php:48
 msgctxt "verb"
 msgid "Select"
 msgstr "Selecionar"
 
-#: includes/fields/class-acf-field-select.php:100
+#: includes/fields/class-acf-field-select.php:94
 msgctxt "Select2 JS searching"
 msgid "Searching&hellip;"
 msgstr "Pesquisando&hellip;"
 
-#: includes/fields/class-acf-field-select.php:99
+#: includes/fields/class-acf-field-select.php:93
 msgctxt "Select2 JS load_more"
 msgid "Loading more results&hellip;"
 msgstr "Carregando mais resultados&hellip;"
@@ -3773,7 +3781,7 @@ msgstr "Barra de ferramentas"
 msgid "Visual Only"
 msgstr "Apenas visual"
 
-#: includes/fields/class-acf-field-icon_picker.php:237
+#: includes/fields/class-acf-field-icon_picker.php:262
 #: includes/fields/class-acf-field-wysiwyg.php:324
 msgid "Tabs"
 msgstr "Abas"
@@ -3909,13 +3917,13 @@ msgid "Display Format"
 msgstr "Formato de exibição"
 
 #. translators: counts for inactive field groups
-#: acf.php:525
+#: acf.php:526
 msgid "Inactive <span class=\"count\">(%s)</span>"
 msgid_plural "Inactive <span class=\"count\">(%s)</span>"
 msgstr[0] "Desativado <span class=\"count\">(%s)</span>"
 msgstr[1] "Desativados <span class=\"count\">(%s)</span>"
 
-#: acf.php:443 includes/admin/post-types/admin-field-groups.php:55
+#: acf.php:444 includes/admin/post-types/admin-field-groups.php:55
 #: includes/admin/post-types/admin-post-types.php:113
 #: includes/admin/post-types/admin-taxonomies.php:112
 msgid "Field Groups"
@@ -3926,45 +3934,45 @@ msgstr "Grupos de campos"
 msgid "https://www.advancedcustomfields.com"
 msgstr "https://www.advancedcustomfields.com"
 
-#: acf.php:484
+#: acf.php:485
 msgid "Search Fields"
 msgstr "Pesquisar campos"
 
-#: acf.php:483
+#: acf.php:484
 msgid "View Field"
 msgstr "Ver campo"
 
-#: acf.php:482 includes/admin/views/acf-field-group/fields.php:113
+#: acf.php:483 includes/admin/views/acf-field-group/fields.php:113
 msgid "New Field"
 msgstr "Novo campo"
 
-#: acf.php:481
+#: acf.php:482
 msgid "Edit Field"
 msgstr "Editar campo"
 
-#: acf.php:478
+#: acf.php:479
 msgid "Field"
 msgstr "Campo"
 
-#: acf.php:477 includes/admin/post-types/admin-field-group.php:179
+#: acf.php:478 includes/admin/post-types/admin-field-group.php:179
 #: includes/admin/post-types/admin-field-groups.php:93
 #: includes/admin/views/acf-field-group/fields.php:32
 msgid "Fields"
 msgstr "Campos"
 
-#: acf.php:450
+#: acf.php:451
 msgid "Search Field Groups"
 msgstr "Pesquisar grupos de campos"
 
-#: acf.php:449
+#: acf.php:450
 msgid "View Field Group"
 msgstr "Ver grupo de campos"
 
-#: acf.php:448
+#: acf.php:449
 msgid "New Field Group"
 msgstr "Novo grupo de campos"
 
-#: acf.php:447
+#: acf.php:448
 msgid "Edit Field Group"
 msgstr "Editar grupo de campos"
 
@@ -3981,13 +3989,13 @@ msgstr "Mensagem"
 
 #: includes/assets.php:352 includes/fields/class-acf-field-true_false.php:79
 #: includes/fields/class-acf-field-true_false.php:175
-#: src/Site_Health/Site_Health.php:281 src/Site_Health/Site_Health.php:338
+#: src/Site_Health/Site_Health.php:281 src/Site_Health/Site_Health.php:343
 msgid "No"
 msgstr "Não"
 
 #: includes/assets.php:351 includes/fields/class-acf-field-true_false.php:76
 #: includes/fields/class-acf-field-true_false.php:159
-#: src/Site_Health/Site_Health.php:280 src/Site_Health/Site_Health.php:338
+#: src/Site_Health/Site_Health.php:280 src/Site_Health/Site_Health.php:343
 msgid "Yes"
 msgstr "Sim"
 
@@ -4193,7 +4201,7 @@ msgstr "Vertical"
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: includes/fields/class-acf-field-select.php:22
+#: includes/fields/class-acf-field-select.php:16
 #: includes/fields/class-acf-field-taxonomy.php:699
 msgctxt "noun"
 msgid "Select"
@@ -4378,7 +4386,7 @@ msgid "Field group draft updated."
 msgstr "Rascunho de grupo de campos atualizado."
 
 #: includes/admin/admin-tools.php:107
-#: includes/admin/views/global/navigation.php:251
+#: includes/admin/views/global/navigation.php:254
 #: includes/admin/views/tools/tools.php:13
 msgid "Tools"
 msgstr "Ferramentas"
@@ -4601,19 +4609,19 @@ msgstr "Atualização do banco de dados concluída. <a href=\"%s\">Retornar para
 msgid "Site requires database upgrade from %1$s to %2$s"
 msgstr "O site requer a atualização do banco de dados de %1$s para %2$s"
 
-#: acf.php:485
+#: acf.php:486
 msgid "No Fields found"
 msgstr "Não foi possível encontrar campos"
 
-#: acf.php:452
+#: acf.php:453
 msgid "No Field Groups found in Trash"
 msgstr "Não foi possível encontrar grupos de campos na lixeira"
 
-#: acf.php:451
+#: acf.php:452
 msgid "No Field Groups found"
 msgstr "Não foi possível encontrar grupos de campos"
 
-#: acf.php:486
+#: acf.php:487
 msgid "No Fields found in Trash"
 msgstr "Não foi possível encontrar campos na lixeira"
 
@@ -4621,7 +4629,7 @@ msgstr "Não foi possível encontrar campos na lixeira"
 msgid "No matches found"
 msgstr "Não foi possível encontrar correspondências"
 
-#: includes/fields/class-acf-field-select.php:89
+#: includes/fields/class-acf-field-select.php:83
 msgctxt "Select2 JS matches_0"
 msgid "No matches found"
 msgstr "Não foi possível encontrar correspondências"
@@ -4812,18 +4820,18 @@ msgstr "Ignorar HTML"
 msgid "Allow HTML markup to display as visible text instead of rendering"
 msgstr "Permitir que a marcação HTML seja exibida como texto ao invés de ser renderizada"
 
-#: includes/fields/class-acf-field-select.php:90
+#: includes/fields/class-acf-field-select.php:84
 msgctxt "Select2 JS input_too_short_1"
 msgid "Please enter 1 or more characters"
 msgstr "Digite 1 ou mais caracteres"
 
 #. translators: %d - number of characters to enter into select field input
-#: includes/fields/class-acf-field-select.php:92
+#: includes/fields/class-acf-field-select.php:86
 msgctxt "Select2 JS input_too_short_n"
 msgid "Please enter %d or more characters"
 msgstr "Digite %d ou mais caracteres"
 
-#: includes/fields/class-acf-field-select.php:101
+#: includes/fields/class-acf-field-select.php:95
 msgctxt "Select2 JS load_fail"
 msgid "Loading failed"
 msgstr "Falha ao carregar"
@@ -4895,7 +4903,7 @@ msgstr "Início da semana"
 #: includes/fields/class-acf-field-color_picker.php:168
 #: includes/fields/class-acf-field-date_picker.php:200
 #: includes/fields/class-acf-field-date_time_picker.php:188
-#: includes/fields/class-acf-field-icon_picker.php:260
+#: includes/fields/class-acf-field-icon_picker.php:285
 #: includes/fields/class-acf-field-image.php:177
 #: includes/fields/class-acf-field-post_object.php:396
 #: includes/fields/class-acf-field-relationship.php:610
@@ -5014,7 +5022,7 @@ msgstr "Seletor de data e horário"
 msgid "User Object"
 msgstr "Objeto de usuário"
 
-#: includes/fields/class-acf-field-select.php:93
+#: includes/fields/class-acf-field-select.php:87
 msgctxt "Select2 JS input_too_long_1"
 msgid "Please delete 1 character"
 msgstr "Exclua 1 caractere"
@@ -5141,30 +5149,30 @@ msgstr "Digite cada escolha em uma nova linha."
 
 #. translators: %d - maximum number of items that can be selected in the select
 #. field
-#: includes/fields/class-acf-field-select.php:98
+#: includes/fields/class-acf-field-select.php:92
 msgctxt "Select2 JS selection_too_long_n"
 msgid "You can only select %d items"
 msgstr "Você só pode selecionar %d itens"
 
-#: includes/fields/class-acf-field-select.php:96
+#: includes/fields/class-acf-field-select.php:90
 msgctxt "Select2 JS selection_too_long_1"
 msgid "You can only select 1 item"
 msgstr "Você só pode selecionar 1 item"
 
 #. translators: %d - number of characters that should be removed from select
 #. field
-#: includes/fields/class-acf-field-select.php:95
+#: includes/fields/class-acf-field-select.php:89
 msgctxt "Select2 JS input_too_long_n"
 msgid "Please delete %d characters"
 msgstr "Exclua %d caracteres"
 
-#: includes/fields/class-acf-field-select.php:86
+#: includes/fields/class-acf-field-select.php:80
 msgctxt "Select2 JS matches_1"
 msgid "One result is available, press enter to select it."
 msgstr "Um resultado disponível, aperte Enter para selecioná-lo."
 
 #. translators: %d - number of results available in select field
-#: includes/fields/class-acf-field-select.php:88
+#: includes/fields/class-acf-field-select.php:82
 msgctxt "Select2 JS matches_n"
 msgid "%d results are available, use up and down arrow keys to navigate."
 msgstr "%d resultados disponíveis, use as setas para cima ou baixo para navegar."
@@ -5317,7 +5325,7 @@ msgstr "Todos os tipos de posts"
 msgid "Relationship"
 msgstr "Relação"
 
-#: acf.php:444
+#: acf.php:445
 msgid "Field Group"
 msgstr "Grupo de campos"
 
@@ -5330,6 +5338,6 @@ msgid "Show Media Upload Buttons"
 msgstr "Mostrar botões de envio de mídia"
 
 #. Plugin Name of the plugin
-#: acf.php acf.php:289
+#: acf.php acf.php:290
 msgid "Advanced Custom Fields"
 msgstr "Advanced Custom Fields"

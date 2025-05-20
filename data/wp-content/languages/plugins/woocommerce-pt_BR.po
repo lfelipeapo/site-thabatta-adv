@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-04-24 12:35:18+0000\n"
+"PO-Revision-Date: 2025-05-18 14:37:22+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,22 @@ msgstr ""
 "X-Generator: GlotPress/4.0.1\n"
 "Language: pt_BR\n"
 "Project-Id-Version: Plugins - WooCommerce - Stable (latest release)\n"
+
+#: src/Internal/Utilities/FilesystemUtil.php:147
+msgid "File path is not a valid upload path."
+msgstr "O caminho do arquivo não é um caminho de upload válido."
+
+#: src/Internal/Admin/Settings/PaymentsRestController.php:1177
+msgid "Unix timestamp representing when the incentive was dismissed."
+msgstr "Carimbo de data/hora Unix representando quando o incentivo foi dispensado."
+
+#: src/Internal/Admin/Settings/PaymentsRestController.php:1163
+msgid "The dismissals list for the incentive. Each dismissal entry includes a context and a timestamp. The `all` entry means the incentive was dismissed for all contexts."
+msgstr "A lista de dispensas para o incentivo. Cada entrada de dispensa inclui um contexto e um carimbo de data/hora. A entrada all significa que o incentivo foi dispensado para todos os contextos."
+
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:18
+msgid "Return to shipping"
+msgstr "Voltar para o envio"
 
 #: packages/email-editor/src/Engine/theme.json
 msgctxt "Font size name"
@@ -195,7 +211,7 @@ msgstr "Seletor de quantidade (experimental)"
 msgid "Rate limit Checkout"
 msgstr "Limite de taxa na finalização de compra"
 
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2814
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2838
 msgid "Stripe"
 msgstr "Stripe"
 
@@ -326,7 +342,7 @@ msgstr "A quantidade mínima de \"%1$s\" permitida no carrinho é %2$s"
 msgid "The quantity of &quot;%1$s&quot; cannot be changed"
 msgstr "A quantidade de \"%1$s\" não pode ser alterada"
 
-#: src/StoreApi/Utilities/CartController.php:526
+#: src/StoreApi/Utilities/CartController.php:527
 msgid "Cannot place an order, your cart is empty."
 msgstr "Não é possível realizar o pedido, seu carrinho está vazio."
 
@@ -656,7 +672,7 @@ msgstr "Registre eventos do PayPal, como solicitações de IPN, e revise-os na <
 msgid "GTIN"
 msgstr "GTIN"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:133
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:121
 msgid "File path provided for import is invalid."
 msgstr "O caminho de arquivo fornecido para importação é inválido."
 
@@ -758,7 +774,7 @@ msgstr "Adicionar %s"
 msgid "GTIN, UPC, EAN or ISBN."
 msgstr "GTIN, UPC, EAN ou ISBN."
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:811
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:786
 #: includes/export/class-wc-product-csv-exporter.php:116
 msgid "GTIN, UPC, EAN, or ISBN"
 msgstr "GTIN, UPC, EAN, ou ISBN"
@@ -944,7 +960,7 @@ msgid "Key for the data being registered must be a string"
 msgstr "Chave para os dados que estão sendo registrados devem ser uma string"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:752
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2424
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2448
 msgid "Set up your payment methods and accept credit and debit cards, cash, bank transfers and money from your Mercado Pago account. Offer safe and secure payments with Latin America’s leading processor."
 msgstr "Configure seus métodos de pagamento e aceite cartões de crédito e débito, dinheiro, transferências bancárias e dinheiro da sua conta do mercado pago. ofereça pagamentos seguros e seguros com o processador líder da américa latina."
 
@@ -977,7 +993,7 @@ msgid "It's time to celebrate – you're ready to launch your store! Woo! Hit th
 msgstr "É hora de comemorar - você está pronto para lançar sua loja!woo!aperte o botão para visualizar sua loja e torná -lo público."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:751
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2423
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2447
 msgid "Mercado Pago"
 msgstr "Mercado pago"
 
@@ -1010,18 +1026,18 @@ msgstr "O checkout pode ser personalizado <a href=\"%s\"> no editor </a> com seu
 #. settings in current site, 3 = URL of webhooks settings in current site, 4 =
 #. URL of logs page in current site, 5 = URL of blog post about the Legacy REST
 #. API removal
-#: includes/class-wc-install.php:1447
+#: includes/class-wc-install.php:1401
 msgid "⚠️ WooCommerce attempted to install <a href=\"%1$s\">the Legacy REST API plugin</a> because this site has <a href=\"%2$s\">the Legacy REST API enabled</a> or has <a href=\"%3$s\">legacy webhooks defined</a>, but the installation failed (see error details in <a href=\"%4$s\">the WooCommerce logs</a>). Please install and activate the plugin manually. <a href=\"%5$s\">More information</a>"
 msgstr "WooCommerce tentou instalar <a href=\"%1$s\"> o plug -in api do legacy rest rest </a> porque este site possui <a href=\"%2$s\"> a api rest legacy habilitada </a> outem <a href=\"%3$s\"> webhooks legados definidos </a>, mas a instalação falhou (consulte os detalhes do erro em <a href=\"%4$s\"> os registros woocommerce </a>). por favor, instale e ative o plug -in manualmente. <a href=\"%5$s\"> mais informações </a>"
 
 #. translators: 1 = URL of Legacy REST API plugin page, 2 = URL of Legacy API
 #. settings in current site, 3 = URL of webhooks settings in current site, 4 =
 #. URL of blog post about the Legacy REST API removal
-#: includes/class-wc-install.php:1433
+#: includes/class-wc-install.php:1387
 msgid "ℹ️ WooCommerce installed and activated <a href=\"%1$s\">the Legacy REST API plugin</a> because this site has <a href=\"%2$s\">the Legacy REST API enabled</a> or has <a href=\"%3$s\">legacy webhooks defined</a>. <a href=\"%4$s\">More information</a>"
 msgstr "woocommerce instalado e ativado <a href=\"%1$s\"> o plug -in api do legacy rest rest </a> porque este site possui <a href=\"%2$s\"> a api rest legacy habilitada </a> outem <a href=\"%3$s\"> webhooks legados definidos </a>. <a href=\"%4$s\"> mais informações </a>"
 
-#: includes/class-wc-install.php:1424
+#: includes/class-wc-install.php:1378
 msgid "WooCommerce installed the Legacy REST API plugin but failed to activate it, see context for more details."
 msgstr "O woocommerce instalou o plug -in da api legacy rest, mas não conseguiu ativá -lo, veja o contexto para obter mais detalhes."
 
@@ -1029,7 +1045,7 @@ msgstr "O woocommerce instalou o plug -in da api legacy rest, mas não conseguiu
 #. settings in current site, 3 = URL of webhooks settings in current site, 4 =
 #. URL of logs page in current site, 5 = URL of plugins page in current site, 6
 #. = URL of blog post about the Legacy REST API removal
-#: includes/class-wc-install.php:1414
+#: includes/class-wc-install.php:1368
 msgid "⚠️ WooCommerce installed <a href=\"%1$s\">the Legacy REST API plugin</a> because this site has <a href=\"%2$s\">the Legacy REST API enabled</a> or has <a href=\"%3$s\">legacy webhooks defined</a>, but it failed to activate it (see error details in <a href=\"%4$s\">the WooCommerce logs</a>). Please go to <a href=\"%5$s\">the plugins page</a> and activate it manually. <a href=\"%6$s\">More information</a>"
 msgstr "WooCommerce instalado <a href=\"%1$s\"> o plug -in api do rest legacy </a> porque este site possui <a href=\"%2$s\"> a api rest legacy habilitada </a> ou tem <a href = \"%3s\"> webhooks legados definidos </a>, mas não conseguiu ativá -lo (consulte os detalhes do erro em <a href=\"%4$s\"> os logs woocommerce </a>). por favor, vá para <a href=\"%5$s\"> a página dos plugins </a> e ative -a manualmente. <a href=\"%6$s\"> mais informações </a>"
 
@@ -1049,12 +1065,12 @@ msgid "To allow logging, make %s writable."
 msgstr "Para permitir o registro, faça com que %s gravitassem."
 
 #. translators: %s: Local pickup settings page URL.
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:239
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:237
 msgid "Explore a new enhanced delivery method that allows you to easily offer one or more pickup locations to your customers in the <a href=\"%s\">Local pickup settings page</a>."
 msgstr "Explore um novo método de entrega aprimorada que permita que você ofereça facilmente um ou mais locais de coleta para seus clientes na página <a href=\"%s\"> página de configurações de coleta local </a>."
 
 #. translators: %s: Local pickup settings page URL.
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:247
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:245
 msgid "Local pickup: Set up pickup locations in the <a href=\"%s\">Local pickup settings page</a>."
 msgstr "Pickup local: configure os locais de coleta na página <a href=\"%s\"> configurações de coleta local </a>."
 
@@ -1450,7 +1466,7 @@ msgstr "Manipulador"
 msgid "Is logging enabled?"
 msgstr "O registro está ativado?"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:165
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:163
 msgid "Create and save"
 msgstr "Criar e salvar"
 
@@ -2091,12 +2107,12 @@ msgid "Note that if this setting is changed, any log entries that have already b
 msgstr "Observação: se essa configuração for alterada, todas as entradas do registro adicionadas até o momento vão continuar armazenadas no local atual, elas não serão migradas."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:118
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2363
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2387
 msgid "Boost international sales and save on FX fees. Accept 60+ local payment methods including Apple Pay and Google Pay."
 msgstr "Impulsione suas vendas em outros países e economize nas taxas de transação internacionais. Aceite mais de 60 métodos de pagamentos globais, incluindo Apple Pay e Google Pay."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:117
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2362
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2386
 msgid "Airwallex Payments"
 msgstr "Airwallex Payments"
 
@@ -2889,6 +2905,7 @@ msgstr "Adicione ao carrinho: &ldquo;%s&rdquo;"
 msgid "An optional zone you can use to set the shipping method(s) available to any regions that have not been listed above."
 msgstr "Uma zona opcional que você pode usar para definir o (s) método (s) de envio (s) disponível para todas as regiões que não foram listadas acima."
 
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:18
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:9
 msgid "Add zone"
 msgstr "Adicionar área"
@@ -2898,7 +2915,7 @@ msgid "Classes"
 msgstr "Classes"
 
 #. translators: %s: shipping method title
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:144
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:142
 msgid "Set up %s"
 msgstr "Configurar %s"
 
@@ -2906,11 +2923,11 @@ msgstr "Configurar %s"
 msgid "Slug (unique identifier) can be left blank and auto-generated, or you can enter one"
 msgstr "Slug (identificador exclusivo) pode ser deixado em branco e gerado automaticamente, ou você pode inserir um"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:73
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:71
 msgid "Add the shipping methods you'd like to make available to customers in this zone."
 msgstr "Adicione os métodos de envio que você deseja disponibilizar aos clientes nesta zona."
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:183
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:181
 msgid "Create shipping method"
 msgstr "Crie método de envio"
 
@@ -2930,19 +2947,19 @@ msgstr "por exemplo. pacotes pesados"
 msgid "Give your shipping class a name for easy identification"
 msgstr "Dê um nome à sua aula de remessa para facilitar a identificação"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:36
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:34
 msgid "Give your zone a name! E.g. Local, or Worldwide."
 msgstr "Dê um nome à sua zona!por exemplo. local, ou mundialmente."
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:49
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:47
 msgid "List the regions you'd like to include in your shipping zone. Customers will be matched against these regions."
 msgstr "Liste as regiões que você deseja incluir na sua zona de remessa. os clientes serão comparados a essas regiões."
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:273
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:271
 msgid "STEP 1 OF 2"
 msgstr "Etapa 1 de 2"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:169
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:167
 msgid "STEP 2 OF 2"
 msgstr "Etapa 2 de 2"
 
@@ -2950,7 +2967,7 @@ msgstr "Etapa 2 de 2"
 msgid "Use shipping classes to customize the shipping rates for different groups of products, such as heavy items that require higher postage fees."
 msgstr "Use aulas de remessa para personalizar as taxas de envio de diferentes grupos de produtos, como itens pesados que exigem taxas de postagem mais altas."
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:158
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:156
 msgid "Add shipping class costs"
 msgstr "Adicionar custos da classe de entrega"
 
@@ -5461,18 +5478,18 @@ msgid "Pinterest for WooCommerce"
 msgstr "Pinterest para WooCommerce"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:130
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2947
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2971
 #: assets/client/admin/chunks/wcpay-payment-welcome-page.js:2
 msgid "Amazon Pay"
 msgstr "Amazon Pay"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:131
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2948
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2972
 msgid "Enable a familiar, fast checkout for hundreds of millions of active Amazon customers globally."
 msgstr "Ative uma finalização de compra rápida e familiar para centenas de milhos de clientes Amazon ativos globalmente."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:87
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:3015
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:3039
 msgid "Afterpay"
 msgstr "Afterpay"
 
@@ -6802,7 +6819,7 @@ msgstr "Arquivos que podem conter relatórios de %1$sanalytics da loja%2$s foram
 msgid "Edit page"
 msgstr "Editar página"
 
-#: includes/class-wc-install.php:928
+#: includes/class-wc-install.php:929
 msgctxt "Page title"
 msgid "Refund and Returns Policy"
 msgstr "Política de reembolso e devoluções"
@@ -6851,7 +6868,7 @@ msgstr "Número de telefone de entrega"
 msgid "When true, refunded items are restocked."
 msgstr "Quando ativo, itens reembolsados voltam para o estoque."
 
-#: includes/class-wc-install.php:927
+#: includes/class-wc-install.php:928
 msgctxt "Page slug"
 msgid "refund_returns"
 msgstr "reembolso_devolucoes"
@@ -6966,7 +6983,7 @@ msgid "Notes are unavailable because the \"admin-note\" data store cannot be loa
 msgstr "As observação estão indisponíveis porque os dados da \"admin-note\" não puderam ser carregados."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:309
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2449
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2473
 msgid "Mollie"
 msgstr "Mollie"
 
@@ -7009,7 +7026,7 @@ msgstr "Lista de produtos por classificação"
 
 #. translators: %d: Download number
 #. translators: %s: download number
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:708
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:683
 #: includes/export/class-wc-product-csv-exporter.php:624
 msgid "Download %d ID"
 msgstr "ID do download %d"
@@ -7182,7 +7199,7 @@ msgid "%s connected successfully"
 msgstr "%s conectado com sucesso"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:383
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2649
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2673
 msgid "Paystack"
 msgstr "Paystack"
 
@@ -7207,7 +7224,7 @@ msgid "How easy was it to add a product attribute?"
 msgstr "Quão fácil foi adicionar um atributo de produto?"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:384
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2650
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2674
 msgid "Paystack helps African merchants accept one-time and recurring payments online with a modern, safe, and secure payment gateway."
 msgstr "Paystack proporciona aos comerciantes africanos um sistema de pagamento moderno, seguro e protegido que aceita pagamentos on-line únicos e recorrentes."
 
@@ -7244,7 +7261,7 @@ msgstr "PayU para WooCommerce"
 msgid "Get ready to start selling"
 msgstr "Prepare-se para começar a vender"
 
-#: src/StoreApi/Utilities/CartController.php:442
+#: src/StoreApi/Utilities/CartController.php:443
 msgid "There was an error with an item in your cart."
 msgstr "Ocorreu um erro com um item em seu carrinho."
 
@@ -7258,17 +7275,17 @@ msgid "%1$s and %2$s"
 msgstr "%1$s e %2$s"
 
 #. translators: %s: product name.
-#: src/StoreApi/Utilities/CartController.php:399
+#: src/StoreApi/Utilities/CartController.php:400
 msgid "%s cannot be purchased. Please remove it from your cart."
 msgstr "Não é possível comprar %s. Remova este item do seu carrinho."
 
 #. translators: %s: product names.
-#: src/StoreApi/Utilities/CartController.php:392
+#: src/StoreApi/Utilities/CartController.php:393
 msgid "%s are out of stock and cannot be purchased. Please remove them from your cart."
 msgstr "Não é possível comprar %s porque estão fora de estoque. Remova estes itens do seu carrinho."
 
 #. translators: %s: product name.
-#: src/StoreApi/Utilities/CartController.php:387
+#: src/StoreApi/Utilities/CartController.php:388
 msgid "%s is out of stock and cannot be purchased. Please remove it from your cart."
 msgstr "Não é possível comprar %s porque está fora de estoque. Remova este item do seu carrinho."
 
@@ -7287,27 +7304,27 @@ msgid "Block name is required."
 msgstr "O nome do bloco é obrigatório."
 
 #. translators: %s: product names.
-#: src/StoreApi/Utilities/CartController.php:404
+#: src/StoreApi/Utilities/CartController.php:405
 msgid "%s cannot be purchased. Please remove them from your cart."
 msgstr "Não é possível comprar %s. Remova estes itens do seu carrinho."
 
 #. translators: %s: product names.
-#: src/StoreApi/Utilities/CartController.php:423
+#: src/StoreApi/Utilities/CartController.php:424
 msgid "There is not enough %s in stock. Please reduce the quantity in your cart."
 msgstr "Não há %s suficiente em estoque. Reduza a quantidade em seu carrinho."
 
 #. translators: %s: product names.
-#: src/StoreApi/Utilities/CartController.php:411
+#: src/StoreApi/Utilities/CartController.php:412
 msgid "There are too many %s in the cart. Only 1 can be purchased. Please reduce the quantity in your cart."
 msgstr "Há %s demais no carrinho. Você só pode comprar 1. Reduza a quantidade em seu carrinho."
 
 #. translators: %s: product names.
-#: src/StoreApi/Utilities/CartController.php:416
+#: src/StoreApi/Utilities/CartController.php:417
 msgid "There are too many %s in the cart. Only 1 of each can be purchased. Please reduce the quantities in your cart."
 msgstr "Há %s demais no carrinho. Você só pode comprar 1 de cada. Reduza a quantidade em seu carrinho."
 
 #. translators: %s: product names.
-#: src/StoreApi/Utilities/CartController.php:428
+#: src/StoreApi/Utilities/CartController.php:429
 msgid "There are not enough %s in stock. Please reduce the quantities in your cart."
 msgstr "Não há %s suficiente em estoque. Reduza a quantidade em seu carrinho."
 
@@ -7409,7 +7426,7 @@ msgid "%1$s (ID: %2$s)"
 msgstr "%1$s (ID: %2$s)"
 
 #. translators: 1: product link, 2: product name
-#: includes/class-wc-cart.php:1164
+#: includes/class-wc-cart.php:1172
 msgid "The selected product isn't a variation of %2$s, please choose product options by visiting <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
 msgstr "O produto selecionado não é uma variação de %2$s, escolha as opções de produtos visitando <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
 
@@ -7429,13 +7446,13 @@ msgid "When product stock reaches this amount you will be notified by email. It 
 msgstr "Quando o estoque do produto atingir esse valor, você será notificado por e-mail. É possível definir valores diferentes para cada variação individualmente. O valor padrão da loja pode ser definido em Configurações > Produtos > Estoque."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:310
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2450
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2474
 msgid "Effortless payments by Mollie: Offer global and local payment methods, get onboarded in minutes, and supported in your language."
 msgstr "Pagamentos sem esforços com Mollie: ofereça métodos de pagamentos globais e locais, inicio em minutos e suporte à vários idiomas."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:415
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2548
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2582
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2572
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2606
 #: assets/client/admin/chunks/wcpay-payment-welcome-page.js:2
 msgid "PayPal Payments"
 msgstr "Pagamento via PayPal"
@@ -7874,14 +7891,14 @@ msgid "We strongly recommend creating a backup of your site before updating."
 msgstr "Recomendamos fortemente a criação de um backup do seu site antes de atualizar."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:583
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2747
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2771
 #: assets/client/admin/chunks/homescreen.js:1
 #: assets/client/admin/data/index.js:2
 msgid "Razorpay"
 msgstr "Razorpay"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:584
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2748
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2772
 msgid "The official Razorpay extension for WooCommerce allows you to accept credit cards, debit cards, netbanking, wallet, and UPI payments."
 msgstr "A extensão oficial Razorpay para WooCommerce permite receber pagamentos com cartões de crédito, cartões de débito, carteira digital e pagamentos UPI."
 
@@ -7959,7 +7976,7 @@ msgstr "Limita o resultado para pedidos que possuem customer_type especificados.
 msgid "Current set billing address for the customer."
 msgstr "Endereço de cobrança atual definido para o cliente."
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:163
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:161
 #: assets/client/admin/chunks/3978.js:1 assets/client/admin/chunks/8499.js:1
 #: assets/client/admin/chunks/customize-store.js:1
 #: assets/client/admin/chunks/launch-store.js:1
@@ -8122,7 +8139,7 @@ msgid "WooCommerce Shipping"
 msgstr "WooCommerce Shipping"
 
 #. translators: 1: product link, 2: product name
-#: includes/class-wc-cart.php:1059 includes/class-wc-form-handler.php:960
+#: includes/class-wc-cart.php:1067 includes/class-wc-form-handler.php:960
 msgid "Please choose product options by visiting <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
 msgstr "Escolha as opções de produtos visitando <a href=\"%1$s\" title=\"%2$s\">%2$s</a>"
 
@@ -9445,7 +9462,7 @@ msgstr "Arquivo enviado: %s"
 msgid "Are you sure you want to run this tool?"
 msgstr "Tem certeza de que deseja executar esta ferramenta?"
 
-#: includes/class-wc-install.php:2328
+#: includes/class-wc-install.php:2282
 msgid "Community support"
 msgstr "Suporte da comunidade"
 
@@ -9537,7 +9554,7 @@ msgstr "Tag excluída."
 msgid "Tag added."
 msgstr "Tag adicionada."
 
-#: includes/class-wc-install.php:2328
+#: includes/class-wc-install.php:2282
 msgid "Visit community forums"
 msgstr "Visite os fóruns da comunidade"
 
@@ -9714,12 +9731,12 @@ msgstr "Navegar pela loja"
 msgid "Remove item"
 msgstr "Remover item"
 
-#: includes/class-wc-install.php:2859 src/Blocks/BlockTypes/Cart.php:88
+#: includes/class-wc-install.php:2813 src/Blocks/BlockTypes/Cart.php:88
 #: assets/client/blocks/cart.js:21
 msgid "New in store"
 msgstr "Novo na loja"
 
-#: includes/class-wc-install.php:2851 src/Blocks/BlockTypes/Cart.php:78
+#: includes/class-wc-install.php:2805 src/Blocks/BlockTypes/Cart.php:78
 #: src/Blocks/BlockTypes/MiniCart.php:594 assets/client/blocks/cart.js:21
 #: assets/client/blocks/checkout-frontend.js:1
 msgid "Your cart is currently empty!"
@@ -10160,31 +10177,31 @@ msgid "Cannot create order from empty cart."
 msgstr "Não é possível criar pedido a partir de um carrinho vazio."
 
 #. translators: %s: product name
-#: src/StoreApi/Utilities/CartController.php:1184
+#: src/StoreApi/Utilities/CartController.php:1185
 msgid "&quot;%s&quot; is not available for purchase."
 msgstr "&quot;%s&quot; não está disponível para compra."
 
 #. translators: %1$s coupon code, %2$s reason.
-#: src/StoreApi/Utilities/CartController.php:1094
+#: src/StoreApi/Utilities/CartController.php:1095
 msgid "The \"%1$s\" coupon has been removed from your cart: %2$s"
 msgstr "O cupom \"%1$s\" foi removido do seu carrinho: %2$s"
 
 #. translators: %s: coupon code
-#: src/StoreApi/Utilities/CartController.php:1033
+#: src/StoreApi/Utilities/CartController.php:1034
 msgid "\"%s\" has already been applied and cannot be used in conjunction with other coupons."
 msgstr "\"%s\" já foi aplicado e não pode ser usado em conjunto com outros cupons."
 
 #. translators: %s coupon code
-#: src/StoreApi/Utilities/CartController.php:985
+#: src/StoreApi/Utilities/CartController.php:986
 msgid "Coupon code \"%s\" has already been applied."
 msgstr "O cupom \"%s\" já foi aplicado."
 
 #. translators: %s coupon code
-#: src/StoreApi/Utilities/CartController.php:973
+#: src/StoreApi/Utilities/CartController.php:974
 msgid "\"%s\" is an invalid coupon code."
 msgstr "\"%s\" é um código de cupom inválido."
 
-#: src/StoreApi/Utilities/CartController.php:234
+#: src/StoreApi/Utilities/CartController.php:235
 msgid "Cart item is invalid."
 msgstr "O item do carrinho é inválido."
 
@@ -11030,12 +11047,12 @@ msgstr "Aceite com segurança cartões de crédito e débito com uma tarifa baix
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:217
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:241
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:3081
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:3105
 msgid "Choose the payment that you want, pay now, pay later or slice it. No credit card numbers, no passwords, no worries."
 msgstr "Escolha o pagamento que deseja, pague agora, pague mais tarde ou parcele. Sem números de cartão de crédito, sem senhas, sem preocupações."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:653
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2815
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2839
 msgid "Accept debit and credit cards in 135+ currencies, methods such as Alipay, and one-touch checkout with Apple Pay."
 msgstr "Aceite cartões de débito e crédito em mais de 135 moedas, métodos como Alipay e finalização com um toque com o Apple Pay."
 
@@ -13376,22 +13393,22 @@ msgstr "Nome da taxonomia."
 msgid "Unique identifier for the attribute."
 msgstr "Identificador único para o atributo."
 
-#: src/StoreApi/Utilities/CartController.php:1350
+#: src/StoreApi/Utilities/CartController.php:1351
 msgid "No matching variation found."
 msgstr "Nenhuma variação correspondente encontrada."
 
 #. translators: %s: Attribute name.
-#: src/StoreApi/Utilities/CartController.php:1323
+#: src/StoreApi/Utilities/CartController.php:1324
 msgid "Missing variation data for variable product."
 msgstr "Dados de variação ausentes para produto variável."
 
 #. translators: %1$s: Attribute name, %2$s: Allowed values.
-#: src/StoreApi/Utilities/CartController.php:1303
+#: src/StoreApi/Utilities/CartController.php:1304
 msgid "Invalid value posted for %1$s. Allowed values: %2$s"
 msgstr "Valor inválido publicado para %1$s. Valores permitidos: %2$s"
 
-#: src/StoreApi/Utilities/CartController.php:1144
-#: src/StoreApi/Utilities/CartController.php:1447
+#: src/StoreApi/Utilities/CartController.php:1145
+#: src/StoreApi/Utilities/CartController.php:1448
 msgid "This product cannot be added to the cart."
 msgstr "Este produto não pode ser adicionado ao carrinho."
 
@@ -13476,7 +13493,7 @@ msgstr "Não é possível criar um item de carrinho existente."
 
 #: src/StoreApi/Routes/V1/CartItemsByKey.php:90
 #: src/StoreApi/Routes/V1/CartItemsByKey.php:128
-#: src/StoreApi/Utilities/CartController.php:228
+#: src/StoreApi/Utilities/CartController.php:229
 msgid "Cart item does not exist."
 msgstr "O item do carrinho não existe."
 
@@ -13485,7 +13502,7 @@ msgstr "O item do carrinho não existe."
 msgid "Unique identifier for the item within the cart."
 msgstr "Identificador único para o item no carrinho."
 
-#: src/StoreApi/Utilities/CartController.php:789
+#: src/StoreApi/Utilities/CartController.php:790
 msgid "Unable to retrieve cart."
 msgstr "Não foi possível recuperar o carrinho."
 
@@ -13669,7 +13686,7 @@ msgstr "O plugin \"WooCommerce Admin\" será instalado e ativado"
 msgid "Get your store up and running more quickly with our new and improved setup experience"
 msgstr "Coloque sua loja em funcionamento mais rapidamente com nossa nova e melhorada experiência de instalação"
 
-#: includes/class-wc-install.php:792
+#: includes/class-wc-install.php:793
 msgid "Every 15 Days"
 msgstr "A cada 15 dias"
 
@@ -14410,15 +14427,15 @@ msgid_plural "%d variations do not have prices."
 msgstr[0] "%d variação sem preço."
 msgstr[1] "%d variações sem preço."
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:885
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:860
 msgid "Import as meta data"
 msgstr "Importar como metadados"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:849
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:824
 msgid "Tags (space separated)"
 msgstr "Tags (separadas por espaço)"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:848
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:823
 msgid "Tags (comma separated)"
 msgstr "Tags (separadas por vírgulas)"
 
@@ -14457,11 +14474,11 @@ msgstr "Dados: %1$.2fMB + Índex: %2$.2fMB + mecanismo %3$s"
 msgid "Drag and drop to set admin attribute order"
 msgstr "Arraste e solte para definir a ordenação de atributo no painel administrativo"
 
-#: includes/class-wc-install.php:991
+#: includes/class-wc-install.php:992
 msgid "Zero rate"
 msgstr "Taxa zero"
 
-#: includes/class-wc-install.php:990
+#: includes/class-wc-install.php:991
 msgid "Reduced rate"
 msgstr "Taxa reduzida"
 
@@ -15898,7 +15915,7 @@ msgstr "%1$s não é válido. Você pode procurar pelo Eircode correto <a target
 
 #. translators: 1: product name 2: quantity in stock
 #. translators: %s: product name
-#: includes/class-wc-cart.php:807
+#: includes/class-wc-cart.php:815
 #: includes/shortcodes/class-wc-shortcode-checkout.php:170
 #: src/StoreApi/Utilities/OrderController.php:670
 msgid "Sorry, we do not have enough \"%1$s\" in stock to fulfill your order (%2$s available). We apologize for any inconvenience caused."
@@ -16125,8 +16142,8 @@ msgstr "ShipStation"
 msgid "ShipStation icon"
 msgstr "Ícone do ShipStation"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:660
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:832
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:635
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:807
 #: includes/export/class-wc-product-csv-exporter.php:129
 msgid "Low stock amount"
 msgstr "Quantidade baixa de estoque"
@@ -16604,13 +16621,13 @@ msgid "Removed payment token \"%d\""
 msgstr "Token de pagamento \"%d\" removido"
 
 #. translators: user role
-#: includes/class-wc-install.php:2031
+#: includes/class-wc-install.php:1985
 msgctxt "User role"
 msgid "Shop manager"
 msgstr "Gerente da loja"
 
 #. translators: user role
-#: includes/class-wc-install.php:2029
+#: includes/class-wc-install.php:1983
 msgctxt "User role"
 msgid "Customer"
 msgstr "Cliente"
@@ -16668,7 +16685,7 @@ msgid "Display name"
 msgstr "Nome de exibição"
 
 #. translators: 1: first name 2: last name
-#: includes/class-wc-customer.php:906
+#: includes/class-wc-customer.php:877
 msgctxt "display name"
 msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
@@ -16805,7 +16822,7 @@ msgstr "Downloads comprados"
 msgid "Access to Purchased Downloads"
 msgstr "Acesso a downloads comprados"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:866
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:841
 #: includes/class-wc-privacy-exporters.php:142
 #: includes/class-wc-privacy-exporters.php:347
 msgid "Download ID"
@@ -16853,7 +16870,7 @@ msgstr "Versão do banco de dados do WooCommerce"
 msgid "WordPress version"
 msgstr "Versão do WordPress"
 
-#: includes/admin/settings/class-wc-settings-payment-gateways-react.php:51
+#: includes/admin/settings/class-wc-settings-payment-gateways-react.php:71
 #: includes/admin/settings/class-wc-settings-payment-gateways.php:28
 msgctxt "Settings tab label"
 msgid "Payments"
@@ -17241,7 +17258,7 @@ msgstr "API REST"
 msgid "No keys found."
 msgstr "Nenhuma chave foi encontrada."
 
-#: includes/abstracts/abstract-wc-payment-gateway.php:219
+#: includes/abstracts/abstract-wc-payment-gateway.php:218
 msgid "Return to payments"
 msgstr "Retornar para pagamentos"
 
@@ -17832,7 +17849,7 @@ msgid "Buy &ldquo;%s&rdquo;"
 msgstr "Comprar &ldquo;%s&rdquo;"
 
 #: includes/admin/class-wc-admin-taxonomies.php:340
-#: includes/class-wc-install.php:1288 includes/class-wc-install.php:1294
+#: includes/class-wc-install.php:1242 includes/class-wc-install.php:1248
 msgctxt "Default category slug"
 msgid "Uncategorized"
 msgstr "Sem categoria"
@@ -18004,7 +18021,7 @@ msgstr "Filtrar por status do estoque"
 
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:317
 #: includes/admin/reports/class-wc-report-stock.php:116
-#: includes/wc-product-functions.php:1068
+#: includes/wc-product-functions.php:1089
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/ProductVariationTemplate.php:404
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:870
 #: assets/client/admin/chunks/analytics-report-stock.js:1
@@ -18039,7 +18056,7 @@ msgid "Limit result set to products with specific SKU(s). Use commas to separate
 msgstr "Limita o resultado para produtos com SKU(s) específicos. Utilize vírgulas para separar."
 
 #. translators: WooCommerce link to setting up shipping zones
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:62
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:60
 msgid "Postcodes containing wildcards (e.g. CB23*) or fully numeric ranges (e.g. <code>90210...99000</code>) are also supported. Please see the shipping zones <a href=\"%s\" target=\"_blank\">documentation</a> for more information."
 msgstr "CEPs que contenham curingas (p. ex. 170*) ou intervalos numéricos (ex. <code>17000000...17099999</code>) também são suportados. Veja a <a href=\"%s\" target=\"_blank\">documentação</a> sobre áreas de entrega para mais informações."
 
@@ -18140,7 +18157,7 @@ msgid "payment setup and automated taxes"
 msgstr "configurar pagamento e impostos automatizados"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:601
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2780
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:2804
 #: assets/client/admin/chunks/core-profiler.js:1
 msgid "Square"
 msgstr "Square"
@@ -18154,12 +18171,12 @@ msgid "Direct payments to email address:"
 msgstr "Direcionar pagamentos para o endereço de e-mail:"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:216
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:3113
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:3137
 msgid "Klarna Checkout"
 msgstr "Klarna Checkout"
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:240
-#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:3080
+#: src/Internal/Admin/Suggestions/PaymentExtensionSuggestions.php:3104
 msgid "Klarna Payments"
 msgstr "Klarna Payments"
 
@@ -18507,7 +18524,7 @@ msgstr "Exibir o carrinho de compras do cliente."
 
 #. translators: 1: wc_load_cart 2: woocommerce_init
 #. translators: 1: class::method 2: plugins_loaded
-#: includes/wc-core-functions.php:2647
+#: includes/wc-core-functions.php:2661
 #: src/Internal/Features/FeaturesController.php:796
 msgid "%1$s should not be called before the %2$s action."
 msgstr "A função %1$s não deve ser chamada antes da ação %2$s."
@@ -18559,7 +18576,7 @@ msgstr "A tarifa já foi adicionada."
 
 #. translators: 1: class name 2: woocommerce_logging_class 3:
 #. WC_Logger_Interface
-#: includes/wc-core-functions.php:2134
+#: includes/wc-core-functions.php:2148
 msgid "The class %1$s provided by %2$s filter must implement %3$s."
 msgstr "A classe %1$s fornecida pelo filtro %2$s deve implementar %3$s."
 
@@ -18720,11 +18737,11 @@ msgstr "Aqui é onde sua empresa está localizada. Taxas de imposto e custos de 
 msgid "Forcing downloads will keep URLs hidden, but some servers may serve large files unreliably. If supported, %1$s / %2$s can be used to serve downloads instead (server requires %3$s)."
 msgstr "Forçar downloads manterá os URLs ocultos, mas alguns servidores podem servir arquivos grandes de maneira não confiável. caso suportado, %1$s / %2$s pode ser utilizado para servir transferência no lugar (servidor requer %3$s)."
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:539
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:514
 msgid "Upload a new file"
 msgstr "Enviar um novo arquivo"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:535
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:510
 msgid "The file is empty or using a different encoding than UTF-8, please try again with a new file."
 msgstr "O arquivo está vazio ou usando uma codificação diferente do UTF-8, tente novamente com um novo arquivo."
 
@@ -18737,8 +18754,8 @@ msgstr "Adicionar entrega"
 msgid "Refund #%1$s - %2$s by %3$s"
 msgstr "Reembolso #%1$s - %2$s por %3$s"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:686
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:886
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:661
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:861
 #: includes/export/class-wc-product-csv-exporter.php:156
 msgid "Position"
 msgstr "Posição"
@@ -19233,7 +19250,7 @@ msgstr "Categorias de produtos que o cupom será aplicado, ou que precisam estar
 msgid "The \"locations not covered by your other zones\" zone cannot be updated."
 msgstr "A área de entrega \"Locais não cobertos por suas outras áreas de entrega\" não pode ser atualizada."
 
-#: includes/wc-product-functions.php:1031
+#: includes/wc-product-functions.php:1052
 msgid "Search results only"
 msgstr "Apenas nos resultados de pesquisa"
 
@@ -19253,11 +19270,11 @@ msgid_plural "Rated %1$s out of 5 based on %2$s customer ratings"
 msgstr[0] "Avaliado como %1$s de 5, com baseado em %2$s avaliação de cliente"
 msgstr[1] "Avaliado como %1$s de 5, com baseado em %2$s avaliações de clientes"
 
-#: includes/wc-product-functions.php:1030
+#: includes/wc-product-functions.php:1051
 msgid "Shop only"
 msgstr "Apenas na loja"
 
-#: includes/wc-product-functions.php:1029
+#: includes/wc-product-functions.php:1050
 msgid "Shop and search results"
 msgstr "Loja e resultados de pesquisa"
 
@@ -19455,7 +19472,7 @@ msgstr "Locais não cobertos por suas outras áreas"
 msgid "This tool allows you to generate and download a CSV file containing a list of all products."
 msgstr "Esta ferramenta permite você gerar e baixar um arquivo CSV contendo uma lista de todos os produtos."
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:137
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:125
 #: includes/admin/importers/class-wc-tax-rate-importer.php:235
 #: includes/admin/importers/class-wc-tax-rate-importer.php:246
 #: includes/import/class-wc-product-csv-importer.php:91
@@ -19479,7 +19496,7 @@ msgstr "Compartilhado por %s"
 msgid "Subscription: Not available - %1$d of %2$d already in use"
 msgstr "Assinatura: Não disponível - %1$d de %2$d já em utilização"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:830
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:805
 msgctxt "Quantity in stock"
 msgid "Stock"
 msgstr "Estoque"
@@ -19616,132 +19633,132 @@ msgid_plural "%s products imported"
 msgstr[0] "%s produto importado"
 msgstr[1] "%s produtos importados"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:880
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:855
 msgid "Default attribute"
 msgstr "Atributo padrão"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:879
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:854
 msgid "Attribute visibility"
 msgstr "Visibilidade do atributo"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:878
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:853
 msgid "Is a global attribute?"
 msgstr "É um atributo global?"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:877
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:852
 msgid "Attribute value(s)"
 msgstr "Valores de atributos"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:876
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:851
 #: assets/client/admin/components/index.js:2
 msgid "Attribute name"
 msgstr "Nome do atributo"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:857
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:832
 #: assets/client/admin/chunks/6262.js:1
 msgid "External product"
 msgstr "Produto externo"
 
 #. translators: %d: Meta number
 #. translators: %s: meta data name
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:714
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:689
 #: includes/export/class-wc-product-csv-exporter.php:745
 msgid "Meta: %s"
 msgstr "Metadado: %s"
 
 #. translators: %d: Attribute number
 #. translators: %s: attribute number
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:706
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:681
 #: includes/export/class-wc-product-csv-exporter.php:699
 msgid "Attribute %d default"
 msgstr "Atributo padrão %d"
 
 #. translators: %d: Attribute number
 #. translators: %s: attribute number
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:704
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:679
 #: includes/export/class-wc-product-csv-exporter.php:661
 msgid "Attribute %d global"
 msgstr "Atributo global %d"
 
 #. translators: %d: Attribute number
 #. translators: %s: attribute number
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:702
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:677
 #: includes/export/class-wc-product-csv-exporter.php:659
 msgid "Attribute %d visible"
 msgstr "Visibilidade do atributo %d"
 
 #. translators: %d: Attribute number
 #. translators: %s: attribute number
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:700
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:675
 #: includes/export/class-wc-product-csv-exporter.php:657
 msgid "Attribute %d value(s)"
 msgstr "Valores do atributo %d"
 
 #. translators: %d: Attribute number
 #. translators: %s: attribute number
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:698
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:673
 #: includes/export/class-wc-product-csv-exporter.php:655
 msgid "Attribute %d name"
 msgstr "Nome do atributo %d"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:684
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:859
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:659
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:834
 #: includes/export/class-wc-product-csv-exporter.php:154
 msgid "External URL"
 msgstr "URL externa"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:677
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:851
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:652
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:826
 #: includes/export/class-wc-product-csv-exporter.php:147
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:503
 #: assets/client/admin/chunks/682.js:2
 msgid "Images"
 msgstr "Imagens"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:670
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:883
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:645
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:858
 #: includes/export/class-wc-product-csv-exporter.php:140
 msgid "Allow customer reviews?"
 msgstr "Permitir avaliações de clientes?"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:659
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:831
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:634
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:806
 #: includes/export/class-wc-product-csv-exporter.php:130
 msgid "Backorders allowed?"
 msgstr "São permitidas encomendas?"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:654
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:824
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:629
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:799
 #: includes/export/class-wc-product-csv-exporter.php:124
 msgid "Date sale price ends"
 msgstr "Data de preço promocional termina em"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:653
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:823
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:628
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:798
 #: includes/export/class-wc-product-csv-exporter.php:123
 msgid "Date sale price starts"
 msgstr "Data de preço promocional começa em"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:651
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:816
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:626
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:791
 #: includes/export/class-wc-product-csv-exporter.php:121
 msgid "Short description"
 msgstr "Descrição curta"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:650
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:815
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:625
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:790
 #: includes/export/class-wc-product-csv-exporter.php:120
 msgid "Visibility in catalog"
 msgstr "Visibilidade no catálogo"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:649
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:814
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:624
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:789
 #: includes/export/class-wc-product-csv-exporter.php:119
 msgid "Is featured?"
 msgstr "Em destaque?"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:648
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:813
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:623
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:788
 #: includes/export/class-wc-product-csv-exporter.php:118
 #: assets/client/admin/chunks/3978.js:1
 msgid "Published"
@@ -19751,15 +19768,15 @@ msgstr "Publicado"
 msgid "File is empty. Please upload something more substantial. This error could also be caused by uploads being disabled in your php.ini or by post_max_size being defined as smaller than upload_max_filesize in php.ini."
 msgstr "O arquivo esta vazio, Faça envio de algo mais substancial. Este erro pode ser também causado por uploads sendo desativados no seu arquivo php.ini ou por post_max_size sendo definido com um valor menor do que upload_max_filesize no php.ini."
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:190
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:165
 msgid "Done!"
 msgstr "Concluído!"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:180
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:155
 msgid "Column mapping"
 msgstr "Mapeamento de colunas"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:175
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:150
 msgid "Upload CSV file"
 msgstr "Fazer upload de arquivo CSV"
 
@@ -19835,31 +19852,31 @@ msgstr "Esta ferramenta lhe permite importar (ou fundir) dados de produtos para 
 msgid "Parent SKU"
 msgstr "SKU ascendente"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:679
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:870
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:654
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:845
 #: includes/export/class-wc-product-csv-exporter.php:149
 msgid "Download expiry days"
 msgstr "Dias para expirar o download"
 
 #. translators: %d: Download number
 #. translators: %s: download number
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:710
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:685
 #: includes/export/class-wc-product-csv-exporter.php:626
 msgid "Download %d name"
 msgstr "Nome do download %d"
 
 #. translators: %d: Download number
 #. translators: %s: download number
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:712
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:687
 #: includes/export/class-wc-product-csv-exporter.php:628
 msgid "Download %d URL"
 msgstr "URL do download %d"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:867
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:842
 msgid "Download name"
 msgstr "Nome do download"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:868
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:843
 msgid "Download URL"
 msgstr "URL de download"
 
@@ -20038,7 +20055,7 @@ msgid "Export"
 msgstr "Exportar"
 
 #: includes/admin/class-wc-admin-assets.php:230
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:185
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:160
 #: assets/client/admin/wp-admin-scripts/settings-embed.js:2
 msgid "Import"
 msgstr "Importar"
@@ -20860,7 +20877,7 @@ msgstr[1] "Categorias"
 msgid "Invalid tax class"
 msgstr "Classe de impostos inválida"
 
-#: includes/class-wc-install.php:2332
+#: includes/class-wc-install.php:2286
 msgid "Visit premium customer support"
 msgstr "Visite o suporte ao cliente premium"
 
@@ -20872,7 +20889,7 @@ msgstr[0] "O item %d do seu pedido anterior não está disponível no momento e 
 msgstr[1] "Os itens %d do seu pedido anterior não estão disponíveis no momento e não puderam ser adicionados ao carrinho."
 
 #. translators: %s: Attribute name.
-#: includes/class-wc-cart.php:1136
+#: includes/class-wc-cart.php:1144
 msgid "Invalid value posted for %s"
 msgstr "Valor inválido postado para %s"
 
@@ -20882,11 +20899,11 @@ msgstr "Valor inválido postado para %s"
 msgid "Invalid data store."
 msgstr "Armazenamento de dados inválido."
 
-#: includes/class-wc-customer.php:919
+#: includes/class-wc-customer.php:890
 msgid "Invalid role"
 msgstr "Função inválida"
 
-#: includes/class-wc-customer.php:873 src/Admin/API/OnboardingProfile.php:677
+#: includes/class-wc-customer.php:844 src/Admin/API/OnboardingProfile.php:677
 msgid "Invalid email address"
 msgstr "Endereço de e-mail inválido"
 
@@ -20934,16 +20951,16 @@ msgstr "Apartamento, suíte, sala, etc. (opcional)"
 msgid "%1$s is low in stock. There are %2$d left."
 msgstr "%1$s esta com estoque baixo. Ainda há %2$d."
 
-#: includes/class-wc-customer.php:1123 includes/class-wc-order.php:1344
+#: includes/class-wc-customer.php:1094 includes/class-wc-order.php:1344
 msgid "Invalid billing email address"
 msgstr "E-mail de cobrança inválido"
 
 #. translators: %s: product name
-#: includes/class-wc-cart.php:1183
+#: includes/class-wc-cart.php:1191
 msgid "You cannot add another \"%s\" to your cart."
 msgstr "Você não pode adicionar outro \"%s\" em seu carrinho."
 
-#: includes/class-wc-cart.php:1195 includes/class-wc-cart.php:1262
+#: includes/class-wc-cart.php:1203 includes/class-wc-cart.php:1270
 #: includes/class-wc-frontend-scripts.php:598
 #: includes/wc-cart-functions.php:130 includes/wc-template-functions.php:2459
 #: src/Blocks/BlockTypes/ProductButton.php:336
@@ -21945,7 +21962,7 @@ msgstr "%1$s de %2$s"
 msgid "Search for a user&hellip;"
 msgstr "Buscar um usuário&hellip;"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:46
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:44
 msgid "Zone regions"
 msgstr "Regiões da área"
 
@@ -21962,7 +21979,6 @@ msgid "Enable debug mode"
 msgstr "Ativar modo de depuração"
 
 #: includes/admin/settings/class-wc-settings-shipping.php:57
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:18
 #: includes/admin/settings/views/html-admin-page-shipping-zones-instance.php:7
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:8
 #: includes/admin/views/html-notice-legacy-shipping.php:18
@@ -22059,8 +22075,8 @@ msgstr "Comprimento x largura x altura em forma decimal"
 #. translators: %s: Weight unit
 #. translators: %s: weight unit
 #. translators: %s: weight
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:663
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:835
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:638
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:810
 #: includes/admin/meta-boxes/views/html-product-data-shipping.php:18
 #: includes/admin/meta-boxes/views/html-variation-admin.php:331
 #: includes/export/class-wc-product-csv-exporter.php:133
@@ -22106,8 +22122,8 @@ msgstr "Reembolsar %s manualmente"
 msgid "Refund %1$s via %2$s"
 msgstr "Reembolso %1$s por %2$s"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:683
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:855
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:658
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:830
 #: includes/admin/meta-boxes/views/html-product-data-linked-products.php:16
 #: includes/export/class-wc-product-csv-exporter.php:151
 msgid "Grouped products"
@@ -22844,7 +22860,7 @@ msgstr "https://woocommerce.com/"
 msgid "No shipping methods offered to this zone."
 msgstr "Não há métodos de entrega para esta área."
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:191
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:189
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:118
 msgid "Choose the shipping method you wish to add. Only shipping methods which support zones are listed."
 msgstr "Escolha o método de entrega que você deseja adicionar. Apenas métodos de entrega que suportam áreas estão listados aqui."
@@ -23773,7 +23789,6 @@ msgid "Order on-hold"
 msgstr "Pedido aguardando"
 
 #: includes/admin/settings/class-wc-settings-shipping.php:333
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:19
 #: includes/class-wc-shipping-zone.php:301
 msgid "Zone"
 msgstr "Área"
@@ -23801,7 +23816,7 @@ msgid "Postcode / ZIP."
 msgstr "CEP."
 
 #. translators: 1: plugin name, 2: URL to WP plugin page.
-#: includes/class-wc-install.php:2488
+#: includes/class-wc-install.php:2442
 msgid "%1$s was installed but could not be activated. <a href=\"%2$s\">Please activate it manually by clicking here.</a>"
 msgstr "%1$s foi instalado mas não foi possível ativá-lo. <a href=\"%2$s\">Ative-o manualmente clicando aqui.</a>"
 
@@ -23809,7 +23824,7 @@ msgstr "%1$s foi instalado mas não foi possível ativá-lo. <a href=\"%2$s\">At
 #. manually.
 #. translators: 1: theme slug, 2: error message, 3: URL to install theme
 #. manually.
-#: includes/class-wc-install.php:2460 includes/class-wc-install.php:2564
+#: includes/class-wc-install.php:2414 includes/class-wc-install.php:2518
 msgid "%1$s could not be installed (%2$s). <a href=\"%3$s\">Please install it manually by clicking here.</a>"
 msgstr "%1$s não pode ser instalado (%2$s). <a href=\"%3$s\">Instale manualmente clicando aqui.</a>"
 
@@ -25952,7 +25967,7 @@ msgstr "Por exemplo:"
 msgid "Add as many zones as you need &ndash; customers will only see the methods available for their address."
 msgstr "Adicione quantas áreas você precisa. Os clientes irão ver apenas os métodos disponíveis para os endereços deles."
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:60
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:58
 msgid "List 1 postcode per line"
 msgstr "Listar 1 CEP por linha"
 
@@ -26040,7 +26055,7 @@ msgstr "Entrega internacional na Europa = Qualquer pais na Europa = Taxa fixa"
 msgid "US domestic zone = All US states = Flat rate shipping"
 msgstr "Entrega nacional = Todos os estados brasileiros = Taxa fixa"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:57
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:55
 msgid "Limit to specific ZIP/postcodes"
 msgstr "Limitar para CEPs específicos"
 
@@ -26053,19 +26068,19 @@ msgstr "O ID da página foi definido, mas a página não existe"
 msgid "Rest of the world"
 msgstr "Resto do mundo"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:94
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:92
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:110
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:136
 msgid "Add shipping method"
 msgstr "Adicionar método de entrega"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:112
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:110
 msgid "You can add multiple shipping methods within this zone. Only customers within the zone will see them."
 msgstr "Você pode adicionar múltiplos métodos de entrega dentro desta área. Apenas clientes dentro desta área serão capazes de vê-los."
 
 #: includes/admin/settings/views/html-admin-page-shipping-classes.php:51
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:150
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:185
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:148
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:183
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:112
 #: src/Internal/Admin/Orders/ListTable.php:1577
 msgid "Close modal panel"
@@ -26133,8 +26148,8 @@ msgstr "Arraste e solte para ordenar as suas áreas personalizadas. Esta será a
 msgid "Sell to all countries, except for&hellip;"
 msgstr "Vender para todos os países, exceto para&hellip;"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:33
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:40
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:31
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:38
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:29
 msgid "Zone name"
 msgstr "Nome da área"
@@ -26211,7 +26226,7 @@ msgstr "Endpoint para a página \"Minha conta &rarr; Métodos de pagamento\"."
 msgid "Shipping method could not be added. Please retry."
 msgstr "O método de entrega não pode ser adicionado. Tente novamente."
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:864
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:839
 #: includes/admin/settings/class-wc-settings-advanced.php:271
 #: includes/admin/views/html-admin-page-product-export.php:40
 #: includes/class-wc-query.php:141 includes/wc-account-functions.php:108
@@ -26271,8 +26286,8 @@ msgstr "Observação: o motivo do reembolso ficará visível para o cliente."
 msgid "Stock quantity"
 msgstr "Quantidade em estoque"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:655
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:827
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:630
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:802
 #: includes/admin/meta-boxes/views/html-product-data-general.php:205
 #: includes/admin/views/html-bulk-edit-product.php:102
 #: includes/admin/views/html-quick-edit-product.php:65
@@ -26582,10 +26597,6 @@ msgstr "Taxonomia inexistente."
 msgid "Invalid post ID."
 msgstr "ID de post inválido."
 
-#: includes/abstracts/abstract-wc-payment-gateway.php:655
-msgid "Save to account"
-msgstr "Salvar na conta"
-
 #: includes/rest-api/Controllers/Version1/class-wc-rest-webhooks-v1-controller.php:315
 #: includes/rest-api/Controllers/Version1/class-wc-rest-webhooks-v1-controller.php:476
 #: includes/rest-api/Controllers/Version2/class-wc-rest-product-variations-v2-controller.php:181
@@ -26599,6 +26610,10 @@ msgstr "Salvar na conta"
 #: includes/rest-api/Controllers/Version3/class-wc-rest-posts-controller.php:153
 msgid "Invalid ID."
 msgstr "ID inválido."
+
+#: includes/abstracts/abstract-wc-payment-gateway.php:654
+msgid "Save to account"
+msgstr "Salvar na conta"
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-terms-controller.php:402
 #: includes/rest-api/Controllers/Version3/class-wc-rest-terms-controller.php:499
@@ -27135,7 +27150,7 @@ msgstr "Digite os destinatários (separados por vírgula) que irão receber esta
 msgid "%s removed."
 msgstr "%s removido."
 
-#: includes/class-wc-install.php:788
+#: includes/class-wc-install.php:789
 msgid "Monthly"
 msgstr "Mensal"
 
@@ -27813,7 +27828,7 @@ msgstr "Nova senha"
 msgid "Re-enter new password"
 msgstr "Digite sua senha novamente"
 
-#: includes/class-wc-brands.php:191 includes/wc-product-functions.php:321
+#: includes/class-wc-brands.php:191 includes/wc-product-functions.php:342
 msgctxt "slug"
 msgid "uncategorized"
 msgstr "sem categoria"
@@ -27840,7 +27855,7 @@ msgctxt "Sorting order"
 msgid "Order"
 msgstr "Pedido"
 
-#: includes/abstracts/abstract-wc-payment-gateway.php:623
+#: includes/abstracts/abstract-wc-payment-gateway.php:622
 msgid "Use a new payment method"
 msgstr "Utilizar um novo método de pagamento"
 
@@ -28494,7 +28509,7 @@ msgid "BIC / Swift"
 msgstr "Identificação - BIC / Swift"
 
 #: includes/admin/importers/mappings/generic.php:21
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:81
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:79
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:111
 #: includes/gateways/cheque/class-wc-gateway-cheque.php:80
 #: includes/gateways/cod/class-wc-gateway-cod.php:106
@@ -29296,21 +29311,21 @@ msgstr "Autor: %s"
 msgid "Page %d"
 msgstr "Página %d"
 
-#: includes/class-wc-cart.php:761
+#: includes/class-wc-cart.php:769
 msgid "An item which is no longer available was removed from your cart."
 msgstr "Um item que não está mais disponível foi removido de seu carrinho."
 
-#: includes/class-wc-cart.php:613
+#: includes/class-wc-cart.php:621
 msgid "Get cart should not be called before the wp_loaded action."
 msgstr "Você não deveria recuperar o carrinho antes da chamada da ação wp_loaded."
 
-#: includes/class-wc-cart.php:1200
+#: includes/class-wc-cart.php:1208
 msgid "Sorry, this product cannot be purchased."
 msgstr "Desculpe, este produto não pode ser comprado."
 
 #. translators: %s: product name
-#: includes/class-wc-cart.php:1215
-#: src/StoreApi/Utilities/CartController.php:265
+#: includes/class-wc-cart.php:1223
+#: src/StoreApi/Utilities/CartController.php:266
 msgid "You cannot add &quot;%s&quot; to the cart because the product is out of stock."
 msgstr "Você não pode adicionar &quot;%s&quot; ao carrinho porque o produto está em falta."
 
@@ -29668,22 +29683,22 @@ msgid_plural "Refunded <span class=\"count\">(%s)</span>"
 msgstr[0] "Reembolsado <span class=\"count\">(%s)</span>"
 msgstr[1] "Reembolsado <span class=\"count\">(%s)</span>"
 
-#: includes/class-wc-install.php:907
+#: includes/class-wc-install.php:908
 msgctxt "Page slug"
 msgid "shop"
 msgstr "loja"
 
-#: includes/class-wc-install.php:912
+#: includes/class-wc-install.php:913
 msgctxt "Page slug"
 msgid "cart"
 msgstr "carrinho"
 
-#: includes/class-wc-install.php:917
+#: includes/class-wc-install.php:918
 msgctxt "Page slug"
 msgid "checkout"
 msgstr "finalizar-compra"
 
-#: includes/class-wc-install.php:922
+#: includes/class-wc-install.php:923
 msgctxt "Page slug"
 msgid "my-account"
 msgstr "minha-conta"
@@ -29768,7 +29783,7 @@ msgstr "Produtos marcados com a tag &ldquo;%s&rdquo;"
 msgid "Please choose a product to add to your cart&hellip;"
 msgstr "Selecione um produto para adicionar ao seu carrinho&hellip;"
 
-#: includes/class-wc-cart.php:1104
+#: includes/class-wc-cart.php:1112
 msgid "Please choose product options&hellip;"
 msgstr "Escolha as opções do produto&hellip;"
 
@@ -29952,23 +29967,23 @@ msgctxt "Admin menu name"
 msgid "Shipping classes"
 msgstr "Classes de entrega"
 
-#: includes/class-wc-install.php:2332
+#: includes/class-wc-install.php:2286
 msgid "Premium support"
 msgstr "Suporte premium"
 
-#: includes/class-wc-install.php:2327
+#: includes/class-wc-install.php:2281
 msgid "API docs"
 msgstr "Documentação da API"
 
-#: includes/class-wc-install.php:2327
+#: includes/class-wc-install.php:2281
 msgid "View WooCommerce API docs"
 msgstr "Ver a documentação da API do WooCommerce"
 
-#: includes/class-wc-install.php:2326
+#: includes/class-wc-install.php:2280
 msgid "View WooCommerce documentation"
 msgstr "Ver a documentação do WooCommerce"
 
-#: includes/class-wc-install.php:2278
+#: includes/class-wc-install.php:2232
 msgid "View WooCommerce settings"
 msgstr "Ver as configurações do WooCommerce"
 
@@ -30011,13 +30026,13 @@ msgid "%s is a required field."
 msgstr "%s é um campo obrigatório."
 
 #. translators: 1: quantity in stock 2: current quantity
-#: includes/class-wc-cart.php:1259
+#: includes/class-wc-cart.php:1267
 msgid "You cannot add that amount to the cart &mdash; we have %1$s in stock and you already have %2$s in your cart."
 msgstr "Você não pode adicionar esta quantidade ao seu carrinho, temos em estoque %1$s e você já tem em seu carrinho %2$s."
 
 #. translators: 1: product name 2: quantity in stock
-#: includes/class-wc-cart.php:1232
-#: src/StoreApi/Utilities/CartController.php:281
+#: includes/class-wc-cart.php:1240
+#: src/StoreApi/Utilities/CartController.php:282
 msgid "You cannot add that amount of &quot;%1$s&quot; to the cart because there is not enough stock (%2$s remaining)."
 msgstr "Você não pode adicionar a quantidade de &quot;%1$s&quot;, porque a quantidade em estoque não é suficiente (restando %2$s)."
 
@@ -30096,7 +30111,7 @@ msgid "We were unable to process your order, please try again."
 msgstr "Não foi possível processar seu pedido, tente novamente."
 
 #. translators: %s: product name
-#: includes/class-wc-cart.php:784
+#: includes/class-wc-cart.php:792
 msgid "Sorry, \"%s\" is not in stock. Please edit your cart and try again. We apologize for any inconvenience caused."
 msgstr "Desculpe, mas \"%s\" está em falta no estoque. Edite seu carrinho de compras e tente novamente. Desculpe-nos por qualquer inconveniente causado."
 
@@ -30156,8 +30171,8 @@ msgstr[0] "%d produto"
 msgstr[1] "%d produtos"
 
 #. translators: %s: Attribute name.
-#: includes/class-wc-cart.php:1146
-#: src/StoreApi/Utilities/CartController.php:1323
+#: includes/class-wc-cart.php:1154
+#: src/StoreApi/Utilities/CartController.php:1324
 msgid "%s is a required field"
 msgid_plural "%s are required fields"
 msgstr[0] "%s é um campo obrigatório"
@@ -30473,7 +30488,7 @@ msgid "Logs"
 msgstr "Logs"
 
 #: includes/admin/meta-boxes/views/html-product-data-variations.php:172
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:106
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:104
 #: includes/admin/settings/views/html-keys-edit.php:131
 #: includes/admin/views/html-admin-settings.php:73
 #: src/Internal/Admin/Logging/Settings.php:436
@@ -30528,8 +30543,8 @@ msgstr "C/L/A"
 #. translators: %s: dimension unit
 #. translators: %s is dimension unit label
 #. translators: %s: length
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:665
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:840
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:640
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:815
 #: includes/admin/views/html-bulk-edit-product.php:212
 #: includes/export/class-wc-product-csv-exporter.php:135
 msgid "Length (%s)"
@@ -30539,8 +30554,8 @@ msgstr "Comprimento (%s)"
 #. translators: %s: dimension unit
 #. translators: %s is dimension unit label
 #. translators: %s: width
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:667
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:842
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:642
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:817
 #: includes/admin/views/html-bulk-edit-product.php:220
 #: includes/export/class-wc-product-csv-exporter.php:137
 msgid "Width (%s)"
@@ -30550,8 +30565,8 @@ msgstr "Largura (%s)"
 #. translators: %s: dimension unit
 #. translators: %s is dimension unit label
 #. translators: %s: Height
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:669
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:844
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:644
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:819
 #: includes/admin/views/html-bulk-edit-product.php:228
 #: includes/export/class-wc-product-csv-exporter.php:139
 msgid "Height (%s)"
@@ -30562,8 +30577,8 @@ msgstr "Altura (%s)"
 msgid "Visibility"
 msgstr "Visibilidade"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:657
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:829
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:632
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:804
 #: includes/admin/views/html-bulk-edit-product.php:288
 #: includes/admin/views/html-quick-edit-product.php:190
 #: includes/export/class-wc-product-csv-exporter.php:127
@@ -30771,8 +30786,8 @@ msgstr "O número máximo de variáveis que seu servidor pode usar em uma única
 msgid "File does not exist"
 msgstr "Arquivo não existe"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:661
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:833
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:636
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:808
 #: includes/admin/views/html-bulk-edit-product.php:363
 #: includes/export/class-wc-product-csv-exporter.php:131
 msgid "Sold individually?"
@@ -30837,7 +30852,7 @@ msgstr "Rede ativada"
 #: includes/rest-api/Controllers/Version1/class-wc-rest-products-v1-controller.php:321
 #: includes/rest-api/Controllers/Version2/class-wc-rest-products-v2-controller.php:450
 #: includes/rest-api/Controllers/Version2/class-wc-rest-products-v2-controller.php:451
-#: includes/wc-product-functions.php:437
+#: includes/wc-product-functions.php:458
 #: assets/client/blocks/order-confirmation-additional-fields.js:1
 #: assets/client/blocks/order-confirmation-billing-address.js:1
 #: assets/client/blocks/order-confirmation-shipping-address.js:1
@@ -31017,8 +31032,8 @@ msgstr "Enviar para todas as localidades que você vende"
 msgid "Ship to specific countries only"
 msgstr "Enviar apenas para países específicos"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:644
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:808
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:619
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:783
 #: includes/export/class-wc-product-csv-exporter.php:113
 msgid "ID"
 msgstr "ID"
@@ -31744,7 +31759,7 @@ msgstr "Peso"
 msgid "Weight in decimal form"
 msgstr "Peso na forma decimal"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:837
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:812
 #: includes/wc-template-functions.php:3820
 #: assets/client/admin/email-editor/index.js:19
 #: assets/client/admin/product-editor/blocks/product-fields/shipping-dimensions/edit.js:1
@@ -32025,7 +32040,7 @@ msgstr "Adicionar taxa"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:328
 #: includes/admin/settings/views/html-admin-page-shipping-classes.php:114
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:166
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:164
 #: templates/myaccount/form-reset-password.php:45
 #: assets/client/admin/chunks/3796.js:1
 #: assets/client/admin/chunks/homescreen.js:1
@@ -32430,8 +32445,8 @@ msgstr "Aumentar preços promocionais (valor fixo ou porcentagem)"
 msgid "Decrease sale prices (fixed amount or percentage)"
 msgstr "Diminuir preços promocionais (valor fixo ou porcentagem)"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:673
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:821
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:648
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:796
 #: includes/admin/meta-boxes/views/html-product-data-general.php:49
 #: includes/admin/views/html-quick-edit-product.php:38
 #: includes/export/class-wc-product-csv-exporter.php:143
@@ -32441,8 +32456,8 @@ msgstr "Diminuir preços promocionais (valor fixo ou porcentagem)"
 msgid "Regular price"
 msgstr "Preço"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:672
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:822
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:647
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:797
 #: includes/admin/meta-boxes/views/html-product-data-general.php:59
 #: includes/admin/views/html-quick-edit-product.php:45
 #: includes/export/class-wc-product-csv-exporter.php:142
@@ -32469,8 +32484,8 @@ msgstr "%s cupons utilizados no total"
 msgid "Save attributes"
 msgstr "Salvar atributos"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:682
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:854
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:657
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:829
 #: includes/admin/meta-boxes/views/html-product-data-linked-products.php:50
 #: includes/export/class-wc-product-csv-exporter.php:153
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:1171
@@ -32760,8 +32775,8 @@ msgstr "SKU do produto."
 msgid "To edit this order change the status back to \"Pending payment\""
 msgstr "Para editar este pedido altere o status de volta para \"pagamento pendente\""
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:680
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:852
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:655
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:827
 #: includes/admin/reports/class-wc-report-stock.php:176
 #: includes/export/class-wc-product-csv-exporter.php:150
 #: assets/client/admin/product-editor/blocks/generic/taxonomy/create-taxonomy-modal.js:1
@@ -32819,8 +32834,8 @@ msgstr "Imposto"
 msgid "Add tax"
 msgstr "Adicionar imposto"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:656
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:828
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:631
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:803
 #: includes/admin/meta-boxes/views/html-order-items.php:460
 #: includes/admin/meta-boxes/views/html-product-data-general.php:220
 #: includes/admin/meta-boxes/views/html-variation-admin.php:414
@@ -32898,8 +32913,8 @@ msgstr "O arquivo baixável %1$s não pode ser utilizado, uma vez que não é ti
 msgid "No shipping class"
 msgstr "Nenhuma classe de entrega"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:676
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:850
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:651
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:825
 #: includes/admin/meta-boxes/views/html-product-data-shipping.php:70
 #: includes/admin/meta-boxes/views/html-variation-admin.php:392
 #: includes/admin/settings/class-wc-settings-shipping.php:444
@@ -32920,7 +32935,7 @@ msgstr "Classes de entrega são utilizadas por certos métodos de entrega para a
 msgid "Shipping name"
 msgstr "Nome da entrega"
 
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:70
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:68
 #: assets/client/admin/chunks/shipping-recommendations.js:1
 msgid "Shipping methods"
 msgstr "Métodos de entrega"
@@ -32955,8 +32970,8 @@ msgstr "Total de entrega"
 msgid "Total sales minus shipping and tax."
 msgstr "Total de vendas menos entrega e impostos."
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:678
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:869
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:653
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:844
 #: includes/admin/meta-boxes/views/html-product-data-general.php:168
 #: includes/admin/meta-boxes/views/html-product-data-variations.php:112
 #: includes/admin/meta-boxes/views/html-variation-admin.php:517
@@ -32982,8 +32997,8 @@ msgstr "Downloads restantes"
 msgid "Enable this option if access is given to a downloadable file upon purchase of a product"
 msgstr "Ative esta opção se será dado acesso a um arquivo baixável após a compra de um produto"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:681
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:853
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:656
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:828
 #: includes/admin/meta-boxes/views/html-product-data-linked-products.php:34
 #: includes/export/class-wc-product-csv-exporter.php:152
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:1138
@@ -33002,7 +33017,7 @@ msgstr "Vendas cruzadas são produtos que você promove no carrinho com base nos
 #: includes/admin/meta-boxes/views/html-variation-admin.php:113
 #: includes/admin/settings/class-wc-settings-emails.php:590
 #: includes/admin/settings/class-wc-settings-payment-gateways.php:140
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:82
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:80
 #: includes/admin/views/html-admin-page-status-report.php:795
 #: src/Internal/ProductDownloads/ApprovedDirectories/Admin/Table.php:202
 #: assets/client/blocks/wc-shipping-method-pickup-location.js:238
@@ -33039,8 +33054,8 @@ msgstr "Adicionar metadado"
 msgid "All"
 msgstr "Todas"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:671
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:884
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:646
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:859
 #: includes/admin/meta-boxes/views/html-product-data-advanced.php:14
 #: includes/export/class-wc-product-csv-exporter.php:141
 msgid "Purchase note"
@@ -33054,7 +33069,7 @@ msgstr "Pagamentos offline"
 msgid "Enable cash on delivery"
 msgstr "Ativar pagamento na entrega"
 
-#: includes/wc-product-functions.php:1083
+#: includes/wc-product-functions.php:1104
 msgid "Allow"
 msgstr "Permitir"
 
@@ -33197,7 +33212,7 @@ msgstr "Webhook criado com sucesso."
 msgid "Webhooks"
 msgstr "Webhooks"
 
-#: includes/class-wc-install.php:2326
+#: includes/class-wc-install.php:2280
 msgid "Docs"
 msgstr "Documentação"
 
@@ -33491,8 +33506,8 @@ msgstr "URL do produto"
 msgid "Enter the external URL to the product."
 msgstr "Informe o URL externo para o produto."
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:685
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:860
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:660
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:835
 #: includes/admin/meta-boxes/views/html-product-data-general.php:33
 #: includes/export/class-wc-product-csv-exporter.php:155
 msgid "Button text"
@@ -33544,7 +33559,7 @@ msgstr "Tributável"
 #: includes/admin/settings/views/html-settings-tax.php:24
 #: includes/admin/views/html-bulk-edit-product.php:127
 #: includes/admin/views/html-quick-edit-product.php:88
-#: includes/wc-product-functions.php:1046
+#: includes/wc-product-functions.php:1067
 msgid "Standard"
 msgstr "Padrão"
 
@@ -33558,11 +33573,11 @@ msgstr "Gerenciar estoque?"
 msgid "Stock quantity. If this is a variable product this value will be used to control stock for all variations, unless you define stock at variation level."
 msgstr "Estoque disponível. Se este produto contiver variações, o valor será usado para controlar o estoque de todas as variações, a menos que você defina o estoque no nível da variação."
 
-#: includes/wc-product-functions.php:1081
+#: includes/wc-product-functions.php:1102
 msgid "Do not allow"
 msgstr "Não permitir"
 
-#: includes/wc-product-functions.php:1082
+#: includes/wc-product-functions.php:1103
 msgid "Allow, but notify customer"
 msgstr "Permitir, mas informar o cliente"
 
@@ -34229,8 +34244,8 @@ msgstr[1] "%s cupons restaurados da lixeira."
 msgid "Image"
 msgstr "Imagem"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:674
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:847
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:649
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:822
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:158
 #: includes/admin/reports/class-wc-report-sales-by-category.php:199
 #: includes/class-wc-post-types.php:97
@@ -34258,7 +34273,7 @@ msgid "Coupon amount"
 msgstr "Valor do cupom"
 
 #: includes/admin/class-wc-admin-reports.php:143
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:658
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:633
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:151
 #: includes/admin/meta-boxes/views/html-product-data-variations.php:99
 #: includes/export/class-wc-product-csv-exporter.php:128
@@ -34277,7 +34292,7 @@ msgstr "Valor do cupom"
 msgid "Stock"
 msgstr "Estoque"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:819
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:794
 #: includes/admin/importers/mappings/generic.php:23
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:154
 #: includes/admin/views/html-bulk-edit-product.php:26
@@ -34483,21 +34498,21 @@ msgstr "Concluído"
 msgid "Order status changed by bulk edit:"
 msgstr "Status do pedido alterado por edição em massa:"
 
-#: includes/wc-product-functions.php:715
+#: includes/wc-product-functions.php:736
 #: src/Admin/Features/ProductBlockEditor/Init.php:297
 #: assets/client/admin/chunks/6262.js:1
 msgid "Grouped product"
 msgstr "Grupo de produto"
 
-#: includes/wc-product-functions.php:716
+#: includes/wc-product-functions.php:737
 msgid "External/Affiliate product"
 msgstr "Produto externo/afiliado"
 
-#: includes/wc-product-functions.php:717 assets/client/admin/chunks/6262.js:1
+#: includes/wc-product-functions.php:738 assets/client/admin/chunks/6262.js:1
 msgid "Variable product"
 msgstr "Produto variável"
 
-#: includes/wc-product-functions.php:714
+#: includes/wc-product-functions.php:735
 msgid "Simple product"
 msgstr "Produto simples"
 
@@ -34729,7 +34744,7 @@ msgstr "Selecione nenhum"
 
 #: includes/class-wc-privacy.php:124
 #: src/Admin/Features/Blueprint/Exporters/ExportWCPaymentGateways.php:77
-#: src/Internal/Admin/Settings/PaymentsController.php:72
+#: src/Internal/Admin/Settings/PaymentsController.php:78
 #: src/Internal/Admin/WcPayWelcomePage.php:94
 #: assets/client/admin/chunks/homescreen.js:1
 msgid "Payments"
@@ -34748,7 +34763,7 @@ msgstr "WooCommerce &rsaquo; Assistente de configuração"
 #: includes/admin/class-wc-admin-setup-wizard.php:1818
 #: includes/admin/class-wc-admin-setup-wizard.php:1953
 #: includes/admin/importers/views/html-product-csv-import-form.php:115
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:272
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:270
 #: assets/client/admin/chunks/3796.js:1
 #: assets/client/admin/chunks/core-profiler.js:1
 #: assets/client/admin/chunks/customize-store.js:1
@@ -34834,17 +34849,17 @@ msgstr "yd"
 msgid "State"
 msgstr "Estado"
 
-#: includes/class-wc-install.php:908
+#: includes/class-wc-install.php:909
 msgctxt "Page title"
 msgid "Shop"
 msgstr "Loja"
 
-#: includes/class-wc-install.php:913
+#: includes/class-wc-install.php:914
 msgctxt "Page title"
 msgid "Cart"
 msgstr "Carrinho"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:675
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:650
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:159
 #: includes/export/class-wc-product-csv-exporter.php:145
 #: assets/client/admin/product-editor/blocks/product-fields/tag/edit.js:1
@@ -34865,7 +34880,7 @@ msgstr "Separador de milhar."
 msgid "Currency position."
 msgstr "Posição da moeda."
 
-#: includes/class-wc-install.php:923
+#: includes/class-wc-install.php:924
 msgctxt "Page title"
 msgid "My account"
 msgstr "Minha conta"
@@ -34953,13 +34968,13 @@ msgstr "Tag de produto"
 #: includes/admin/views/html-bulk-edit-product.php:260
 #: includes/admin/views/html-quick-edit-product.php:164
 #: includes/customizer/class-wc-shop-customizer.php:766
-#: includes/wc-product-functions.php:1032 assets/client/admin/chunks/6370.js:2
+#: includes/wc-product-functions.php:1053 assets/client/admin/chunks/6370.js:2
 #: assets/client/admin/product-editor/index.js:2
 msgid "Hidden"
 msgstr "Oculto"
 
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:646
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:810
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:621
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:785
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:147
 #: includes/admin/meta-boxes/views/html-product-data-inventory.php:22
 #: includes/admin/meta-boxes/views/html-variation-admin.php:88
@@ -34982,7 +34997,7 @@ msgstr "SKU"
 msgid "Custom field updated."
 msgstr "Campo personalizado atualizado."
 
-#: includes/class-wc-install.php:918
+#: includes/class-wc-install.php:919
 msgctxt "Page title"
 msgid "Checkout"
 msgstr "Finalização de compra"
@@ -35090,13 +35105,13 @@ msgid "Billing"
 msgstr "Cobrança"
 
 #: includes/admin/class-wc-admin-api-keys-table-list.php:48
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:652
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:817
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:627
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:792
 #: includes/admin/list-tables/class-wc-admin-list-table-coupons.php:85
 #: includes/admin/meta-boxes/views/html-variation-admin.php:442
 #: includes/admin/settings/class-wc-settings-payment-gateways.php:141
 #: includes/admin/settings/class-wc-settings-shipping.php:446
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:83
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:81
 #: includes/admin/settings/views/html-keys-edit.php:28
 #: includes/export/class-wc-product-csv-exporter.php:122
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:118
@@ -35278,8 +35293,8 @@ msgstr "Você esta certo que deseja excluir este reembolso? Esta operação não
 #: includes/admin/class-wc-admin-attributes.php:426
 #: includes/admin/class-wc-admin-attributes.php:479
 #: includes/admin/class-wc-admin-webhooks-table-list.php:50
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:647
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:812
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:622
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:787
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:144
 #: includes/admin/meta-boxes/views/html-product-attribute-inner.php:17
 #: includes/admin/meta-boxes/views/html-product-data-general.php:110
@@ -35381,8 +35396,8 @@ msgstr "Slug"
 #: includes/admin/class-wc-admin-attributes.php:243
 #: includes/admin/class-wc-admin-attributes.php:311
 #: includes/admin/class-wc-admin-attributes.php:454
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:645
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:809
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:620
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:784
 #: includes/export/class-wc-product-csv-exporter.php:114
 #: src/Admin/API/Reports/Coupons/Controller.php:227
 #: assets/client/admin/chunks/analytics-report-coupons.js:1
@@ -35435,7 +35450,7 @@ msgid "Update"
 msgstr "Atualizar"
 
 #: includes/admin/class-wc-admin-menus.php:105
-#: includes/admin/importers/class-wc-product-csv-importer-controller.php:874
+#: includes/admin/importers/class-wc-product-csv-importer-controller.php:849
 #: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:103
 #: includes/admin/views/html-admin-page-product-export.php:41
 #: includes/react-admin/connect-existing-pages.php:298
@@ -35499,7 +35514,7 @@ msgstr[1] "<strong>%s pedidos</strong> em espera"
 #: includes/admin/reports/class-wc-report-customer-list.php:163
 #: includes/admin/reports/class-wc-report-stock.php:137
 #: includes/admin/settings/views/html-admin-page-shipping-classes.php:162
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:129
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:127
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:62
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:99
 #: includes/class-wc-post-types.php:332 includes/class-wc-post-types.php:397
@@ -35526,7 +35541,7 @@ msgstr "Editar"
 #: includes/admin/meta-boxes/views/html-product-download.php:29
 #: includes/admin/meta-boxes/views/html-product-variation-download.php:29
 #: includes/admin/settings/views/html-admin-page-shipping-classes.php:162
-#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:129
+#: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:127
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:99
 #: includes/wc-account-functions.php:395
 #: packages/action-scheduler/classes/ActionScheduler_ListTable.php:92
@@ -35626,7 +35641,7 @@ msgstr "Sobre o WooCommerce"
 #. translators: accessibility text for the settings landmark region.
 #: includes/admin/class-wc-admin-menus.php:126
 #: includes/admin/views/html-admin-page-status-report.php:693
-#: includes/class-wc-install.php:2278
+#: includes/class-wc-install.php:2232
 #: includes/react-admin/connect-existing-pages.php:35
 #: src/Admin/Features/Blueprint/RestApi.php:238
 #: src/Internal/Admin/Analytics.php:266
@@ -35638,6 +35653,7 @@ msgstr "Sobre o WooCommerce"
 #: assets/client/admin/email-editor/index.js:9
 #: assets/client/admin/product-editor/index.js:2
 #: assets/client/admin/settings-editor/index.js:2
+#: assets/client/admin/wp-admin-scripts/settings-embed.js:2
 #: assets/client/blocks/accordion-group.js:1
 #: assets/client/blocks/accordion-header.js:1
 #: assets/client/blocks/accordion-item.js:1
@@ -35694,7 +35710,7 @@ msgstr "Padrão"
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:319
 #: includes/admin/reports/class-wc-report-stock.php:118
 #: includes/wc-formatting-functions.php:1256
-#: includes/wc-product-functions.php:1066
+#: includes/wc-product-functions.php:1087
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/ProductVariationTemplate.php:396
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:862
 #: assets/client/admin/chunks/analytics-report-stock.js:1
@@ -35710,7 +35726,7 @@ msgstr "Em estoque"
 #: includes/admin/class-wc-admin-reports.php:152
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:321
 #: includes/admin/reports/class-wc-report-stock.php:120
-#: includes/wc-product-functions.php:1067
+#: includes/wc-product-functions.php:1088
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/ProductVariationTemplate.php:400
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:866
 #: assets/client/admin/chunks/analytics-report-stock.js:1
@@ -35774,7 +35790,7 @@ msgid "Orders"
 msgstr "Pedidos"
 
 #: includes/admin/class-wc-admin-permalink-settings.php:74
-#: includes/wc-core-functions.php:2275 includes/wc-update-functions.php:84
+#: includes/wc-core-functions.php:2289 includes/wc-update-functions.php:84
 msgctxt "slug"
 msgid "product-category"
 msgstr "categoria-produto"
@@ -35782,7 +35798,7 @@ msgstr "categoria-produto"
 #: includes/admin/class-wc-admin-brands.php:660
 #: includes/admin/class-wc-admin-permalink-settings.php:193
 #: includes/admin/class-wc-admin-permalink-settings.php:196
-#: includes/wc-core-functions.php:2274 includes/wc-update-functions.php:94
+#: includes/wc-core-functions.php:2288 includes/wc-update-functions.php:94
 msgctxt "slug"
 msgid "product"
 msgstr "produto"
@@ -35864,7 +35880,7 @@ msgid "Backordered"
 msgstr "Encomendado"
 
 #: includes/abstracts/abstract-wc-order.php:2266
-#: includes/class-wc-cart.php:1649 includes/class-wc-product-grouped.php:122
+#: includes/class-wc-cart.php:1697 includes/class-wc-product-grouped.php:122
 msgid "Free!"
 msgstr "Grátis!"
 
@@ -35975,7 +35991,7 @@ msgid "Order status changed from %1$s to %2$s."
 msgstr "Status do pedido alterado de %1$s para %2$s."
 
 #: includes/admin/class-wc-admin-permalink-settings.php:83
-#: includes/wc-core-functions.php:2276 includes/wc-update-functions.php:85
+#: includes/wc-core-functions.php:2290 includes/wc-update-functions.php:85
 msgctxt "slug"
 msgid "product-tag"
 msgstr "produto-tag"

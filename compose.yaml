@@ -12,10 +12,6 @@ services:
       - "443:443/udp" # HTTP/3
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: ${DB_USER:-wordpress}
-      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-wordpress}
-      WORDPRESS_DB_NAME: ${DB_NAME:-wordpress}
       WORDPRESS_DEBUG: ${WP_DEBUG:-true}
       WORDPRESS_TABLE_PREFIX: ${DB_TABLE_PREFIX:-wp_}
       CACHE_LOC: ${CACHE_LOC:-/var/www/html/wp-content/cache}
@@ -26,7 +22,7 @@ services:
       BYPASS_PATH_PREFIXES: ${BYPASS_PATH_PREFIXES:-/wp-admin,/wp-content,/wp-includes,/wp-json,/feed}
       CACHE_RESPONSE_CODES: ${CACHE_RESPONSE_CODES:-200,404,405}
       CADDY_GLOBAL_OPTIONS: |
-        email myemail@sample.com
+        email lfelipeapo@gmail.com
         auto_https disable_redirects
         debug
       WORDPRESS_CONFIG_EXTRA: |
@@ -35,37 +31,11 @@ services:
     volumes:
       - ./data/wp-content:/var/www/html/wp-content
       - ./data/wp-content/themes/thabatta-adv-theme:/var/www/html/wp-content/themes/thabatta-adv-theme
+      - ./data/sqlite:/var/www/html/wp-content/database 
       - caddy_data:/data
       - caddy_config:/config
-    depends_on:
-      - db
     tty: true
 
-  db:
-    image: mysql:5.7
-    restart: always
-    ports:
-      - "${LOCAL_DB_PORT:-3311}:3306"
-    environment:
-      MYSQL_DATABASE: ${DB_NAME:-wordpress}
-      MYSQL_USER: ${DB_USER:-wordpress}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-wordpress}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
-    volumes:
-      - db_data:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - "${LOCAL_PHPMYADMIN_PORT:-8086}:80"
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
-    depends_on:
-      - db
-
 volumes:
-  db_data:
   caddy_data:
   caddy_config:

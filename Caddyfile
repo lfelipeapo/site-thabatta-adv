@@ -27,6 +27,14 @@ dev.local {
     X-Content-Type-Options "nosniff"
     X-XSS-Protection "1; mode=block"
     Referrer-Policy "no-referrer-when-downgrade"
+
+    # ---------- ADICIONADO PARA REST API ----------
+    +Access-Control-Allow-Headers "Authorization, Content-Type"
+    +Access-Control-Expose-Headers "Authorization"
+    # Para garantir que Authorization passe SEMPRE
+    +Authorization *
+    # (opcional, só se for usar REST externamente)
+    Access-Control-Allow-Origin *
   }
 
   respond /xmlrpc.php 403
@@ -66,4 +74,5 @@ dev.local {
   {$CADDY_SERVER_EXTRA_DIRECTIVES}
 
   php_server
+  file_server
 }
