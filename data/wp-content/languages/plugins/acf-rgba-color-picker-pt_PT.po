@@ -1,0 +1,109 @@
+# Translation of Plugins - ACF RGBA Color Picker - Stable (latest release) in Portuguese (Portugal)
+# This file is distributed under the same license as the Plugins - ACF RGBA Color Picker - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-08-24 09:37:49+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: pt\n"
+"Project-Id-Version: Plugins - ACF RGBA Color Picker - Stable (latest release)\n"
+
+#: acf-rgba-color-picker.php:181
+msgid "Color value"
+msgstr "Valor da cor"
+
+#: acf-rgba-color-picker.php:179
+msgid "Select default color"
+msgstr "Seleccionar cor por omissão"
+
+#: acf-rgba-color-picker.php:177
+msgid "Clear color"
+msgstr "Limpar cor"
+
+#: fields/acf-rgba-color-picker-v5.php:187
+msgid "Enter color codes separated by semicolons. You can use HEX or RGBA color codes and can also mix them (e.g. #2ecc71; rgba(50,40,30,0.5).<br><br>This can (and is maybe) overwritten by the \"acf/acfrb_color_picker/palette\" filter."
+msgstr "Insira códigos de cor separados por ponto e vírgula. Pode usar códigos de cor HEX ou RGBA e também pode misturá-los (por exemplo: #2ecc71; rgba(50,40,30,0.5).<br><br>Isto poderá ser substituído pelo filtro \"acf/acfrb_color_picker/palette\"."
+
+#. Author URI of the plugin
+#: acf-rgba-color-picker.php
+msgid "https://dreihochzwo.de"
+msgstr "https://dreihochzwo.de"
+
+#. Author of the plugin
+#: acf-rgba-color-picker.php
+msgid "Thomas Meyer"
+msgstr "Thomas Meyer"
+
+#. Description of the plugin
+#: acf-rgba-color-picker.php
+msgid "Adds an Advanced Custom Fields field for an extended color picker with transparency option."
+msgstr "Adicione ao Advanced Custom Fields um campo de selecção avançada de cor com opção de transparência."
+
+#. Plugin URI of the plugin
+#: acf-rgba-color-picker.php
+msgid "https://wordpress.org/plugins/acf-rgba-color-picker/"
+msgstr "https://wordpress.org/plugins/acf-rgba-color-picker/"
+
+#. Plugin Name of the plugin
+#: acf-rgba-color-picker.php
+msgid "ACF RGBA Color Picker"
+msgstr "ACF RGBA Color Picker"
+
+#: fields/acf-rgba-color-picker-v5.php:195
+msgid "Don't show a color palette in the color picker"
+msgstr "Não mostrar a paleta de cores na selecção de cor"
+
+#: fields/acf-rgba-color-picker-v5.php:194
+msgid "Hide Color Palette"
+msgstr "Esconder paleta de cores"
+
+#: fields/acf-rgba-color-picker-v5.php:186
+msgid "Color Palette"
+msgstr "Paleta de cores"
+
+#: fields/acf-rgba-color-picker-v5.php:177
+msgid "Default Value"
+msgstr "Valor por omissão"
+
+#: fields/acf-rgba-color-picker-v5.php:87
+msgid "Current Color"
+msgstr "Cor actual"
+
+#: acf-rgba-color-picker.php:180 fields/acf-rgba-color-picker-v5.php:86
+msgid "Select Color"
+msgstr "Seleccionar cor"
+
+#: acf-rgba-color-picker.php:178 fields/acf-rgba-color-picker-v5.php:85
+msgid "Default"
+msgstr "Por omissão"
+
+#: acf-rgba-color-picker.php:176 fields/acf-rgba-color-picker-v5.php:84
+msgid "Clear"
+msgstr "Limpar"
+
+#: fields/acf-rgba-color-picker-v5.php:36
+msgid "RGBA Color Picker"
+msgstr "Selecção de cor RGBA"
+
+#: acf-rgba-color-picker.php:165
+msgid "Please consider making a small donation!"
+msgstr "Por favor, considere fazer um pequeno donativo!"
+
+#: acf-rgba-color-picker.php:156
+msgid "Documentation"
+msgstr "Documentação"
+
+#: acf-rgba-color-picker.php:147
+msgid "Thank you for using my plugins!"
+msgstr "Obrigado por utilizar os meus plugins!"
+
+#: acf-rgba-color-picker.php:127
+msgid "Plugins by dreihochzwo"
+msgstr "Plugins de dreihochzwo"
+
+#: acf-rgba-color-picker.php:91
+msgid "%1$s requires ACF PRO v%2$s or higher to be installed and activated."
+msgstr "O %1$s requer o ACF PRO v%2$s ou superior, instalado e activado."
