@@ -5,74 +5,100 @@ set -e
 export WP_CLI_ALLOW_ROOT=1
 WP_CMD="wp --allow-root --skip-plugins --skip-themes --path=/var/www/html --url=dev.local"
 
-echo "⏳ Aguardando o banco de dados em ${WORDPRESS_DB_HOST:-db}:3306..."
+# Função para verificar se o WordPress está funcionando corretamente
+check_wp_installation() {
+    if ! $WP_CMD core is-installed >/dev/null 2>&1; then
+        return 1
+    fi
+    
+    # Verifica se o banco de dados está acessível
+    if ! $WP_CMD db check >/dev/null 2>&1; then
+        return 1
+    fi
+    
+    # Verifica se as tabelas principais existem
+    if ! $WP_CMD db tables | grep -q "wp_posts"; then
+        return 1
+    fi
+    
+    return 0
+}
 
-# Extrai host e porta do DB
-if [ -n "$WORDPRESS_DB_HOST" ]; then
-  if echo "$WORDPRESS_DB_HOST" | grep -q ":"; then
-    host=$(echo "$WORDPRESS_DB_HOST" | cut -d: -f1)
-    port=$(echo "$WORDPRESS_DB_HOST" | cut -d: -f2)
-  else
-    host="$WORDPRESS_DB_HOST"
-    port=3306
-  fi
-
-  # Espera o banco de dados ficar acessível
-  until nc -z "$host" "$port"; do
-    echo "⏳ Aguardando $host:$port..."
-    sleep 5
-  done
+# Configuração do SQLite
+SQLITE_DROPIN="/var/www/html/wp-content/db.php"
+if [ ! -f "$SQLITE_DROPIN" ]; then
+    echo "🔽 Baixando suporte automático SQLite (plugin oficial WordPress)..."
+    curl -fsSL -o /tmp/sqlite.zip https://downloads.wordpress.org/plugin/sqlite-database-integration.latest-stable.zip
+    unzip -j /tmp/sqlite.zip "sqlite-database-integration/db.copy" -d /var/www/html/wp-content/
+    mv /var/www/html/wp-content/db.copy /var/www/html/wp-content/db.php
+    rm /tmp/sqlite.zip
 fi
 
-echo "✅ Banco de dados disponível em $host:$port"
+mkdir -p /var/www/html/wp-content/database
+chmod 777 /var/www/html/wp-content/database
 
-# Verifica se o WordPress multisite está instalado
-if ! $WP_CMD core is-installed >/dev/null 2>&1; then
-  echo "⚠️ WordPress ainda não está instalado. Instalando em modo multisite..."
+# Verifica se o WordPress está instalado e funcionando
+if ! check_wp_installation; then
+    echo "⚠️ WordPress não está instalado ou não está funcionando corretamente. Instalando em modo multisite..."
+    
+    # Remove o banco de dados SQLite se existir
+    rm -f /var/www/html/wp-content/database/.ht.sqlite
+    
+    $WP_CMD core multisite-install \
+        --url="dev.local" \
+        --title="Thabatta Apolinário Advocacia" \
+        --admin_user="admin" \
+        --admin_password="2212" \
+        --admin_email="lfelipeapo@gmail.com" \
+        --skip-email
 
-  $WP_CMD core multisite-install \
-    --url="dev.local" \
-    --title="Thabatta Apolinário Advocacia" \
-    --admin_user="admin" \
-    --admin_password="2212" \
-    --admin_email="lfelipeapo@gmail.com" \
-    --skip-email
-
-  echo "✅ WordPress multisite instalado com sucesso!"
+    echo "✅ WordPress multisite instalado com sucesso!"
 else
-  echo "✅ WordPress já está instalado, seguindo com os plugins e tema..."
+    echo "✅ WordPress já está instalado e funcionando, verificando plugins e tema..."
 fi
 
 # Plugins essenciais
 PLUGINS=(
-  jetpack
-  jetpack-boost
-  jetpack-protect
-  classic-editor
-  custom-post-type-ui
-  advanced-custom-fields
-  acf-to-rest-api
-  acf-extended
-  advanced-custom-fields-table-field
-  acf-quickedit-fields
-  acf-better-search
-  advanced-forms
-  navz-photo-gallery
-  admin-columns-for-acf-fields
-  acf-rgba-color-picker
-  pages-with-category-and-tag
-  jwt-auth
-  woocommerce
+    jetpack
+    jetpack-boost
+    jetpack-protect
+    classic-editor
+    custom-post-type-ui
+    advanced-custom-fields
+    acf-to-rest-api
+    acf-extended
+    advanced-custom-fields-table-field
+    acf-quickedit-fields
+    acf-better-search
+    advanced-forms
+    navz-photo-gallery
+    admin-columns-for-acf-fields
+    acf-rgba-color-picker
+    pages-with-category-and-tag
+    jwt-auth
+    woocommerce
 )
 
 echo "🔌 Instalando e ativando plugins..."
 for plugin in "${PLUGINS[@]}"; do
-  $WP_CMD plugin install "$plugin" --activate || echo "⚠️ Erro ao instalar plugin: $plugin"
+    if ! $WP_CMD plugin is-installed "$plugin" >/dev/null 2>&1; then
+        echo "📦 Instalando plugin: $plugin"
+        $WP_CMD plugin install "$plugin" --activate || echo "⚠️ Erro ao instalar plugin: $plugin"
+    elif ! $WP_CMD plugin is-active "$plugin" >/dev/null 2>&1; then
+        echo "🔄 Ativando plugin: $plugin"
+        $WP_CMD plugin activate "$plugin" || echo "⚠️ Erro ao ativar plugin: $plugin"
+    else
+        echo "✅ Plugin já instalado e ativo: $plugin"
+    fi
 done
 
-# Ativar tema
-echo "🎨 Ativando o tema thabatta-adv-theme..."
-$WP_CMD theme activate thabatta-adv-theme
+# Verifica e ativa o tema
+if ! $WP_CMD theme is-active thabatta-adv-theme >/dev/null 2>&1; then
+    echo "🎨 Ativando o tema thabatta-adv-theme..."
+    $WP_CMD theme activate thabatta-adv-theme || echo "⚠️ Erro ao ativar o tema"
+else
+    echo "✅ Tema thabatta-adv-theme já está ativo"
+fi
 
 # Executar entrypoint padrão do container
 echo "🚀 Iniciando WordPress com entrypoint oficial..."
