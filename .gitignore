@@ -27,3 +27,4 @@ data/wp-content/cache/sidekick-cache/br::+/*
 data/wp-content/cache/sidekick-cache/br::+/0
 data/wp-content/debug.log
 data/wp-content/uploads/wc-logs/*
+data/sqlite/.ht.sqlite
