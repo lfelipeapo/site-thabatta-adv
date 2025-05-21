@@ -96,15 +96,18 @@ class ApiManager
     }
     
     /**
-     * Registra middleware para a API
+     * Registra middlewares para a API
      * 
-     * @param string $name Nome do middleware
-     * @param callable|string $callback Callback do middleware
+     * @param array $middlewares Array de classes de middleware
      * @return ApiManager
      */
-    public function middleware($name, $callback)
+    public function middleware(array $middlewares)
     {
-        $this->middleware[$name] = $callback;
+        foreach ($middlewares as $middleware) {
+            if (class_exists($middleware)) {
+                $this->middleware[] = $middleware;
+            }
+        }
         return $this;
     }
     
@@ -254,35 +257,23 @@ class ApiManager
     }
     
     /**
-     * Manipula a requisição da API
+     * Manipula a requisição
      * 
      * @param \WP_REST_Request $request Requisição REST
      * @return mixed
      */
     public function handleRequest($request)
     {
+        // Executa os middlewares globais
+        foreach ($this->middleware as $middleware) {
+            $result = $this->runMiddleware($middleware, $request);
+            if ($result !== true) {
+                return $result;
+            }
+        }
+        
         // Obtém o callback da rota
-        $callback = $request->get_attributes()['wpframework_callback'] ?? null;
-        
-        // Obtém o middleware da rota
-        $middleware = $request->get_attributes()['wpframework_middleware'] ?? [];
-        
-        // Executa o middleware
-        $continue = $this->runMiddleware($middleware, $request);
-        
-        // Se o middleware retornar false, interrompe a execução
-        if ($continue === false) {
-            return new \WP_Error(
-                'rest_forbidden',
-                __('Acesso negado pelo middleware.', 'wpframework'),
-                ['status' => 403]
-            );
-        }
-        
-        // Se o middleware retornar uma resposta, retorna-a
-        if ($continue instanceof \WP_REST_Response || $continue instanceof \WP_Error) {
-            return $continue;
-        }
+        $callback = $request->get_route()['wpframework_callback'];
         
         // Executa o callback
         if (is_callable($callback)) {
@@ -294,7 +285,7 @@ class ApiManager
             
             // Adiciona o namespace se não existir
             if (strpos($controller, '\\') === false) {
-                $controller = '\\WPFramework\\Api\\' . $controller;
+                $controller = '\\WPFramework\\Controllers\\' . $controller;
             }
             
             // Verifica se o controller existe
@@ -310,74 +301,25 @@ class ApiManager
             }
         }
         
-        // Callback inválido
-        return new \WP_Error(
-            'rest_invalid_handler',
-            __('O handler para a rota é inválido.', 'wpframework'),
-            ['status' => 500]
-        );
+        // Se não encontrou o callback, retorna erro
+        return self::error('Rota não encontrada', 404, 'not_found');
     }
     
     /**
-     * Executa o middleware
+     * Executa um middleware
      * 
-     * @param array $middleware Middleware a ser executado
+     * @param string $middleware Classe do middleware
      * @param \WP_REST_Request $request Requisição REST
-     * @return mixed
+     * @return bool|\WP_REST_Response|\WP_Error
      */
     private function runMiddleware($middleware, $request)
     {
-        // Se não houver middleware, continua a execução
-        if (empty($middleware)) {
-            return true;
-        }
-        
-        // Executa cada middleware
-        foreach ($middleware as $name) {
-            // Verifica se o middleware existe
-            if (!isset($this->middleware[$name])) {
-                continue;
-            }
-            
-            // Obtém o callback do middleware
-            $callback = $this->middleware[$name];
-            
-            // Executa o callback
-            if (is_callable($callback)) {
-                // Callback é uma função anônima
-                $result = call_user_func($callback, $request);
-                
-                // Se o middleware retornar false, interrompe a execução
-                if ($result === false) {
-                    return false;
-                }
-                
-                // Se o middleware retornar uma resposta, retorna-a
-                if ($result instanceof \WP_REST_Response || $result instanceof \WP_Error) {
-                    return $result;
-                }
-            } elseif (is_string($callback) && class_exists($callback)) {
-                // Callback é uma classe
-                $instance = new $callback();
-                
-                // Verifica se o método handle existe
-                if (method_exists($instance, 'handle')) {
-                    // Executa o método
-                    $result = call_user_func_array([$instance, 'handle'], [$request]);
-                    
-                    // Se o middleware retornar false, interrompe a execução
-                    if ($result === false) {
-                        return false;
-                    }
-                    
-                    // Se o middleware retornar uma resposta, retorna-a
-                    if ($result instanceof \WP_REST_Response || $result instanceof \WP_Error) {
-                        return $result;
-                    }
-                }
+        if (class_exists($middleware)) {
+            $instance = new $middleware();
+            if (method_exists($instance, 'handle')) {
+                return $instance->handle($request);
             }
         }
-        
         return true;
     }
     

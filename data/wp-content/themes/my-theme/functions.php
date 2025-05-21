@@ -29,5 +29,39 @@ if (file_exists(WPFRAMEWORK_DIR . '/vendor/autoload.php')) {
     new \WPFramework\Core\Autoloader();
 }
 
-// Inicializa o framework
-\WPFramework\Core\Bootstrap::init();
+// Inicializa a compatibilidade com plugins
+\WPFramework\Core\PluginCompatibility::init();
+
+// Adiciona suporte a recursos do tema
+function wpframework_setup() {
+    // Adiciona suporte a título
+    add_theme_support('title-tag');
+    
+    // Adiciona suporte a miniaturas
+    add_theme_support('post-thumbnails');
+    
+    // Adiciona suporte a HTML5
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+    ));
+
+    // Registra o diretório do tema
+    register_theme_directory(WPFRAMEWORK_DIR);
+}
+add_action('after_setup_theme', 'wpframework_setup', 1);
+
+// Carrega as traduções do tema
+function wpframework_load_theme_textdomain() {
+    load_theme_textdomain('wpframework', WPFRAMEWORK_DIR . '/languages');
+}
+add_action('init', 'wpframework_load_theme_textdomain', 1);
+
+// Inicializa o framework após o WordPress estar completamente carregado
+function wpframework_init() {
+    \WPFramework\Core\Bootstrap::init();
+}
+add_action('init', 'wpframework_init', 20);

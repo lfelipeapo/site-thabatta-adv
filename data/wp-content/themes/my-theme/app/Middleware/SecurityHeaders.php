@@ -15,7 +15,7 @@ class SecurityHeaders extends BaseMiddleware
      * Manipula a requisição
      * 
      * @param \WP_REST_Request $request Requisição REST
-     * @return bool|\WP_REST_Response|\WP_Error
+     * @return bool
      */
     public function handle($request)
     {

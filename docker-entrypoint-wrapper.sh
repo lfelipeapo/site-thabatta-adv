@@ -34,6 +34,7 @@ if [ ! -f "$SQLITE_DROPIN" ]; then
     rm /tmp/sqlite.zip
 fi
 
+# Criar diretório do banco de dados
 mkdir -p /var/www/html/wp-content/database
 chmod 777 /var/www/html/wp-content/database
 
@@ -42,7 +43,7 @@ if ! check_wp_installation; then
     echo "⚠️ WordPress não está instalado ou não está funcionando corretamente. Instalando em modo multisite..."
     
     # Remove o banco de dados SQLite se existir
-    rm -f /var/www/html/wp-content/database/.ht.sqlite
+    rm -f /var/www/html/wp-content/database/database.sqlite
     
     $WP_CMD core multisite-install \
         --url="dev.local" \

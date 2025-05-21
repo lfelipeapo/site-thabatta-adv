@@ -444,7 +444,7 @@ class GlobalHelpers
      * @param string $post Nome do post
      * @return bool
      */
-    public static function isPost($post)
+    public static function isSinglePost($post)
     {
         return is_single($post);
     }

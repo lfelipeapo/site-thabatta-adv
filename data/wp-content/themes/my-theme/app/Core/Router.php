@@ -26,6 +26,13 @@ class Router
     private $routes = [];
     
     /**
+     * Array de middlewares globais
+     * 
+     * @var array
+     */
+    private $middlewares = [];
+    
+    /**
      * Rota atual
      * 
      * @var array|null
@@ -286,6 +293,11 @@ class Router
                 $this->verifyNonce();
             }
             
+            // Executa os middlewares
+            if (!$this->executeMiddlewares()) {
+                return;
+            }
+            
             // Executa o callback
             $this->executeRouteCallback();
             
@@ -489,5 +501,37 @@ class Router
     public function getNonceField()
     {
         return wp_nonce_field('wpframework_route', '_wpnonce', true, false);
+    }
+    
+    /**
+     * Registra middlewares globais
+     * 
+     * @param array $middlewares Array de classes de middleware
+     * @return Router
+     */
+    public function middleware(array $middlewares)
+    {
+        $this->middlewares = array_merge($this->middlewares, $middlewares);
+        return $this;
+    }
+    
+    /**
+     * Executa os middlewares registrados
+     * 
+     * @return bool
+     */
+    private function executeMiddlewares()
+    {
+        foreach ($this->middlewares as $middleware) {
+            if (class_exists($middleware)) {
+                $instance = new $middleware();
+                if (method_exists($instance, 'handle')) {
+                    if (!$instance->handle()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

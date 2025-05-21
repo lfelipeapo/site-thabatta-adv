@@ -93,9 +93,14 @@ class AdminManager
                 $className = basename($file, '.php');
                 $fullClassName = '\\WPFramework\\Core\\Admin\\' . $className;
                 
-                // Inicializa a classe se existir e tiver método init
-                if (class_exists($fullClassName) && method_exists($fullClassName, 'init')) {
-                    call_user_func([$fullClassName, 'init']);
+                // Ignora a classe base abstrata
+                if ($className === 'BaseAdminComponent') {
+                    continue;
+                }
+                
+                // Inicializa a classe se existir e tiver método getInstance
+                if (class_exists($fullClassName) && method_exists($fullClassName, 'getInstance')) {
+                    $fullClassName::getInstance();
                 }
             }
         }
@@ -509,7 +514,7 @@ class AdminManager
                 $args['parent_slug'] = $parent_slug;
             }
             
-            acf_add_options_page($args);
+            \acf_add_options_page($args);
         }
         
         return $this;

@@ -349,21 +349,6 @@ function thabatta_block_sensitive_files() {
 add_action('init', 'thabatta_block_sensitive_files');
 
 /**
- * Adicionar proteção contra CSRF
- */
-/* Comentado: Redundante/Conflitante com nonces do admin
-function thabatta_csrf_protection() {
-    if (is_admin() && current_user_can('edit_posts')) {
-        // Verificar nonce para ações de administração
-        if (!empty($_POST) && !isset($_POST['_wpnonce'])) {
-            wp_die(__('Verificação de segurança falhou. Por favor, tente novamente.', 'thabatta-adv'));
-        }
-    }
-}
-add_action('admin_init', 'thabatta_csrf_protection');
-*/
-
-/**
  * Adicionar proteção contra ataques de força bruta no login
  */
 function thabatta_login_protection() {
@@ -400,18 +385,6 @@ add_filter('the_content', 'thabatta_protect_against_xss');
 add_filter('the_title', 'thabatta_protect_against_xss');
 add_filter('comment_text', 'thabatta_protect_against_xss');
 add_filter('widget_text_content', 'thabatta_protect_against_xss');
-
-/**
- * Proteger contra ataques de Cross-Site Request Forgery (CSRF)
- */
-/* Comentado: Redundante/Conflitante com nonces do admin
-function thabatta_protect_against_csrf() {
-    if (is_admin() && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        check_admin_referer('thabatta_admin_action');
-    }
-}
-add_action('admin_init', 'thabatta_protect_against_csrf');
-*/
 
 /**
  * Adicionar proteção contra ataques de clickjacking

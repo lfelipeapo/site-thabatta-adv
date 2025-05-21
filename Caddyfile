@@ -32,9 +32,8 @@ dev.local {
     +Access-Control-Allow-Headers "Authorization, Content-Type"
     +Access-Control-Expose-Headers "Authorization"
     # Para garantir que Authorization passe SEMPRE
-    +Authorization *
     # (opcional, só se for usar REST externamente)
-    Access-Control-Allow-Origin *
+    +Access-Control-Allow-Origin *
   }
 
   respond /xmlrpc.php 403
@@ -75,4 +74,5 @@ dev.local {
 
   php_server
   file_server
+  tls /certs-dev-local/dev.local.crt /certs-dev-local/dev.local.key
 }

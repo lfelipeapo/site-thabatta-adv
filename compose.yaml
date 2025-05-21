@@ -34,6 +34,7 @@ services:
       - ./data/sqlite:/var/www/html/wp-content/database 
       - caddy_data:/data
       - caddy_config:/config
+      - ./data/certs-dev-local:/certs-dev-local
     tty: true
 
 volumes:

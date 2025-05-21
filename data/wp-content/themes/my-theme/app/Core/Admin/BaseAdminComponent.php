@@ -19,14 +19,27 @@ abstract class BaseAdminComponent
     protected static $instance = null;
     
     /**
+     * Construtor protegido para padrão Singleton
+     */
+    protected function __construct()
+    {
+        $this->init();
+    }
+    
+    /**
      * Obtém a instância única da classe (padrão Singleton)
      * 
      * @return static
      */
     public static function getInstance()
     {
+        $class = get_called_class();
+        if ($class === __CLASS__) {
+            throw new \Exception('Não é possível instanciar a classe base abstrata');
+        }
+        
         if (static::$instance === null) {
-            static::$instance = new static();
+            static::$instance = new $class();
         }
         
         return static::$instance;
