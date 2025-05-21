@@ -647,16 +647,42 @@ function thabatta_excerpt_more($more)
 }
 add_filter('excerpt_more', 'thabatta_excerpt_more');
 
-
 /**
- * Adicionar suporte para SVG no uploader de mídia
+ * Permitir upload de mais tipos de arquivo
  */
-function thabatta_mime_types($mimes)
-{
+function thabatta_mime_types($mimes) {
+    // Adicionar suporte para SVG
     $mimes['svg'] = 'image/svg+xml';
+    $mimes['svgz'] = 'image/svg+xml';
+    
+    // Adicionar suporte para WebP
+    $mimes['webp'] = 'image/webp';
+    
+    // Adicionar suporte para documentos
+    $mimes['doc'] = 'application/msword';
+    $mimes['docx'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    $mimes['xls'] = 'application/vnd.ms-excel';
+    $mimes['xlsx'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    $mimes['ppt'] = 'application/vnd.ms-powerpoint';
+    $mimes['pptx'] = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+    
+    // Adicionar suporte para PDF
+    $mimes['pdf'] = 'application/pdf';
+    
+    // Adicionar suporte para arquivos de texto
+    $mimes['txt'] = 'text/plain';
+    
     return $mimes;
 }
 add_filter('upload_mimes', 'thabatta_mime_types');
+
+/**
+ * Aumentar limite de upload
+ */
+function thabatta_upload_size_limit($size) {
+    return 64 * 1024 * 1024; // 64MB em bytes
+}
+add_filter('upload_size_limit', 'thabatta_upload_size_limit');
 
 /**
  * Corrigir exibição de SVG no painel administrativo
@@ -809,3 +835,52 @@ function thabatta_localize_scripts() {
     ));
 }
 add_action('wp_enqueue_scripts', 'thabatta_localize_scripts', 20);
+
+// 1) registra a rewrite rule
+add_action('init', function () {
+    add_rewrite_tag('%wpai_admin_path%', '([^&]+)');
+    add_rewrite_rule('^admin/(.+)/?$', 'index.php?wpai_admin_path=$matches[1]', 'top');
+});
+
+// 2) expõe a query var
+add_filter('query_vars', function ($vars) {
+    $vars[] = 'wpai_admin_path';
+    return $vars;
+});
+
+// 3) antes do WP buscar posts, altera o main query
+add_action('pre_get_posts', function (\WP_Query $query) {
+    if ( is_admin() || ! $query->is_main_query() ) {
+        return;
+    }
+
+    $path = get_query_var('wpai_admin_path');
+    if ( empty($path) ) {
+        return;
+    }
+
+    $slug = basename( trim($path, '/') );
+
+    $query->set('name',      $slug);
+    $query->set('post_type', 'post');
+
+    // ajusta flags de template
+    $query->is_single   = true;
+    $query->is_singular = true;
+    $query->is_home     = false;
+    $query->is_archive  = false;
+    $query->is_404      = false;
+});
+
+// 4) no carregamento do template, força a admin‐bar
+add_action('template_redirect', function(){
+    if ( get_query_var('wpai_admin_path') ) {
+        // pra garantir que o WP injete os estilos/js da barra
+        show_admin_bar(true);
+    }
+});
+
+add_filter('allowed_http_origins', function (array $origins) {
+    $origins[] = 'oaidalleapiprodscus.blob.core.windows.net';
+    return $origins;
+});

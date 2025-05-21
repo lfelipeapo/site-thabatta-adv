@@ -691,6 +691,83 @@ section.padding-half, .section.padding-half {
   border-right: 1px solid rgba(74, 74, 74, 0.1);
 }
 
+/* ---------------------------------------------------
+   1) Zerar list-styles e reset de padding/margin
+   --------------------------------------------------- */
+#wpadminbar ul.ab-top-menu,
+#wpadminbar ul.ab-submenu,
+#wpadminbar ul.ab-top-secondary,
+#wpadminbar ul.ab-top-menu li,
+#wpadminbar ul.ab-submenu li {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ---------------------------------------------------
+   2) Forçar position e tamanho dos sub-menus
+   --------------------------------------------------- */
+#wpadminbar .menupop {
+  position: relative !important;
+}
+
+#wpadminbar .ab-submenu {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  min-width: 180px !important;
+  white-space: nowrap !important;
+  display: none !important;
+  z-index: 99999 !important;
+}
+
+/* Mostrar submenu ao hover */
+#wpadminbar .menupop:hover > .ab-submenu {
+  display: block !important;
+}
+
+/* ---------------------------------------------------
+   3) Ajustes de link e hover
+   --------------------------------------------------- */
+#wpadminbar .ab-item {
+  display: block !important;
+  text-decoration: none !important;
+  padding: 10px 14px !important;
+  color: #eaeaea !important;
+  transition: background 0.15s !important;
+}
+
+#wpadminbar .ab-item:hover {
+  background-color: #004a72 !important;
+}
+
+/* ---------------------------------------------------
+   4) Ícones e labels da barra
+   --------------------------------------------------- */
+#wpadminbar .ab-icon:before,
+#wpadminbar .ab-label {
+  color: #eaeaea !important;
+}
+
+/* ---------------------------------------------------
+   5) Corrigir overflow (quando muitos itens)
+   --------------------------------------------------- */
+#wpadminbar .ab-submenu {
+  max-height: 70vh !important;
+  overflow-y: auto !important;
+}
+
+/* ---------------------------------------------------
+   6) Resumo responsivo (se quiser)
+   --------------------------------------------------- */
+@media screen and (max-width: 600px) {
+  #wpadminbar .ab-item {
+    padding: 8px 10px !important;
+  }
+  #wpadminbar .ab-submenu {
+    min-width: 140px !important;
+  }
+}
 /* Estilos do cabeçalho */
 .site-header {
   background-color: #800020;
