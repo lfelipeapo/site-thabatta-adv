@@ -9,20 +9,20 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('single-post'); ?>>
     <header class="entry-header">
-        <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
+        <?php the_title('<h1 class="entry-title post-title">', '</h1>'); ?>
 
         <?php if ('post' === get_post_type()) : ?>
-            <div class="entry-meta">
-                <span class="posted-on">
+            <div class="entry-meta meta-bar">
+                <span class="posted-on meta-date">
                     <i class="far fa-calendar-alt"></i>
                     <?php echo get_the_date(); ?>
                 </span>
-                <span class="byline">
+                <span class="byline meta-author">
                     <i class="far fa-user"></i>
                     <?php the_author(); ?>
                 </span>
                 <?php if (has_category()) : ?>
-                    <span class="cat-links">
+                    <span class="cat-links meta-category">
                         <i class="far fa-folder-open"></i>
                         <?php the_category(', '); ?>
                     </span>
@@ -32,12 +32,12 @@
     </header><!-- .entry-header -->
 
     <?php if (has_post_thumbnail()) : ?>
-        <div class="featured-image">
+        <div class="featured-image post-thumbnail">
             <?php the_post_thumbnail('thabatta-featured'); ?>
         </div>
     <?php endif; ?>
 
-    <div class="entry-content">
+    <div class="entry-content post-content">
         <?php
         the_content(
             sprintf(
@@ -76,8 +76,7 @@
         $share_url = urlencode(get_permalink());
         $share_title = urlencode(get_the_title());
         ?>
-        <div class="share-links">
-            <span><?php esc_html_e('Compartilhar:', 'thabatta-adv'); ?></span>
+        <div class="social-share">
             <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e('Compartilhar no Facebook', 'thabatta-adv'); ?>">
                 <i class="fab fa-facebook-f"></i>
             </a>
@@ -91,13 +90,11 @@
                 <i class="fab fa-whatsapp"></i>
             </a>
         </div>
-    </footer><!-- .entry-footer -->
-    
-    <?php // Exibe posts relacionados
-    if (function_exists('thabatta_get_related_posts')) {
-        thabatta_get_related_posts(get_the_ID());
-    }
-    ?>
 
-    <?php thabatta_post_navigation(); ?>
+        <?php
+        ?>
+        <div class="post-navigation-area">
+            <?php thabatta_post_navigation(); ?>
+        </div>
+    </footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

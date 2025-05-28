@@ -196,4 +196,524 @@
             }
         }
     }
+}
+
+// Sidebar contínua, divisórias suaves
+.sidebar-area {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(128,0,32,0.06);
+  border: 1px solid #f3e9e0;
+  padding: 1.2rem 0.7rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+
+  .sidebar-widget {
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    position: static;
+
+    .widget-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.08rem;
+      color: #800020;
+      margin-bottom: 0.6rem;
+      padding-bottom: 0;
+      border-bottom: none;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+    }
+  }
+
+  // Busca visível
+  .widget_search {
+    .search-form {
+      display: block;
+      margin-bottom: 0;
+      .search-field {
+        width: 100%;
+        border: 1px solid #ffd700;
+        border-radius: 6px;
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+        color: #800020;
+        &:focus {
+          outline: none;
+          border-color: #800020;
+        }
+      }
+      .search-submit {
+        background: #800020;
+        color: #fff;
+        border: none;
+        border-radius: 0 6px 6px 0;
+        padding: 0.7rem 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        &:hover {
+          background: #ffd700;
+          color: #800020;
+        }
+      }
+    }
+  }
+
+  // CTA mais discreto
+  .sidebar-cta {
+    background: #f9f5f0;
+    padding: 1.2rem;
+    border-radius: 8px;
+    text-align: center;
+    .cta-title {
+      font-size: 1.1rem;
+      color: #800020;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #800020;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      &:hover {
+        background: #ffd700;
+        color: #800020;
+      }
+    }
+  }
+
+  // Cards de posts
+  .sidebar-post-card {
+    background: #fff;
+    border: 1px solid #f3e9e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.1rem;
+    transition: all 0.3s ease;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(128,0,32,0.08);
+    }
+    .sidebar-thumb {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 8px 8px 0 0;
+      margin: 0;
+      border: none;
+      background: #eaeaea;
+      display: block;
+    }
+    .sidebar-info {
+      padding: 0.8rem 0.8rem 0.6rem 0.8rem;
+      .sidebar-title {
+        font-size: 1rem;
+        color: #800020;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        line-height: 1.1;
+      }
+      .sidebar-category {
+        padding: 0.2rem 0.5rem;
+        border-radius: 6px;
+        background-color: #800020;
+        font-size: 14px;
+        color: #bfa14a;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+
+        &:hover {
+            box-shadow: 0 4px 16px rgba(128, 0, 32, .1);
+        }
+      }
+      .sidebar-excerpt {
+        font-size: 0.93rem;
+        color: #4a4a4a;
+        margin-bottom: 0.5rem;
+        line-height: 1.25;
+      }
+      .sidebar-readmore {
+        font-size: 0.93rem;
+        color: #800020;
+        font-weight: 500;
+        text-decoration: none;
+        border-bottom: 1px solid #ffd700;
+        margin-top: 0.1rem;
+        &:hover {
+          color: #ffd700;
+          border-color: #800020;
+        }
+      }
+    }
+  }
+
+  // Social links
+  .sidebar-social-links {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    a {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9f5f0;
+      color: #800020;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      &:hover {
+        background: #800020;
+        color: #fff;
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+// Margin top igual na sidebar e main-content
+.main-content, .sidebar-area {
+  margin-top: 2.5rem;
+}
+
+// Featured image com espaçamento
+.single-post .featured-image {
+  margin-bottom: 1.5rem;
+}
+
+// Compartilhamento: botões redondos proporcionais
+.share-links {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 2.5rem 0 1.5rem 0;
+  padding: 1rem 1.5rem;
+  background: #fffbe6;
+  border-radius: 10px;
+  border: 1px solid #ffd700;
+  box-shadow: 0 1px 6px rgba(255,215,0,0.08);
+  .share-title {
+    color: #800020;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-right: 1rem;
+  }
+  .share-icon {
+    color: #ffd700;
+    font-size: 1.2rem;
+    background: #800020;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 1px 4px rgba(128,0,32,0.08);
+    &:hover {
+      background: #ffd700;
+      color: #800020;
+    }
+  }
+}
+
+// Navegação estilizada (apenas uma)
+.post-navigation-area {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 2.5rem 0 1.5rem 0;
+  .nav-previous, .nav-next {
+    flex: 1;
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    font-weight: 600;
+    color: #800020;
+    transition: background 0.3s, color 0.3s;
+    a {
+      color: #800020;
+      text-decoration: none;
+      &:hover {
+        color: #ffd700;
+      }
+    }
+  }
+}
+
+// Busca: input e botão unidos
+.widget_search .search-form {
+  display: flex;
+  gap: 0;
+  .search-field {
+    flex: 1;
+    border: 1px solid #ffd700;
+    border-radius: 6px 0 0 6px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    color: #800020;
+    background: #fff;
+    margin: 0;
+    &::placeholder {
+      color: #800020;
+      opacity: 0.7;
+    }
+    &:focus {
+      border-color: #800020;
+      outline: none;
+    }
+  }
+  .search-submit {
+    background: #ffd700;
+    color: #800020;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    padding: 0.6rem 1.1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, color 0.3s;
+    &:hover {
+      background: #800020;
+      color: #ffd700;
+    }
+    i {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Cards de post: cores harmônicas, categoria menos gritante
+.recent-posts-sidebar, .related-posts-sidebar {
+  .sidebar-post-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(128,0,32,0.03);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    &:hover {
+      box-shadow: 0 4px 16px rgba(128,0,32,0.10);
+      border-color: #ffd700;
+    }
+    .sidebar-thumb {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+      margin: 0;
+      border: none;
+      background: #eaeaea;
+      display: block;
+    }
+    .sidebar-info {
+      padding: 1rem 1rem 0.7rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .sidebar-title {
+        color: #800020;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        line-height: 1.1;
+      }
+      .sidebar-category {
+        padding: 0.2rem 0.5rem;
+        border-radius: 6px;
+        background-color: #800020;
+        color: #bfa14a;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+
+        &:hover {
+            box-shadow: 0 4px 16px rgba(128, 0, 32, .1);
+        }
+      }
+      .sidebar-excerpt {
+        color: #4a4a4a;
+        font-size: 16px;
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+      }
+      .sidebar-readmore {
+        display: inline-block;
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        color: #800020;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid #ffd700;
+        transition: color 0.3s, border-color 0.3s;
+        &:hover {
+          color: #ffd700;
+          border-color: #800020;
+        }
+      }
+    }
+  }
+}
+
+// Comentários: padding, borda, fontes proporcionais
+.comments-area {
+  margin: 2.2rem 0 0 0;
+  padding: 1.2rem 1rem 1rem 1rem;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  .comment-list {
+    .comment {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #f3e9e0;
+      .comment-body {
+        padding: 0.5rem 0 0.5rem 0;
+        .comment-author img {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+        }
+        .comment-content {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  .comment-respond {
+    margin-top: 1.2rem;
+    .comment-form {
+      gap: 0.7rem;
+      .form-control, textarea {
+        border-radius: 6px;
+        border: 1px solid #ffd700;
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+      }
+      .btn, input[type="submit"] {
+        background: #800020;
+        color: #ffd700;
+        border-radius: 6px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: background 0.3s, color 0.3s;
+        &:hover {
+          background: #ffd700;
+          color: #800020;
+        }
+      }
+    }
+  }
+}
+
+// Headings menores no conteúdo do post
+.single-post .entry-content h1 {
+  font-size: 1.6rem;
+}
+.single-post .entry-content h2 {
+  font-size: 1.3rem;
+}
+.single-post .entry-content h3 {
+  font-size: 1.1rem;
+}
+.single-post .entry-content h4 {
+  font-size: 1rem;
+}
+
+// Responsivo
+@media (max-width: 991px) {
+  .sidebar-area {
+    max-width: 100%;
+    padding: 1.2rem 0.5rem;
+  }
+  .main-content {
+    margin-top: 1.2rem;
+  }
+}
+@media (max-width: 767px) {
+  .sidebar-area {
+    border-radius: 10px;
+    padding: 1rem 0.5rem;
+    .categories-sidebar-list {
+      flex-direction: column;
+      gap: 0.7rem;
+      .category-sidebar-item {
+        flex: 1 1 100%;
+      }
+    }
+  }
+  .main-content {
+    margin-top: 0.7rem;
+  }
+}
+
+// Categorias: gap e padding reduzidos
+.categories-sidebar-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  .category-sidebar-item {
+    flex: 1 1 45%;
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 0;
+    padding: 0.7rem 0.8rem;
+    text-align: center;
+    a {
+      color: #800020;
+      font-size: 1rem;
+      text-decoration: none;
+      font-weight: 500;
+      &:hover {
+        color: #ffd700;
+      }
+    }
+  }
+}
+
+// Share links (sidebar e post)
+.social-share {
+  display: flex;
+  gap: 0.7rem;
+  margin: 1.2rem 0 0.7rem 0;
+  a {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f5f0;
+    color: #800020;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    &:hover {
+      background: #800020;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+  }
 } 
