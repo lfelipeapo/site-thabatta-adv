@@ -104,7 +104,17 @@ $table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
 define('WP_DEBUG', true);
 define('WP_DEBUG_LOG', true);
 define('WP_DEBUG_DISPLAY', true);
+define('SCRIPT_DEBUG', true);
+define('SAVEQUERIES', true);
 
+// Configurações de erro
+@ini_set('display_errors', 1);
+@ini_set('error_reporting', E_ALL);
+error_reporting(E_ALL);
+
+// Aumentar limites de memória e tempo
+@ini_set('memory_limit', '512M');
+set_time_limit(300);
 
 // No wp-config.php
 define('MULTISITE', true);
@@ -135,12 +145,6 @@ if (!defined('ABSPATH')) {
     define('ABSPATH', __DIR__ . '/');
 }
 
-// Configurações de memória e tempo limite
-@ini_set('memory_limit', '512M');
-if (!ini_get('max_execution_time') || ini_get('max_execution_time') < 300) {
-    set_time_limit(300);
-}
-
 // Suprimir avisos específicos
 if (!function_exists('suppress_jwt_auth_notice')) {
     function suppress_jwt_auth_notice() {
@@ -167,8 +171,3 @@ define('FTP_PASS', 'password'); // Senha configurada no serviço SFTP
 define('FTP_BASE', '/home/wp-user/data'); // Diretório raiz do SFTP
 define('FTP_CONTENT_DIR', '/home/wp-user/data/wp-content'); // Diretório wp-content
 define('FTP_PLUGIN_DIR', '/home/wp-user/data/wp-content/plugins'); // Diretório de plugins
-
-@ini_set('display_errors', 1);
-@ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-set_time_limit(120);
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);

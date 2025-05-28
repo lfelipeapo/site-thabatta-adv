@@ -21,7 +21,7 @@ class jh_acf_field_table extends acf_field {
 		*  settings (array) Array of settings
 		*/
 		$this->settings = array(
-			'version' => '1.3.28',
+			'version' => '1.3.29',
 			'dir_url' => plugins_url( '', __FILE__ ) . '/',
 		);
 
@@ -31,7 +31,7 @@ class jh_acf_field_table extends acf_field {
 
 		$this->name = 'table';
 
-		$this->description = __('Allows you to easily edit tabular content.', 'advanced-custom-fields-table-field');
+		$this->description = __('This allows you to easily edit tabular content.', 'advanced-custom-fields-table-field');
 
 		$this->preview_image = plugins_url( '', __FILE__ ) . '/assets/images/field-preview-table.png';
 
@@ -90,7 +90,8 @@ class jh_acf_field_table extends acf_field {
 						if ( json_last_error() !== JSON_ERROR_NONE ) {
 
 							// canceling meta value uptdate
-							error_log( 'The plugin advanced-custom-fields-table-field prevented a third party update_post_meta( ' . $object_id . ', "' . $meta_key . '", $value ); action that would save a broken JSON string.' . "\n" . 'For details see https://codex.wordpress.org/Function_Reference/update_post_meta#Character_Escaping.' );
+							$error_message = 'The plugin advanced-custom-fields-table-field prevented a third party update_post_meta( ' . $object_id . ', "' . $meta_key . '", $value ); action that would save a broken JSON string.' . "\n" . 'For details see https://codex.wordpress.org/Function_Reference/update_post_meta#Character_Escaping.';
+							trigger_error( esc_html( $error_message ), E_USER_WARNING );
 							return true;
 						}
 					}

@@ -62,6 +62,6 @@ add_action('init', 'wpframework_load_theme_textdomain', 1);
 
 // Inicializa o framework após o WordPress estar completamente carregado
 function wpframework_init() {
-    \WPFramework\Core\Bootstrap::init();
+\WPFramework\Core\Bootstrap::init();
 }
 add_action('init', 'wpframework_init', 20);
