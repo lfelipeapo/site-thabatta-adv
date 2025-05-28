@@ -29,3 +29,5 @@ data/wp-content/debug.log
 data/wp-content/uploads/wc-logs/*
 data/sqlite/.ht.sqlite
 data/sqlite/.ht.sqlite
+data/sqlite/
+data/sqlite.backup/
