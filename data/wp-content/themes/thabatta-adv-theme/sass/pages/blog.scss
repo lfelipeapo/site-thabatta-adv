@@ -141,12 +141,107 @@
 /* Estilos específicos para a página de Arquivo */
 .archive {
     .page-title {
-        font-size: 1.5rem;
-        color: variables.$bordo;
-        margin-bottom: 2rem;
-        border-bottom: 2px solid variables.$amarelo-dourado;
-        padding-bottom: 0.5rem;
+        font-size: 2.2rem;
+        color: #800020;
+        margin-bottom: 2.5rem;
+        border-bottom: 3px solid #ffd700;
+        padding-bottom: 0.7rem;
         display: inline-block;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        background: linear-gradient(90deg, #fffbe6 60%, transparent 100%);
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 2px 8px rgba(128,0,32,0.04);
+    }
+    
+    .site-main {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2.2rem;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 16px rgba(128,0,32,0.07);
+        border: 1px solid #f3e9e0;
+        padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+        margin-bottom: 0;
+        transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+        
+        &:hover {
+            box-shadow: 0 6px 24px rgba(128,0,32,0.13);
+            border-color: #ffd700;
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .card-image {
+            margin-bottom: 8px;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 6px;
+                aspect-ratio: 16/9;
+            }
+        }
+
+        .card-content {
+            .entry-title {
+                font-size: 1.3rem;
+                margin-bottom: 0.7rem;
+                
+                a {
+                    color: #800020;
+                    text-decoration: none;
+                    font-weight: 700;
+                    
+                    &:hover {
+                        color: #ffd700;
+                    }
+                }
+            }
+
+            .entry-meta {
+                font-size: 0.98rem;
+                color: #bfa14a;
+                margin-bottom: 0.7rem;
+            }
+
+            .entry-content {
+                color: #4a4a4a;
+                font-size: 1.05rem;
+                line-height: 1.6;
+                
+                p {
+                    margin-bottom: 0;
+                    display: inline-flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                    
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .read-more {
+                    color: #800020;
+                    font-weight: 600;
+                    text-decoration: none;
+                    border-bottom: 1px solid #ffd700;
+                    display: inline-block;
+                    margin-top: 0.7rem;
+                    
+                    &:hover {
+                        color: #ffd700;
+                        border-color: #800020;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -332,6 +427,7 @@
         color: #bfa14a;
         margin-bottom: 0.5rem;
         font-weight: 500;
+        cursor: pointer;
 
         &:hover {
             box-shadow: 0 4px 16px rgba(128, 0, 32, .1);
@@ -547,6 +643,7 @@
         font-size: 14px;
         font-weight: 500;
         margin-bottom: 0.5rem;
+        cursor: pointer;
 
         &:hover {
             box-shadow: 0 4px 16px rgba(128, 0, 32, .1);
@@ -650,6 +747,11 @@
   }
   .main-content {
     margin-top: 1.2rem;
+  }
+  .archive {
+    .card {
+      height: auto;
+    }
   }
 }
 @media (max-width: 767px) {

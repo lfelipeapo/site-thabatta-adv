@@ -40,7 +40,7 @@ if (!is_active_sidebar('sidebar-1')) {
                 echo '<div class="sidebar-info">';
                 echo '<div class="sidebar-title">' . esc_html(get_the_title($post->ID)) . '</div>';
                 if (!empty($cat)) {
-                    echo '<div class="sidebar-category">' . esc_html($cat[0]->name) . '</div>';
+                    echo '<a class="sidebar-category" href="' . esc_url(get_category_link($cat[0]->term_id)) . '">' . esc_html($cat[0]->name) . '</a>';
                 }
                 echo '<div class="sidebar-excerpt">' . wp_trim_words($post->post_content, 10) . '</div>';
                 echo '<a href="' . get_permalink($post->ID) . '" class="sidebar-readmore">Leia mais</a>';
@@ -70,7 +70,9 @@ if (!is_active_sidebar('sidebar-1')) {
                     <div class="sidebar-info">
                         <div class="sidebar-title"><?php echo esc_html($post['post_title']); ?></div>
                         <?php if (!empty($cat)) : ?>
-                            <div class="sidebar-category"><?php echo esc_html($cat[0]->name); ?></div>
+                            <a class="sidebar-category" href="<?php echo esc_url(get_category_link($cat[0]->term_id)); ?>">
+                                <?php echo esc_html($cat[0]->name); ?>
+                            </a>
                         <?php endif; ?>
                         <div class="sidebar-excerpt"><?php echo wp_trim_words($post['post_content'], 10); ?></div>
                         <a href="<?php echo get_permalink($post['ID']); ?>" class="sidebar-readmore">Leia mais</a>
