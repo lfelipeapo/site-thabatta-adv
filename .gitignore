@@ -31,3 +31,9 @@ data/sqlite/.ht.sqlite
 data/sqlite/.ht.sqlite
 data/sqlite/
 data/sqlite.backup/
+data/sqlite/.htaccess
+data/sqlite/index.php
+data/sqlite.backup/index.php
+data/sqlite.backup/.htaccess
+data/sqlite.backup/index.php
+data/sqlite.backup/index.php
