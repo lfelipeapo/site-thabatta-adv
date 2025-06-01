@@ -50,9 +50,9 @@ if (!function_exists('getenv_docker')) {
 define('DB_FILE', 'database.sqlite');
 define('DB_DIR', __DIR__ . '/wp-content/database');
 define('DB_NAME', DB_FILE);
-define('DB_USER', null);
-define('DB_PASSWORD', null);
-define('DB_HOST', null);
+define('DB_USER', '');
+define('DB_PASSWORD', '');
+define('DB_HOST', '');
 
 define( 'DB_CHARSET', getenv_docker('WORDPRESS_DB_CHARSET', 'utf8') );
 

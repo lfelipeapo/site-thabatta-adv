@@ -455,7 +455,7 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
             
             <div class="section-cta">
                 <?php if (get_theme_mod('blog_show_all_button', true)) : ?>
-                <a href="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" class="btn btn-secondary">Ver todos os posts</a>
+                <a href="<?php echo esc_url(get_permalink(get_page_by_path('blog'))); ?>" class="btn btn-secondary">Ver todos os posts</a>
                 <?php endif; ?>
             </div>
         </div>

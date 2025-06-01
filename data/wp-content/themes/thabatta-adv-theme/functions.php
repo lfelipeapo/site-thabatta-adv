@@ -888,3 +888,19 @@ add_filter('allowed_http_origins', function (array $origins) {
     $origins[] = 'oaidalleapiprodscus.blob.core.windows.net';
     return $origins;
 });
+
+/**
+ * Remove os botões de compartilhamento do Jetpack apenas em páginas de blog e arquivos
+ */
+function thabatta_remove_jetpack_sharing() {
+    // Verifica se é uma página de blog ou arquivo
+    if (is_home() || is_archive() || is_category() || is_tag() || is_author() || is_date()) {
+        remove_filter('the_content', 'sharing_display', 19);
+        remove_filter('the_excerpt', 'sharing_display', 19);
+        
+        if (class_exists('Jetpack_Likes')) {
+            remove_filter('the_content', array(Jetpack_Likes::init(), 'post_likes'), 30, 1);
+        }
+    }
+}
+add_action('loop_start', 'thabatta_remove_jetpack_sharing');
