@@ -47,10 +47,24 @@ if (!function_exists('getenv_docker')) {
 
 /** Database hostname */
 
-define('DB_NAME', __DIR__ . '/wp-content/database/database.sqlite');
+// Define o arquivo do banco de dados SQLite
+
+define('DB_DIR', __DIR__ . '/wp-content/database');
+define('DB_FILE', 'database.sqlite');
+define('DB_NAME', DB_FILE);
 define('DB_USER', null);
 define('DB_PASSWORD', null);
 define('DB_HOST', null);
+
+// Garante que o diretório do banco de dados existe
+if (!file_exists(__DIR__ . '/wp-content/database')) {
+    mkdir(__DIR__ . '/wp-content/database', 0777, true);
+}
+
+// Garante que o arquivo do banco de dados tem as permissões corretas
+if (file_exists(__DIR__ . '/wp-content/database/database.sqlite')) {
+    chmod(__DIR__ . '/wp-content/database/database.sqlite', 0666);
+}
 
 /** Database charset to use in creating database tables. */
 define('DB_CHARSET', getenv_docker('WORDPRESS_DB_CHARSET', 'utf8'));
@@ -87,7 +101,7 @@ define('NONCE_SALT', getenv_docker('WORDPRESS_NONCE_SALT', '002839996e41e470504a
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
+$table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'adv_');
 
 /**
  * For developers: WordPress debugging mode.

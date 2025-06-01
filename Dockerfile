@@ -53,7 +53,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libzip-dev \
     libmemcached-dev \
     zlib1g-dev \
-    netcat-openbsd
+    netcat-openbsd \
+    sqlite3
 
 # Instala as extensões PHP necessárias
 RUN install-php-extensions \

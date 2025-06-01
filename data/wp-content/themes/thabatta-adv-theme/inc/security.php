@@ -460,11 +460,11 @@ function thabatta_login_failed($username) {
         $failed_login_count++;
     }
     
-    set_transient('failed_login_count_' . $ip, $failed_login_count, 3600); // 1 hora
+    set_transient('failed_login_count_' . $ip, $failed_login_count, 1); // 1 hora
     
     if ($failed_login_count >= 5) {
         // Bloquear IP por 1 hora
-        set_transient('ip_blocked_' . $ip, 1, 3600);
+        set_transient('ip_blocked_' . $ip, 1, 1);
     }
 }
 add_action('wp_login_failed', 'thabatta_login_failed');

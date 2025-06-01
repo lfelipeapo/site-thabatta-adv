@@ -47,7 +47,9 @@ if (!function_exists('getenv_docker')) {
 
 /** Database charset to use in creating database tables. */
 
-define('DB_NAME', __DIR__ . '/wp-content/database/database.sqlite');
+define('DB_FILE', 'database.sqlite');
+define('DB_DIR', __DIR__ . '/wp-content/database');
+define('DB_NAME', DB_FILE);
 define('DB_USER', null);
 define('DB_PASSWORD', null);
 define('DB_HOST', null);
@@ -95,7 +97,7 @@ define('BLOG_ID_CURRENT_SITE', 1);
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
+$table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'adv_');
 
 /**
  * For developers: WordPress debugging mode.

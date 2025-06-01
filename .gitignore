@@ -37,3 +37,13 @@ data/sqlite.backup/index.php
 data/sqlite.backup/.htaccess
 data/sqlite.backup/index.php
 data/sqlite.backup/index.php
+data/wp-content/database/.htaccess
+data/sqlite/.htaccess
+data/sqlite/.htaccess
+data/wp-content/database/database.sqlite
+data/wp-content/database/backups/database.sqlite.backup
+data/wp-content/debug.log
+data/sqlite/index.php
+data/wp-content/database/index.php
+data/sqlite/index.php
+data/sqlite/.htaccess
