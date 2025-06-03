@@ -904,3 +904,39 @@ function thabatta_remove_jetpack_sharing() {
     }
 }
 add_action('loop_start', 'thabatta_remove_jetpack_sharing');
+
+/**
+ * Ajusta o número de posts por página em diferentes tipos de arquivo
+ */
+function thabatta_posts_per_page($query) {
+    // Não afeta queries do admin
+    if (!is_admin() && $query->is_main_query()) {
+        // Página de blog
+        if (is_page_template('page-blog.php')) {
+            $query->set('posts_per_page', 10);
+        }
+        // Arquivos, categorias e outras páginas de arquivo
+        elseif (is_archive() || is_category() || is_tag() || is_author() || is_date()) {
+            $query->set('posts_per_page', 5);
+        }
+    }
+}
+add_action('pre_get_posts', 'thabatta_posts_per_page');
+
+// Enfileira o JS do formulário multistep de contato apenas na página de contato
+add_action('wp_enqueue_scripts', function() {
+    if (is_page_template('page-contato.php')) {
+        wp_enqueue_script(
+            'thabatta-contact-form-multistep',
+            get_template_directory_uri() . '/js/contact-form-multistep.js',
+            array('jquery'),
+            filemtime(get_template_directory() . '/js/contact-form-multistep.js'),
+            true
+        );
+        // Passa o ajaxUrl para o JS do formulário de contato
+        wp_localize_script('thabatta-contact-form-multistep', 'thabattaData', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('thabatta_consultation_nonce'),
+        ));
+    }
+}, 101);

@@ -25,7 +25,7 @@ get_header();
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
                 'post_type'      => 'post',
-                'posts_per_page' => 9,
+                'posts_per_page' => 10,
                 'paged'          => $paged,
                 'orderby'        => 'date',
                 'order'          => 'DESC',
@@ -85,11 +85,12 @@ get_header();
                 
                 // Paginação
                 echo '<div class="pagination">';
-                echo paginate_links(array(
-                    'total'   => $blog_query->max_num_pages,
-                    'current' => $paged,
+                the_posts_pagination(array(
+                    'mid_size'  => 2,
                     'prev_text' => '<i class="fas fa-arrow-left"></i> ' . esc_html__('Anterior', 'thabatta-adv'),
                     'next_text' => esc_html__('Próximo', 'thabatta-adv') . ' <i class="fas fa-arrow-right"></i>',
+                    'screen_reader_text' => ' ',
+                    'aria_label' => __('Navegação de posts', 'thabatta-adv'),
                 ));
                 echo '</div>';
                 

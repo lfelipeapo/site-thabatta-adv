@@ -1,0 +1,177 @@
+.contact-multistep-form-wrapper {
+  max-width: 520px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(128, 0, 32, 0.07);
+  border: 1px solid #f3e9e0;
+  padding: 2.2rem 2rem 2rem 2rem;
+}
+@media (max-width: 600px) {
+  .contact-multistep-form-wrapper {
+    padding: 1.2rem 0.5rem;
+  }
+}
+.contact-multistep-form-wrapper .hidden {
+  display: none !important;
+}
+.contact-multistep-form-wrapper .form-title {
+  font-size: 2rem;
+  color: #800020;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+.contact-multistep-form-wrapper .step-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+}
+.contact-multistep-form-wrapper .step-indicators .step-indicator {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f9f5f0;
+  color: #800020;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffd700;
+  transition: all 0.3s ease;
+}
+.contact-multistep-form-wrapper .step-indicators .step-indicator.active {
+  background: #ffd700;
+  color: #800020;
+  border-color: #800020;
+}
+.contact-multistep-form-wrapper .multi-step-form .step {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.contact-multistep-form-wrapper .multi-step-form .step.active {
+  display: block;
+  opacity: 1;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .step-title {
+  font-size: 1.2rem;
+  color: #800020;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-group {
+  margin-bottom: 1.2rem;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-group label {
+  font-weight: 500;
+  color: #800020;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-group input, .contact-multistep-form-wrapper .multi-step-form .step .form-group select, .contact-multistep-form-wrapper .multi-step-form .step .form-group textarea {
+  width: 100%;
+  border: 1px solid #ffd700;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  color: #800020;
+  background: #fff;
+  margin-top: 0.2rem;
+  transition: border-color 0.3s ease;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-group input:focus, .contact-multistep-form-wrapper .multi-step-form .step .form-group select:focus, .contact-multistep-form-wrapper .multi-step-form .step .form-group textarea:focus {
+  outline: none;
+  border-color: #800020;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-group input.is-invalid, .contact-multistep-form-wrapper .multi-step-form .step .form-group select.is-invalid, .contact-multistep-form-wrapper .multi-step-form .step .form-group textarea.is-invalid {
+  border-color: #d32f2f;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-group .invalid-feedback {
+  color: #d32f2f;
+  font-size: 0.95rem;
+  margin-top: 0.2rem;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-group .form-text {
+  font-size: 0.95rem;
+  color: #888;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-check {
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-check input[type=checkbox] {
+  margin-right: 0.5rem;
+}
+.contact-multistep-form-wrapper .multi-step-form .step .form-check label {
+  font-size: 0.98rem;
+  color: #800020;
+}
+.contact-multistep-form-wrapper .multi-step-form .form-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.contact-multistep-form-wrapper .multi-step-form .form-nav button {
+  min-width: 120px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.contact-multistep-form-wrapper .multi-step-form .form-nav button.btn-primary {
+  background: #800020;
+  border-color: #800020;
+  color: #fff;
+}
+.contact-multistep-form-wrapper .multi-step-form .form-nav button.btn-primary:hover {
+  background: rgb(77, 0, 19.25);
+  border-color: rgb(77, 0, 19.25);
+}
+.contact-multistep-form-wrapper .multi-step-form .form-nav button.btn-outline-secondary {
+  border-color: #800020;
+  color: #800020;
+}
+.contact-multistep-form-wrapper .multi-step-form .form-nav button.btn-outline-secondary:hover {
+  background: #800020;
+  color: #fff;
+}
+.contact-multistep-form-wrapper .form-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: #f9f5f0;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+.contact-multistep-form-wrapper .form-success.hidden {
+  display: none;
+}
+.contact-multistep-form-wrapper .form-success.active {
+  display: flex;
+}
+.contact-multistep-form-wrapper .form-success .success-icon {
+  font-size: 2.5rem;
+  color: #4caf50;
+  margin-bottom: 1rem;
+}
+.contact-multistep-form-wrapper .form-success h4 {
+  color: #800020;
+  font-size: 1.3rem;
+  margin-bottom: 0.7rem;
+  font-family: "Playfair Display", serif;
+}
+.contact-multistep-form-wrapper .form-success p {
+  color: #333;
+  font-size: 1.05rem;
+  text-align: center;
+}
+/*# sourceMappingURL=contact-form-multistep.css.map */
