@@ -254,4 +254,75 @@ abstract class BaseController
             );
         }
     }
+    
+    /**
+     * Obtém um valor de $_POST ou $_GET (alias para getRequest)
+     * 
+     * @param string $key Chave do parâmetro
+     * @param mixed $default Valor padrão se não existir
+     * @return mixed
+     */
+    protected function input($key, $default = null)
+    {
+        return $this->getRequest($key, $default);
+    }
+    
+    /**
+     * Valida dados com regras
+     * 
+     * @param array $data Dados para validar
+     * @param array $rules Regras de validação
+     * @return array Array de erros (vazio se válido)
+     */
+    protected function validate($data, $rules)
+    {
+        $errors = [];
+        
+        foreach ($rules as $field => $ruleString) {
+            $rulesArray = explode('|', $ruleString);
+            $value = $data[$field] ?? null;
+            
+            foreach ($rulesArray as $rule) {
+                $ruleParts = explode(':', $rule);
+                $ruleName = $ruleParts[0];
+                $ruleValue = $ruleParts[1] ?? null;
+                
+                switch ($ruleName) {
+                    case 'required':
+                        if (empty($value)) {
+                            $errors[$field][] = sprintf(__('O campo %s é obrigatório.', 'wpframework'), $field);
+                        }
+                        break;
+                    case 'email':
+                        if (!empty($value) && !is_email($value)) {
+                            $errors[$field][] = sprintf(__('O campo %s deve ser um e-mail válido.', 'wpframework'), $field);
+                        }
+                        break;
+                    case 'min':
+                        if (!empty($value) && strlen($value) < (int)$ruleValue) {
+                            $errors[$field][] = sprintf(__('O campo %s deve ter no mínimo %d caracteres.', 'wpframework'), $field, $ruleValue);
+                        }
+                        break;
+                    case 'max':
+                        if (!empty($value) && strlen($value) > (int)$ruleValue) {
+                            $errors[$field][] = sprintf(__('O campo %s deve ter no máximo %d caracteres.', 'wpframework'), $field, $ruleValue);
+                        }
+                        break;
+                }
+            }
+        }
+        
+        return $errors;
+    }
+    
+    /**
+     * Sanitiza um valor (alias para sanitizeInput)
+     * 
+     * @param mixed $value Valor para sanitizar
+     * @return mixed
+     */
+    protected function sanitize($value)
+    {
+        return $this->sanitizeInput($value);
+    }
 }

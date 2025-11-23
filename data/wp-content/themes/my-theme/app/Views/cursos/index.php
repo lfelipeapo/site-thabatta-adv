@@ -45,7 +45,7 @@ $pagination = isset($pagination) ? $pagination : ['total' => 1, 'current' => 1];
                         <li>
                             <a href="<?php echo esc_url(get_term_link($categoria)); ?>">
                                 <?php echo esc_html($categoria->name); ?>
-                                <span class="count">(<?php echo esc_html($categoria->count); ?>)</span>
+                                <span class="count">(<?php echo esc_html((string) $categoria->count); ?>)</span>
                             </a>
                         </li>
                     <?php endforeach; ?>
@@ -127,7 +127,7 @@ $pagination = isset($pagination) ? $pagination : ['total' => 1, 'current' => 1];
         <div class="pagination">
             <?php
             echo paginate_links([
-                'base' => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
+                'base' => str_replace('999999999', '%#%', esc_url(get_pagenum_link(999999999))),
                 'format' => '?paged=%#%',
                 'current' => max(1, $pagination['current']),
                 'total' => $pagination['total'],

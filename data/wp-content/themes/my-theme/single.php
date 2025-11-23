@@ -35,7 +35,7 @@ get_header();
                                 <span class="byline">
                                     <?php _e('por', 'wpframework'); ?> 
                                     <span class="author vcard">
-                                        <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>">
+                                        <a href="<?php echo esc_url(get_author_posts_url((int) get_the_author_meta('ID'))); ?>">
                                             <?php echo get_the_author(); ?>
                                         </a>
                                     </span>

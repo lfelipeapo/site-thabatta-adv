@@ -16,7 +16,7 @@ class ApiController extends BaseController
      */
     public function __construct()
     {
-        parent::__construct();
+        // BaseController não tem construtor, então não precisa chamar parent
     }
 
     /**

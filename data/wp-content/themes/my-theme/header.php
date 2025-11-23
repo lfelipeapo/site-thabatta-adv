@@ -40,7 +40,7 @@ if (!defined('ABSPATH')) {
                 wp_nav_menu([
                     'theme_location' => 'primary',
                     'menu_id' => 'primary-menu',
-                    'container' => false,
+                    'container' => '',
                     'fallback_cb' => false,
                 ]);
                 ?>

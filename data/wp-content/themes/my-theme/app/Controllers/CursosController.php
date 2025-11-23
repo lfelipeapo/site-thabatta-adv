@@ -14,7 +14,7 @@ class CursosController extends BaseController
      */
     public function __construct()
     {
-        parent::__construct();
+        // BaseController não tem construtor, então não precisa chamar parent
     }
 
     /**
@@ -59,7 +59,8 @@ class CursosController extends BaseController
         
         // Verifica se o curso existe
         if (!$curso || $curso->post_type !== 'curso') {
-            return $this->notFound();
+            $this->notFound();
+            return;
         }
         
         // Obtém os campos ACF
@@ -90,7 +91,8 @@ class CursosController extends BaseController
         
         // Verifica se a categoria existe
         if (!$term) {
-            return $this->notFound();
+            $this->notFound();
+            return;
         }
         
         // Obtém os cursos da categoria

@@ -28,7 +28,7 @@ if (!defined('ABSPATH')) {
                     wp_nav_menu([
                         'theme_location' => 'footer',
                         'menu_id' => 'footer-menu',
-                        'container' => false,
+                        'container' => '',
                         'fallback_cb' => false,
                     ]);
                     ?>

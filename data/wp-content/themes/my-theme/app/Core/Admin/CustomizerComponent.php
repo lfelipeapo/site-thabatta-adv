@@ -47,7 +47,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control(new \WP_Customize_Image_Control($wp_customize, 'wpframework_logo', [
             'label'    => __('Logotipo', 'wpframework'),
             'section'  => 'wpframework_general_settings',
-            'settings' => 'wpframework_logo',
+            'setting' => 'wpframework_logo',
         ]));
         
         // Configuração para cores primárias
@@ -60,7 +60,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control(new \WP_Customize_Color_Control($wp_customize, 'wpframework_primary_color', [
             'label'    => __('Cor Primária', 'wpframework'),
             'section'  => 'wpframework_general_settings',
-            'settings' => 'wpframework_primary_color',
+            'setting' => 'wpframework_primary_color',
         ]));
         
         // Configuração para cores secundárias
@@ -73,7 +73,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control(new \WP_Customize_Color_Control($wp_customize, 'wpframework_secondary_color', [
             'label'    => __('Cor Secundária', 'wpframework'),
             'section'  => 'wpframework_general_settings',
-            'settings' => 'wpframework_secondary_color',
+            'setting' => 'wpframework_secondary_color',
         ]));
         
         // Configuração para informações de contato
@@ -86,7 +86,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_contact_email', [
             'label'    => __('E-mail de Contato', 'wpframework'),
             'section'  => 'wpframework_general_settings',
-            'settings' => 'wpframework_contact_email',
+            'setting' => 'wpframework_contact_email',
             'type'     => 'email',
         ]);
         
@@ -99,7 +99,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_contact_phone', [
             'label'    => __('Telefone de Contato', 'wpframework'),
             'section'  => 'wpframework_general_settings',
-            'settings' => 'wpframework_contact_phone',
+            'setting' => 'wpframework_contact_phone',
             'type'     => 'text',
         ]);
         
@@ -119,7 +119,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_facebook_url', [
             'label'    => __('URL do Facebook', 'wpframework'),
             'section'  => 'wpframework_social_media',
-            'settings' => 'wpframework_facebook_url',
+            'setting' => 'wpframework_facebook_url',
             'type'     => 'url',
         ]);
         
@@ -133,7 +133,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_instagram_url', [
             'label'    => __('URL do Instagram', 'wpframework'),
             'section'  => 'wpframework_social_media',
-            'settings' => 'wpframework_instagram_url',
+            'setting' => 'wpframework_instagram_url',
             'type'     => 'url',
         ]);
         
@@ -147,7 +147,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_twitter_url', [
             'label'    => __('URL do Twitter', 'wpframework'),
             'section'  => 'wpframework_social_media',
-            'settings' => 'wpframework_twitter_url',
+            'setting' => 'wpframework_twitter_url',
             'type'     => 'url',
         ]);
         
@@ -161,7 +161,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_linkedin_url', [
             'label'    => __('URL do LinkedIn', 'wpframework'),
             'section'  => 'wpframework_social_media',
-            'settings' => 'wpframework_linkedin_url',
+            'setting' => 'wpframework_linkedin_url',
             'type'     => 'url',
         ]);
         
@@ -175,7 +175,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_youtube_url', [
             'label'    => __('URL do YouTube', 'wpframework'),
             'section'  => 'wpframework_social_media',
-            'settings' => 'wpframework_youtube_url',
+            'setting' => 'wpframework_youtube_url',
             'type'     => 'url',
         ]);
         
@@ -195,7 +195,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_homepage_layout', [
             'label'    => __('Layout da Página Inicial', 'wpframework'),
             'section'  => 'wpframework_layout',
-            'settings' => 'wpframework_homepage_layout',
+            'setting' => 'wpframework_homepage_layout',
             'type'     => 'select',
             'choices'  => [
                 'default'  => __('Padrão', 'wpframework'),
@@ -215,7 +215,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_post_layout', [
             'label'    => __('Layout de Posts', 'wpframework'),
             'section'  => 'wpframework_layout',
-            'settings' => 'wpframework_post_layout',
+            'setting' => 'wpframework_post_layout',
             'type'     => 'select',
             'choices'  => [
                 'default'      => __('Padrão', 'wpframework'),
@@ -235,7 +235,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_page_layout', [
             'label'    => __('Layout de Páginas', 'wpframework'),
             'section'  => 'wpframework_layout',
-            'settings' => 'wpframework_page_layout',
+            'setting' => 'wpframework_page_layout',
             'type'     => 'select',
             'choices'  => [
                 'default'      => __('Padrão', 'wpframework'),
@@ -255,7 +255,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_archive_layout', [
             'label'    => __('Layout de Arquivos', 'wpframework'),
             'section'  => 'wpframework_layout',
-            'settings' => 'wpframework_archive_layout',
+            'setting' => 'wpframework_archive_layout',
             'type'     => 'select',
             'choices'  => [
                 'default'      => __('Padrão', 'wpframework'),
@@ -284,7 +284,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_footer_text', [
             'label'    => __('Texto do Rodapé', 'wpframework'),
             'section'  => 'wpframework_footer',
-            'settings' => 'wpframework_footer_text',
+            'setting' => 'wpframework_footer_text',
             'type'     => 'textarea',
         ]);
         
@@ -298,7 +298,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_footer_widgets', [
             'label'    => __('Exibir Widgets no Rodapé', 'wpframework'),
             'section'  => 'wpframework_footer',
-            'settings' => 'wpframework_footer_widgets',
+            'setting' => 'wpframework_footer_widgets',
             'type'     => 'checkbox',
         ]);
         
@@ -312,7 +312,7 @@ class CustomizerComponent extends BaseAdminComponent
         $wp_customize->add_control('wpframework_footer_widgets_columns', [
             'label'    => __('Número de Colunas de Widgets no Rodapé', 'wpframework'),
             'section'  => 'wpframework_footer',
-            'settings' => 'wpframework_footer_widgets_columns',
+            'setting' => 'wpframework_footer_widgets_columns',
             'type'     => 'number',
             'input_attrs' => [
                 'min'  => 1,
