@@ -40,7 +40,7 @@ abstract class BaseAdminComponent
         }
         
         if (static::$instance === null) {
-            /** @phpstan-var static */
+            /** @phpstan-var static $instance */
             static::$instance = new $class();
         }
         

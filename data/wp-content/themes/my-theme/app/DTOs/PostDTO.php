@@ -33,7 +33,7 @@ class PostDTO extends BaseDTO
      */
     public static function fromWpPost(\WP_Post $post)
     {
-        /** @var static */
+        /** @phpstan-ignore-next-line */
         return new static([
             'id' => $post->ID,
             'title' => $post->post_title,

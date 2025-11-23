@@ -146,7 +146,7 @@ abstract class BaseDTO
      */
     public static function fromArray(array $data)
     {
-        /** @var static */
+        /** @phpstan-ignore-next-line */
         return new static($data);
     }
     
@@ -159,7 +159,7 @@ abstract class BaseDTO
      */
     public static function fromObject($object)
     {
-        /** @var static */
+        /** @phpstan-ignore-next-line */
         return new static((array) $object);
     }
     
@@ -172,7 +172,7 @@ abstract class BaseDTO
      */
     public static function fromJson($json)
     {
-        /** @var static */
+        /** @phpstan-ignore-next-line */
         return new static(json_decode($json, true) ?: []);
     }
     

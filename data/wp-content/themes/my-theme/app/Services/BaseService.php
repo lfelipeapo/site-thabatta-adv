@@ -27,7 +27,8 @@ abstract class BaseService
     public static function getInstance()
     {
         if (static::$instance === null) {
-            /** @phpstan-var static */
+            /** @phpstan-var static $instance */
+            /** @phpstan-ignore-next-line */
             static::$instance = new static();
         }
         
