@@ -1,45 +1,78 @@
 {
-	local_certs
-	auto_https disable_redirects # This is required to avoid redirect loops when using a reverse proxy and cloud load balancers.
-	{$CADDY_GLOBAL_OPTIONS}
+  local_certs
+  auto_https disable_redirects
+  {$CADDY_GLOBAL_OPTIONS}
 
-	frankenphp {
-		#worker /path/to/your/worker.php
-		{$FRANKENPHP_CONFIG}
-	}
+  frankenphp {
+    {$FRANKENPHP_CONFIG}
+  }
 
-	# https://caddyserver.com/docs/caddyfile/directives#sorting-algorithm
-	order php_server before file_server
-	order php before file_server
-	order wp_cache before rewrite
-	order request_header before wp_cache
+  order php_server before file_server
+  order php before file_server
+  order wp_cache before rewrite
+  order request_header before wp_cache
 }
 
-{$CADDY_EXTRA_CONFIG}
+:80 {
+  redir https://dev.local{uri}
+}
 
-## Need to set all hosts with port for the cloud.
-# You may not have the hostname being called due to dynamic IPs and load balancers.
-# Allowing all hosts on port 80 for health checks, local dev & cases where the hostname is unknown.
-{$SERVER_NAME:localhost} {
-	@static {
-		file
-		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff
-	}
+dev.local {
+  root * /var/www/html/
+  encode br zstd gzip
 
-	root * /var/www/html/
-	encode br zstd gzip
-	
-	wp_cache {
-		loc {$CACHE_LOC:/var/www/html/wp-content/cache}
-		cache_response_codes {$CACHE_RESPONSE_CODES:2XX,404,405}
-		ttl {$TTL:6000}
-		purge_path {$PURGE_PATH:/__cache/purge}
-		purge_key {$PURGE_KEY}
-		bypass_home {$BYPASS_HOME:false}
-		bypass_path_prefixes {$BYPASS_PATH_PREFIXES:/wp-admin,/wp-json}
-	}
+  header {
+    Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    X-Frame-Options "SAMEORIGIN"
+    X-Content-Type-Options "nosniff"
+    X-XSS-Protection "1; mode=block"
+    Referrer-Policy "no-referrer-when-downgrade"
 
-	{$CADDY_SERVER_EXTRA_DIRECTIVES}
+    # ---------- ADICIONADO PARA REST API ----------
+    +Access-Control-Allow-Headers "Authorization, Content-Type"
+    +Access-Control-Expose-Headers "Authorization"
+    # Para garantir que Authorization passe SEMPRE
+    # (opcional, só se for usar REST externamente)
+    +Access-Control-Allow-Origin *
+  }
 
-	php_server
+  respond /xmlrpc.php 403
+  respond /wp-trackback.php 403
+
+  @loginPOST {
+    method POST
+    path /wp-login.php
+  }
+
+  @enumUsers {
+    path_regexp enum ^/\?author=\d+
+  }
+  respond @enumUsers 404
+
+  @restUsers {
+    method GET
+    path /wp-json/wp/v2/users
+  }
+  respond @restUsers 403
+
+  @denyConfig {
+    path /composer.json /composer.lock /wp-config.php /wp-config-docker.php /readme.html /.htaccess
+  }
+  respond @denyConfig 404
+
+  wp_cache {
+    loc {$CACHE_LOC:/var/www/html/wp-content/cache}
+    cache_response_codes {$CACHE_RESPONSE_CODES:2XX,404,405}
+    ttl {$TTL:6000}
+    purge_path {$PURGE_PATH:/__cache/purge}
+    purge_key {$PURGE_KEY}
+    bypass_home {$BYPASS_HOME:false}
+    bypass_path_prefixes {$BYPASS_PATH_PREFIXES:/wp-admin,/wp-json}
+  }
+
+  {$CADDY_SERVER_EXTRA_DIRECTIVES}
+
+  php_server
+  file_server
+  tls /certs-dev-local/dev.local.crt /certs-dev-local/dev.local.key
 }

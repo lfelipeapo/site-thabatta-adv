@@ -1,0 +1,161 @@
+# Translation of Plugins - ACF Quick Edit Fields - Stable (latest release) in Portuguese (Portugal)
+# This file is distributed under the same license as the Plugins - ACF Quick Edit Fields - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-07-08 14:49:38+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: pt\n"
+"Project-Id-Version: Plugins - ACF Quick Edit Fields - Stable (latest release)\n"
+
+#: include/ACFQuickEdit/Fields/Traits/InputCheckbox.php:39
+msgid " Toggle All"
+msgstr "Alternar tudo"
+
+#. Translators: 1: ACF Pro URL, 2: plugins page url
+#: include/ACFQuickEdit/Admin/Admin.php:250
+msgid "The <strong>ACF QuickEdit Fields</strong> plugin requires <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href=\"%2$s\">plugins page</a>."
+msgstr "O plugin <strong>ACF QuickEdit Fields</strong> requer a <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">versão 5.6 ou mais recente do ACF</a>. Pode desactivá-lo ou desinstalá-lo na <a href=\"%2$s\">página de plugins</a>."
+
+#. Author of the plugin
+#: index.php
+msgid "Jörn Lund"
+msgstr "Jörn Lund"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:210
+msgid "Bulk Edit"
+msgstr "Edição por lotes"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:199
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:216
+msgid "Disabled"
+msgstr "Desactivado"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:198
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:215
+msgid "Enabled"
+msgstr "Activado"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:193
+msgid "QuickEdit"
+msgstr "Edição rápida"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:168
+msgid "Editing"
+msgstr "Editar"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:112
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:133
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:137
+msgid "Column Weight"
+msgstr "Peso da coluna"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:101
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:123
+msgid "Make this column sortable"
+msgstr "Tornar coluna ordenável"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:100
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:118
+msgid "Sortable Column"
+msgstr "Coluna ordenável"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:110
+msgid "Show column in list tables"
+msgstr "Mostrar coluna nas listas"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:89
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:105
+msgid "Show Column"
+msgstr "Mostrar coluna"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:90
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:89
+msgid "Show a column in the posts list table"
+msgstr "Mostrar coluna na lista de conteúdos"
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:85
+msgid "Column View"
+msgstr "Visão em modo coluna"
+
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:75
+msgid "(no title)"
+msgstr "(sem título)"
+
+#: include/ACFQuickEdit/Fields/Traits/InputCheckbox.php:72
+msgid "Add Choice"
+msgstr "Adicionar opção"
+
+#: include/ACFQuickEdit/Fields/Traits/InputSelect.php:53
+msgid "— Select —"
+msgstr "— Seleccionar —"
+
+#: include/ACFQuickEdit/Fields/Field.php:361
+msgid "Do not change"
+msgstr "Não modificar"
+
+#: include/ACFQuickEdit/Fields/FileField.php:44
+msgid "Remove File"
+msgstr "Remover ficheiro"
+
+#: include/ACFQuickEdit/Fields/FileField.php:43
+msgid "Select File"
+msgstr "Seleccionar ficheiro"
+
+#: include/ACFQuickEdit/Fields/LinkField.php:57
+msgid "Remove Link"
+msgstr "Remover ligação"
+
+#: include/ACFQuickEdit/Fields/LinkField.php:56
+msgid "Select Link"
+msgstr "Seleccionar ligação"
+
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:61
+msgid "No"
+msgstr "Não"
+
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:60
+msgid "Yes"
+msgstr "Sim"
+
+#: include/ACFQuickEdit/Fields/Field.php:492
+#: include/ACFQuickEdit/Fields/Traits/InputRadio.php:41
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:38
+msgid "(No value)"
+msgstr "(Sem valor)"
+
+#: include/ACFQuickEdit/Ajax/AjaxHandler.php:161
+msgid "Insufficient Permission"
+msgstr "Permissões insuficientes"
+
+#: include/ACFQuickEdit/Ajax/AjaxHandler.php:156
+msgid "Nonce invalid"
+msgstr "Nonce inválido"
+
+#. Author URI of the plugin
+#: index.php
+msgid "https://github.com/mcguffin"
+msgstr "https://github.com/mcguffin"
+
+#. Description of the plugin
+#: index.php
+msgid "Show Advanced Custom Fields in post list table. Edit field values in Quick Edit and / or Bulk edit."
+msgstr "Mostra os campos personalizados do ACF na visualização da lista de artigos (e outros conteúdos). Permite editar os valores dos campos na Edição rápida e/ou na Edição por lotes."
+
+#. Plugin URI of the plugin
+#: index.php
+msgid "https://github.com/mcguffin/acf-quickedit-fields"
+msgstr "https://github.com/mcguffin/acf-quickedit-fields"
+
+#. Plugin Name of the plugin
+#: index.php
+msgid "ACF QuickEdit Fields"
+msgstr "ACF QuickEdit Fields"
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:113
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:134
+msgid "Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position."
+msgstr "As colunas com peso maior são colocadas à direita. A coluna mais à esquerda do WordPress tem peso <em>0</em>, a seguinte tem peso <em>100</em> e assim por diante. Deixe vazio para a coluna ocupar a posição mais à direita possível."

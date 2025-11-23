@@ -49,7 +49,7 @@ thabatta-adv-theme/
 │   ├── security-features.php
 │   ├── template-functions.php
 │   ├── template-tags.php
-│   └── web-components.php
+│   └── generate-admin-css.php
 ├── src/
 │   ├── js/
 │   └── scss/

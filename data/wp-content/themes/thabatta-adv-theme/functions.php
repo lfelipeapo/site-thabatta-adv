@@ -5,6 +5,10 @@
  * @package Thabatta_Advocacia
  */
 
+// Debug
+error_reporting(E_ALL);
+ini_set('display_errors', 1);   
+
 if (!defined('ABSPATH')) {
     exit; // Saída direta se acessado diretamente
 }
@@ -76,6 +80,17 @@ function thabatta_load_theme_textdomain() {
     load_theme_textdomain('thabatta-adv', THABATTA_THEME_DIR . '/languages');
 }
 add_action('init', 'thabatta_load_theme_textdomain', 100);
+
+// Corrigir aviso de carregamento precoce de tradução do jwt-auth
+add_action('init', function() {
+    if ( function_exists('load_plugin_textdomain') ) {
+        load_plugin_textdomain(
+            'jwt-auth', 
+            false, 
+            WP_PLUGIN_DIR . '/jwt-auth/languages'
+        );
+    }
+}, 5);
 
 /**
  * Registrar e carregar scripts e estilos
@@ -636,16 +651,42 @@ function thabatta_excerpt_more($more)
 }
 add_filter('excerpt_more', 'thabatta_excerpt_more');
 
-
 /**
- * Adicionar suporte para SVG no uploader de mídia
+ * Permitir upload de mais tipos de arquivo
  */
-function thabatta_mime_types($mimes)
-{
+function thabatta_mime_types($mimes) {
+    // Adicionar suporte para SVG
     $mimes['svg'] = 'image/svg+xml';
+    $mimes['svgz'] = 'image/svg+xml';
+    
+    // Adicionar suporte para WebP
+    $mimes['webp'] = 'image/webp';
+    
+    // Adicionar suporte para documentos
+    $mimes['doc'] = 'application/msword';
+    $mimes['docx'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    $mimes['xls'] = 'application/vnd.ms-excel';
+    $mimes['xlsx'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    $mimes['ppt'] = 'application/vnd.ms-powerpoint';
+    $mimes['pptx'] = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+    
+    // Adicionar suporte para PDF
+    $mimes['pdf'] = 'application/pdf';
+    
+    // Adicionar suporte para arquivos de texto
+    $mimes['txt'] = 'text/plain';
+    
     return $mimes;
 }
 add_filter('upload_mimes', 'thabatta_mime_types');
+
+/**
+ * Aumentar limite de upload
+ */
+function thabatta_upload_size_limit($size) {
+    return 64 * 1024 * 1024; // 64MB em bytes
+}
+add_filter('upload_size_limit', 'thabatta_upload_size_limit');
 
 /**
  * Corrigir exibição de SVG no painel administrativo
@@ -798,3 +839,104 @@ function thabatta_localize_scripts() {
     ));
 }
 add_action('wp_enqueue_scripts', 'thabatta_localize_scripts', 20);
+
+// 1) registra a rewrite rule
+add_action('init', function () {
+    add_rewrite_tag('%wpai_admin_path%', '([^&]+)');
+    add_rewrite_rule('^admin/(.+)/?$', 'index.php?wpai_admin_path=$matches[1]', 'top');
+});
+
+// 2) expõe a query var
+add_filter('query_vars', function ($vars) {
+    $vars[] = 'wpai_admin_path';
+    return $vars;
+});
+
+// 3) antes do WP buscar posts, altera o main query
+add_action('pre_get_posts', function (\WP_Query $query) {
+    if ( is_admin() || ! $query->is_main_query() ) {
+        return;
+    }
+
+    $path = get_query_var('wpai_admin_path');
+    if ( empty($path) ) {
+        return;
+    }
+
+    $slug = basename( trim($path, '/') );
+
+    $query->set('name',      $slug);
+    $query->set('post_type', 'post');
+
+    // ajusta flags de template
+    $query->is_single   = true;
+    $query->is_singular = true;
+    $query->is_home     = false;
+    $query->is_archive  = false;
+    $query->is_404      = false;
+});
+
+// 4) no carregamento do template, força a admin‐bar
+add_action('template_redirect', function(){
+    if ( get_query_var('wpai_admin_path') ) {
+        // pra garantir que o WP injete os estilos/js da barra
+        show_admin_bar(true);
+    }
+});
+
+add_filter('allowed_http_origins', function (array $origins) {
+    $origins[] = 'oaidalleapiprodscus.blob.core.windows.net';
+    return $origins;
+});
+
+/**
+ * Remove os botões de compartilhamento do Jetpack apenas em páginas de blog e arquivos
+ */
+function thabatta_remove_jetpack_sharing() {
+    // Verifica se é uma página de blog ou arquivo
+    if (is_home() || is_archive() || is_category() || is_tag() || is_author() || is_date()) {
+        remove_filter('the_content', 'sharing_display', 19);
+        remove_filter('the_excerpt', 'sharing_display', 19);
+        
+        if (class_exists('Jetpack_Likes')) {
+            remove_filter('the_content', array(Jetpack_Likes::init(), 'post_likes'), 30, 1);
+        }
+    }
+}
+add_action('loop_start', 'thabatta_remove_jetpack_sharing');
+
+/**
+ * Ajusta o número de posts por página em diferentes tipos de arquivo
+ */
+function thabatta_posts_per_page($query) {
+    // Não afeta queries do admin
+    if (!is_admin() && $query->is_main_query()) {
+        // Página de blog
+        if (is_page_template('page-blog.php')) {
+            $query->set('posts_per_page', 10);
+        }
+        // Arquivos, categorias e outras páginas de arquivo
+        elseif (is_archive() || is_category() || is_tag() || is_author() || is_date()) {
+            $query->set('posts_per_page', 5);
+        }
+    }
+}
+add_action('pre_get_posts', 'thabatta_posts_per_page');
+
+// Enfileira o JS do formulário multistep de contato apenas na página de contato
+add_action('wp_enqueue_scripts', function() {
+    if (is_page_template('page-contato.php')) {
+        wp_enqueue_script(
+            'thabatta-contact-form-multistep',
+            get_template_directory_uri() . '/js/contact-form-multistep.js',
+            array('jquery'),
+            filemtime(get_template_directory() . '/js/contact-form-multistep.js'),
+            true
+        );
+        // Passa o ajaxUrl para o JS do formulário de contato
+        wp_localize_script('thabatta-contact-form-multistep', 'thabattaData', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('thabatta_consultation_nonce'),
+        ));
+    }
+}, 101);

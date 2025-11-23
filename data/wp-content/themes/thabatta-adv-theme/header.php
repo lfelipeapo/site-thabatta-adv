@@ -67,7 +67,7 @@
                 <?php endif; ?>
 
                 <div class="header-buttons">
-                    <a href="<?php echo esc_url(get_theme_mod('header_contact_link', '#')); ?>" class="btn-contact">
+                    <a href="<?php echo esc_url(get_theme_mod('header_contact_link', '/contato')); ?>" class="btn-contact">
                         <i class="fas fa-phone-alt"></i>
                         <span><?php echo esc_html(get_theme_mod('header_contact_text', __('Contato', 'thabatta-adv'))); ?></span>
                     </a>

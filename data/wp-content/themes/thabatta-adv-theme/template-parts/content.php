@@ -52,11 +52,6 @@
                 the_content();
             else :
                 the_excerpt();
-            ?>
-                <a href="<?php the_permalink(); ?>" class="read-more">
-                    <?php esc_html_e('Leia mais', 'thabatta-adv'); ?> <i class="fas fa-arrow-right"></i>
-                </a>
-            <?php
             endif;
             ?>
         </div><!-- .entry-content -->

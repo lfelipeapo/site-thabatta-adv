@@ -20,14 +20,6 @@ get_header();
 
                     get_template_part('template-parts/content', 'single');
 
-                    // Navegação de posts anterior/próximo
-                    the_post_navigation(
-                        array(
-                            'prev_text' => '<span class="nav-subtitle"><i class="fas fa-arrow-left"></i> ' . esc_html__('Anterior:', 'thabatta-adv') . '</span> <span class="nav-title">%title</span>',
-                            'next_text' => '<span class="nav-subtitle">' . esc_html__('Próximo:', 'thabatta-adv') . ' <i class="fas fa-arrow-right"></i></span> <span class="nav-title">%title</span>',
-                        )
-                    );
-
                     // Se comentários estão abertos ou temos pelo menos um comentário, carregue o template de comentários.
                     if (comments_open() || get_comments_number()) :
                         comments_template();

@@ -1,0 +1,21 @@
+{
+    "name": "wpframework/my-theme",
+    "description": "Uma estrutura MVC para WordPress usando paradigma orientado a objetos",
+    "type": "wordpress-theme",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WPFramework",
+            "email": "info@wpframework.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "WPFramework\\": "app/"
+        }
+    }
+}

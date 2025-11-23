@@ -22,11 +22,16 @@ function thabatta_security_headers() {
     // Proteção XSS
     header('X-XSS-Protection: 1; mode=block');
     
-    // Política de segurança de conteúdo (CSP) - TEMPORARIAMENTE COMENTADA PARA TESTE
-    /*
-    $csp = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com *.google.com *.google-analytics.com *.googletagmanager.com *.jquery.com *.cloudflare.com cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' *.googleapis.com *.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com *.gravatar.com; font-src 'self' data: *.gstatic.com *.googleapis.com cdnjs.cloudflare.com; connect-src 'self' *.google-analytics.com *.googleapis.com; frame-src 'self' *.google.com *.youtube.com; object-src 'none'";
+    // Política de segurança de conteúdo (CSP) - agora liberando c0.wp.com e s0.wp.com
+    $csp = "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: https:; "
+        . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://c0.wp.com https://s0.wp.com *.googleapis.com *.gstatic.com *.google.com *.google-analytics.com *.googletagmanager.com *.jquery.com *.cloudflare.com cdnjs.cloudflare.com unpkg.com; "
+        . "style-src 'self' 'unsafe-inline' https://c0.wp.com https://s0.wp.com *.googleapis.com *.gstatic.com cdnjs.cloudflare.com unpkg.com; "
+        . "img-src 'self' data: https: https://c0.wp.com https://s0.wp.com *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com *.gravatar.com; "
+        . "font-src 'self' data: https: *.gstatic.com *.googleapis.com cdnjs.cloudflare.com; "
+        . "connect-src 'self' *.google-analytics.com *.googleapis.com; "
+        . "frame-src 'self' *.google.com *.youtube.com; "
+        . "object-src 'none'";
     header("Content-Security-Policy: $csp");
-    */
     
     // Referrer Policy
     header('Referrer-Policy: strict-origin-when-cross-origin');
@@ -281,14 +286,16 @@ function thabatta_check_array_for_sql_injection($array, $patterns, $parent_key =
 /**
  * Proteger uploads de arquivos
  */
-/* // TEMPORARIAMENTE COMENTADO PARA TESTE
 function thabatta_secure_upload_files($file) {
     // Verificar extensão do arquivo
     $file_name = isset($file['name']) ? $file['name'] : '';
     $file_type = isset($file['type']) ? $file['type'] : '';
     
     // Lista de extensões permitidas
-    $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt', 'svg'); // Adicione SVG se necessário
+    $allowed_extensions = array(
+        'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 
+        'xls', 'xlsx', 'txt', 'svg', 'webp', 'bmp', 'tiff', 'tif', 'ico'
+    );
     
     // Obter extensão do arquivo
     $ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
@@ -303,7 +310,11 @@ function thabatta_secure_upload_files($file) {
         'image/jpeg',
         'image/png',
         'image/gif',
-        'image/svg+xml', // Adicione SVG MIME type
+        'image/svg+xml',
+        'image/webp',
+        'image/bmp',
+        'image/tiff',
+        'image/x-icon',
         'application/pdf',
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -321,7 +332,6 @@ function thabatta_secure_upload_files($file) {
     return $file;
 }
 add_filter('wp_handle_upload_prefilter', 'thabatta_secure_upload_files');
-*/
 
 /**
  * Bloquear acesso a arquivos sensíveis
@@ -349,21 +359,6 @@ function thabatta_block_sensitive_files() {
     }
 }
 add_action('init', 'thabatta_block_sensitive_files');
-
-/**
- * Adicionar proteção contra CSRF
- */
-/* Comentado: Redundante/Conflitante com nonces do admin
-function thabatta_csrf_protection() {
-    if (is_admin() && current_user_can('edit_posts')) {
-        // Verificar nonce para ações de administração
-        if (!empty($_POST) && !isset($_POST['_wpnonce'])) {
-            wp_die(__('Verificação de segurança falhou. Por favor, tente novamente.', 'thabatta-adv'));
-        }
-    }
-}
-add_action('admin_init', 'thabatta_csrf_protection');
-*/
 
 /**
  * Adicionar proteção contra ataques de força bruta no login
@@ -402,18 +397,6 @@ add_filter('the_content', 'thabatta_protect_against_xss');
 add_filter('the_title', 'thabatta_protect_against_xss');
 add_filter('comment_text', 'thabatta_protect_against_xss');
 add_filter('widget_text_content', 'thabatta_protect_against_xss');
-
-/**
- * Proteger contra ataques de Cross-Site Request Forgery (CSRF)
- */
-/* Comentado: Redundante/Conflitante com nonces do admin
-function thabatta_protect_against_csrf() {
-    if (is_admin() && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        check_admin_referer('thabatta_admin_action');
-    }
-}
-add_action('admin_init', 'thabatta_protect_against_csrf');
-*/
 
 /**
  * Adicionar proteção contra ataques de clickjacking
@@ -477,11 +460,11 @@ function thabatta_login_failed($username) {
         $failed_login_count++;
     }
     
-    set_transient('failed_login_count_' . $ip, $failed_login_count, 3600); // 1 hora
+    set_transient('failed_login_count_' . $ip, $failed_login_count, 1); // 1 hora
     
     if ($failed_login_count >= 5) {
         // Bloquear IP por 1 hora
-        set_transient('ip_blocked_' . $ip, 1, 3600);
+        set_transient('ip_blocked_' . $ip, 1, 1);
     }
 }
 add_action('wp_login_failed', 'thabatta_login_failed');

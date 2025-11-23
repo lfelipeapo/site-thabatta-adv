@@ -22,3 +22,28 @@ node_modules
 node_modules/*
 
 
+data/wp-content/cache/sidekick-cache/*
+data/wp-content/cache/sidekick-cache/br::+/*
+data/wp-content/cache/sidekick-cache/br::+/0
+data/wp-content/debug.log
+data/wp-content/uploads/wc-logs/*
+data/sqlite/.ht.sqlite
+data/sqlite/.ht.sqlite
+data/sqlite/
+data/sqlite.backup/
+data/sqlite/.htaccess
+data/sqlite/index.php
+data/sqlite.backup/index.php
+data/sqlite.backup/.htaccess
+data/sqlite.backup/index.php
+data/sqlite.backup/index.php
+data/wp-content/database/.htaccess
+data/sqlite/.htaccess
+data/sqlite/.htaccess
+data/wp-content/database/database.sqlite
+data/wp-content/database/backups/database.sqlite.backup
+data/wp-content/debug.log
+data/sqlite/index.php
+data/wp-content/database/index.php
+data/sqlite/index.php
+data/sqlite/.htaccess

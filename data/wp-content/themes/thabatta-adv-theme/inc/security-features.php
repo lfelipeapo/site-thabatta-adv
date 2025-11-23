@@ -626,7 +626,7 @@ class Thabatta_Security_Features
         // Obter configurações
         $settings = get_option('thabatta_security_settings', array(
             'login_attempts_limit' => 5,
-            'login_block_duration' => 3600,
+            'login_block_duration' => 1,
             'enable_security_headers' => 1,
             'enable_csrf_protection' => 1,
             'enable_xss_protection' => 1,

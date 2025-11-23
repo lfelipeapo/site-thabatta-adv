@@ -27,11 +27,15 @@ get_header(); ?>
 
         <?php
         // Paginação
+        echo '<div class="pagination">';
         the_posts_pagination(array(
             'mid_size'  => 2,
-            'prev_text' => __('« Anterior', 'thabatta-adv'),
-            'next_text' => __('Próximo »', 'thabatta-adv'),
+            'prev_text' => '<i class="fas fa-arrow-left"></i> ' . esc_html__('Anterior', 'thabatta-adv'),
+            'next_text' => esc_html__('Próximo', 'thabatta-adv') . ' <i class="fas fa-arrow-right"></i>',
+            'screen_reader_text' => ' ',
+            'aria_label' => __('Navegação de membros da equipe', 'thabatta-adv'),
         ));
+        echo '</div>';
 ?>
 
     <?php else : ?>

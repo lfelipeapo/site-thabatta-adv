@@ -46,6 +46,8 @@ Tags: advocacia, direito, elegante, responsivo, bordo, dourado
 @use 'components/cta'; // Usar @use
 @use 'components/testimonials'; // Usar @use
 @use 'components/info-cards'; // Usar @use
+@use 'components/pagination';
+@use 'components/contact-form-multistep'; // Componente do formulário multi-etapas
 
 // Páginas
 @use 'pages/home'; // Usar @use

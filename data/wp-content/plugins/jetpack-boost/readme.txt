@@ -2,10 +2,10 @@
 Contributors: automattic, xwp, adnan007, bjorsch, danwalmsley, davidlonjon, dilirity, donncha, ebinnion, exelero, jeherve, jpolakovic, karthikbhatb, kraftbj, lsarsfield, luchad0res, pyronaur, rheinardkorf, scruffian, thingalon
 Donate link: https://automattic.com
 Tags: performance, speed, web vitals, critical css, cache
-Requires at least: 6.6
+Requires at least: 6.7
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 3.13.0
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -183,23 +183,27 @@ If you run into compatibility issues, please do let us know. You can drop us a l
 2. Jetpack Boost Speed Improvement
 
 == Changelog ==
-### 3.13.0 - 2025-04-01
-#### Added
-- Cornerstone Pages: Add speculation rules toggle to prerender those URLs
-- Improve the onboarding experience of Jetpack guiding the users through a new onboarding process.
-- Speculation rules: Add Cornerstone Pages to the WP speculation rules for displaying
-
+### 4.0.0 - 2025-05-19
 #### Changed
-- General: Update interstitial modal secondary button to use URL from Jetpack Redirect
-- Critical CSS: Improve reliability of generation by running hooks after saving the state.
-- General: Indicate compatibility with the upcoming version of WordPress - 6.8.
-- General: Update Class/Interface file names to adhere to WordPress Convention
-- UI: Show module loading errors with details.
+- General: Run feature activation routines for active features when the plugin is deactivated, then reactivated.
+- Dashboard: Indicate all external links with External icon.
+- Page Cache: Improve compatibility with sites using Endurance Page Cache.
+- My Jetpack: Update the onboarding UI, changing it to a single button.
+- UI: Updated currency formatting.
 - Update package dependencies.
 
+#### Removed
+- General: Update minimum WordPress version to 6.7.
+
 #### Fixed
-- Admin Menu: Ensure Akismet menu item display alongside standalone.
-- Misc: Fix incorrectly registering plugin text domain.
+- Dashboard: Properly display notice to purchase a plan in Critical CSS modal.
+- Cornerstone Pages: Avoid fatal errors when no pages are set.
+- Page Cache: Handle garbage collection through cron-job on front-end update.
+- Concatenate JS/CSS: Gracefully handle if there are too many files to concat.
+- Concatenate JS/CSS: Avoid fatal errors on feature activation.
+- Concatenate JS: Ensure compatibility with the WooCommerce Bookings plugin.
+- My Jetpack: Fix social login getting stuck when email input is not empty.
+- Performance: Improve internal object caching.
 
 --------
 

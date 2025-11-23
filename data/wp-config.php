@@ -39,16 +39,6 @@ if (!function_exists('getenv_docker')) {
     }
 }
 
-// ** Database settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define('DB_NAME', getenv_docker('WORDPRESS_DB_NAME', 'wordpress'));
-
-/** Database username */
-define('DB_USER', getenv_docker('WORDPRESS_DB_USER', 'example username'));
-
-/** Database password */
-define('DB_PASSWORD', getenv_docker('WORDPRESS_DB_PASSWORD', 'example password'));
-
 /**
  * Docker image fallback values above are sourced from the official WordPress installation wizard:
  * https://github.com/WordPress/WordPress/blob/1356f6537220ffdc32b9dad2a6cdbe2d010b7a88/wp-admin/setup-config.php#L224-L238
@@ -56,7 +46,25 @@ define('DB_PASSWORD', getenv_docker('WORDPRESS_DB_PASSWORD', 'example password')
  */
 
 /** Database hostname */
-define('DB_HOST', getenv_docker('WORDPRESS_DB_HOST', 'db'));
+
+// Define o arquivo do banco de dados SQLite
+
+define('DB_DIR', __DIR__ . '/wp-content/database');
+define('DB_FILE', 'database.sqlite');
+define('DB_NAME', DB_FILE);
+define('DB_USER', '');
+define('DB_PASSWORD', '');
+define('DB_HOST', '');
+
+// Garante que o diretório do banco de dados existe
+if (!file_exists(__DIR__ . '/wp-content/database')) {
+    mkdir(__DIR__ . '/wp-content/database', 0777, true);
+}
+
+// Garante que o arquivo do banco de dados tem as permissões corretas
+if (file_exists(__DIR__ . '/wp-content/database/database.sqlite')) {
+    chmod(__DIR__ . '/wp-content/database/database.sqlite', 0666);
+}
 
 /** Database charset to use in creating database tables. */
 define('DB_CHARSET', getenv_docker('WORDPRESS_DB_CHARSET', 'utf8'));
@@ -93,7 +101,7 @@ define('NONCE_SALT', getenv_docker('WORDPRESS_NONCE_SALT', '002839996e41e470504a
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
+$table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'adv_');
 
 /**
  * For developers: WordPress debugging mode.
@@ -107,9 +115,31 @@ $table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
-define('WP_DEBUG', !!getenv_docker('WORDPRESS_DEBUG', ''));
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', true);
+define('SCRIPT_DEBUG', true);
+define('SAVEQUERIES', true);
+
+// Configurações de erro
+@ini_set('display_errors', 1);
+@ini_set('error_reporting', E_ALL);
+error_reporting(E_ALL);
+
+// Aumentar limites de memória e tempo
+@ini_set('memory_limit', '512M');
+set_time_limit(300);
+
+// No wp-config.php
+define('MULTISITE', true);
+define('SUBDOMAIN_INSTALL', false);
+define('DOMAIN_CURRENT_SITE', 'dev.local');
+define('PATH_CURRENT_SITE', '/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);
 
 /* Add any custom values between this line and the "stop editing" line. */
+define('DISABLE_WP_CRON', true);
 
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
 // see also https://wordpress.org/support/article/administration-over-ssl/#using-a-reverse-proxy
@@ -129,6 +159,18 @@ if (!defined('ABSPATH')) {
     define('ABSPATH', __DIR__ . '/');
 }
 
+// Suprimir avisos específicos
+if (!function_exists('suppress_jwt_auth_notice')) {
+    function suppress_jwt_auth_notice() {
+        remove_action('admin_notices', array('JWT_AUTH_Public', 'admin_notices'));
+    }
+}
+
+// Adiciona o hook somente se a função add_action existir (não em WP-CLI)
+if (function_exists('add_action') && !defined('WP_CLI')) {
+    add_action('init', 'suppress_jwt_auth_notice', 1);
+}
+
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
 
@@ -143,12 +185,3 @@ define('FTP_PASS', 'password'); // Senha configurada no serviço SFTP
 define('FTP_BASE', '/home/wp-user/data'); // Diretório raiz do SFTP
 define('FTP_CONTENT_DIR', '/home/wp-user/data/wp-content'); // Diretório wp-content
 define('FTP_PLUGIN_DIR', '/home/wp-user/data/wp-content/plugins'); // Diretório de plugins
-
-@ini_set('display_errors', 1);
-@ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-set_time_limit(120);
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-
-
-define('WP_MEMORY_LIMIT', '512M');
-set_time_limit(300);
