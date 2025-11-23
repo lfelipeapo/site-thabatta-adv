@@ -89,10 +89,12 @@ class SessionManager
             $httponly = true;
             
             // Define os parâmetros do cookie
+            $cookiepath = defined('COOKIEPATH') ? COOKIEPATH : '/';
+            $cookiedomain = defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '';
             session_set_cookie_params([
                 'lifetime' => 0,
-                'path' => COOKIEPATH,
-                'domain' => COOKIE_DOMAIN,
+                'path' => $cookiepath,
+                'domain' => $cookiedomain,
                 'secure' => $secure,
                 'httponly' => $httponly,
                 'samesite' => 'Lax'

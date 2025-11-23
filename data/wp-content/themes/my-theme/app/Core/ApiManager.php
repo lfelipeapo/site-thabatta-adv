@@ -216,7 +216,7 @@ class ApiManager
      * Verifica as permissões da rota
      * 
      * @param \WP_REST_Request $request Requisição REST
-     * @return bool|WP_Error
+     * @return bool|\WP_Error
      */
     public function checkPermissions($request)
     {
@@ -273,7 +273,13 @@ class ApiManager
         }
         
         // Obtém o callback da rota
-        $callback = $request->get_route()['wpframework_callback'];
+        $route_attrs = $request->get_attributes();
+        $callback = $route_attrs['wpframework_callback'] ?? null;
+        
+        // Se não houver callback, retorna erro
+        if (!$callback) {
+            return self::error('Rota não encontrada', 404, 'not_found');
+        }
         
         // Executa o callback
         if (is_callable($callback)) {

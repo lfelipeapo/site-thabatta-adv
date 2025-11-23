@@ -46,7 +46,7 @@ class PostModel
      * Cria um novo post
      * 
      * @param array $data Dados do post
-     * @return int|WP_Error ID do post criado ou objeto de erro
+     * @return int|\WP_Error ID do post criado ou objeto de erro
      */
     public function create($data)
     {
@@ -66,7 +66,7 @@ class PostModel
      * 
      * @param int $id ID do post
      * @param array $data Dados do post
-     * @return int|WP_Error ID do post atualizado ou objeto de erro
+     * @return int|\WP_Error ID do post atualizado ou objeto de erro
      */
     public function update($id, $data)
     {

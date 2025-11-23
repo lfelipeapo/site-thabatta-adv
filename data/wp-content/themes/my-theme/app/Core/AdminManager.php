@@ -368,7 +368,8 @@ class AdminManager
     public function registerTinyMCEPlugins($plugins)
     {
         // Adiciona plugins personalizados
-        $plugins['wpframework_tinymce'] = WPFRAMEWORK_URI . '/public/js/admin/tinymce-plugins.js';
+        $wpframework_uri = defined('WPFRAMEWORK_URI') ? WPFRAMEWORK_URI : get_template_directory_uri();
+        $plugins['wpframework_tinymce'] = $wpframework_uri . '/public/js/admin/tinymce-plugins.js';
         
         return $plugins;
     }
@@ -439,7 +440,7 @@ class AdminManager
             'menu_title' => $title,
             'capability' => 'manage_options',
             'menu_slug' => $slug,
-            'callback' => function() use ($title, $slug, $modules) {
+            'callback' => function() use ($title, $modules) {
                 // Renderiza a página modular
                 echo '<div class="wrap">';
                 echo '<h1>' . esc_html($title) . '</h1>';

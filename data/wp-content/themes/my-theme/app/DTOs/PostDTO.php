@@ -29,9 +29,11 @@ class PostDTO extends BaseDTO
      * 
      * @param \WP_Post $post Objeto post do WordPress
      * @return PostDTO
+     * @phpstan-return static
      */
     public static function fromWpPost(\WP_Post $post)
     {
+        /** @var static */
         return new static([
             'id' => $post->ID,
             'title' => $post->post_title,
@@ -58,27 +60,27 @@ class PostDTO extends BaseDTO
     public function toWpPostArray()
     {
         $data = [
-            'post_title' => $this->title,
-            'post_content' => $this->content,
-            'post_status' => $this->status ?? 'publish',
-            'post_type' => $this->type ?? 'post',
+            'post_title' => $this->get('title', ''),
+            'post_content' => $this->get('content', ''),
+            'post_status' => $this->get('status', 'publish'),
+            'post_type' => $this->get('type', 'post'),
         ];
         
         // Adiciona campos opcionais se estiverem definidos
-        if (isset($this->id)) {
-            $data['ID'] = $this->id;
+        if ($this->has('id')) {
+            $data['ID'] = $this->get('id');
         }
         
-        if (isset($this->excerpt)) {
-            $data['post_excerpt'] = $this->excerpt;
+        if ($this->has('excerpt')) {
+            $data['post_excerpt'] = $this->get('excerpt');
         }
         
-        if (isset($this->author)) {
-            $data['post_author'] = $this->author;
+        if ($this->has('author')) {
+            $data['post_author'] = $this->get('author');
         }
         
-        if (isset($this->slug)) {
-            $data['post_name'] = $this->slug;
+        if ($this->has('slug')) {
+            $data['post_name'] = $this->get('slug');
         }
         
         return $data;

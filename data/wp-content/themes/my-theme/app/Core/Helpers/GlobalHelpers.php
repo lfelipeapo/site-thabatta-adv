@@ -1212,7 +1212,10 @@ class GlobalHelpers
      */
     public static function isDisallowFileEdit()
     {
-        return defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT;
+        if (!defined('DISALLOW_FILE_EDIT')) {
+            return false;
+        }
+        return DISALLOW_FILE_EDIT;
     }
     
     /**

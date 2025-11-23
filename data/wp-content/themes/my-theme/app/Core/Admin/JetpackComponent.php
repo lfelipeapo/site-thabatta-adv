@@ -107,7 +107,7 @@ class JetpackComponent extends BaseAdminComponent
         
         // Adiciona módulos recomendados se não estiverem ativos
         foreach ($recommended_modules as $module) {
-            if (!in_array($module, $modules) && \Jetpack::is_module_available($module)) {
+            if (!in_array($module, $modules) && class_exists('Jetpack') && \Jetpack::is_module_available($module)) {
                 $modules[] = $module;
             }
         }

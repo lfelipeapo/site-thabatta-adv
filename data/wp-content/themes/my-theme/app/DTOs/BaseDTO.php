@@ -94,6 +94,29 @@ abstract class BaseDTO
     }
     
     /**
+     * Obtém uma propriedade com valor padrão
+     * 
+     * @param string $name Nome da propriedade
+     * @param mixed $default Valor padrão se não existir
+     * @return mixed
+     */
+    public function get($name, $default = null)
+    {
+        return isset($this->properties[$name]) ? $this->properties[$name] : $default;
+    }
+    
+    /**
+     * Verifica se uma propriedade existe
+     * 
+     * @param string $name Nome da propriedade
+     * @return bool
+     */
+    public function has($name)
+    {
+        return isset($this->properties[$name]);
+    }
+    
+    /**
      * Converte o DTO para array
      * 
      * @return array
@@ -119,9 +142,11 @@ abstract class BaseDTO
      * 
      * @param array $data Dados para o DTO
      * @return static
+     * @phpstan-return static
      */
     public static function fromArray(array $data)
     {
+        /** @var static */
         return new static($data);
     }
     
@@ -130,9 +155,11 @@ abstract class BaseDTO
      * 
      * @param object $object Objeto para converter
      * @return static
+     * @phpstan-return static
      */
     public static function fromObject($object)
     {
+        /** @var static */
         return new static((array) $object);
     }
     
@@ -141,9 +168,11 @@ abstract class BaseDTO
      * 
      * @param string $json String JSON
      * @return static
+     * @phpstan-return static
      */
     public static function fromJson($json)
     {
+        /** @var static */
         return new static(json_decode($json, true) ?: []);
     }
     

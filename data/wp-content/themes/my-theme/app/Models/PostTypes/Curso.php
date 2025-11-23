@@ -95,6 +95,9 @@ class Curso
      */
     private static function registerAcfFields()
     {
+        if (!function_exists('acf_add_local_field_group')) {
+            return;
+        }
         acf_add_local_field_group([
             'key' => 'group_cursos',
             'title' => 'Informações do Curso',

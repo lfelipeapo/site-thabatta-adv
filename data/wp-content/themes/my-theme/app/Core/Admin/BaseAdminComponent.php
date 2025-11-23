@@ -30,6 +30,7 @@ abstract class BaseAdminComponent
      * Obtém a instância única da classe (padrão Singleton)
      * 
      * @return static
+     * @phpstan-return static
      */
     public static function getInstance()
     {
@@ -39,9 +40,11 @@ abstract class BaseAdminComponent
         }
         
         if (static::$instance === null) {
+            /** @phpstan-var static */
             static::$instance = new $class();
         }
         
+        /** @phpstan-var static */
         return static::$instance;
     }
     

@@ -22,13 +22,16 @@ abstract class BaseService
      * Obtém a instância única da classe (padrão Singleton)
      * 
      * @return static
+     * @phpstan-return static
      */
     public static function getInstance()
     {
         if (static::$instance === null) {
+            /** @phpstan-var static */
             static::$instance = new static();
         }
         
+        /** @phpstan-var static */
         return static::$instance;
     }
     

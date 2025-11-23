@@ -39,6 +39,10 @@ abstract class BaseMiddleware
             }
             
             // Usa a biblioteca JWT para decodificar o token
+            if (!class_exists('\Firebase\JWT\JWT')) {
+                return false;
+            }
+            /** @phpstan-ignore-next-line */
             $decoded_token = \Firebase\JWT\JWT::decode(
                 $token,
                 $secret_key,
