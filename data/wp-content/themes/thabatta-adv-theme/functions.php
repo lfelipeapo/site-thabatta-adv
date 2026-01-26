@@ -214,6 +214,7 @@ add_action('wp_footer', 'thabatta_include_consultation_form', 20);
  */
 require THABATTA_THEME_DIR . '/inc/template-functions.php';
 require THABATTA_THEME_DIR . '/inc/template-tags.php';
+require THABATTA_THEME_DIR . '/inc/form-helpers.php';
 require THABATTA_THEME_DIR . '/inc/customizer.php';
 require THABATTA_THEME_DIR . '/inc/acf-fields.php';
 require THABATTA_THEME_DIR . '/inc/jetpack-integration.php';

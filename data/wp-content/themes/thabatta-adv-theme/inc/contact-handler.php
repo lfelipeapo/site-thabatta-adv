@@ -14,13 +14,14 @@ if (!defined('ABSPATH')) {
  */
 function thabatta_handle_contact_form() {
     // Verificar nonce
-    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'thabatta_contact_nonce')) {
+    $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+    if (!$nonce || !wp_verify_nonce($nonce, 'thabatta_contact_nonce')) {
         wp_send_json_error(array('message' => esc_html__('Verificação de segurança falhou. Por favor, tente novamente.', 'thabatta-adv')));
         wp_die();
     }
     
     // Recuperar e sanitizar dados
-    parse_str($_POST['formData'], $form_data);
+    $form_data = thabatta_parse_form_data($_POST['formData'] ?? '');
     
     $name = isset($form_data['contact_name']) ? sanitize_text_field($form_data['contact_name']) : '';
     $email = isset($form_data['contact_email']) ? sanitize_email($form_data['contact_email']) : '';
@@ -59,15 +60,7 @@ add_action('wp_ajax_nopriv_thabatta_contact', 'thabatta_handle_contact_form');
  */
 function thabatta_send_contact_email($name, $email, $phone, $subject, $message) {
     // Obter destinatário do e-mail (Opções ACF)
-    $admin_email = get_option('admin_email');
-    
-    if (function_exists('get_field')) {
-        $notification_email = get_field('email_notificacao_contato', 'option');
-        
-        if (!empty($notification_email)) {
-            $admin_email = $notification_email;
-        }
-    }
+    $admin_email = thabatta_get_notification_email('email_notificacao_contato');
     
     // Formatar mensagem
     $email_subject = '[Thabatta Advocacia] ' . $subject;
@@ -100,26 +93,3 @@ function thabatta_send_contact_email($name, $email, $phone, $subject, $message) 
     // Enviar e-mail
     return wp_mail($admin_email, $email_subject, $email_message, $headers);
 }
-
-/**
- * Função auxiliar para obter IP do cliente
- */
-function thabatta_get_client_ip() {
-    $ip_keys = array(
-        'HTTP_CLIENT_IP',
-        'HTTP_X_FORWARDED_FOR',
-        'HTTP_X_FORWARDED',
-        'HTTP_X_CLUSTER_CLIENT_IP',
-        'HTTP_FORWARDED_FOR',
-        'HTTP_FORWARDED',
-        'REMOTE_ADDR',
-    );
-    
-    foreach ($ip_keys as $key) {
-        if (isset($_SERVER[$key]) && filter_var($_SERVER[$key], FILTER_VALIDATE_IP)) {
-            return sanitize_text_field($_SERVER[$key]);
-        }
-    }
-    
-    return '127.0.0.1'; // Fallback para localhost
-} 
