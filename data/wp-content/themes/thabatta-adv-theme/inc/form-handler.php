@@ -185,13 +185,14 @@ add_action('save_post_lead', 'thabatta_save_lead_details');
  */
 function thabatta_handle_lead_form() {
     // Verificar nonce
-    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'thabatta_nonce')) {
+    $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+    if (!$nonce || !wp_verify_nonce($nonce, 'thabatta_nonce')) {
         wp_send_json_error(array('message' => esc_html__('Verificação de segurança falhou. Por favor, tente novamente.', 'thabatta-adv')));
         wp_die();
     }
     
     // Recuperar e sanitizar dados
-    parse_str($_POST['formData'], $form_data);
+    $form_data = thabatta_parse_form_data($_POST['formData'] ?? '');
     
     $name = isset($form_data['name']) ? sanitize_text_field($form_data['name']) : '';
     $phone = isset($form_data['phone']) ? sanitize_text_field($form_data['phone']) : '';
@@ -241,15 +242,7 @@ add_action('wp_ajax_nopriv_thabatta_lead', 'thabatta_handle_lead_form');
  */
 function thabatta_send_lead_notification($lead_id, $name, $phone, $cpf_cnpj, $case_details, $law_area) {
     // Obter destinatário do e-mail (Opções ACF)
-    $admin_email = get_option('admin_email');
-    
-    if (function_exists('get_field')) {
-        $notification_email = get_field('email_notificacao_leads', 'option');
-        
-        if (!empty($notification_email)) {
-            $admin_email = $notification_email;
-        }
-    }
+    $admin_email = thabatta_get_notification_email('email_notificacao_leads');
     
     // Mapear área para nome legível
     $area_names = array(
