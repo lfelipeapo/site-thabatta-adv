@@ -10,36 +10,61 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Adicionar cabeçalhos de segurança
+ * Carregar classes de segurança
  */
-function thabatta_security_headers() {
-    // Proteção contra clickjacking
-    header('X-Frame-Options: SAMEORIGIN');
-    
-    // Proteção contra MIME sniffing
-    header('X-Content-Type-Options: nosniff');
-    
-    // Proteção XSS
-    header('X-XSS-Protection: 1; mode=block');
-    
-    // Política de segurança de conteúdo (CSP) - agora liberando c0.wp.com e s0.wp.com
-    $csp = "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: https:; "
-        . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://c0.wp.com https://s0.wp.com *.googleapis.com *.gstatic.com *.google.com *.google-analytics.com *.googletagmanager.com *.jquery.com *.cloudflare.com cdnjs.cloudflare.com unpkg.com; "
-        . "style-src 'self' 'unsafe-inline' https://c0.wp.com https://s0.wp.com *.googleapis.com *.gstatic.com cdnjs.cloudflare.com unpkg.com; "
-        . "img-src 'self' data: https: https://c0.wp.com https://s0.wp.com *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com *.gravatar.com; "
-        . "font-src 'self' data: https: *.gstatic.com *.googleapis.com cdnjs.cloudflare.com; "
-        . "connect-src 'self' *.google-analytics.com *.googleapis.com; "
-        . "frame-src 'self' *.google.com *.youtube.com; "
-        . "object-src 'none'";
-    header("Content-Security-Policy: $csp");
-    
-    // Referrer Policy
-    header('Referrer-Policy: strict-origin-when-cross-origin');
-    
-    // Feature Policy
-    header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
+require_once get_template_directory() . '/inc/SecurityHeaders.php';
+require_once get_template_directory() . '/inc/RequestBlocker.php';
+
+/**
+ * Obter o ambiente atual (production, staging, development, local).
+ */
+function thabatta_get_environment_type() {
+    if (defined('WP_ENVIRONMENT_TYPE')) {
+        return strtolower((string) WP_ENVIRONMENT_TYPE);
+    }
+
+    if (defined('WP_ENV')) {
+        return strtolower((string) WP_ENV);
+    }
+
+    $env = getenv('WP_ENV');
+    if ($env) {
+        return strtolower($env);
+    }
+
+    return 'production';
 }
-add_action('send_headers', 'thabatta_security_headers');
+
+/**
+ * Registrar evento de segurança.
+ */
+function thabatta_log_security_event($type, $data = array()) {
+    $security_events = get_option('thabatta_security_events', array());
+
+    $security_events[] = array(
+        'type' => sanitize_text_field($type),
+        'data' => $data,
+        'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
+        'user_agent' => isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field($_SERVER['HTTP_USER_AGENT']) : '',
+        'timestamp' => time(),
+    );
+
+    if (count($security_events) > 100) {
+        $security_events = array_slice($security_events, -100);
+    }
+
+    update_option('thabatta_security_events', $security_events);
+}
+add_action('thabatta_security_event', 'thabatta_log_security_event', 10, 2);
+
+/**
+ * Registrar handlers de segurança.
+ */
+$thabatta_security_headers = new Thabatta_Security_Headers();
+$thabatta_security_headers->register();
+
+$thabatta_request_blocker = new Thabatta_Request_Blocker();
+$thabatta_request_blocker->register();
 
 /**
  * Desabilitar a descoberta de XML-RPC
@@ -139,50 +164,6 @@ function thabatta_sanitize_comment_data($commentdata) {
     return $commentdata;
 }
 add_filter('preprocess_comment', 'thabatta_sanitize_comment_data');
-
-/**
- * Bloquear requisições suspeitas
- */
-function thabatta_block_suspicious_requests() {
-    // Não executar esta verificação no admin
-    if (is_admin()) {
-        return;
-    }
-
-    // Verificar strings suspeitas na URL
-    $request_uri = $_SERVER['REQUEST_URI'];
-    $suspicious_strings = array(
-        'eval(',
-        'UNION+SELECT',
-        'UNION SELECT',
-        '<script',
-        '../',
-        'base64_',
-        '<?php',
-        'data:text',
-        'alert(',
-        'document.cookie',
-        'onmouseover=',
-        'javascript:',
-        'prompt(',
-        'fromCharCode'
-    );
-    
-    foreach ($suspicious_strings as $string) {
-        if (stripos($request_uri, $string) !== false) {
-            header('HTTP/1.1 403 Forbidden');
-            exit('Acesso negado');
-        }
-    }
-    
-    // Verificar User-Agent vazio ou suspeito
-    $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-    if (empty($user_agent) || stripos($user_agent, 'libwww-perl') !== false) {
-        header('HTTP/1.1 403 Forbidden');
-        exit('Acesso negado');
-    }
-}
-add_action('init', 'thabatta_block_suspicious_requests');
 
 /**
  * Proteger contra ataques de força bruta na API REST
