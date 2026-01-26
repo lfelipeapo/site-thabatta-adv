@@ -56,6 +56,7 @@ class HomepageCache
         $query_args['post__in'] = $ids ?: [0];
         $query_args['orderby'] = 'post__in';
         $query_args['posts_per_page'] = count($ids);
+        $query_args['paged'] = 1;
         $query_args['no_found_rows'] = true;
 
         return $query_args;
