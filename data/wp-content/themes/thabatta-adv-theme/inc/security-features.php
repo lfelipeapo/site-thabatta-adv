@@ -9,6 +9,9 @@ if (!defined('ABSPATH')) {
     exit; // Saída direta se acessado diretamente
 }
 
+require_once get_template_directory() . '/inc/SecurityHeaders.php';
+require_once get_template_directory() . '/inc/RequestBlocker.php';
+
 /**
  * Classe para gerenciar recursos de segurança do tema
  */
@@ -39,14 +42,8 @@ class Thabatta_Security_Features
         add_action('wp_logout', array($this, 'end_session'));
         add_action('wp_login', array($this, 'end_session'));
 
-        // Adicionar cabeçalhos de segurança
-        add_action('send_headers', array($this, 'add_security_headers'));
-
         // Desabilitar listagem de diretórios
         add_action('init', array($this, 'disable_directory_listing'));
-
-        // Proteger arquivos sensíveis
-        add_action('init', array($this, 'protect_sensitive_files'));
 
         // Limitar tentativas de login
         add_filter('wp_login_errors', array($this, 'login_error_message'));
@@ -65,8 +62,18 @@ class Thabatta_Security_Features
         // Proteger contra ataques de enumeração de usuários
         add_action('template_redirect', array($this, 'disable_author_pages'));
 
-        // Proteger contra ataques de clickjacking
-        add_action('send_headers', array($this, 'prevent_clickjacking'));
+        // Registrar handlers centralizados de segurança
+        if (class_exists('Thabatta_Security_Headers')) {
+            $headers = new Thabatta_Security_Headers();
+            $headers->register();
+        }
+
+        if (class_exists('Thabatta_Request_Blocker')) {
+            $blocker = new Thabatta_Request_Blocker();
+            $blocker->register();
+        }
+
+        add_action('thabatta_security_event', array($this, 'log_security_event'), 10, 2);
     }
 
     /**
@@ -263,32 +270,6 @@ class Thabatta_Security_Features
     }
 
     /**
-     * Adicionar cabeçalhos de segurança
-     */
-    public function add_security_headers()
-    {
-        // Proteção contra clickjacking
-        header('X-Frame-Options: SAMEORIGIN');
-
-        // Proteção contra MIME sniffing
-        header('X-Content-Type-Options: nosniff');
-
-        // Proteção XSS
-        header('X-XSS-Protection: 1; mode=block');
-
-        // Política de segurança de conteúdo (CSP) - TEMPORARIAMENTE COMENTADA PARA TESTE
-        
-        $csp = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com *.google.com *.google-analytics.com *.googletagmanager.com *.jquery.com *.cloudflare.com cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' *.googleapis.com *.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com *.gravatar.com; font-src 'self' data: *.gstatic.com *.googleapis.com cdnjs.cloudflare.com; connect-src 'self' *.google-analytics.com *.googleapis.com; frame-src 'self' *.google.com *.youtube.com; object-src 'none'";
-        header("Content-Security-Policy: $csp");
-
-        // Referrer Policy
-        header('Referrer-Policy: strict-origin-when-cross-origin');
-
-        // Feature Policy
-        header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
-    }
-
-    /**
      * Desabilitar listagem de diretórios
      */
     public function disable_directory_listing()
@@ -306,33 +287,6 @@ class Thabatta_Security_Features
 
                 // Salvar arquivo
                 file_put_contents($htaccess_file, $htaccess_content);
-            }
-        }
-    }
-
-    /**
-     * Proteger arquivos sensíveis
-     */
-    public function protect_sensitive_files()
-    {
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $blocked_files = array(
-            'wp-config.php',
-            '.htaccess',
-            'readme.html',
-            'license.txt',
-            'error_log',
-            'install.php',
-            'wp-includes',
-            'wp-admin/install.php',
-            'wp-admin/includes',
-            'wp-admin/setup-config.php'
-        );
-
-        foreach ($blocked_files as $file) {
-            if (strpos($request_uri, $file) !== false) {
-                header('HTTP/1.1 403 Forbidden');
-                exit('Acesso negado');
             }
         }
     }
@@ -379,17 +333,9 @@ class Thabatta_Security_Features
     }
 
     /**
-     * Prevenir clickjacking
-     */
-    public function prevent_clickjacking()
-    {
-        header('X-Frame-Options: SAMEORIGIN');
-    }
-
-    /**
      * Registrar evento de segurança
      */
-    private function log_security_event($type, $data = array())
+    public function log_security_event($type, $data = array())
     {
         // Obter eventos de segurança
         $security_events = get_option('thabatta_security_events', array());
