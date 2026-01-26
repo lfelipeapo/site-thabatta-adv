@@ -2,14 +2,13 @@ ARG WORDPRESS_VERSION=latest
 ARG PHP_VERSION=8.3
 ARG USER=www-data
 
-FROM dunglas/frankenphp:latest-builder-php${PHP_VERSION} as builder
+FROM dunglas/frankenphp:latest-builder-php${PHP_VERSION} AS builder
+
+ENV GOTOOLCHAIN=go1.25.6+auto
+ENV CGO_ENABLED=1 XCADDY_SETCAP=1 XCADDY_GO_BUILD_FLAGS='-ldflags="-w -s" -trimpath'
 
 # Copia o xcaddy da imagem builder do Caddy
 COPY --from=caddy:builder /usr/bin/xcaddy /usr/bin/xcaddy
-
-# CGO deve estar habilitado para compilar o FrankenPHP
-ENV CGO_ENABLED=1 XCADDY_SETCAP=1 XCADDY_GO_BUILD_FLAGS='-ldflags="-w -s" -trimpath'
-
 COPY ./sidekick/middleware/cache ./cache
 
 RUN xcaddy build \
@@ -19,7 +18,7 @@ RUN xcaddy build \
     --with github.com/dunglas/caddy-cbrotli \
     --with github.com/stephenmiracle/frankenwp/sidekick/middleware/cache=./cache
 
-FROM wordpress:$WORDPRESS_VERSION as wp
+FROM wordpress:$WORDPRESS_VERSION AS wp
 FROM dunglas/frankenphp:latest-php${PHP_VERSION} AS base
 
 LABEL org.opencontainers.image.title=FrankenWP
