@@ -2,6 +2,8 @@
 
 namespace ThabattaAdv\Infrastructure\WordPress\Repositories;
 
+use ThabattaAdv\Infrastructure\WordPress\HomepageCache;
+
 class TeamRepository
 {
     public function query(array $args = []): \WP_Query
@@ -14,6 +16,16 @@ class TeamRepository
             'paged'          => 1,
         ];
 
-        return new \WP_Query(wp_parse_args($args, $defaults));
+        $query_args = wp_parse_args($args, $defaults);
+        $cached_ids = HomepageCache::getCachedIds('team', $query_args);
+
+        if (is_array($cached_ids)) {
+            return new \WP_Query(HomepageCache::queryArgsFromIds($query_args, $cached_ids));
+        }
+
+        $query = new \WP_Query($query_args);
+        HomepageCache::storeCachedIds('team', $query_args, wp_list_pluck($query->posts, 'ID'));
+
+        return $query;
     }
 }
