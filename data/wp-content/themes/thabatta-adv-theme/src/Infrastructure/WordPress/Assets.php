@@ -4,10 +4,16 @@ namespace ThabattaAdv\Infrastructure\WordPress;
 
 class Assets
 {
+    private ThemeDataProvider $themeDataProvider;
+
+    public function __construct(?ThemeDataProvider $themeDataProvider = null)
+    {
+        $this->themeDataProvider = $themeDataProvider ?? new ThemeDataProvider();
+    }
+
     public function register(): void
     {
         add_action('wp_enqueue_scripts', [$this, 'register_public_assets'], 100);
-        add_action('wp_enqueue_scripts', [$this, 'register_localized_scripts'], 20);
         add_action('wp_enqueue_scripts', [$this, 'register_contact_form_assets'], 101);
         add_action('admin_enqueue_scripts', [$this, 'register_admin_assets']);
     }
@@ -32,25 +38,11 @@ class Assets
 
         wp_enqueue_script('thabatta-script', get_template_directory_uri() . '/assets/js/bundle.min.js', array('jquery', 'jquery-mask'), THABATTA_VERSION, true);
 
-        wp_localize_script('thabatta-script', 'thabattaData', array(
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('thabatta_consultation_nonce'),
-            'homeUrl' => esc_url(home_url('/')),
-            'themeUrl' => esc_url(get_template_directory_uri()),
-        ));
+        wp_localize_script('thabatta-script', 'thabattaData', $this->themeDataProvider->forPublicScript());
 
         if (is_singular() && comments_open() && get_option('thread_comments')) {
             wp_enqueue_script('comment-reply');
         }
-    }
-
-    public function register_localized_scripts(): void
-    {
-        wp_localize_script('thabatta-script', 'thabattaData', array(
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'siteUrl' => get_site_url(),
-            'themePath' => get_template_directory_uri(),
-        ));
     }
 
     public function register_contact_form_assets(): void
@@ -67,10 +59,7 @@ class Assets
             true
         );
 
-        wp_localize_script('thabatta-contact-form-multistep', 'thabattaData', array(
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('thabatta_consultation_nonce'),
-        ));
+        wp_localize_script('thabatta-contact-form-multistep', 'thabattaData', $this->themeDataProvider->forContactForm());
     }
 
     public function register_admin_assets($hook_suffix): void
@@ -106,11 +95,43 @@ class Assets
         wp_enqueue_style('wp-color-picker');
         wp_enqueue_script('thabatta-admin-script', get_template_directory_uri() . '/assets/js/admin.min.js', array('jquery', 'wp-color-picker'), $theme_version, true);
 
-        wp_localize_script('thabatta-admin-script', 'thabattaAdmin', array(
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('thabatta_admin_nonce'),
+        wp_localize_script('thabatta-admin-script', 'thabattaAdmin', $this->themeDataProvider->forAdmin());
+    }
+}
+
+class ThemeDataProvider
+{
+    public function forPublicScript(): array
+    {
+        return $this->withNonce($this->baseAjaxData(), 'thabatta_consultation_nonce');
+    }
+
+    public function forContactForm(): array
+    {
+        return $this->withNonce($this->baseAjaxData(), 'thabatta_consultation_nonce');
+    }
+
+    public function forAdmin(): array
+    {
+        $data = $this->withNonce($this->baseAjaxData(), 'thabatta_admin_nonce');
+
+        return array_merge($data, [
             'mediaTitle' => esc_html__('Selecionar ou Enviar Mídia', 'thabatta-adv'),
             'mediaButton' => esc_html__('Usar esta mídia', 'thabatta-adv'),
-        ));
+        ]);
+    }
+
+    private function baseAjaxData(): array
+    {
+        return [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+        ];
+    }
+
+    private function withNonce(array $data, string $action, string $key = 'nonce'): array
+    {
+        $data[$key] = wp_create_nonce($action);
+
+        return $data;
     }
 }
