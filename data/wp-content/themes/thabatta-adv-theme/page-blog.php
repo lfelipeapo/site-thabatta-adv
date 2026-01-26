@@ -7,6 +7,8 @@
  */
 
 get_header();
+
+$post_repository = new \ThabattaAdv\Infrastructure\WordPress\Repositories\PostRepository();
 ?>
 
 <main id="primary" class="site-main blog-page">
@@ -23,15 +25,10 @@ get_header();
         <div class="blog-grid">
             <?php
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-            $args = array(
-                'post_type'      => 'post',
+            $blog_query = $post_repository->query([
                 'posts_per_page' => 10,
                 'paged'          => $paged,
-                'orderby'        => 'date',
-                'order'          => 'DESC',
-            );
-            
-            $blog_query = new WP_Query($args);
+            ]);
             
             if ($blog_query->have_posts()) :
                 while ($blog_query->have_posts()) : $blog_query->the_post();
