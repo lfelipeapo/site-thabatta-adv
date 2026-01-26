@@ -37,7 +37,7 @@ class Plugin {
         add_action('save_post', [$this, 'saveMeta']);
         add_action('wp', [$this, 'detectComponents']);
         add_action('wp_enqueue_scripts', [$this->renderer, 'enqueueAssets']);
-        add_action('wp_footer', [$this->renderer, 'renderTemplates'], 20);
+        add_action('wp_footer', [$this->renderer, 'renderTemplates'], 5);
 
         $this->importer->register();
         $this->adminColumns->register();
