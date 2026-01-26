@@ -7,6 +7,11 @@
 
 get_header();
 
+$area_repository = new \ThabattaAdv\Infrastructure\WordPress\Repositories\AreaRepository();
+$testimonial_repository = new \ThabattaAdv\Infrastructure\WordPress\Repositories\TestimonialRepository();
+$team_repository = new \ThabattaAdv\Infrastructure\WordPress\Repositories\TeamRepository();
+$post_repository = new \ThabattaAdv\Infrastructure\WordPress\Repositories\PostRepository();
+
 // Verifica se há uma imagem de banner definida no admin
 $banner_image = '';
 if (function_exists('get_field') && get_field('hero_background_image', 'option')) {
@@ -45,14 +50,9 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
             <div class="services-grid">
                 <?php
                 // Consulta para áreas de atuação
-                $args = array(
-                    'post_type'      => 'area_atuacao',
+                $areas_query = $area_repository->query([
                     'posts_per_page' => get_theme_mod('services_count', 6),
-                    'orderby'        => 'menu_order',
-                    'order'          => 'ASC',
-                );
-                
-                $areas_query = new WP_Query($args);
+                ]);
                 
                 if ($areas_query->have_posts()) :
                     while ($areas_query->have_posts()) : $areas_query->the_post();
@@ -172,14 +172,9 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
             <div class="testimonial-carousel">
                 <?php
                 // Consulta para depoimentos
-                $args = array(
-                    'post_type'      => 'depoimento',
+                $testimonials_query = $testimonial_repository->query([
                     'posts_per_page' => get_theme_mod('testimonials_count', 5),
-                    'orderby'        => 'date',
-                    'order'          => 'DESC',
-                );
-                
-                $testimonials_query = new WP_Query($args);
+                ]);
                 
                 if ($testimonials_query->have_posts()) :
                     while ($testimonials_query->have_posts()) : $testimonials_query->the_post();
@@ -315,14 +310,9 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
             <div class="team-grid">
                 <?php
                 // Consulta para equipe
-                $args = array(
-                    'post_type'      => 'equipe',
+                $team_query = $team_repository->query([
                     'posts_per_page' => get_theme_mod('team_count', 4),
-                    'orderby'        => 'menu_order',
-                    'order'          => 'ASC',
-                );
-                
-                $team_query = new WP_Query($args);
+                ]);
                 
                 if ($team_query->have_posts()) :
                     while ($team_query->have_posts()) : $team_query->the_post();
@@ -380,14 +370,9 @@ if (function_exists('get_field') && get_field('hero_background_image', 'option')
             <div class="blog-grid">
                 <?php
                 // Consulta para posts recentes
-                $args = array(
-                    'post_type'      => 'post',
+                $blog_query = $post_repository->query([
                     'posts_per_page' => get_theme_mod('blog_count', 3),
-                    'orderby'        => 'date',
-                    'order'          => 'DESC',
-                );
-                
-                $blog_query = new WP_Query($args);
+                ]);
                 
                 if ($blog_query->have_posts()) :
                     while ($blog_query->have_posts()) : $blog_query->the_post();
