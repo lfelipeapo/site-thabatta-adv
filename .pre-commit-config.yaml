@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: phpcs-theme
+        name: PHPCS (theme)
+        entry: data/vendor/bin/phpcs --standard=phpcs.xml
+        language: system
+        types: [php]
+        files: ^data/wp-content/themes/thabatta-adv-theme/

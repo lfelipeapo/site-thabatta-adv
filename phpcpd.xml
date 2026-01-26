@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<phpcpd>
+    <min-lines>8</min-lines>
+    <min-tokens>70</min-tokens>
+
+    <directory>data/wp-content/themes/thabatta-adv-theme</directory>
+
+    <exclude>*vendor*</exclude>
+    <exclude>*node_modules*</exclude>
+    <exclude>*dist*</exclude>
+    <exclude>*build*</exclude>
+    <exclude>*assets*</exclude>
+    <exclude>*images*</exclude>
+    <exclude>*languages*</exclude>
+</phpcpd>

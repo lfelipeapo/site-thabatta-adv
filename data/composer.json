@@ -2,14 +2,31 @@
     "require-dev": {
         "phpstan/phpstan": "^1.12",
         "szepeviktor/phpstan-wordpress": "^1.3",
-        "phpstan/extension-installer": "^1.4"
+        "phpstan/extension-installer": "^1.4",
+        "squizlabs/php_codesniffer": "^3.10",
+        "wp-coding-standards/wpcs": "^3.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "sebastian/phpcpd": "^6.0"
     },
     "config": {
         "allow-plugins": {
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "scripts": {
-        "phpstan": "vendor/bin/phpstan analyse --memory-limit=8192M"
+        "lint": "vendor/bin/phpcs --standard=../phpcs.xml",
+        "lint:fix": "vendor/bin/phpcbf --standard=../phpcs.xml",
+        "stan": "vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit=8192M",
+        "cpd": "cd .. && data/vendor/bin/phpcpd --config=phpcpd.xml",
+        "cpd:js": "npm --prefix wp-content/themes/thabatta-adv-theme run cpd",
+        "flows:scan": "php ../tools/scan-repeated-flows.php",
+        "quality": [
+            "@lint",
+            "@stan",
+            "@cpd",
+            "@cpd:js",
+            "@flows:scan"
+        ]
     }
 }

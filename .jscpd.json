@@ -1,0 +1,26 @@
+{
+  "minLines": 8,
+  "minTokens": 70,
+  "threshold": 0,
+  "reporters": ["console", "markdown"],
+  "output": "reports/jscpd",
+  "ignore": [
+    "**/node_modules/**",
+    "**/vendor/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/assets/**",
+    "**/images/**",
+    "**/languages/**"
+  ],
+  "formats": [
+    "php",
+    "html",
+    "js",
+    "css",
+    "scss"
+  ],
+  "paths": [
+    "data/wp-content/themes/thabatta-adv-theme"
+  ]
+}
