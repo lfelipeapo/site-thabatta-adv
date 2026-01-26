@@ -30,7 +30,7 @@ class Thabatta_Request_Blocker
             return;
         }
 
-        if ($this->should_bypass()) {
+        if ($this->should_bypass($wp)) {
             return;
         }
 
@@ -80,11 +80,19 @@ class Thabatta_Request_Blocker
     /**
      * Determinar quando não aplicar bloqueios.
      */
-    private function should_bypass()
+    private function should_bypass($wp = null)
     {
+        $rest_route = '';
+        if ($wp instanceof WP && isset($wp->query_vars['rest_route'])) {
+            $rest_route = (string) $wp->query_vars['rest_route'];
+        } elseif (function_exists('get_query_var')) {
+            $rest_route = (string) get_query_var('rest_route');
+        }
+
         return is_admin()
             || wp_doing_ajax()
             || wp_doing_cron()
+            || $rest_route !== ''
             || (defined('REST_REQUEST') && REST_REQUEST);
     }
 
