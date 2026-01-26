@@ -15,8 +15,8 @@
         }
     },
     "scripts": {
-        "lint": "vendor/bin/phpcs --standard=../phpcs.xml",
-        "lint:fix": "vendor/bin/phpcbf --standard=../phpcs.xml",
+        "lint": "cd .. && data/vendor/bin/phpcs --standard=phpcs.xml",
+        "lint:fix": "cd .. && data/vendor/bin/phpcbf --standard=phpcs.xml",
         "stan": "vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit=8192M",
         "cpd": "cd .. && data/vendor/bin/phpcpd --config=phpcpd.xml",
         "cpd:js": "npm --prefix wp-content/themes/thabatta-adv-theme run cpd",
