@@ -1,16 +1,21 @@
 includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon
   - phpstan-baseline.neon
+
 parameters:
   level: 5
   paths:
-    - wp-content/themes
+    - wp-content/themes/thabatta-adv-theme
   excludePaths:
-    - vendor/*
+    - wp-content/themes/**/node_modules/*
+    - wp-content/themes/**/vendor/*
+    - wp-content/themes/**/dist/*
+    - wp-content/themes/**/build/*
   bootstrapFiles: []
   ignoreErrors:
     - '#Call to undefined function add_action#'
     - '#Call to undefined function add_filter#'
-    - '#^Else branch is unreachable because ternary operator condition is always true\.\$ in path#'
+    - '#^Else branch is unreachable because ternary operator condition is always true\.$#'
     # Ignorar funções ACF
     - '#Function (acf_add_options_page|acf_add_options_sub_page|get_field) not found\.#'
     # Ignorar erros de is_wp_error e instanceof WP_Error

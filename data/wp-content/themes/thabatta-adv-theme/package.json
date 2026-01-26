@@ -10,7 +10,8 @@
     "styles": "gulp styles",
     "scripts": "gulp scripts",
     "images": "gulp images",
-    "clean": "gulp clean"
+    "clean": "gulp clean",
+    "cpd": "jscpd --config ../../../../.jscpd.json"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,7 @@
     "gulp-sass": "^6.0.1",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
+    "jscpd": "^4.0.2",
     "sass": "^1.86.0"
   },
   "dependencies": {
