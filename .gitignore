@@ -47,3 +47,4 @@ data/sqlite/index.php
 data/wp-content/database/index.php
 data/sqlite/index.php
 data/sqlite/.htaccess
+data/wp-content/debug.log
