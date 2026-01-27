@@ -146,7 +146,7 @@ PLUGINS=(
     jetpack-protect
     classic-editor
     custom-post-type-ui
-    advanced-custom-fields
+    secure-custom-fields
     acf-to-rest-api
     acf-extended
     advanced-custom-fields-table-field
