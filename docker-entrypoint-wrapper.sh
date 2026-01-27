@@ -103,8 +103,8 @@ SQLITE_DROPIN="/var/www/html/wp-content/db.php"
 if [ ! -f "$SQLITE_DROPIN" ]; then
     echo "🔽 Baixando suporte automático SQLite (plugin oficial WordPress)..."
     curl -fsSL -o /tmp/sqlite.zip https://downloads.wordpress.org/plugin/sqlite-database-integration.latest-stable.zip
-    unzip -j /tmp/sqlite.zip "sqlite-database-integration/db.copy" -d /var/www/html/wp-content/
-    mv /var/www/html/wp-content/db.copy /var/www/html/wp-content/db.php
+    unzip -q /tmp/sqlite.zip -d /var/www/html/wp-content/plugins/
+    cp /var/www/html/wp-content/plugins/sqlite-database-integration/db.copy /var/www/html/wp-content/db.php
     rm /tmp/sqlite.zip
 fi
 

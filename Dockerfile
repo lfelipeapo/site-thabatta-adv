@@ -64,7 +64,9 @@ RUN install-php-extensions \
     mysqli \
     zip \
     imagick/imagick@master \
-    opcache
+    opcache \
+    pdo_mysql \
+    pdo_sqlite
 
 RUN cp $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 COPY php.ini $PHP_INI_DIR/conf.d/wp.ini
