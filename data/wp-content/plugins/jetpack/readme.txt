@@ -1,10 +1,10 @@
 === Jetpack - WP Security, Backup, Speed, & Growth ===
 Contributors: automattic, adamkheckler, adrianmoldovanwp, aduth, akirk, allendav, alternatekev, andy, annamcphee, annezazu, apeatling, arcangelini, arsihasi, azaozz, barry, batmoo, beaulebens, bindlegirl, biskobe, bjorsch, blobaugh, brbrr, brileyhooper, cainm, cena, cfinke, cgastrell, chaselivingston, chellycat, clickysteve, csonnek, danielbachhuber, daniloercoli, davoraltman, delawski, designsimply, dkmyta, dllh, drawmyface, dsmart, dun2mis, dzver, ebinnion, egregor, eliorivero, enej, eoigal, erania-pinnera, ethitter, fgiannar, gcorne, georgestephanis, gibrown, goldsounds, hew, hugobaeta, hypertextranch, iammattthomas, iandunn, joen, jblz, jeffgolenski, jeherve, jenhooks, jenia, jessefriedman, jgs, jkudish, jmdodd, joanrho, johnjamesjacoby, jshreve, kbrownkd, keoshi, koke, kraftbj, lancewillett, leogermani, lhkowalski, lschuyler, macmanx, martinremy, matt, mattwiebe, matveb, maverick3x6, mcsf, mdawaffe, mdbitz, MichaelArestad, migueluy, miguelxavierpenha, mikeyarce, mkaz, nancythanki, nickmomrik, njweller, nunyvega, obenland, oskosk, pento, professor44, rachelsquirrel, rdcoll, renatoagds, retrofox, richardmtl, richardmuscat, robertbpugh, roccotripaldi, ryancowles, samhotchkiss, samiff, scarstocea, scottsweb, sdixon194, sdquirk, sermitr, simison, stephdau, thehenridev, tmoorewp, tyxla, Viper007Bond, westi, williamvianas, wpkaren, yoavf, zinigor
 Tags: Security, backup, malware, scan, performance
-Stable tag: 14.6
+Stable tag: 15.4
 Requires at least: 6.7
 Requires PHP: 7.2
-Tested up to: 6.8
+Tested up to: 6.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -326,60 +326,27 @@ Jetpack Backup can do a full website migration to a new host, migrate theme file
 
 
 == Changelog ==
-### 14.6 - 2025-05-06
-#### Major Enhancements
-- General: Update minimum WordPress version to 6.7.
-
+### 15.4 - 2026-01-06
 #### Enhancements
-- Add My Jetpack tour.
-- Admin Menu: Update the icon of WooCommerce for the Woo installation.
-- Button block: Add support for border width, style, and color.
-- Featured Content: Add messaging to clarify that the tag name is case sensitive.
-- Forms: Add custom hooks for integrations.
-- Forms: Add endpoint for all integrations.
-- Forms: Add new integrations setup modal.
-- Forms: Add tabs to forms dashboard.
-- Forms: Close block panels by default.
-- Forms: Reduce default padding in form patterns.
-- Forms: Update default forms view to dataviews.
-- Forms: Update the email notification template.
-- My Jetpack: Update the onboarding UI to show a single button on initial page.
-- Newsletter Widget: Improve the display of links in the Newsletter widget.
-- Replace video embed with VideoPress block in Media & Text block.
-- Sharing buttons: Update legacy Twitter logos to use the X logo.
-- Shortcode: Convert an embed code from Facebook.com to an oEmbeddable URL.
-- Sitemaps: Use XMLWriter for a more performant sitemap generation when available.
-- User: Allow user to delete themselves through the endpoint.
-
-#### Improved compatibility
-- Add Share status support for WordPress.com sites.
-- Blocks: Ensure all child blocks use the latest version of the Blocks API.
-- Enable the Top Posts block in WP Admin for Simple Sites.
-- Forms: Ensure styles are loaded when expected, preventing console warnings.
-- Sharing: Remove deprecated Skype sharing button.
+- External media: Add replace flow support.
+- Forms: Add filter to hide integration icons.
+- Forms: Add integrations display filters.
+- Forms: add list view sidebar for easier field management.
+- Forms: support Math and Code blocks inside forms.
+- Forms: Use entire button area for selecting multi-select options.
+- Social: Improve social preview for LinkedIn and Tumblr.
+- Social: Reuse AI image generation in media section.
 
 #### Bug fixes
-- Add translation context to Search menu item.
-- Block editor: Hide blocks from non-admins when feature is not active.
-- Blogroll block: Prevent console warnings and block validation issues when adding new items to the blogroll.
-- Dashboard: Avoid layout issues with "Apply" button on sites using a localized version of WordPress.
-- Forms: Ensure `render_field` returns string.
-- Forms: Update form responses link on editor sidebar.
-- Image Compare block: Ensure block does not overlap navigation submenu items.
-- Image Compare block: Ensure sticky menus hide the compare line.
-- JS Packages: Decrease CSS priority of global styles to prevent them from applying within the editor.
-- My Jetpack: Prevent social login from getting stuck when email input is not empty.
-- Open Graph: Ensure scaled images are used when specific registered image files exist on a site.
-- Related Posts: Ensure the block is properly displayed in the editor regardless of user role.
-- Reset access level of the post to everyone when a paywall is removed.
-- Slideshow: Prevent images from appearing stuck to the mouse in block-based themes.
-- Slideshow block: Ensure block preview doesn't generate an invalid API request.
-- Social: Do not load in the Classic editor if module is off.
-- Social: Fix "Start for free" not working when module is OFF.
-- Star Rating: Fix padding and improve panel copy.
-- Stats: Fix PHP TypeError.
-- Subscriptions: Only display the dashboard widget to site admins when the Subscriptions feature is active.
-- VideoPress: Avoid suggesting transforming unsupported Video blocks into VideoPress blocks.
+- AI Assistant: disabled Write Brief functionality for non-English sites.
+- AI Assistant: Fix product page URL for Simple sites to use jetpack.com instead of My Jetpack.
+- Forms: Ensure submission summary is contained within 100% width.
+- Forms: Fix validation accessibility.
+- Forms: Remove the classic Admin initialization call.
+- Forms: Strip HTML from styled labels in error summary.
+- Jetpack settings: Avoid deprecation notices when loading Settings screen or Debugger screen.
+- Scan: Replace inline onclick handler with target="_blank" for CSP compliance in admin bar notice.
+- Social: Fix connections management modal not opening from pre-publish panel.
 
 --------
 

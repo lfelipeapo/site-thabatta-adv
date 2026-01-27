@@ -16,7 +16,8 @@
   border-color: #fff;
 }
 
-.jetpack-slideshow-window, .jetpack-slideshow-window * {
+.jetpack-slideshow-window,
+.jetpack-slideshow-window * {
   box-sizing: content-box;
 }
 
@@ -128,7 +129,7 @@ body div div.jetpack-slideshow-controls a:hover {
   }
 }
 body div div.jetpack-slideshow-controls a:hover {
-  border-color: rgb(255, 255, 255) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
 }
 
 body div div.jetpack-slideshow-controls a:first-child {

@@ -437,7 +437,7 @@ class Jetpack_Backup {
 			'wpcom'
 		);
 
-		if ( 200 !== $response['response']['code'] ) {
+		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			return null;
 		}
 
@@ -503,11 +503,7 @@ class Jetpack_Backup {
 			'wpcom'
 		);
 
-		if ( is_wp_error( $response ) ) {
-			return null;
-		}
-
-		if ( 200 !== $response['response']['code'] ) {
+		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			return null;
 		}
 
@@ -534,7 +530,7 @@ class Jetpack_Backup {
 			'wpcom'
 		);
 
-		if ( 200 !== $response['response']['code'] ) {
+		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			return null;
 		}
 
@@ -721,15 +717,12 @@ class Jetpack_Backup {
 				return $upsell_products[ $bytes_1tb ];
 			}
 
+			$matched_bytes = $bytes_10gb;
 			foreach ( $upsell_products as $bytes => $product ) {
 				if ( $bytes > $additional_bytes_needed ) {
 					$matched_bytes = $bytes;
 					break;
 				}
-			}
-
-			if ( ! $matched_bytes ) {
-				$matched_bytes = $bytes_10gb;
 			}
 
 			return $upsell_products[ $matched_bytes ];

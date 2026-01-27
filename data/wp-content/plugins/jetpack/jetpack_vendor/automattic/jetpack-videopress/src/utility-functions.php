@@ -2,6 +2,10 @@
 
 use Automattic\Jetpack\Connection\Client;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit( 0 );
+}
+
 defined( 'VIDEOPRESS_MIN_WIDTH' ) || define( 'VIDEOPRESS_MIN_WIDTH', 60 );
 defined( 'VIDEOPRESS_DEFAULT_WIDTH' ) || define( 'VIDEOPRESS_DEFAULT_WIDTH', 640 );
 
@@ -424,7 +428,7 @@ function videopress_is_attachment_without_guid( $post_id ) {
 function is_videopress_attachment( $post_id ) {
 	$post = get_post( $post_id );
 
-	if ( is_wp_error( $post ) ) {
+	if ( ! $post instanceof WP_Post ) {
 		return false;
 	}
 
@@ -731,6 +735,10 @@ function videopress_get_attachment_url( $post_id ) {
  * @return string filtered content
  */
 function jetpack_videopress_flash_embed_filter( $content ) {
+	// This receives data from the `the_content` filter, which unfortunately sometimes has bad content passed along as a param.
+	if ( ! is_string( $content ) ) {
+		return $content;
+	}
 	$regex   = '%<embed[^>]*+>(?:\s*</embed>)?%i';
 	$content = preg_replace_callback(
 		$regex,

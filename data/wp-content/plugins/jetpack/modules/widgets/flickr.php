@@ -144,6 +144,9 @@ if ( ! class_exists( 'Jetpack_Flickr_Widget' ) ) {
 						case 'large':
 							$src = $photo->get_enclosure()->get_link();
 							break;
+						default:
+							$src = '';
+							break;
 					}
 
 					$photos .= '<a href="' . esc_url( $photo->get_permalink(), array( 'http', 'https' ) ) . '" ';
@@ -186,6 +189,7 @@ if ( ! class_exists( 'Jetpack_Flickr_Widget' ) ) {
 		 * @html-template-var array $instance
 		 *
 		 * @param array $instance Previously saved values from database.
+		 * @return string|void
 		 */
 		public function form( $instance ) {
 			$instance = wp_parse_args( $instance, $this->defaults() );

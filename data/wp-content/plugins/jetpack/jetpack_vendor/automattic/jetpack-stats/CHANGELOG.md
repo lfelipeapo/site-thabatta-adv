@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.7] - 2025-12-15
+### Changed
+- Improve Post Stats cache handling for invalid or error data. [#46211]
+
+## [0.17.6] - 2025-12-08
+### Fixed
+- Ensure proper flags are used with `json_encode()`. [#46092]
+
+## [0.17.5] - 2025-11-12
+### Changed
+- Internal updates.
+
+## [0.17.4] - 2025-11-10
+### Changed
+- Tests: Ensure PHP 8.5 compatibility. [#45769]
+
+## [0.17.3] - 2025-10-10
+### Changed
+- Handle lazy-loading of `WP_User` object properties. [#45450]
+
+## [0.17.2] - 2025-07-21
+### Changed
+- Internal updates. [#39260]
+
+## [0.17.1] - 2025-06-23
+### Fixed
+- Autoloader: Prevent double slash in autoloader path. [#44030]
+
+## [0.17.0] - 2025-06-23
+### Added
+- Add archives endpoint support. [#44028]
+
+## [0.16.3] - 2025-06-16
+### Fixed
+- Fix tracking of search terms and tags. [#43879]
+- Fix parsing of taxonomies query. [#43879]
+
 ## [0.16.2] - 2025-04-28
 ### Changed
 - Internal updates.
@@ -257,6 +294,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixing static method which was called without self reference. [#26640]
 
+[0.17.7]: https://github.com/Automattic/jetpack-stats/compare/v0.17.6...v0.17.7
+[0.17.6]: https://github.com/Automattic/jetpack-stats/compare/v0.17.5...v0.17.6
+[0.17.5]: https://github.com/Automattic/jetpack-stats/compare/v0.17.4...v0.17.5
+[0.17.4]: https://github.com/Automattic/jetpack-stats/compare/v0.17.3...v0.17.4
+[0.17.3]: https://github.com/Automattic/jetpack-stats/compare/v0.17.2...v0.17.3
+[0.17.2]: https://github.com/Automattic/jetpack-stats/compare/v0.17.1...v0.17.2
+[0.17.1]: https://github.com/Automattic/jetpack-stats/compare/v0.17.0...v0.17.1
+[0.17.0]: https://github.com/Automattic/jetpack-stats/compare/v0.16.3...v0.17.0
+[0.16.3]: https://github.com/Automattic/jetpack-stats/compare/v0.16.2...v0.16.3
 [0.16.2]: https://github.com/Automattic/jetpack-stats/compare/v0.16.1...v0.16.2
 [0.16.1]: https://github.com/Automattic/jetpack-stats/compare/v0.16.0...v0.16.1
 [0.16.0]: https://github.com/Automattic/jetpack-stats/compare/v0.15.9...v0.16.0

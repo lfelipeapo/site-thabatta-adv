@@ -1,5 +1,9 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit( 0 );
+}
+
 // phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed -- TODO: Move classes to appropriately-named class files.
 
 /**
@@ -184,7 +188,7 @@ class Jetpack_Widget_Social_Icons extends WP_Widget {
 							<?php
 							printf(
 								'<a href="%1$s" %2$s>',
-								esc_url( $icon['url'], array( 'http', 'https', 'mailto', 'skype', 'sms' ) ),
+								esc_url( $icon['url'], array( 'http', 'https', 'mailto', 'sms' ) ),
 								true === $instance['new-tab'] ?
 									'target="_blank" rel="noopener noreferrer"' :
 									'target="_self"'
@@ -397,7 +401,7 @@ class Jetpack_Widget_Social_Icons extends WP_Widget {
 							esc_attr( $args['url-icon-id'] ),
 							esc_attr( $args['url-icon-name'] ),
 							esc_attr__( 'Account URL', 'jetpack' ),
-							esc_url( $args['url-value'], array( 'http', 'https', 'mailto', 'skype', 'sms' ) )
+							esc_url( $args['url-value'], array( 'http', 'https', 'mailto', 'sms' ) )
 						);
 					?>
 				</p>
@@ -648,16 +652,6 @@ class Jetpack_Widget_Social_Icons extends WP_Widget {
 				'url'   => array( 'reddit.com' ),
 				'icon'  => 'reddit',
 				'label' => 'Reddit',
-			),
-			array(
-				'url'   => array( 'skype.com' ),
-				'icon'  => 'skype',
-				'label' => 'Skype',
-			),
-			array(
-				'url'   => array( 'skype:' ),
-				'icon'  => 'skype',
-				'label' => 'Skype',
 			),
 			array(
 				'url'   => array( 'slideshare.net' ),

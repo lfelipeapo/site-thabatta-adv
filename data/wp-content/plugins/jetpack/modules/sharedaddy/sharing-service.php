@@ -13,9 +13,11 @@
 // phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed -- TODO: Move classes to appropriately-named class files.
 
 use Automattic\Jetpack\Assets;
-use Automattic\Jetpack\Redirect;
-use Automattic\Jetpack\Status;
 use Automattic\Jetpack\Sync\Settings;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit( 0 );
+}
 
 require_once __DIR__ . '/sharing-sources.php';
 
@@ -120,8 +122,10 @@ class Sharing_Service {
 		if ( $include_custom ) {
 			// Add any custom services in
 			$options = $this->get_global_options();
-			foreach ( (array) $options['custom'] as $custom_id ) {
-				$services[ $custom_id ] = 'Share_Custom';
+			if ( isset( $options['custom'] ) ) {
+				foreach ( $options['custom'] as $custom_id ) {
+					$services[ $custom_id ] = 'Share_Custom';
+				}
 			}
 		}
 
@@ -313,13 +317,13 @@ class Sharing_Service {
 		}
 
 		// Cleanup after any filters that may have produced duplicate services
-		if ( is_array( $enabled['visible'] ) ) {
+		if ( isset( $enabled['visible'] ) && is_array( $enabled['visible'] ) ) {
 			$enabled['visible'] = array_unique( $enabled['visible'] );
 		} else {
 			$enabled['visible'] = array();
 		}
 
-		if ( is_array( $enabled['hidden'] ) ) {
+		if ( isset( $enabled['hidden'] ) && is_array( $enabled['hidden'] ) ) {
 			$enabled['hidden'] = array_unique( $enabled['hidden'] );
 		} else {
 			$enabled['hidden'] = array();
@@ -499,7 +503,7 @@ class Sharing_Service {
 			}
 		}
 
-		if ( false === $this->global['sharing_label'] || $this->global['sharing_label'] === 'Share this:' ) {
+		if ( ! isset( $this->global['sharing_label'] ) || false === $this->global['sharing_label'] || $this->global['sharing_label'] === 'Share this:' ) {
 			$this->global['sharing_label'] = $this->default_sharing_label;
 		}
 
@@ -687,7 +691,9 @@ class Sharing_Service_Total {
 		$this->service = $services->get_service( $id );
 		$this->total   = (int) $total;
 
-		$this->name = $this->service->get_name();
+		if ( $this->service instanceof Sharing_Source ) {
+			$this->name = $this->service->get_name();
+		}
 	}
 
 	/**
@@ -868,7 +874,7 @@ function sharing_add_footer() {
 				?>
 
 	<script type="text/javascript">
-		window.WPCOM_sharing_counts = <?php echo wp_json_encode( array_flip( $sharing_post_urls ) ); ?>;
+		window.WPCOM_sharing_counts = <?php echo wp_json_encode( array_flip( $sharing_post_urls ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 	</script>
 				<?php
 			endif;
@@ -935,12 +941,12 @@ if ( isset( $_GET['share'] ) ) {
 }
 
 /**
- * Gets the url to customise the sharing buttons in Calypso.
+ * Gets the url to customise the sharing buttons in WP-Admin.
  *
- * @return string the customisation URL or null if it couldn't be determinde.
+ * @return string the customisation URL.
  */
 function get_sharing_buttons_customisation_url() {
-	return Redirect::get_url( 'calypso-marketing-sharing-buttons', array( 'site' => ( new Status() )->get_site_suffix() ) );
+	return admin_url( 'options-general.php?page=sharing' );
 }
 
 /**
@@ -1105,7 +1111,7 @@ function sharing_display( $text = '', $echo = false ) {
 			$dir = get_option( 'text_direction' );
 
 			// Wrapper.
-			$sharing_content .= '<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-' . $global['button_style'] . ' sd-sharing">';
+			$sharing_content .= '<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-' . ( $global['button_style'] ?? 'icon-text' ) . ' sd-sharing">';
 			if ( '' !== $global['sharing_label'] ) {
 				$sharing_content .= sprintf(
 					/**
