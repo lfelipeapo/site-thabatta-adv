@@ -15,13 +15,31 @@ class jh_acf_field_table extends acf_field {
 	*  @return	n/a
 	*/
 
+	public $settings;
+
+	public $name;
+
+	public $description;
+
+	public $preview_image;
+
+	public $doc_url;
+
+	public $label;
+
+	public $category;
+
+	public $defaults;
+
+	public $l10n;
+
 	function __construct() {
 
 		/*
 		*  settings (array) Array of settings
 		*/
 		$this->settings = array(
-			'version' => '1.3.29',
+			'version' => '1.3.33',
 			'dir_url' => plugins_url( '', __FILE__ ) . '/',
 		);
 
@@ -204,9 +222,11 @@ class jh_acf_field_table extends acf_field {
 
 					if ( $data_field['use_header'] === 0 ) {
 
+						$id = uniqid();
+
 						$e .= '<div class="acf-table-optionbox">';
-							$e .= '<label for="acf-table-opt-use-header">' . __( 'use table header', 'advanced-custom-fields-table-field' ) . ' </label>';
-							$e .= '<select class="acf-table-optionbox-field acf-table-fc-opt-use-header" id="acf-table-opt-use-header" name="acf-table-opt-use-header">';
+							$e .= '<label for="acf-table-opt-use-header-' . $id . '">' . __( 'use table header', 'advanced-custom-fields-table-field' ) . ' </label>';
+							$e .= '<select class="acf-table-optionbox-field acf-table-fc-opt-use-header" id="acf-table-opt-use-header-' . $id . '" name="acf-table-opt-use-header">';
 								$e .= '<option value="0">' . __( 'No', 'advanced-custom-fields-table-field' ) . '</option>';
 								$e .= '<option value="1">' . __( 'Yes', 'advanced-custom-fields-table-field' ) . '</option>';
 							$e .= '</select>';
@@ -219,9 +239,11 @@ class jh_acf_field_table extends acf_field {
 
 					if ( $data_field['use_caption'] === 1 ) {
 
+						$id = uniqid();
+
 						$e .= '<div class="acf-table-optionbox">';
-							$e .= '<label for="acf-table-opt-caption">' . __( 'Table Caption', 'advanced-custom-fields-table-field' ) . ' </label><br>';
-							$e .= '<input class="acf-table-optionbox-field acf-table-fc-opt-caption" id="acf-table-opt-caption" type="text" name="acf-table-opt-caption" value=""></input>';
+							$e .= '<label for="acf-table-opt-caption-' . $id . '">' . __( 'Table Caption', 'advanced-custom-fields-table-field' ) . ' </label><br>';
+							$e .= '<input class="acf-table-optionbox-field acf-table-fc-opt-caption" id="acf-table-opt-caption-' . $id . '" type="text" name="acf-table-opt-caption" value=""></input>';
 						$e .= '</div>';
 					}
 
@@ -269,7 +291,8 @@ class jh_acf_field_table extends acf_field {
 	function input_admin_enqueue_scripts() {
 
 		// register & include JS
-		wp_enqueue_script( 'acf-input-table', $this->settings['dir_url'] . 'js/input-v5.js', array( 'jquery', 'acf-input' ), $this->settings['version'], true );
+		wp_enqueue_script( 'acf-input-table', $this->settings['dir_url'] . 'js/init.js', array( 'jquery', 'acf-input' ), $this->settings['version'], true );
+		wp_enqueue_script( 'acf-input-table-execute', $this->settings['dir_url'] . 'js/execute.js', array( 'acf-input-table' ), $this->settings['version'], true );
 
 		// register & include CSS
 		wp_register_style( 'acf-input-table', $this->settings['dir_url'] . 'css/input.css', array( 'acf-input' ), $this->settings['version'] );
@@ -449,13 +472,19 @@ class jh_acf_field_table extends acf_field {
 				// try post_meta
 				$data = get_post_meta( $post_id, $field['name'], true );
 
+				// try user meta
+				if ( empty( $data ) ) {
+
+					$data = get_user_meta( str_replace('user_', '', $post_id ), $field['name'], true );
+				}
+
 				// try term_meta
 				if ( empty( $data ) ) {
 
 					$data = get_term_meta( str_replace('term_', '', $post_id ), $field['name'], true );
 				}
 
-				//try options
+				// try options
 				if (
 					empty( $data ) AND (
 						$post_id = 'options' OR
@@ -529,6 +558,48 @@ class jh_acf_field_table extends acf_field {
 				// }
 
 				$value = $data;
+			}
+
+		// }
+
+		// SANITIZES DATA VALUES {
+
+			// CAPTION
+			if ( isset( $value['p']['ca'] ) ) {
+
+				$value['p']['ca'] = wp_kses( $value['p']['ca'], 'post' );
+			}
+
+			// HEADER CELL VALUES
+			if (
+				isset( $value['h'] ) &&
+				is_array( $value['h'] )
+			) {
+
+				array_walk_recursive( $value['h'], function ( &$item ) {
+
+					if ( is_string( $item ) ) {
+
+						$item = wp_kses( $item, 'post' );
+					}
+				});
+
+			}
+
+			// BODY CELL VALUES
+			if (
+				isset( $value['b'] ) &&
+				is_array( $value['b'] )
+			) {
+
+				array_walk_recursive( $value['b'], function ( &$item ) {
+
+					if ( is_string( $item ) ) {
+
+						$item = wp_kses( $item, 'post' );
+					}
+				});
+
 			}
 
 		// }

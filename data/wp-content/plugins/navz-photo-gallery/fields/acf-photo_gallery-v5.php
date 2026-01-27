@@ -17,7 +17,8 @@ include( dirname(dirname(__FILE__)) . '/includes/acf_photo_gallery_edit_save.php
 // check if class already exists
 if( !class_exists('acf_field_photo_gallery') ) :
 
-	class acf_field_photo_gallery extends acf_field {
+	#[AllowDynamicProperties]
+class acf_field_photo_gallery extends acf_field {
 		
 		
 		/*

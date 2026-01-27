@@ -13,6 +13,7 @@
 
 if( ! class_exists('dhz_acf_field_extended_color_picker') ) :
 
+#[AllowDynamicProperties]
 class dhz_acf_field_extended_color_picker extends acf_field {
 	
 	
