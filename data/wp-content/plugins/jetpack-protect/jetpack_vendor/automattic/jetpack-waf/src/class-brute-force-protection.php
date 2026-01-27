@@ -21,6 +21,8 @@ use WP_Error;
 
 /**
  * Brute Force Protection class.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 class Brute_Force_Protection {
 
@@ -134,7 +136,7 @@ class Brute_Force_Protection {
 		add_filter( 'authenticate', array( $this, 'check_preauth' ), 10, 3 );
 		add_filter( 'jetpack_has_login_ability', array( $this, 'has_login_ability' ) );
 		add_action( 'wp_login', array( $this, 'log_successful_login' ), 10, 2 );
-		add_action( 'wp_login_failed', array( $this, 'log_failed_attempt' ) );
+		add_action( 'wp_login_failed', array( $this, 'log_failed_attempt' ), 10, 2 );
 		add_action( 'admin_init', array( $this, 'maybe_update_headers' ) );
 		add_action( 'admin_init', array( $this, 'maybe_display_security_warning' ) );
 
@@ -515,10 +517,18 @@ class Brute_Force_Protection {
 	 *
 	 * Fires custom, plugable action jpp_log_failed_attempt with the IP
 	 *
-	 * @param string $login_user - the user attempting to log in.
+	 * @param string|null           $username - The username or email address attempting to log in.
+	 * @param \WP_Error|string|null $error    - A WP_Error object or error message with the authentication failure details.
+	 *
 	 * @return void
 	 */
-	public function log_failed_attempt( $login_user = null ) {
+	public function log_failed_attempt( $username, $error = null ) {
+		$username = $username ?? '';
+
+		// Skip if Account protection password validation error.
+		if ( is_object( $error ) && isset( $error->errors['password_detection_validation_error'] ) ) {
+			return;
+		}
 
 		/**
 		 * Fires before every failed login attempt.
@@ -532,16 +542,21 @@ class Brute_Force_Protection {
 		 *     'login'             => (string) Username or email used in failed login attempt
 		 *   ]
 		 */
-		do_action( 'jpp_log_failed_attempt', array( 'login' => $login_user ) );
+		do_action( 'jpp_log_failed_attempt', array( 'login' => $username ) );
 
 		if ( isset( $_COOKIE['jpp_math_pass'] ) ) {
 
 			$transient = $this->get_transient( 'jpp_math_pass_' . sanitize_key( $_COOKIE['jpp_math_pass'] ) );
-			--$transient;
+			if ( is_int( $transient ) ) {
+				--$transient;
+			}
 
-			if ( ! $transient || $transient < 1 ) {
+			if ( ! is_int( $transient ) || $transient < 1 ) {
 				$this->delete_transient( 'jpp_math_pass_' . sanitize_key( $_COOKIE['jpp_math_pass'] ) );
-				setcookie( 'jpp_math_pass', 0, time() - DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, false, true );
+				// This is a cop out for the tests on some PHP versions
+				if ( ! headers_sent() ) {
+					setcookie( 'jpp_math_pass', '0', time() - DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, false, true );
+				}
 			} else {
 				$this->set_transient( 'jpp_math_pass_' . sanitize_key( $_COOKIE['jpp_math_pass'] ), $transient, DAY_IN_SECONDS );
 			}
@@ -561,8 +576,8 @@ class Brute_Force_Protection {
 	 * a busy IP that has a lot of good logins along with some forgotten passwords. Also saves current user's ip
 	 * to the ip address allow list
 	 *
-	 * @param string $user_login - the user loggign in.
-	 * @param string $user - the user.
+	 * @param string   $user_login - the user logging in.
+	 * @param \WP_User $user - the user.
 	 */
 	public function log_successful_login( $user_login, $user = null ) {
 		if ( ! $user ) { // For do_action( 'wp_login' ) calls that lacked passing the 2nd arg.
@@ -1157,9 +1172,11 @@ class Brute_Force_Protection {
 			$uri = network_home_url();
 		}
 
+		$domain  = '';
 		$uridata = wp_parse_url( $uri );
-
-		$domain = $uridata['host'];
+		if ( false !== $uridata ) {
+			$domain = $uridata['host'];
+		}
 
 		// If we still don't have the site_url, get it.
 		if ( ! $domain ) {

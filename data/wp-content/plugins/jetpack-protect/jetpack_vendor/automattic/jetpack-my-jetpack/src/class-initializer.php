@@ -39,7 +39,7 @@ class Initializer {
 	 *
 	 * @var string
 	 */
-	const PACKAGE_VERSION = '5.9.1';
+	const PACKAGE_VERSION = '5.28.6';
 
 	/**
 	 * HTML container ID for the IDC screen on My Jetpack page.
@@ -98,7 +98,7 @@ class Initializer {
 		// This is later than the admin-ui package, which runs on 1000
 		add_action( 'admin_init', array( __CLASS__, 'maybe_show_red_bubble' ), 1001 );
 
-		//  Set up the ExPlat package endpoints
+		// Set up the ExPlat package endpoints
 		ExPlat::init();
 
 		// Sets up JITMS.
@@ -174,13 +174,64 @@ class Initializer {
 	 * @return void
 	 */
 	public static function admin_init() {
+		$connection = new Connection_Manager();
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No nonce needed for redirect flow control
+		$step = isset( $_GET['step'] ) ? sanitize_text_field( wp_unslash( $_GET['step'] ) ) : '';
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Checking for partner coupon redemption flow
+		$show_coupon_redemption = isset( $_GET['showCouponRedemption'] );
+
+		// Redirect to Jetpack dashboard for partner coupon redemption
+		if ( $show_coupon_redemption ) {
+			wp_safe_redirect( admin_url( 'admin.php?page=jetpack&showCouponRedemption=1#/dashboard' ) );
+			exit( 0 );
+		}
+
+		// Handle onboarding redirects based on connection status
+		$should_redirect = false;
+		$redirect_args   = array( 'page' => 'my-jetpack' );
+
+		if ( ! $connection->is_connected() && $step !== 'onboarding' ) {
+			// Redirect to onboarding if not connected
+			$redirect_args['step'] = 'onboarding';
+			$should_redirect       = true;
+		} elseif ( $connection->is_connected() && $step === 'onboarding' ) {
+			// Redirect away from onboarding if already connected
+			$should_redirect = true;
+		}
+
+		if ( $should_redirect ) {
+			$admin_page = add_query_arg( $redirect_args, admin_url( 'admin.php' ) );
+			$location   = wp_sanitize_redirect( $admin_page );
+
+			// Remove wp_get_referer filter applied in `fix_redirect` method of `Jetpack_Admin` class
+			remove_filter( 'wp_redirect', 'wp_get_referer' );
+			wp_safe_redirect( $location );
+
+			exit( 0 );
+		}
+
+		// If the user reaches the onboarding page, add a class to the body
+		if ( $step === 'onboarding' ) {
+			add_filter( 'admin_body_class', array( __CLASS__, 'add_onboarding_admin_body_class' ) );
+		}
+
 		self::$site_info = self::get_site_info();
 		add_filter( 'identity_crisis_container_id', array( static::class, 'get_idc_container_id' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
-		// Product statuses are constantly changing, so we never want to cache the page.
-		header( 'Cache-Control: no-cache, no-store, must-revalidate' );
-		header( 'Pragma: no-cache' );
-		header( 'Expires: 0' );
+	}
+
+	/**
+	 * Add a body class to the My Jetpack onboarding page.
+	 * This class hides the WP Admin toolbar and the sidebar menu.
+	 *
+	 * @param string $classes The body classes.
+	 * @return string The modified body classes.
+	 */
+	public static function add_onboarding_admin_body_class( $classes ) {
+		$classes .= 'jetpack-admin-full-screen';
+		return $classes;
 	}
 
 	/**
@@ -307,9 +358,6 @@ class Initializer {
 		$plugin_slugs = array_map(
 			static function ( $slug ) {
 				$parts = explode( '/', $slug );
-				if ( empty( $parts ) ) {
-					return '';
-				}
 				// Return the last segment of the filepath without the PHP extension
 				return str_replace( '.php', '', $parts[ count( $parts ) - 1 ] );
 			},
@@ -364,9 +412,6 @@ class Initializer {
 		$plugin_slugs              = array_map(
 			static function ( $slug ) {
 				$parts = explode( '/', $slug );
-				if ( empty( $parts ) ) {
-					return '';
-				}
 				// Return the last segment of the filepath without the PHP extension
 				return str_replace( '.php', '', $parts[ count( $parts ) - 1 ] );
 			},
@@ -406,7 +451,11 @@ class Initializer {
 	 * @return void
 	 */
 	public static function admin_page() {
-		echo '<div id="my-jetpack-container"></div>';
+		$step          = isset( $_GET['step'] ) ? sanitize_text_field( wp_unslash( $_GET['step'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$is_onboarding = $step === 'onboarding';
+
+		// Add data attribute for onboarding, otherwise render normal container
+		echo '<div id="my-jetpack-container" ' . ( $is_onboarding ? 'data-route="onboarding"' : '' ) . '></div>';
 	}
 
 	/**
@@ -464,10 +513,6 @@ class Initializer {
 	 */
 	public static function should_initialize() {
 		$should = true;
-
-		if ( is_multisite() ) {
-			$should = false;
-		}
 
 		// All options presented in My Jetpack require a connection to WordPress.com.
 		if ( ( new Status() )->is_offline_mode() ) {
@@ -593,7 +638,7 @@ class Initializer {
 	}
 
 	/**
-	 * Returns true if the site has file write access to the plugins folder, false otherwise.
+	 * Returns "yes" if the site has file write access to the plugins folder, "no" otherwise.
 	 *
 	 * @return string
 	 **/
@@ -618,7 +663,7 @@ class Initializer {
 			$write_access = 'yes';
 		}
 
-		if ( ! $write_access ) {
+		if ( 'no' === $write_access ) {
 			ob_start();
 			$filesystem_credentials_are_stored = request_filesystem_credentials( self_admin_url() );
 			ob_end_clean();
@@ -655,6 +700,14 @@ class Initializer {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+
+		// Don't show any red bubbles when Jetpack is disconnected
+		// Users can't act on most alerts without a connection
+		$connection = new Connection_Manager();
+		if ( ! $connection->is_connected() ) {
+			return;
+		}
+
 		$rbn = new Red_Bubble_Notifications();
 
 		// filters for the items in this file
@@ -670,7 +723,6 @@ class Initializer {
 		// The Jetpack menu item should be on index 3
 		if (
 			! empty( $red_bubble_alerts ) &&
-			is_countable( $red_bubble_alerts ) &&
 			isset( $menu[3] ) &&
 			$menu[3][0] === 'Jetpack'
 		) {

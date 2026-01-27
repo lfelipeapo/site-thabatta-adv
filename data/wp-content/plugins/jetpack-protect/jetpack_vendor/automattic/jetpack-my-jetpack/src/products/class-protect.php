@@ -15,6 +15,10 @@ use Automattic\Jetpack\Waf\Waf_Runner;
 use WP_Error;
 use WP_REST_Response;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit( 0 );
+}
+
 /**
  * Class responsible for handling the Protect product
  */
@@ -33,6 +37,13 @@ class Protect extends Hybrid_Product {
 	 * @var string
 	 */
 	public static $slug = 'protect';
+
+	/**
+	 * The Jetpack module name
+	 *
+	 * @var string
+	 */
+	public static $module_name = 'protect';
 
 	/**
 	 * The filename (id) of the plugin associated with this product.
@@ -233,6 +244,13 @@ class Protect extends Hybrid_Product {
 				),
 			),
 			array(
+				'name'  => __( 'Account protection', 'jetpack-my-jetpack' ),
+				'tiers' => array(
+					self::FREE_TIER_SLUG     => array( 'included' => true ),
+					self::UPGRADED_TIER_SLUG => array( 'included' => true ),
+				),
+			),
+			array(
 				'name'  => __( 'Access to scan on Cloud', 'jetpack-my-jetpack' ),
 				'tiers' => array(
 					self::FREE_TIER_SLUG     => array( 'included' => false ),
@@ -374,13 +392,12 @@ class Protect extends Hybrid_Product {
 	 * @return ?string
 	 */
 	public static function get_manage_url() {
-		// check standalone first
 		if ( static::is_standalone_plugin_active() ) {
+			// Protect admin dashboard
 			return admin_url( 'admin.php?page=jetpack-protect' );
-			// otherwise, check for the main Jetpack plugin
-		} elseif ( static::is_jetpack_plugin_active() ) {
-			return Redirect::get_url( 'my-jetpack-manage-scan' );
 		}
+		// Jetpack Cloud Scan dashboard.
+		return Redirect::get_url( 'my-jetpack-manage-scan' );
 	}
 
 	/**
