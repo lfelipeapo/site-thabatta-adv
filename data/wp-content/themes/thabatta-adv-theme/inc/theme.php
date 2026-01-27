@@ -245,11 +245,7 @@ if (function_exists('acf_add_options_page')) {
         'position'   => 59,
     ));
 
-    acf_add_options_sub_page(array(
-        'page_title'  => esc_html__('Informações de Contato', 'thabatta-adv'),
-        'menu_title'  => esc_html__('Informações de Contato', 'thabatta-adv'),
-        'parent_slug' => 'theme-general-settings',
-    ));
+
 }
 
 /**
@@ -577,38 +573,7 @@ add_filter('the_content', 'thabatta_add_lazy_loading');
 /**
  * Adiciona página de opções do tema no menu do WordPress.
  */
-function thabatta_add_theme_options_page() {
-    add_menu_page(
-        esc_html__('Opções do Tema', 'thabatta-adv'), // Título da página
-        esc_html__('Opções do Tema', 'thabatta-adv'), // Título do menu
-        'manage_options',                      // Capacidade necessária
-        'thabatta-theme-options',              // Slug do menu
-        'thabatta_theme_options_page_content', // Função de callback para o conteúdo da página
-        'dashicons-admin-generic',             // Ícone
-        60                                     // Posição
-    );
-}
-add_action('admin_menu', 'thabatta_add_theme_options_page');
 
-/**
- * Função de callback para a página de opções do tema.
- * Deixada vazia por enquanto, ou pode ser preenchida com conteúdo relevante.
- */
-function thabatta_theme_options_page_content() {
-    // Conteúdo da página de opções pode ser adicionado aqui.
-    // Exemplo: verificar se ACF Pro está ativo e exibir link para a página de opções ACF.
-    if (class_exists('ACF') && function_exists('acf_add_options_page')) {
-        echo '<div class="wrap"><h1>' . esc_html__('Opções do Tema', 'thabatta-adv') . '</h1>';
-        echo '<p>' . esc_html__('As opções do tema são gerenciadas usando o Advanced Custom Fields (ACF) Pro.', 'thabatta-adv') . '</p>';
-        // Você pode adicionar um link direto para a página de opções ACF se souber o slug
-        echo '<p><a href="' . admin_url('admin.php?page=theme-general-settings') . '" class="button button-primary">' . esc_html__('Gerenciar Opções', 'thabatta-adv') . '</a></p>';
-        echo '</div>';
-    } else {
-        echo '<div class="wrap"><h1>' . esc_html__('Opções do Tema', 'thabatta-adv') . '</h1>';
-        echo '<p>' . esc_html__('Ative o plugin Advanced Custom Fields (ACF) Pro para gerenciar as opções do tema.', 'thabatta-adv') . '</p>';
-        echo '</div>';
-    }
-}
 
 /**
  * Importar manipuladores AJAX
