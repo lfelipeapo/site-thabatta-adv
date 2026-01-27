@@ -3,9 +3,9 @@ Contributors: navzme
 Donate link: https://www.buymeacoffee.com/navzme
 Tags: acf, custom, fields, photo, gallery
 Requires at least: 5.8
-Tested up to: 6.5
+Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.0
+Stable tag: 3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,9 @@ From your WordPress dashboard
 4. **Watch** the tutorial to [get started](https://www.youtube.com/watch?v=c7u9FwVLe9Q)
 
 == Changelog ==
+=3.1=
+* [Fixed] WordPress security fix and plugin check fix.
+
 =3.0=
 * [Fixed] URL and target not saving into the database.
 

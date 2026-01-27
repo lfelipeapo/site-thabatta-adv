@@ -1,0 +1,235 @@
+# Translation of Plugins - ACF: Better Search - Stable (latest release) in Portuguese (Brazil)
+# This file is distributed under the same license as the Plugins - ACF: Better Search - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2025-12-09 01:13:07+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: pt_BR\n"
+"Project-Id-Version: Plugins - ACF: Better Search - Stable (latest release)\n"
+
+#. Plugin URI of the plugin
+#: acf-better-search.php
+msgid "https://mattplugins.com"
+msgstr "https://mattplugins.com"
+
+#: templates/components/notices/thanks.php:41
+#: templates/components/widgets/support.php:52
+msgid "Add a plugin review"
+msgstr "Adicionar uma avaliação do plugin"
+
+#: templates/components/notices/thanks.php:33
+msgid "We are glad that you are using our plugin and we hope you are satisfied with it. If you want, you can support us in the development of the plugin by adding a plugin review. This is very important and gives us the opportunity to create even better tools for you. Thank you!"
+msgstr "Estamos felizes por você estar usando nosso plugin e esperamos que esteja satisfeito com ele. Se quiser, você pode nos apoiar no desenvolvimento do plugin, adicionando uma avaliação do plugin. Isso é muito importante e nos dá a oportunidade de criar ferramentas ainda melhores para você. Obrigado!"
+
+#. translators: %s: plugin name
+#: templates/components/notices/thanks.php:24
+msgid "Thank you for using our %s plugin!"
+msgstr "Agradecemos por usar nosso plugin %s!"
+
+#: templates/components/notices/converter-plugin.php:42
+#: templates/components/notices/thanks.php:45
+msgid "Hide and do not show again"
+msgstr "Ocultar e não mostrar novamente"
+
+#: templates/components/notices/converter-plugin.php:38
+msgid "Explore new plugin"
+msgstr "Conhecer o novo plugin"
+
+#. translators: %1$s: plugin name, %2$s: plugin name
+#: templates/components/notices/converter-plugin.php:27
+msgid "We are glad you are using our %1$s plugin. We would like to introduce one of our highly rated plugins, %2$s, which can speed up your website by optimizing images to the WebP format and to the AVIF format."
+msgstr "Estamos felizes por você estar usando nosso plugin %1$s. Gostaríamos de apresentar um dos nossos plugins mais bem classificados, o %2$s, que pode acelerar seu site otimizando imagens para os formatos WebP e AVIF."
+
+#: templates/components/notices/converter-plugin.php:20
+msgid "New opportunities for your website"
+msgstr "Novas oportunidades para o seu site"
+
+#. translators: %1$s: open anchor tag, %2$s: close anchor tag
+#: templates/components/notices/acf.php:22
+msgid "Unfortunately, but this plugin requires %1$sthe Advanced Custom Field plugin%2$s for all functionalities to work properly. Our plugin is an extension for the Advanced Custom Field plugin - our plugin extends the capabilities of that plugin."
+msgstr "Infelizmente, este plugin requer o plugin %1$sAdvanced Custom Field%2$s para que todos os recursos funcionem corretamente. Nosso plugin é uma extensão do plugin Advanced Custom Field: ele estende os recursos desse plugin."
+
+#: src/Settings/Options.php:40
+msgid "Table"
+msgstr "Tabela"
+
+#: templates/views/settings.php:26
+msgid "Changes were successfully saved!"
+msgstr "As alterações foram salvas!"
+
+#: templates/components/widgets/support.php:45
+msgid "Do you like our plugin? Could you rate him? Please let us know what you think about our plugin. It is important that we can develop this tool. Thank you for all the reviews."
+msgstr "Gosta do nosso plugin? Pode classificá-lo? Conte para nós o que você acha do nosso plugin. É importante para que possamos desenvolver esta ferramenta. Agradecemos por todas as avaliações."
+
+#. translators: %1$s: open anchor tag, %2$s: close anchor tag, %3$s: open
+#. anchor tag, %4$s: close anchor tag
+#: templates/components/widgets/support.php:27
+msgid "Please %1$scheck our FAQ%2$s before adding a thread with technical problem. If you do not find help there, %3$scheck support forum%4$s for similar problems."
+msgstr "%1$sConsulte nossas perguntas frequentes%2$s antes de adicionar um tópico com problemas técnicos. Se não encontrar ajuda lá, %3$sconfira o fórum de suporte%4$s para ver se há problemas semelhantes."
+
+#: templates/components/widgets/support.php:18
+msgid "Do you have a technical problem? Please contact us. We will be happy to help you. Or maybe you have an idea for a new feature? Please let us know about it by filling the support form. We will try to add it!"
+msgstr "Tem algum problema técnico? Fale com a gente. Ficaremos felizes em ajudar. Ou talvez tenha uma ideia para um novo recurso? Deixe sua sugestão preenchendo o formulário de suporte. Vamos tentar adicionar!"
+
+#: templates/components/widgets/support.php:12
+msgid "We are waiting for your message"
+msgstr "Estamos aguardando sua mensagem"
+
+#: templates/components/widgets/settings.php:54
+msgid "Save Changes"
+msgstr "Salvar alterações"
+
+#: templates/components/widgets/settings.php:38
+msgid "The configuration only for Developers."
+msgstr "A configuração é apenas para desenvolvedores."
+
+#: templates/components/widgets/settings.php:33
+msgid "Advanced settings"
+msgstr "Configurações avançadas"
+
+#: templates/components/widgets/settings.php:26
+msgid "Additional features"
+msgstr "Recursos adicionais"
+
+#: templates/components/widgets/settings.php:22
+msgid "List of supported fields types"
+msgstr "Lista dos tipos de campos compatíveis"
+
+#: templates/components/widgets/settings.php:18
+msgid "Settings"
+msgstr "Configurações"
+
+#. translators: %1$s: open anchor tag, %2$s: close anchor tag
+#: templates/components/widgets/about.php:34
+msgid "For custom WP_Query loop and get_posts() function you must add %1$sSearch Parameter%2$s."
+msgstr "Para o loop WP_Query personalizado e a função get_posts(), você precisa adicionar %1$sParâmetro de pesquisa%2$s."
+
+#: templates/components/widgets/about.php:25
+msgid "On search page and in admin panel everything works automatically. No need to add any additional code."
+msgstr "Na página de pesquisa e no painel administrativo, tudo funciona automaticamente. Não é necessário adicionar nenhum código adicional."
+
+#: templates/components/widgets/about.php:18
+msgid "Plugin changes all SQL queries by extending the standard search to selected fields of Advanced Custom Fields."
+msgstr "O plugin altera todas as consultas SQL, estendendo a pesquisa padrão para campos selecionados do Advanced Custom Fields."
+
+#: templates/components/widgets/about.php:12
+msgid "How does this work?"
+msgstr "Como isso funciona?"
+
+#: templates/components/widgets/support.php:39
+msgid "Get help"
+msgstr "Peça ajuda"
+
+#: templates/components/notices/acf.php:15
+msgid "ACF: Better Search error!"
+msgstr "Erro do ACF: Better Search!"
+
+#. translators: %1$s: open em tag, %2$s: close em tag
+#: src/Settings/Options.php:101
+msgid "Use implementation of regular expression by Henry Spencer to search for whole words %1$s(for newer versions of MySQL where default does not work)%2$s"
+msgstr "Usar a implementação da expressão regular de Henry Spencer para pesquisar palavras inteiras %1$s(para versões mais recentes do MySQL, onde o padrão não funciona)%2$s"
+
+#. translators: %1$s: open strong tag, %2$s: close strong tag, %3$s: open em
+#. tag, %4$s: close em tag
+#: src/Settings/Options.php:90
+msgid "Use %1$s\"Selected Mode\"%2$s - use only selected fields for searching %3$s(edit group of ACF fields and check option for selected fields; it does not work in \"Lite Mode\")%4$s"
+msgstr "Usar %1$s“Modo selecionado”%2$s - use apenas os campos selecionados para pesquisa %3$s(edite o grupo de campos ACF e marque a opção para os campos selecionados; não funciona no “Modo Lite”)%4$s"
+
+#. translators: %1$s: open strong tag, %2$s: close strong tag, %3$s: open em
+#. tag, %4$s: close em tag
+#: src/Settings/Options.php:79
+msgid "Use %1$s\"Lite Mode\"%2$s - does not check field types %3$s(faster search, but less accurate)%4$s"
+msgstr "Usar %1$s“Modo Lite”%2$s - não verifica os tipos de campo %3$s(pesquisa mais rápida, mas menos precisa)%4$s"
+
+#. translators: %1$s: open em tag, %2$s: close em tag
+#: src/Settings/Options.php:60
+msgid "Search for whole words instead of fragments within longer words %1$s(slower search)%2$s"
+msgstr "Pesquisar palavras inteiras em vez de fragmentos dentro de palavras mais longas %1$s(pesquisa mais lenta)%2$s"
+
+#: src/Settings/Options.php:54
+msgid "Search for whole phrases instead of each single word of phrase"
+msgstr "Pesquisar frases inteiras em vez de cada palavra da frase"
+
+#: src/Settings/Options.php:36
+msgid "Radio Button"
+msgstr "Botão de opção"
+
+#: src/Settings/Options.php:35
+msgid "Checkbox"
+msgstr "Caixa de seleção"
+
+#: src/Settings/Options.php:34
+msgid "Select"
+msgstr "Seleção"
+
+#: src/Settings/Options.php:33
+msgid "Wysiwyg Editor"
+msgstr "Editor Wysiwyg"
+
+#. translators: %1$s: open em tag, %2$s: close em tag
+#: src/Settings/Options.php:29
+msgid "File %1$s(it does not work in \"Lite Mode\")%2$s"
+msgstr "Arquivo %1$s(não funciona no “Modo Lite”)%2$s"
+
+#: src/Settings/Options.php:26
+msgid "Url"
+msgstr "URL"
+
+#: src/Settings/Options.php:25
+msgid "Email"
+msgstr "E-mail"
+
+#: src/Settings/Options.php:24
+msgid "Number"
+msgstr "Número"
+
+#: src/Settings/Options.php:23
+msgid "Text Area"
+msgstr "Área de texto"
+
+#: src/Settings/Options.php:22
+msgid "Text"
+msgstr "Texto"
+
+#. translators: %1$s: open strong tag, %2$s: close strong tag
+#: src/Settings/Acf.php:36
+msgid "Only values from fields with selected this option will be used by %1$sACF: Better Search%2$s plugin."
+msgstr "Apenas os valores dos campos com esta opção selecionada são usados pelo plugin %1$sACF: Better Search%2$s."
+
+#: src/Settings/Acf.php:33
+msgid "Allow use for search?"
+msgstr "Permitir o uso para pesquisa?"
+
+#. translators: %1$s: open anchor tag, %2$s: close anchor tag
+#: src/Admin/Plugin.php:50
+msgid "%1$sProvide us a coffee%2$s"
+msgstr "%1$sNos dê um cafezinho%2$s"
+
+#. translators: %1$s: open anchor tag, %2$s: close anchor tag
+#: src/Admin/Plugin.php:43
+msgid "%1$sSettings%2$s"
+msgstr "%1$sConfigurações%2$s"
+
+#. Author URI of the plugin
+#: acf-better-search.php
+msgid "https://gbiorczyk.pl/"
+msgstr "https://gbiorczyk.pl/"
+
+#. Author of the plugin
+#: acf-better-search.php
+msgid "Mateusz Gbiorczyk"
+msgstr "Mateusz Gbiorczyk"
+
+#. Description of the plugin
+#: acf-better-search.php
+msgid "Adds to default WordPress search engine the ability to search by content from selected fields of Advanced Custom Fields plugin."
+msgstr "Adiciona ao mecanismo de pesquisa padrão do WordPress o recurso de pesquisar pelo conteúdo de campos selecionados do plugin Advanced Custom Fields."
+
+#. Plugin Name of the plugin
+#: acf-better-search.php templates/views/settings.php:20
+msgid "ACF: Better Search"
+msgstr "ACF: Better Search"

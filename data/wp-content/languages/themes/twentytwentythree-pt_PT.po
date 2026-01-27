@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Themes - Twenty Twenty-Three package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-13 18:16:21+0000\n"
+"PO-Revision-Date: 2025-09-26 13:14:42+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,6 +23,16 @@ msgstr "O tema Twenty Twenty-Three foi concebido para tirar partido das novas fe
 msgid "Twenty Twenty-Three"
 msgstr "Twenty Twenty-Three"
 
+#: patterns/hidden-heading.php:9
+msgctxt "Main heading for homepage"
+msgid "Mindblown: a blog about philosophy."
+msgstr "Mindblown: um blog sobre filosofia."
+
+#: patterns/hidden-heading.php
+msgctxt "Pattern title"
+msgid "Hidden Heading for Homepage"
+msgstr "Título escondido para a página inicial"
+
 #: patterns/post-meta.php
 msgctxt "Pattern description"
 msgid "Post meta information with separator on the top."
@@ -42,6 +52,11 @@ msgstr "Texto alinhado à esquerda com um botão CTA e um separador."
 msgctxt "Template part name"
 msgid "Comments Template Part"
 msgstr "Parte de modelo dos comentários"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Post Meta"
+msgstr "Metadados de artigo"
 
 #: theme.json
 msgctxt "Template part name"
@@ -93,139 +108,25 @@ msgctxt "Custom template name"
 msgid "Blank"
 msgstr "Vazio"
 
-#: styles/pilgrimage.json
-msgctxt "Gradient name"
-msgid "Dots"
-msgstr "Pontos"
-
-#: styles/marigold.json styles/pitch.json theme.json
-msgctxt "Space size name"
-msgid "6"
-msgstr "6"
-
-#: styles/marigold.json styles/pitch.json theme.json
-msgctxt "Space size name"
-msgid "5"
-msgstr "5"
-
-#: styles/marigold.json styles/pitch.json theme.json
-msgctxt "Space size name"
-msgid "4"
-msgstr "4"
-
-#: styles/marigold.json styles/pitch.json theme.json
-msgctxt "Space size name"
-msgid "3"
-msgstr "3"
-
-#: styles/marigold.json styles/pitch.json theme.json
-msgctxt "Space size name"
-msgid "2"
-msgstr "2"
-
-#: styles/marigold.json styles/pitch.json theme.json
-msgctxt "Space size name"
-msgid "1"
-msgstr "1"
-
-#: patterns/post-meta.php:65
-msgctxt "Label for a list of post tags"
-msgid "Tags:"
-msgstr "Etiquetas:"
-
-#: patterns/post-meta.php:49
-msgctxt "Preposition to show the relationship between the post and its author"
-msgid "by"
-msgstr "por"
-
-#: patterns/post-meta.php:37
-msgctxt "Preposition to show the relationship between the post and its categories"
-msgid "in"
-msgstr "em"
-
-#: patterns/post-meta.php:29
-msgctxt "Verb to explain the publication status of a post"
-msgid "Posted"
-msgstr "Publicado"
-
-#: patterns/post-meta.php
-msgctxt "Pattern title"
-msgid "Post Meta"
-msgstr "Metadados do artigo"
-
-#: patterns/hidden-no-results.php:10
-msgctxt "Message explaining that there are no results returned from a search"
-msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
-msgstr "Desculpe, mas nada correspondeu aos seus critérios de pesquisa. Por favor tente com palavras-chave diferentes."
-
-#: patterns/hidden-comments.php:13
-msgctxt "Title of comments section"
-msgid "Comments"
-msgstr "Comentários"
-
-#: patterns/hidden-comments.php
-msgctxt "Pattern title"
-msgid "Hidden Comments"
-msgstr "Comentários escondidos"
-
-#: patterns/hidden-404.php:22 patterns/hidden-no-results.php:14
-msgid "Search"
-msgstr "Pesquisar"
-
-#: patterns/hidden-404.php:22 patterns/hidden-no-results.php:14
-msgctxt "placeholder for search field"
-msgid "Search..."
-msgstr "Pesquisar..."
-
-#: patterns/hidden-404.php:22 patterns/hidden-no-results.php:14
-msgctxt "label"
-msgid "Search"
-msgstr "Pesquisa"
-
-#: patterns/hidden-404.php:19
-msgctxt "Message to convey that a webpage could not be found"
-msgid "This page could not be found."
-msgstr "Não foi possível encontrar esta página."
-
-#: patterns/hidden-404.php:13
-msgctxt "Error code for a webpage that is not found."
-msgid "404"
-msgstr "404"
-
-#. Translators: WordPress link.
-#: patterns/footer-default.php:20
-msgid "Proudly powered by %s"
-msgstr "Criado com %s"
-
-#: patterns/footer-default.php
-msgctxt "Pattern title"
-msgid "Default Footer"
-msgstr "Rodapé por omissão"
-
-#: patterns/call-to-action.php:25
-msgctxt "sample content for call to action button"
-msgid "Get In Touch"
-msgstr "Contacte-nos"
-
-#: patterns/call-to-action.php
-msgctxt "Pattern title"
-msgid "Call to action"
-msgstr "Chamada para acção"
-
-#: theme.json
-msgctxt "Template part name"
-msgid "Post Meta"
-msgstr "Metadados de artigo"
-
-#: styles/pitch.json
-msgctxt "Space size name"
-msgid "7"
-msgstr "7"
-
 #: styles/whisper.json
 msgctxt "Style variation name"
 msgid "Whisper"
 msgstr "Sussurro"
+
+#: styles/sherbet.json
+msgctxt "Gradient name"
+msgid "Tertiary to Secondary to Primary Fixed"
+msgstr "Terciário para secundário para principal fixo"
+
+#: styles/sherbet.json
+msgctxt "Gradient name"
+msgid "Primary to Secondary to Tertiary Fixed"
+msgstr "Principal para secundário para terciário fixo"
+
+#: styles/sherbet.json
+msgctxt "Gradient name"
+msgid "Primary to Secondary to Tertiary"
+msgstr "Principal para secundário para terciário"
 
 #: styles/sherbet.json
 msgctxt "Style variation name"
@@ -257,15 +158,30 @@ msgctxt "Font size name"
 msgid "small"
 msgstr "pequeno"
 
+#: styles/pitch.json
+msgctxt "Space size name"
+msgid "7"
+msgstr "7"
+
+#: styles/pitch.json
+msgctxt "Style variation name"
+msgid "Pitch"
+msgstr "Apresentação"
+
+#: styles/pilgrimage.json
+msgctxt "Gradient name"
+msgid "Dots"
+msgstr "Pontos"
+
+#: styles/pilgrimage.json
+msgctxt "Gradient name"
+msgid "Base to Primary"
+msgstr "Base para principal"
+
 #: styles/pilgrimage.json
 msgctxt "Gradient name"
 msgid "Tertiary to Secondary"
 msgstr "Terciário para secundário"
-
-#: styles/pilgrimage.json
-msgctxt "Gradient name"
-msgid "Primary to Secondary"
-msgstr "Principal para secundário"
 
 #: styles/pilgrimage.json
 msgctxt "Gradient name"
@@ -274,23 +190,68 @@ msgstr "Secundário para principal"
 
 #: styles/pilgrimage.json
 msgctxt "Gradient name"
-msgid "Base to Primary"
-msgstr "Base para principal"
+msgid "Primary to Secondary"
+msgstr "Principal para secundário"
 
-#: styles/sherbet.json
-msgctxt "Gradient name"
-msgid "Tertiary to Secondary to Primary Fixed"
-msgstr "Terciário para secundário para principal fixo"
+#: styles/pilgrimage.json
+msgctxt "Style variation name"
+msgid "Pilgrimage"
+msgstr "Peregrinação"
 
-#: styles/sherbet.json
-msgctxt "Gradient name"
-msgid "Primary to Secondary to Tertiary Fixed"
-msgstr "Principal para secundário para terciário fixo"
+#: styles/marigold.json
+msgctxt "Font size name"
+msgid "Gigantic"
+msgstr "Gigante"
 
-#: styles/sherbet.json
-msgctxt "Gradient name"
-msgid "Primary to Secondary to Tertiary"
-msgstr "Principal para secundário para terciário"
+#: styles/marigold.json
+msgctxt "Font size name"
+msgid "Huge"
+msgstr "Muito grande"
+
+#: styles/marigold.json
+msgctxt "Font size name"
+msgid "Normal"
+msgstr "Normal"
+
+#: styles/marigold.json
+msgctxt "Font size name"
+msgid "Tiny"
+msgstr "Pequeno"
+
+#: styles/marigold.json styles/pitch.json theme.json
+msgctxt "Space size name"
+msgid "6"
+msgstr "6"
+
+#: styles/marigold.json styles/pitch.json theme.json
+msgctxt "Space size name"
+msgid "5"
+msgstr "5"
+
+#: styles/marigold.json styles/pitch.json theme.json
+msgctxt "Space size name"
+msgid "4"
+msgstr "4"
+
+#: styles/marigold.json styles/pitch.json theme.json
+msgctxt "Space size name"
+msgid "3"
+msgstr "3"
+
+#: styles/marigold.json styles/pitch.json theme.json
+msgctxt "Space size name"
+msgid "2"
+msgstr "2"
+
+#: styles/marigold.json styles/pitch.json theme.json
+msgctxt "Space size name"
+msgid "1"
+msgstr "1"
+
+#: styles/marigold.json
+msgctxt "Style variation name"
+msgid "Marigold"
+msgstr "Margarida"
 
 #: styles/grapes.json
 msgctxt "Style variation name"
@@ -312,6 +273,11 @@ msgstr "Canário"
 msgctxt "Duotone name"
 msgid "Default filter"
 msgstr "Filtro por omissão"
+
+#: styles/block-out.json
+msgctxt "Style variation name"
+msgid "Block out"
+msgstr "Bloqueio"
 
 #: styles/aubergine.json styles/block-out.json styles/canary.json
 #: styles/electric.json styles/grapes.json styles/marigold.json
@@ -373,77 +339,121 @@ msgctxt "Gradient name"
 msgid "Secondary to Base"
 msgstr "Secundário para base"
 
-#: styles/pilgrimage.json
-msgctxt "Style variation name"
-msgid "Pilgrimage"
-msgstr "Peregrinação"
-
-#: styles/marigold.json
-msgctxt "Font size name"
-msgid "Gigantic"
-msgstr "Gigante"
-
-#: styles/marigold.json
-msgctxt "Font size name"
-msgid "Huge"
-msgstr "Muito grande"
-
-#: styles/marigold.json
-msgctxt "Font size name"
-msgid "Normal"
-msgstr "Normal"
-
-#: styles/marigold.json
-msgctxt "Font size name"
-msgid "Tiny"
-msgstr "Pequeno"
-
-#: styles/marigold.json
-msgctxt "Style variation name"
-msgid "Marigold"
-msgstr "Margarida"
-
 #: styles/aubergine.json
 msgctxt "Style variation name"
 msgid "Aubergine"
 msgstr "Beringela"
 
-#: styles/pitch.json
-msgctxt "Style variation name"
-msgid "Pitch"
-msgstr "Apresentação"
+#: patterns/post-meta.php:65
+msgctxt "Label for a list of post tags"
+msgid "Tags:"
+msgstr "Etiquetas:"
 
-#: styles/block-out.json
-msgctxt "Style variation name"
-msgid "Block out"
-msgstr "Bloqueio"
+#: patterns/post-meta.php:49
+msgctxt "Preposition to show the relationship between the post and its author"
+msgid "by"
+msgstr "por"
 
-#: patterns/call-to-action.php:16
-msgctxt "sample content for call to action"
-msgid "Got any book recommendations?"
-msgstr "Recomenda algum livro?"
+#: patterns/post-meta.php:37
+msgctxt "Preposition to show the relationship between the post and its categories"
+msgid "in"
+msgstr "em"
+
+#: patterns/post-meta.php:29
+msgctxt "Verb to explain the publication status of a post"
+msgid "Posted"
+msgstr "Publicado"
+
+#: patterns/post-meta.php
+msgctxt "Pattern title"
+msgid "Post Meta"
+msgstr "Metadados do artigo"
+
+#: patterns/hidden-no-results.php:10
+msgctxt "Message explaining that there are no results returned from a search"
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Desculpe, mas nada correspondeu aos seus critérios de pesquisa. Por favor tente com palavras-chave diferentes."
 
 #: patterns/hidden-no-results.php
 msgctxt "Pattern title"
 msgid "Hidden No Results Content"
 msgstr "Conteúdo para ausência de resultados de pesquisa"
 
+#: patterns/hidden-comments.php:13
+msgctxt "Title of comments section"
+msgid "Comments"
+msgstr "Comentários"
+
+#: patterns/hidden-comments.php
+msgctxt "Pattern title"
+msgid "Hidden Comments"
+msgstr "Comentários escondidos"
+
+#: patterns/hidden-404.php:22 patterns/hidden-no-results.php:14
+msgid "Search"
+msgstr "Pesquisar"
+
+#: patterns/hidden-404.php:22 patterns/hidden-no-results.php:14
+msgctxt "placeholder for search field"
+msgid "Search..."
+msgstr "Pesquisar..."
+
+#: patterns/hidden-404.php:22 patterns/hidden-no-results.php:14
+msgctxt "label"
+msgid "Search"
+msgstr "Pesquisa"
+
+#: patterns/hidden-404.php:19
+msgctxt "Message to convey that a webpage could not be found"
+msgid "This page could not be found."
+msgstr "Não foi possível encontrar esta página."
+
+#: patterns/hidden-404.php:13
+msgctxt "Error code for a webpage that is not found."
+msgid "404"
+msgstr "404"
+
 #: patterns/hidden-404.php
 msgctxt "Pattern title"
 msgid "Hidden 404"
 msgstr "404 Escondido"
 
-#. Author of the theme
-#: style.css
-#, gp-priority: low
-msgid "the WordPress team"
-msgstr "a equipa do WordPress"
+#. Translators: WordPress link.
+#: patterns/footer-default.php:20
+msgid "Proudly powered by %s"
+msgstr "Criado com %s"
+
+#: patterns/footer-default.php
+msgctxt "Pattern title"
+msgid "Default Footer"
+msgstr "Rodapé por omissão"
+
+#: patterns/call-to-action.php:25
+msgctxt "sample content for call to action button"
+msgid "Get In Touch"
+msgstr "Contacte-nos"
+
+#: patterns/call-to-action.php:16
+msgctxt "sample content for call to action"
+msgid "Got any book recommendations?"
+msgstr "Recomenda algum livro?"
+
+#: patterns/call-to-action.php
+msgctxt "Pattern title"
+msgid "Call to action"
+msgstr "Chamada para acção"
 
 #. Author URI of the theme
 #: style.css patterns/footer-default.php:21
 #, gp-priority: low
 msgid "https://wordpress.org"
 msgstr "https://pt.wordpress.org"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "the WordPress team"
+msgstr "a equipa do WordPress"
 
 #. Theme URI of the theme
 #: style.css
