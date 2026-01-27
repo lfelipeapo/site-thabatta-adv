@@ -48,3 +48,6 @@ data/wp-content/database/index.php
 data/sqlite/index.php
 data/sqlite/.htaccess
 data/wp-content/debug.log
+data/wp-content/cache/page_optimize/*
+data/wp-content/cache/sidekick-cache/*
+data/wp-content/*.log
