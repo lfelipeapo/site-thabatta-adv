@@ -80,7 +80,8 @@ class Thabatta_Admin_Features
             $old_pages = array(
                 'thabatta-theme-settings',
                 'thabatta-social-settings',
-                'thabatta-seo-settings'
+                'thabatta-seo-settings',
+                'thabatta-redirect-to-customizer'
             );
             
             if (in_array($_GET['page'], $old_pages)) {
@@ -95,8 +96,15 @@ class Thabatta_Admin_Features
      */
     public function redirect_to_customizer()
     {
-        wp_redirect(admin_url('customize.php'));
-        exit;
+        ?>
+        <script type="text/javascript">
+            window.location.href = "<?php echo esc_url(admin_url('customize.php')); ?>";
+        </script>
+        <div class="wrap">
+            <h1><?php _e('Redirecionando...', 'thabatta-adv'); ?></h1>
+            <p><?php printf(__('Se você não for redirecionado automaticamente, clique <a href="%s">aqui</a>.', 'thabatta-adv'), esc_url(admin_url('customize.php'))); ?></p>
+        </div>
+        <?php
     }
 
     /**
