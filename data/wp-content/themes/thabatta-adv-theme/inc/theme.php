@@ -578,8 +578,7 @@ add_filter('the_content', 'thabatta_add_lazy_loading');
 /**
  * Importar manipuladores AJAX
  */
-require get_template_directory() . '/inc/ajax-handlers.php';
-
+require_once get_template_directory() . '/inc/ajax-handlers.php';
 
 // 1) registra a rewrite rule
 add_action('init', function () {
