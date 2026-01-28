@@ -126,9 +126,19 @@ define('FS_METHOD', 'direct');
 // Configuração manual de logs e exibição de erros (Produção: mostra apenas erros fatais/warnings)
 @ini_set('log_errors', 1);
 @ini_set('error_log', __DIR__ . '/wp-content/debug.log');
-@ini_set('display_errors', 1); // Altere para 0 em produção real se não quiser exibir na tela
+@ini_set('display_errors', 0); // Oculta erros da tela
 @ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
+// Configuração Multisite
+define('MULTISITE', true);
+define('SUBDOMAIN_INSTALL', false);
+define('DOMAIN_CURRENT_SITE', 'dev.local');
+define('PATH_CURRENT_SITE', '/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);
+
+define('DISABLE_WP_CRON', true);
 
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
 // see also https://wordpress.org/support/article/administration-over-ssl/#using-a-reverse-proxy
