@@ -115,32 +115,20 @@ $table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'adv_');
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
-define('WP_DEBUG', true);
-define('WP_DEBUG_LOG', true);
-define('WP_DEBUG_DISPLAY', true);
-define('SCRIPT_DEBUG', true);
-define('SAVEQUERIES', true);
+// Desabilita o modo de debug padrão do WP para evitar sobrescrever o error_reporting
+define('WP_DEBUG', false);
+define('WP_DEBUG_LOG', false);
+define('WP_DEBUG_DISPLAY', false);
+define('SCRIPT_DEBUG', false);
+define('SAVEQUERIES', false);
 define('FS_METHOD', 'direct');
 
-// Mostrar apenas erros críticos e warnings (esconde Notices e Deprecated)
-@ini_set('display_errors', 1);
+// Configuração manual de logs e exibição de erros (Produção: mostra apenas erros fatais/warnings)
+@ini_set('log_errors', 1);
+@ini_set('error_log', __DIR__ . '/wp-content/debug.log');
+@ini_set('display_errors', 1); // Altere para 0 em produção real se não quiser exibir na tela
 @ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
-
-// Aumentar limites de memória e tempo
-@ini_set('memory_limit', '512M');
-set_time_limit(300);
-
-// No wp-config.php
-define('MULTISITE', true);
-define('SUBDOMAIN_INSTALL', false);
-define('DOMAIN_CURRENT_SITE', 'dev.local');
-define('PATH_CURRENT_SITE', '/');
-define('SITE_ID_CURRENT_SITE', 1);
-define('BLOG_ID_CURRENT_SITE', 1);
-
-/* Add any custom values between this line and the "stop editing" line. */
-define('DISABLE_WP_CRON', true);
 
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
 // see also https://wordpress.org/support/article/administration-over-ssl/#using-a-reverse-proxy
