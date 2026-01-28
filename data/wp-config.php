@@ -122,10 +122,10 @@ define('SCRIPT_DEBUG', true);
 define('SAVEQUERIES', true);
 define('FS_METHOD', 'direct');
 
-// Configurações de erro
+// Mostrar apenas erros críticos e warnings (esconde Notices e Deprecated)
 @ini_set('display_errors', 1);
-@ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+@ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
 // Aumentar limites de memória e tempo
 @ini_set('memory_limit', '512M');
