@@ -130,7 +130,11 @@ define('FS_METHOD', 'direct');
 @ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
-// Configuração Multisite
+// Aumentar limites de memória e tempo
+@ini_set('memory_limit', '512M');
+set_time_limit(300);
+
+// No wp-config.php
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', false);
 define('DOMAIN_CURRENT_SITE', 'dev.local');
@@ -138,6 +142,7 @@ define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
 
+/* Add any custom values between this line and the "stop editing" line. */
 define('DISABLE_WP_CRON', true);
 
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
