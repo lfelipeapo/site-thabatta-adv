@@ -29,9 +29,7 @@ services:
         define('WP_SITEURL', 'https://dev.local');
         define('WP_HOME', 'https://dev.local');
     volumes:
-      - ./data/wp-content:/var/www/html/wp-content
-      - ./data/wp-content/themes/thabatta-adv-theme:/var/www/html/wp-content/themes/thabatta-adv-theme
-      - ./data/wp-content/database:/var/www/html/wp-content/database
+      - ./data:/var/www/html
       - caddy_data:/data
       - caddy_config:/config
       - ./data/certs-dev-local:/certs-dev-local

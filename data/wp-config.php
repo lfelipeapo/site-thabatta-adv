@@ -120,6 +120,7 @@ define('WP_DEBUG_LOG', true);
 define('WP_DEBUG_DISPLAY', true);
 define('SCRIPT_DEBUG', true);
 define('SAVEQUERIES', true);
+define('FS_METHOD', 'direct');
 
 // Configurações de erro
 @ini_set('display_errors', 1);
@@ -173,15 +174,3 @@ if (function_exists('add_action') && !defined('WP_CLI')) {
 
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
-
-//Debugs configs
-// define('WP_DEBUG', false);
-// define('WP_DEBUG_LOG', true);
-// define('WP_DEBUG_DISPLAY', false);
-// define('FS_METHOD', 'ftpext');
-define('FTP_HOST', '127.0.0.1:2222'); // Porta configurada para o SFTP
-define('FTP_USER', 'wp-user'); // Usuário configurado no serviço SFTP
-define('FTP_PASS', 'password'); // Senha configurada no serviço SFTP
-define('FTP_BASE', '/home/wp-user/data'); // Diretório raiz do SFTP
-define('FTP_CONTENT_DIR', '/home/wp-user/data/wp-content'); // Diretório wp-content
-define('FTP_PLUGIN_DIR', '/home/wp-user/data/wp-content/plugins'); // Diretório de plugins
