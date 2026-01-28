@@ -124,8 +124,8 @@ define('FS_METHOD', 'direct');
 
 // Configurações de erro
 @ini_set('display_errors', 1);
-@ini_set('error_reporting', E_ALL);
-error_reporting(E_ALL);
+@ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
 // Aumentar limites de memória e tempo
 @ini_set('memory_limit', '512M');
