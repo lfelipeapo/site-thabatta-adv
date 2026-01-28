@@ -79,7 +79,7 @@ function thabatta_load_theme_textdomain() {
     // Método padrão (backup)
     load_theme_textdomain('thabatta-adv', THABATTA_THEME_DIR . '/languages');
 }
-add_action('init', 'thabatta_load_theme_textdomain', 100);
+add_action('after_setup_theme', 'thabatta_load_theme_textdomain');
 
 // Corrigir aviso de carregamento precoce de tradução do jwt-auth
 add_action('init', function() {
