@@ -17,11 +17,12 @@ include( dirname(dirname(__FILE__)) . '/includes/acf_photo_gallery_edit_save.php
 // check if class already exists
 if( !class_exists('acf_field_photo_gallery') ) :
 
+	#[AllowDynamicProperties]
 	class acf_field_photo_gallery extends acf_field {
 
 		// vars
-		var $settings, // will hold info such as dir / path
-			$defaults; // will hold default field options
+		public $settings; // will hold info such as dir / path
+		public $defaults; // will hold default field options
 
 
 		/*
