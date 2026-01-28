@@ -46,11 +46,11 @@ add_action(
 		if ( ! function_exists( 'activate_plugin' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
-		if ( is_plugin_inactive( '{SQLITE_PLUGIN}' ) ) {
+		if ( is_plugin_inactive( 'sqlite-database-integration/load.php' ) ) {
 			// If `activate_plugin()` returns a value other than null (like WP_Error),
 			// the plugin could not be found. Try with a hardcoded string,
 			// because that probably means the file was directly copy-pasted.
-			if ( null !== activate_plugin( '{SQLITE_PLUGIN}', '', false, true ) ) {
+			if ( null !== activate_plugin( 'sqlite-database-integration/load.php', '', false, true ) ) {
 				activate_plugin( 'sqlite-database-integration/load.php', '', false, true );
 			}
 		}
