@@ -105,7 +105,7 @@ class GroqClient
         // Configura modelo
         $model = $options['model'] ?? get_option('aicg_default_model', 'llama-3.3-70b-versatile');
         $tone = $options['tone'] ?? get_option('aicg_default_tone', 'professional');
-        $length = $options['length'] ?? get_option('aicg_default_length', 'medium');
+        $length = $this->resolve_length($options);
 
         // Constrói mensagens
         $messages = $this->build_messages($prompt, $tone, $length, $options);
@@ -115,7 +115,7 @@ class GroqClient
             'model' => $model,
             'messages' => $messages,
             'temperature' => $options['temperature'] ?? 0.7,
-            'max_tokens' => $options['max_tokens'] ?? 4000,
+            'max_tokens' => $options['max_tokens'] ?? $this->resolve_max_tokens($options, $length),
             'response_format' => ['type' => 'json_object'],
         ];
 
@@ -147,6 +147,23 @@ class GroqClient
     {
         $site_name = get_bloginfo('name');
         $site_description = get_bloginfo('description');
+        $schema_example = wp_json_encode([
+            'post' => [
+                'title' => 'Titulo otimizado (ate 100 caracteres)',
+                'content' => 'Conteudo em HTML valido',
+                'excerpt' => 'Resumo de ate 300 caracteres',
+            ],
+            'media' => [
+                'image_url' => 'URL da imagem sugerida (opcional)',
+                'image_alt' => 'Texto alternativo da imagem',
+            ],
+            'seo' => [
+                'meta_title' => 'Titulo SEO (ate 60 caracteres)',
+                'meta_description' => 'Meta description (150-160 caracteres)',
+                'focus_keyword' => 'Palavra-chave principal',
+                'keywords' => ['palavra1', 'palavra2', 'palavra3'],
+            ],
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
         // System prompt
         $system_content = sprintf(
@@ -166,25 +183,10 @@ class GroqClient
         $user_content = sprintf(
             "Crie %s sobre: %s\n\n" .
             "Estrutura de resposta JSON obrigatória:\n" .
-            "{\n" .
-            "  'post': {\n" .
-            "    'title': 'Título otimizado (até 100 caracteres)',\n" .
-            "    'content': 'Conteúdo em HTML válido',\n" .
-            "    'excerpt': 'Resumo de até 300 caracteres'\n" .
-            "  },\n" .
-            "  'media': {\n" .
-            "    'image_url': 'URL da imagem sugerida (opcional)',\n" .
-            "    'image_alt': 'Texto alternativo da imagem'\n" .
-            "  },\n" .
-            "  'seo': {\n" .
-            "    'meta_title': 'Título SEO (até 60 caracteres)',\n" .
-            "    'meta_description': 'Meta description (150-160 caracteres)',\n" .
-            "    'focus_keyword': 'Palavra-chave principal',\n" .
-            "    'keywords': ['palavra1', 'palavra2', 'palavra3']\n" .
-            "  }\n" .
-            "}",
+            "%s",
             $options['content_type'] === 'page' ? 'uma página' : 'um artigo de blog',
-            $prompt
+            $prompt,
+            $schema_example
         );
 
         return [
@@ -233,6 +235,49 @@ class GroqClient
         ];
 
         return $lengths[$length] ?? $lengths['medium'];
+    }
+
+    /**
+     * Resolve o identificador de comprimento a partir das opcoes recebidas.
+     *
+     * @param array $options Opções enviadas pelo cliente
+     * @return string
+     */
+    private function resolve_length(array $options): string
+    {
+        if (!empty($options['length']) && in_array($options['length'], ['short', 'medium', 'long'], true)) {
+            return $options['length'];
+        }
+
+        if (!empty($options['target_length'])) {
+            return match (true) {
+                $options['target_length'] <= 600 => 'short',
+                $options['target_length'] >= 1500 => 'long',
+                default => 'medium',
+            };
+        }
+
+        return get_option('aicg_default_length', 'medium');
+    }
+
+    /**
+     * Resolve o limite de tokens conforme o comprimento solicitado.
+     *
+     * @param array $options Opções enviadas pelo cliente
+     * @param string $length Comprimento normalizado
+     * @return int
+     */
+    private function resolve_max_tokens(array $options, string $length): int
+    {
+        if (!empty($options['target_length'])) {
+            return max(600, min((int) ceil(((int) $options['target_length']) * 1.8), 4000));
+        }
+
+        return match ($length) {
+            'short' => 1200,
+            'long' => 3200,
+            default => 2200,
+        };
     }
 
     /**

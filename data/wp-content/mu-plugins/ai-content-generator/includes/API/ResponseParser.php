@@ -63,6 +63,11 @@ class ResponseParser
         $data = json_decode($content, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
+            $content = $this->extract_json($content);
+            $data = json_decode($content, true);
+        }
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
             return new \WP_Error(
                 'json_parse_error',
                 sprintf(

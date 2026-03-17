@@ -82,12 +82,20 @@ class PostCreator
 
         // Processa imagem destacada
         $featured_image_id = null;
-        if (!empty($data['media']['image_url']) && get_option('aicg_include_images', true)) {
-            $featured_image_id = $this->image_handler->process_featured_image(
+        $should_include_images = array_key_exists('include_images', $options)
+            ? (bool) $options['include_images']
+            : (bool) get_option('aicg_include_images', true);
+
+        if (!empty($data['media']['image_url']) && $should_include_images) {
+            $image_result = $this->image_handler->process_featured_image(
                 $data['media']['image_url'],
                 $post_id,
                 $data['media']['image_alt'] ?? ''
             );
+
+            if (!is_wp_error($image_result)) {
+                $featured_image_id = $image_result;
+            }
         }
 
         // Aplica metadados SEO
@@ -135,15 +143,6 @@ class PostCreator
             if ($scheduled_timestamp > ($now + 60)) {
                 $post_status = 'future';
                 $post_date = gmdate('Y-m-d H:i:s', $scheduled_timestamp);
-                $post_date_gmt = get_gmt_from_date($post_date);
-            }
-        }
-
-        // Usa data do conteúdo gerado se disponível e status for future
-        if ($post_status === 'future' && !empty($data['post']['date'])) {
-            $parsed_date = strtotime($data['post']['date']);
-            if ($parsed_date !== false) {
-                $post_date = gmdate('Y-m-d H:i:s', $parsed_date);
                 $post_date_gmt = get_gmt_from_date($post_date);
             }
         }

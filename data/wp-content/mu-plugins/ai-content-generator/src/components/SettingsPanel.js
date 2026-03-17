@@ -4,7 +4,7 @@
  * @package AICG
  */
 
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import {
     Button,
@@ -30,6 +30,22 @@ const SettingsPanel = ({ settings, onSave }) => {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        if (!settings) {
+            return;
+        }
+
+        setFormData((current) => ({
+            ...current,
+            default_model: settings.default_model || 'llama-3.3-70b-versatile',
+            default_tone: settings.default_tone || 'professional',
+            default_length: settings.default_length || 'medium',
+            include_images: settings.include_images !== false,
+            cache_enabled: settings.cache_enabled !== false,
+            async_generation: settings.async_generation !== false,
+        }));
+    }, [settings]);
 
     const handleSave = async () => {
         setSaving(true);
@@ -108,6 +124,8 @@ const SettingsPanel = ({ settings, onSave }) => {
                     value={formData.api_key}
                     onChange={(api_key) => setFormData({ ...formData, api_key })}
                     placeholder={settings?.api_key_configured ? __('••••••••••••••••', 'ai-content-generator') : ''}
+                    __next40pxDefaultSize
+                    __nextHasNoMarginBottom
                     help={settings?.api_key_configured 
                         ? __('Chave API já configurada. Deixe em branco para manter.', 'ai-content-generator')
                         : __('Obtenha sua chave em console.groq.com', 'ai-content-generator')
@@ -134,6 +152,8 @@ const SettingsPanel = ({ settings, onSave }) => {
                         { label: 'Gemma 7B', value: 'gemma-7b-it' },
                     ]}
                     onChange={(default_model) => setFormData({ ...formData, default_model })}
+                    __next40pxDefaultSize
+                    __nextHasNoMarginBottom
                 />
             </VStack>
 
@@ -153,6 +173,8 @@ const SettingsPanel = ({ settings, onSave }) => {
                         { label: __('Narrativo', 'ai-content-generator'), value: 'narrative' },
                     ]}
                     onChange={(default_tone) => setFormData({ ...formData, default_tone })}
+                    __next40pxDefaultSize
+                    __nextHasNoMarginBottom
                 />
 
                 <SelectControl
@@ -164,24 +186,29 @@ const SettingsPanel = ({ settings, onSave }) => {
                         { label: __('Longo (1500-2500 palavras)', 'ai-content-generator'), value: 'long' },
                     ]}
                     onChange={(default_length) => setFormData({ ...formData, default_length })}
+                    __next40pxDefaultSize
+                    __nextHasNoMarginBottom
                 />
 
                 <ToggleControl
                     label={__('Incluir imagens destacadas', 'ai-content-generator')}
                     checked={formData.include_images}
                     onChange={(include_images) => setFormData({ ...formData, include_images })}
+                    __nextHasNoMarginBottom
                 />
 
                 <ToggleControl
                     label={__('Habilitar cache de respostas', 'ai-content-generator')}
                     checked={formData.cache_enabled}
                     onChange={(cache_enabled) => setFormData({ ...formData, cache_enabled })}
+                    __nextHasNoMarginBottom
                 />
 
                 <ToggleControl
                     label={__('Usar processamento assíncrono', 'ai-content-generator')}
                     checked={formData.async_generation}
                     onChange={(async_generation) => setFormData({ ...formData, async_generation })}
+                    __nextHasNoMarginBottom
                     help={__('Recomendado para evitar timeouts em gerações longas.', 'ai-content-generator')}
                 />
             </VStack>

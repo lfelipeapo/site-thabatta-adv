@@ -259,8 +259,13 @@ class Routes
                 'enum' => ['post', 'page'],
             ],
             'schedule_date' => [
-                'type' => 'string',
-                'format' => 'date-time',
+                'sanitize_callback' => function ($param) {
+                    if (empty($param)) {
+                        return null;
+                    }
+
+                    return sanitize_text_field((string) $param);
+                },
                 'validate_callback' => function ($param) {
                     if (empty($param)) {
                         return true;
@@ -292,6 +297,10 @@ class Routes
                     'tone' => [
                         'type' => 'string',
                         'enum' => ['professional', 'casual', 'technical', 'persuasive', 'narrative'],
+                    ],
+                    'length' => [
+                        'type' => 'string',
+                        'enum' => ['short', 'medium', 'long'],
                     ],
                     'target_length' => [
                         'type' => 'integer',

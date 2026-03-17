@@ -46,7 +46,8 @@ class GenerationController
         $prompt = $request->get_param('prompt');
         $content_type = $request->get_param('content_type');
         $schedule_date = $request->get_param('schedule_date');
-        $options = $request->get_param('options') ?? [];
+        $options = self::normalize_options((array) ($request->get_param('options') ?? []));
+        $schedule_date = is_string($schedule_date) && $schedule_date !== '' ? $schedule_date : null;
 
         // Verifica se deve usar geração assíncrona
         $async = get_option('aicg_async_generation', true);
@@ -56,6 +57,33 @@ class GenerationController
         }
 
         return self::handle_sync_generation($prompt, $content_type, $schedule_date, $options);
+    }
+
+    /**
+     * Normaliza opções recebidas do frontend para o formato esperado no backend.
+     *
+     * @param array $options Opções enviadas pela interface
+     * @return array
+     */
+    private static function normalize_options(array $options): array
+    {
+        if (empty($options['length']) && !empty($options['target_length'])) {
+            $options['length'] = match (true) {
+                $options['target_length'] <= 600 => 'short',
+                $options['target_length'] >= 1500 => 'long',
+                default => 'medium',
+            };
+        }
+
+        if (isset($options['include_images'])) {
+            $options['include_images'] = (bool) $options['include_images'];
+        }
+
+        if (!empty($options['category']) && is_array($options['category'])) {
+            $options['category'] = array_values(array_filter(array_map('intval', $options['category'])));
+        }
+
+        return $options;
     }
 
     /**
@@ -96,12 +124,11 @@ class GenerationController
 
         // Cria o post
         $creator = new PostCreator();
-        $post_data = $creator->create($result, [
+        $post_data = $creator->create($result, array_merge($options, [
             'content_type' => $content_type,
             'schedule_date' => $schedule_date,
             'original_prompt' => $prompt,
-            'category' => $options['category'] ?? [],
-        ]);
+        ]));
 
         if (is_wp_error($post_data)) {
             return $post_data;

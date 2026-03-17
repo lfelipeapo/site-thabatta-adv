@@ -4,12 +4,13 @@
  * @package AICG
  */
 
-import { useState, useCallback } from '@wordpress/element';
+import { useState, useCallback, useEffect } from '@wordpress/element';
 import {
     Button,
     TextareaControl,
     SelectControl,
     ToggleControl,
+    DateTimePicker,
     Panel,
     PanelBody,
     PanelRow,
@@ -18,33 +19,52 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
+const getDefaultScheduleDate = () => new Date(Date.now() + 86400000).toISOString();
+
 const PromptForm = ({ onSubmit, isLoading, settings }) => {
     const [prompt, setPrompt] = useState('');
     const [contentType, setContentType] = useState('post');
     const [tone, setTone] = useState(settings?.default_tone || 'professional');
     const [length, setLength] = useState(settings?.default_length || 'medium');
     const [includeImage, setIncludeImage] = useState(settings?.include_images !== false);
-    const [scheduleDate, setScheduleDate] = useState(null);
+    const [isScheduled, setIsScheduled] = useState(false);
+    const [scheduleDate, setScheduleDate] = useState(getDefaultScheduleDate);
     const [showAdvanced, setShowAdvanced] = useState(false);
     const [category, setCategory] = useState([]);
+
+    useEffect(() => {
+        if (!settings) {
+            return;
+        }
+
+        setTone(settings.default_tone || 'professional');
+        setLength(settings.default_length || 'medium');
+        setIncludeImage(settings.include_images !== false);
+    }, [settings]);
 
     const handleSubmit = useCallback(() => {
         if (!prompt.trim()) {
             return;
         }
 
-        onSubmit({
+        const payload = {
             prompt: prompt.trim(),
             content_type: contentType,
             options: {
                 tone,
+                length,
                 target_length: getLengthValue(length),
                 include_images: includeImage,
                 category,
             },
-            schedule_date: scheduleDate,
-        });
-    }, [prompt, contentType, tone, length, includeImage, category, scheduleDate, onSubmit]);
+        };
+
+        if (isScheduled && scheduleDate) {
+            payload.schedule_date = scheduleDate;
+        }
+
+        onSubmit(payload);
+    }, [prompt, contentType, tone, length, includeImage, category, isScheduled, scheduleDate, onSubmit]);
 
     const getLengthValue = (len) => {
         const values = {
@@ -66,6 +86,7 @@ const PromptForm = ({ onSubmit, isLoading, settings }) => {
                 placeholder={__('Ex: Um artigo sobre benefícios da meditação para profissionais de TI...', 'ai-content-generator')}
                 disabled={isLoading}
                 rows={6}
+                __nextHasNoMarginBottom
                 help={
                     prompt.length > 0 && prompt.length < 10
                         ? __('O prompt deve ter pelo menos 10 caracteres.', 'ai-content-generator')
@@ -83,6 +104,8 @@ const PromptForm = ({ onSubmit, isLoading, settings }) => {
                     ]}
                     onChange={setContentType}
                     disabled={isLoading}
+                    __next40pxDefaultSize
+                    __nextHasNoMarginBottom
                 />
 
                 <SelectControl
@@ -97,6 +120,8 @@ const PromptForm = ({ onSubmit, isLoading, settings }) => {
                     ]}
                     onChange={setTone}
                     disabled={isLoading}
+                    __next40pxDefaultSize
+                    __nextHasNoMarginBottom
                 />
             </HStack>
 
@@ -117,6 +142,8 @@ const PromptForm = ({ onSubmit, isLoading, settings }) => {
                             ]}
                             onChange={setLength}
                             disabled={isLoading}
+                            __next40pxDefaultSize
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
 
@@ -126,17 +153,35 @@ const PromptForm = ({ onSubmit, isLoading, settings }) => {
                             checked={includeImage}
                             onChange={setIncludeImage}
                             disabled={isLoading}
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
 
                     <PanelRow>
                         <ToggleControl
                             label={__('Agendar publicação', 'ai-content-generator')}
-                            checked={!!scheduleDate}
-                            onChange={(checked) => setScheduleDate(checked ? new Date(Date.now() + 86400000).toISOString() : null)}
+                            checked={isScheduled}
+                            onChange={(checked) => {
+                                setIsScheduled(checked);
+
+                                if (checked && !scheduleDate) {
+                                    setScheduleDate(getDefaultScheduleDate());
+                                }
+                            }}
                             disabled={isLoading}
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
+
+                    {isScheduled && (
+                        <PanelRow>
+                            <DateTimePicker
+                                currentDate={scheduleDate}
+                                onChange={setScheduleDate}
+                                is12Hour={false}
+                            />
+                        </PanelRow>
+                    )}
                 </PanelBody>
             </Panel>
 
