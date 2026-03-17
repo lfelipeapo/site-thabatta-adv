@@ -48,6 +48,13 @@ if (!defined('AICG_MIN_PHP_VERSION')) {
     define('AICG_MIN_PHP_VERSION', '8.0');
 }
 
+if (!defined('AICG_IS_MU_PLUGIN')) {
+    define(
+        'AICG_IS_MU_PLUGIN',
+        defined('WPMU_PLUGIN_DIR') && str_starts_with(AICG_PLUGIN_FILE, WPMU_PLUGIN_DIR)
+    );
+}
+
 // Chave de criptografia derivada das constantes do WordPress
 if (!defined('AICG_ENCRYPTION_KEY')) {
     $key_material = defined('AUTH_KEY') ? AUTH_KEY : 'default-auth-key';
@@ -183,13 +190,20 @@ class AICG_Plugin
         // Carrega autoloader
         $this->load_autoloader();
 
-        // Registra hooks de ciclo de vida
-        register_activation_hook(AICG_PLUGIN_FILE, [$this, 'activate']);
-        register_deactivation_hook(AICG_PLUGIN_FILE, [$this, 'deactivate']);
-        register_uninstall_hook(AICG_PLUGIN_FILE, [self::class, 'uninstall']);
+        if (AICG_IS_MU_PLUGIN) {
+            $this->bootstrap_mu_plugin();
+        } else {
+            // Registra hooks de ciclo de vida para instalação como plugin comum
+            register_activation_hook(AICG_PLUGIN_FILE, [$this, 'activate']);
+            register_deactivation_hook(AICG_PLUGIN_FILE, [$this, 'deactivate']);
+            register_uninstall_hook(AICG_PLUGIN_FILE, [self::class, 'uninstall']);
+        }
 
-        // Inicializa componentes quando o WordPress estiver pronto
-        add_action('plugins_loaded', [$this, 'load_plugin']);
+        if (did_action('plugins_loaded')) {
+            $this->load_plugin();
+        } else {
+            add_action('plugins_loaded', [$this, 'load_plugin']);
+        }
     }
 
     /**
@@ -211,11 +225,18 @@ class AICG_Plugin
     public function load_plugin(): void
     {
         // Carrega textdomain para internacionalização
-        load_plugin_textdomain(
-            'ai-content-generator',
-            false,
-            dirname(plugin_basename(AICG_PLUGIN_FILE)) . '/languages/'
-        );
+        if (AICG_IS_MU_PLUGIN) {
+            load_muplugin_textdomain(
+                'ai-content-generator',
+                dirname(plugin_basename(AICG_PLUGIN_FILE)) . '/languages/'
+            );
+        } else {
+            load_plugin_textdomain(
+                'ai-content-generator',
+                false,
+                dirname(plugin_basename(AICG_PLUGIN_FILE)) . '/languages/'
+            );
+        }
 
         // Inicializa componentes principais em ordem de dependência
         new \AICG\Core\Plugin();
@@ -327,6 +348,22 @@ class AICG_Plugin
     public static function uninstall(): void
     {
         \AICG\Core\Deactivator::uninstall();
+    }
+
+    /**
+     * Inicializa recursos que normalmente dependeriam da ativação
+     * quando o plugin roda como MU plugin.
+     *
+     * @return void
+     */
+    private function bootstrap_mu_plugin(): void
+    {
+        $needs_bootstrap = get_option('aicg_version') === false
+            || \AICG\Core\Activator::needs_db_update();
+
+        if ($needs_bootstrap) {
+            \AICG\Core\Activator::activate();
+        }
     }
 }
 
