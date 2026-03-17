@@ -1,8 +1,11 @@
+ARG FRANKENPHP_VERSION=1.12.1
 ARG WORDPRESS_VERSION=latest
 ARG PHP_VERSION=8.3
 ARG USER=www-data
 
-FROM dunglas/frankenphp:latest-builder-php${PHP_VERSION} AS builder
+FROM dunglas/frankenphp:${FRANKENPHP_VERSION}-builder-php${PHP_VERSION} AS builder
+
+ARG FRANKENPHP_VERSION
 
 ENV GOTOOLCHAIN=go1.25.6+auto
 ENV CGO_ENABLED=1 XCADDY_SETCAP=1 XCADDY_GO_BUILD_FLAGS='-ldflags="-w -s" -trimpath'
@@ -11,15 +14,17 @@ ENV CGO_ENABLED=1 XCADDY_SETCAP=1 XCADDY_GO_BUILD_FLAGS='-ldflags="-w -s" -trimp
 COPY --from=caddy:builder /usr/bin/xcaddy /usr/bin/xcaddy
 COPY ./sidekick/middleware/cache ./cache
 
-RUN xcaddy build \
+RUN CGO_CFLAGS="$(php-config --includes)" \
+    CGO_LDFLAGS="$(php-config --ldflags) $(php-config --libs)" \
+    xcaddy build \
     --output /usr/local/bin/frankenphp \
-    --with github.com/dunglas/frankenphp=./ \
-    --with github.com/dunglas/frankenphp/caddy=./caddy/ \
+    --with github.com/dunglas/frankenphp@v${FRANKENPHP_VERSION} \
+    --with github.com/dunglas/frankenphp/caddy@v${FRANKENPHP_VERSION} \
     --with github.com/dunglas/caddy-cbrotli \
     --with github.com/stephenmiracle/frankenwp/sidekick/middleware/cache=./cache
 
 FROM wordpress:$WORDPRESS_VERSION AS wp
-FROM dunglas/frankenphp:latest-php${PHP_VERSION} AS base
+FROM dunglas/frankenphp:${FRANKENPHP_VERSION}-php${PHP_VERSION} AS base
 
 LABEL org.opencontainers.image.title=FrankenWP
 LABEL org.opencontainers.image.description="Optimized WordPress containers to run everywhere. Built with FrankenPHP & Caddy."
