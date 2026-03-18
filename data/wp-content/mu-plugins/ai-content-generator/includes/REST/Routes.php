@@ -168,6 +168,12 @@ class Routes
                 'methods' => \WP_REST_Server::READABLE,
                 'callback' => [SettingsController::class, 'get_models'],
                 'permission_callback' => [$this, 'check_permission'],
+                'args' => [
+                    'refresh' => [
+                        'type' => 'boolean',
+                        'default' => false,
+                    ],
+                ],
             ],
         ]);
 

@@ -4,7 +4,7 @@
  * @package AICG
  */
 
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import {
     Button,
@@ -17,10 +17,35 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
+const buildModelOptions = (models, currentModel) => {
+    if (Array.isArray(models) && models.length > 0) {
+        return models.map((model) => ({
+            label: model.name || model.id,
+            value: model.id,
+        }));
+    }
+
+    if (currentModel) {
+        return [
+            {
+                label: currentModel,
+                value: currentModel,
+            },
+        ];
+    }
+
+    return [
+        {
+            label: __('Nenhum modelo disponível', 'ai-content-generator'),
+            value: '',
+        },
+    ];
+};
+
 const SettingsPanel = ({ settings, onSave }) => {
     const [formData, setFormData] = useState({
         api_key: '',
-        default_model: settings?.default_model || 'llama-3.3-70b-versatile',
+        default_model: settings?.default_model || '',
         default_tone: settings?.default_tone || 'professional',
         default_length: settings?.default_length || 'medium',
         include_images: settings?.include_images !== false,
@@ -30,6 +55,51 @@ const SettingsPanel = ({ settings, onSave }) => {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [availableModels, setAvailableModels] = useState(settings?.available_models || []);
+    const [loadingModels, setLoadingModels] = useState(false);
+
+    const loadModels = useCallback(async (forceRefresh = false, allowManualKey = false) => {
+        if (!settings?.api_key_configured && !allowManualKey) {
+            return [];
+        }
+
+        setLoadingModels(true);
+
+        try {
+            const response = await apiFetch({
+                path: `aicg/v1/models${forceRefresh ? '?refresh=1' : ''}`,
+            });
+
+            if (!response.success) {
+                return [];
+            }
+
+            const models = Array.isArray(response.data) ? response.data : [];
+            setAvailableModels(models);
+
+            setFormData((current) => {
+                if (models.length === 0) {
+                    return current;
+                }
+
+                if (current.default_model && models.some((model) => model.id === current.default_model)) {
+                    return current;
+                }
+
+                return {
+                    ...current,
+                    default_model: models[0].id,
+                };
+            });
+
+            return models;
+        } catch (err) {
+            setError(err.message || __('Erro ao carregar modelos da Groq.', 'ai-content-generator'));
+            return [];
+        } finally {
+            setLoadingModels(false);
+        }
+    }, [settings?.api_key_configured]);
 
     useEffect(() => {
         if (!settings) {
@@ -38,14 +108,23 @@ const SettingsPanel = ({ settings, onSave }) => {
 
         setFormData((current) => ({
             ...current,
-            default_model: settings.default_model || 'llama-3.3-70b-versatile',
+            default_model: settings.default_model || '',
             default_tone: settings.default_tone || 'professional',
             default_length: settings.default_length || 'medium',
             include_images: settings.include_images !== false,
             cache_enabled: settings.cache_enabled !== false,
             async_generation: settings.async_generation !== false,
         }));
+        setAvailableModels(Array.isArray(settings.available_models) ? settings.available_models : []);
     }, [settings]);
+
+    useEffect(() => {
+        if (!settings?.api_key_configured) {
+            return;
+        }
+
+        loadModels(true);
+    }, [loadModels, settings?.api_key_configured]);
 
     const handleSave = async () => {
         setSaving(true);
@@ -61,7 +140,11 @@ const SettingsPanel = ({ settings, onSave }) => {
 
             if (response.success) {
                 setSuccess(true);
-                onSave?.(formData);
+                onSave?.({
+                    ...settings,
+                    ...formData,
+                    available_models: availableModels,
+                });
             } else {
                 setError(response.message || __('Erro ao salvar.', 'ai-content-generator'));
             }
@@ -89,6 +172,7 @@ const SettingsPanel = ({ settings, onSave }) => {
 
             if (response.success) {
                 setSuccess(true);
+                await loadModels(true, true);
             } else {
                 setError(response.message || __('Chave API inválida.', 'ai-content-generator'));
             }
@@ -98,6 +182,8 @@ const SettingsPanel = ({ settings, onSave }) => {
             setSaving(false);
         }
     };
+
+    const modelOptions = buildModelOptions(availableModels, formData.default_model);
 
     return (
         <VStack spacing={4} className="aicg-settings-panel">
@@ -110,6 +196,12 @@ const SettingsPanel = ({ settings, onSave }) => {
             {success && (
                 <Notice status="success" isDismissible onDismiss={() => setSuccess(false)}>
                     {__('Configurações salvas!', 'ai-content-generator')}
+                </Notice>
+            )}
+
+            {settings?.async_available === false && (
+                <Notice status="warning" isDismissible={false}>
+                    {__('O WP-Cron está desativado neste ambiente. O plugin vai usar geração síncrona para evitar jobs presos na fila.', 'ai-content-generator')}
                 </Notice>
             )}
 
@@ -146,14 +238,18 @@ const SettingsPanel = ({ settings, onSave }) => {
                 <SelectControl
                     label={__('Modelo Padrão', 'ai-content-generator')}
                     value={formData.default_model}
-                    options={[
-                        { label: 'Llama 3.3 70B', value: 'llama-3.3-70b-versatile' },
-                        { label: 'Mixtral 8x7B', value: 'mixtral-8x7b-32768' },
-                        { label: 'Gemma 7B', value: 'gemma-7b-it' },
-                    ]}
+                    options={modelOptions}
                     onChange={(default_model) => setFormData({ ...formData, default_model })}
+                    disabled={loadingModels || modelOptions[0]?.value === ''}
                     __next40pxDefaultSize
                     __nextHasNoMarginBottom
+                    help={
+                        loadingModels
+                            ? __('Carregando modelos atuais da Groq...', 'ai-content-generator')
+                            : (!settings?.api_key_configured && !formData.api_key)
+                                ? __('Salve ou valide uma chave API para carregar a lista atual de modelos da Groq.', 'ai-content-generator')
+                                : __('Lista carregada diretamente da API de modelos da Groq.', 'ai-content-generator')
+                    }
                 />
             </VStack>
 
@@ -208,8 +304,13 @@ const SettingsPanel = ({ settings, onSave }) => {
                     label={__('Usar processamento assíncrono', 'ai-content-generator')}
                     checked={formData.async_generation}
                     onChange={(async_generation) => setFormData({ ...formData, async_generation })}
+                    disabled={settings?.async_available === false}
                     __nextHasNoMarginBottom
-                    help={__('Recomendado para evitar timeouts em gerações longas.', 'ai-content-generator')}
+                    help={
+                        settings?.async_available === false
+                            ? __('O WP-Cron está desligado, então o processamento assíncrono foi desativado para não deixar gerações presas.', 'ai-content-generator')
+                            : __('Recomendado para evitar timeouts em gerações longas.', 'ai-content-generator')
+                    }
                 />
             </VStack>
 

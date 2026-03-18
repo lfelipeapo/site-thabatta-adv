@@ -27,6 +27,16 @@ if (!defined('ABSPATH')) {
 class GroqClient
 {
     /**
+     * Chave do cache transitório para modelos.
+     */
+    private const MODELS_CACHE_KEY = 'aicg_groq_models_cache';
+
+    /**
+     * Tempo de cache da lista de modelos em segundos.
+     */
+    private const MODELS_CACHE_TTL = 900;
+
+    /**
      * URL base da API Groq
      *
      * @var string
@@ -103,9 +113,13 @@ class GroqClient
         }
 
         // Configura modelo
-        $model = $options['model'] ?? get_option('aicg_default_model', 'llama-3.3-70b-versatile');
+        $model = $this->resolve_model($options);
         $tone = $options['tone'] ?? get_option('aicg_default_tone', 'professional');
         $length = $this->resolve_length($options);
+
+        if (is_wp_error($model)) {
+            return $model;
+        }
 
         // Constrói mensagens
         $messages = $this->build_messages($prompt, $tone, $length, $options);
@@ -466,7 +480,7 @@ class GroqClient
             );
         }
 
-        $models = $this->get_available_models();
+        $models = $this->get_available_models(true);
 
         if (is_wp_error($models)) {
             return $models;
@@ -480,13 +494,21 @@ class GroqClient
      *
      * @return array|\WP_Error
      */
-    public function get_available_models()
+    public function get_available_models(bool $force_refresh = false)
     {
         if (empty($this->api_key)) {
             return new \WP_Error(
                 'api_key_missing',
                 esc_html__('Chave API não configurada.', 'ai-content-generator')
             );
+        }
+
+        if (!$force_refresh) {
+            $cached_models = get_transient(self::MODELS_CACHE_KEY);
+
+            if (is_array($cached_models) && !empty($cached_models)) {
+                return $cached_models;
+            }
         }
 
         $url = $this->base_url . 'models';
@@ -530,7 +552,176 @@ class GroqClient
             );
         }
 
-        return $data['data'] ?? [];
+        $models = $this->normalize_model_list($data['data'] ?? []);
+
+        if (!empty($models)) {
+            set_transient(self::MODELS_CACHE_KEY, $models, self::MODELS_CACHE_TTL);
+            update_option('aicg_available_models', $models);
+        }
+
+        return $models;
+    }
+
+    /**
+     * Resolve um modelo válido para geração de conteúdo.
+     *
+     * @param array $options Opções enviadas na requisição
+     * @return string|\WP_Error
+     */
+    private function resolve_model(array $options)
+    {
+        $requested_model = (string) ($options['model'] ?? get_option('aicg_default_model', ''));
+        $models = $this->get_available_models();
+
+        if (is_wp_error($models)) {
+            return !empty($requested_model) ? $requested_model : $models;
+        }
+
+        if (empty($models)) {
+            return !empty($requested_model)
+                ? $requested_model
+                : new \WP_Error(
+                    'no_models_available',
+                    esc_html__('Nenhum modelo ativo da Groq foi encontrado para geração.', 'ai-content-generator')
+                );
+        }
+
+        $model_index = [];
+        foreach ($models as $model) {
+            if (!empty($model['id'])) {
+                $model_index[$model['id']] = $model;
+            }
+        }
+
+        if (!empty($requested_model) && isset($model_index[$requested_model])) {
+            return $requested_model;
+        }
+
+        $fallback_model = $this->pick_default_generation_model($models);
+
+        if (empty($fallback_model)) {
+            return !empty($requested_model)
+                ? $requested_model
+                : new \WP_Error(
+                    'no_generation_model_available',
+                    esc_html__('Nenhum modelo compatível com geração de conteúdo foi encontrado na Groq.', 'ai-content-generator')
+                );
+        }
+
+        if (!empty($requested_model) && $requested_model !== $fallback_model) {
+            $this->logger->warning('Configured model unavailable, falling back to active Groq model', [
+                'requested_model' => $requested_model,
+                'fallback_model' => $fallback_model,
+                'component' => 'GroqClient',
+                'event' => 'model_fallback',
+            ]);
+        }
+
+        return $fallback_model;
+    }
+
+    /**
+     * Normaliza e ordena a lista de modelos retornada pela API da Groq.
+     *
+     * @param array $models Lista bruta retornada pela API
+     * @return array
+     */
+    private function normalize_model_list(array $models): array
+    {
+        $normalized_models = [];
+
+        foreach ($models as $model) {
+            if (empty($model['id'])) {
+                continue;
+            }
+
+            if (array_key_exists('active', $model) && !$model['active']) {
+                continue;
+            }
+
+            $id = (string) $model['id'];
+            $owned_by = isset($model['owned_by']) ? (string) $model['owned_by'] : '';
+
+            $normalized_models[] = [
+                'id' => $id,
+                'name' => $this->format_model_label($id, $owned_by),
+                'owned_by' => $owned_by,
+                'active' => !array_key_exists('active', $model) || (bool) $model['active'],
+                'context_window' => isset($model['context_window']) ? (int) $model['context_window'] : null,
+                'max_completion_tokens' => isset($model['max_completion_tokens']) ? (int) $model['max_completion_tokens'] : null,
+            ];
+        }
+
+        usort($normalized_models, function (array $left, array $right): int {
+            $left_priority = $this->is_generation_model($left) ? 0 : 1;
+            $right_priority = $this->is_generation_model($right) ? 0 : 1;
+
+            if ($left_priority !== $right_priority) {
+                return $left_priority <=> $right_priority;
+            }
+
+            return strcasecmp($left['name'], $right['name']);
+        });
+
+        return $normalized_models;
+    }
+
+    /**
+     * Escolhe um modelo padrão adequado para geração de texto.
+     *
+     * @param array $models Modelos normalizados
+     * @return string|null
+     */
+    private function pick_default_generation_model(array $models): ?string
+    {
+        foreach ($models as $model) {
+            if ($this->is_generation_model($model)) {
+                return $model['id'];
+            }
+        }
+
+        return $models[0]['id'] ?? null;
+    }
+
+    /**
+     * Define se o modelo parece apropriado para geração de conteúdo.
+     *
+     * @param array $model Modelo normalizado
+     * @return bool
+     */
+    private function is_generation_model(array $model): bool
+    {
+        $id = strtolower((string) ($model['id'] ?? ''));
+        $blocked_keywords = [
+            'whisper',
+            'tts',
+            'speech',
+            'transcribe',
+            'translation',
+            'guard',
+            'safeguard',
+            'moderation',
+        ];
+
+        foreach ($blocked_keywords as $keyword) {
+            if (str_contains($id, $keyword)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Monta o rótulo amigável do modelo para a interface.
+     *
+     * @param string $id Identificador do modelo
+     * @param string $owned_by Organização proprietária
+     * @return string
+     */
+    private function format_model_label(string $id, string $owned_by): string
+    {
+        return $owned_by !== '' ? sprintf('%s (%s)', $id, $owned_by) : $id;
     }
 
     /**

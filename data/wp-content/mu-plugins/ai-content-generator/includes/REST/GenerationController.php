@@ -50,13 +50,31 @@ class GenerationController
         $schedule_date = is_string($schedule_date) && $schedule_date !== '' ? $schedule_date : null;
 
         // Verifica se deve usar geração assíncrona
-        $async = get_option('aicg_async_generation', true);
+        $async = self::should_use_async_generation();
 
         if ($async) {
             return self::handle_async_generation($prompt, $content_type, $schedule_date, $options);
         }
 
         return self::handle_sync_generation($prompt, $content_type, $schedule_date, $options);
+    }
+
+    /**
+     * Define se a geração assíncrona pode ser usada no ambiente atual.
+     *
+     * @return bool
+     */
+    private static function should_use_async_generation(): bool
+    {
+        if (!get_option('aicg_async_generation', true)) {
+            return false;
+        }
+
+        if (defined('DISABLE_WP_CRON') && DISABLE_WP_CRON) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

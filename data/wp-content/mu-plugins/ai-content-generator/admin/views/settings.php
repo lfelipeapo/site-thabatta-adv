@@ -19,7 +19,7 @@ if (isset($_POST['aicg_save_settings']) && check_admin_referer('aicg_settings_no
     }
 
     // Preferências
-    update_option('aicg_default_model', sanitize_text_field($_POST['aicg_default_model'] ?? 'llama-3.3-70b-versatile'));
+    update_option('aicg_default_model', sanitize_text_field($_POST['aicg_default_model'] ?? ''));
     update_option('aicg_default_tone', sanitize_key($_POST['aicg_default_tone'] ?? 'professional'));
     update_option('aicg_default_length', sanitize_key($_POST['aicg_default_length'] ?? 'medium'));
     update_option('aicg_include_images', isset($_POST['aicg_include_images']));
@@ -34,13 +34,33 @@ if (isset($_POST['aicg_save_settings']) && check_admin_referer('aicg_settings_no
 
 // Obtém valores atuais
 $api_key_configured = !empty(get_option('aicg_api_key_encrypted'));
-$default_model = get_option('aicg_default_model', 'llama-3.3-70b-versatile');
+$default_model = get_option('aicg_default_model', '');
 $default_tone = get_option('aicg_default_tone', 'professional');
 $default_length = get_option('aicg_default_length', 'medium');
 $include_images = get_option('aicg_include_images', true);
 $cache_enabled = get_option('aicg_cache_enabled', true);
 $async_generation = get_option('aicg_async_generation', true);
 $enable_notifications = get_option('aicg_enable_notifications', true);
+$async_available = !(defined('DISABLE_WP_CRON') && DISABLE_WP_CRON);
+$available_models = get_option('aicg_available_models', []);
+
+if ($api_key_configured) {
+    $client = new \AICG\API\GroqClient();
+    $models_result = $client->get_available_models(true);
+
+    if (!is_wp_error($models_result) && !empty($models_result)) {
+        $available_models = $models_result;
+    }
+}
+
+if (empty($available_models) && !empty($default_model)) {
+    $available_models = [
+        [
+            'id' => $default_model,
+            'name' => $default_model,
+        ],
+    ];
+}
 
 ?>
 <div class="wrap">
@@ -81,16 +101,15 @@ $enable_notifications = get_option('aicg_enable_notifications', true);
                 </th>
                 <td>
                     <select id="aicg_default_model" name="aicg_default_model">
-                        <option value="llama-3.3-70b-versatile" <?php selected($default_model, 'llama-3.3-70b-versatile'); ?>>
-                            Llama 3.3 70B
-                        </option>
-                        <option value="mixtral-8x7b-32768" <?php selected($default_model, 'mixtral-8x7b-32768'); ?>>
-                            Mixtral 8x7B
-                        </option>
-                        <option value="gemma-7b-it" <?php selected($default_model, 'gemma-7b-it'); ?>>
-                            Gemma 7B
-                        </option>
+                        <?php foreach ($available_models as $model): ?>
+                            <option value="<?php echo esc_attr($model['id']); ?>" <?php selected($default_model, $model['id']); ?>>
+                                <?php echo esc_html($model['name'] ?? $model['id']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
+                    <p class="description">
+                        <?php esc_html_e('Lista atualizada diretamente da API de modelos da Groq quando a chave estiver configurada.', 'ai-content-generator'); ?>
+                    </p>
                 </td>
             </tr>
         </table>
@@ -173,9 +192,14 @@ $enable_notifications = get_option('aicg_enable_notifications', true);
                 <th scope="row"></th>
                 <td>
                     <label>
-                        <input type="checkbox" name="aicg_async_generation" <?php checked($async_generation); ?>>
+                        <input type="checkbox" name="aicg_async_generation" <?php checked($async_generation); ?> <?php disabled(!$async_available); ?>>
                         <?php esc_html_e('Usar processamento assíncrono (recomendado)', 'ai-content-generator'); ?>
                     </label>
+                    <?php if (!$async_available): ?>
+                        <p class="description">
+                            <?php esc_html_e('O WP-Cron está desabilitado neste ambiente, então o plugin usa geração síncrona para evitar jobs presos.', 'ai-content-generator'); ?>
+                        </p>
+                    <?php endif; ?>
                 </td>
             </tr>
             <tr>

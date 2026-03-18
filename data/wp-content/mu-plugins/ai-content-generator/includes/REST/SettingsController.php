@@ -31,15 +31,35 @@ class SettingsController
      */
     public static function get_settings(): \WP_REST_Response
     {
+        $available_models = get_option('aicg_available_models', []);
+        $async_available = !(defined('DISABLE_WP_CRON') && DISABLE_WP_CRON);
+
+        if (empty($available_models) && !empty(get_option('aicg_api_key_encrypted'))) {
+            $client = new GroqClient();
+            $models = $client->get_available_models();
+
+            if (!is_wp_error($models)) {
+                $available_models = $models;
+            }
+        }
+
+        $default_model = get_option('aicg_default_model', '');
+
+        if (!empty($available_models) && !in_array($default_model, array_column($available_models, 'id'), true)) {
+            $default_model = $available_models[0]['id'];
+            update_option('aicg_default_model', $default_model);
+        }
+
         $settings = [
             'api_key_configured' => !empty(get_option('aicg_api_key_encrypted')),
-            'default_model' => get_option('aicg_default_model', 'llama-3.3-70b-versatile'),
+            'default_model' => $default_model,
             'default_tone' => get_option('aicg_default_tone', 'professional'),
             'default_length' => get_option('aicg_default_length', 'medium'),
             'include_images' => (bool) get_option('aicg_include_images', true),
             'cache_enabled' => (bool) get_option('aicg_cache_enabled', true),
             'async_generation' => (bool) get_option('aicg_async_generation', true),
-            'available_models' => get_option('aicg_available_models', []),
+            'async_available' => $async_available,
+            'available_models' => $available_models,
         ];
 
         return new \WP_REST_Response([
@@ -72,13 +92,17 @@ class SettingsController
             'default_length',
             'include_images',
             'cache_enabled',
-            'async_generation',
         ];
 
         foreach ($fields as $field) {
             if (isset($params[$field])) {
                 update_option('aicg_' . $field, $params[$field]);
             }
+        }
+
+        if (isset($params['async_generation'])) {
+            $async_available = !(defined('DISABLE_WP_CRON') && DISABLE_WP_CRON);
+            update_option('aicg_async_generation', $async_available ? (bool) $params['async_generation'] : false);
         }
 
         return new \WP_REST_Response([
@@ -120,6 +144,8 @@ class SettingsController
             return $result;
         }
 
+        $client->get_available_models(true);
+
         // Mantém nova chave
         return new \WP_REST_Response([
             'success' => true,
@@ -132,34 +158,30 @@ class SettingsController
      *
      * @return \WP_REST_Response|\WP_Error
      */
-    public static function get_models()
+    public static function get_models(\WP_REST_Request $request)
     {
+        $refresh = rest_sanitize_boolean($request->get_param('refresh'));
         $models = get_option('aicg_available_models', []);
 
-        // Se não tiver modelos em cache, tenta buscar
-        if (empty($models)) {
+        if ($refresh || empty($models)) {
             $client = new GroqClient();
-            $result = $client->get_available_models();
+            $result = $client->get_available_models($refresh);
 
             if (!is_wp_error($result)) {
-                $models = [];
-                foreach ($result as $model) {
-                    $models[] = [
-                        'id' => $model['id'],
-                        'name' => $model['id'],
-                    ];
-                }
-                update_option('aicg_available_models', $models);
+                $models = $result;
             }
         }
 
-        // Modelos padrão se nenhum encontrado
         if (empty($models)) {
-            $models = [
-                ['id' => 'llama-3.3-70b-versatile', 'name' => 'Llama 3.3 70B'],
-                ['id' => 'mixtral-8x7b-32768', 'name' => 'Mixtral 8x7B'],
-                ['id' => 'gemma-7b-it', 'name' => 'Gemma 7B'],
-            ];
+            $default_model = get_option('aicg_default_model', '');
+            if (!empty($default_model)) {
+                $models = [
+                    [
+                        'id' => $default_model,
+                        'name' => $default_model,
+                    ],
+                ];
+            }
         }
 
         return new \WP_REST_Response([

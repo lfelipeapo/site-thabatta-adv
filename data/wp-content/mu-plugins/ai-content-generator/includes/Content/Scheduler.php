@@ -370,21 +370,10 @@ class Scheduler
     public function sync_available_models(): void
     {
         $client = new GroqClient();
-        $models = $client->get_available_models();
+        $models = $client->get_available_models(true);
 
         if (!is_wp_error($models)) {
-            $model_list = [];
-            foreach ($models as $model) {
-                $model_list[] = [
-                    'id' => $model['id'],
-                    'name' => $model['id'],
-                    'active' => $model['active'] ?? true,
-                ];
-            }
-
-            update_option('aicg_available_models', $model_list);
-            
-            $this->logger->info('Models synced', ['count' => count($model_list)]);
+            $this->logger->info('Models synced', ['count' => count($models)]);
         }
     }
 
