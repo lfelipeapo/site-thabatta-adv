@@ -167,20 +167,12 @@ class SettingsController
             $client = new GroqClient();
             $result = $client->get_available_models($refresh);
 
-            if (!is_wp_error($result)) {
+            if (is_wp_error($result)) {
+                if (empty($models) || $refresh) {
+                    return $result;
+                }
+            } else {
                 $models = $result;
-            }
-        }
-
-        if (empty($models)) {
-            $default_model = get_option('aicg_default_model', '');
-            if (!empty($default_model)) {
-                $models = [
-                    [
-                        'id' => $default_model,
-                        'name' => $default_model,
-                    ],
-                ];
             }
         }
 

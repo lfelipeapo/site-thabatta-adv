@@ -535,10 +535,26 @@ class GroqClient
         $http_code = wp_remote_retrieve_response_code($response);
         
         if ($http_code !== 200) {
+            $body = wp_remote_retrieve_body($response);
+            $error_data = json_decode($body, true);
+            $error_message = $error_data['error']['message'] ?? esc_html__('Erro ao obter modelos.', 'ai-content-generator');
+            $error_codes = [
+                401 => 'auth_failed',
+                403 => 'forbidden',
+                429 => 'rate_limited',
+                500 => 'server_error',
+                502 => 'bad_gateway',
+                503 => 'service_unavailable',
+                504 => 'gateway_timeout',
+            ];
+
             return new \WP_Error(
-                'api_error',
-                esc_html__('Erro ao obter modelos.', 'ai-content-generator'),
-                ['status' => $http_code]
+                $error_codes[$http_code] ?? 'api_error',
+                $error_message,
+                [
+                    'status' => $http_code,
+                    'body' => $body,
+                ]
             );
         }
 

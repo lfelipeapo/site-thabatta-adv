@@ -126,7 +126,7 @@ class Logger
         $wpdb->insert(
             $table,
             [
-                'level' => $data['error'] ? 'ERROR' : 'INFO',
+                'level' => !empty($data['error']) ? 'ERROR' : 'INFO',
                 'component' => $data['component'] ?? 'API',
                 'event' => $data['event'] ?? 'request',
                 'request_id' => $data['request_id'] ?? null,

@@ -94,6 +94,11 @@ const SettingsPanel = ({ settings, onSave }) => {
 
             return models;
         } catch (err) {
+            setAvailableModels([]);
+            setFormData((current) => ({
+                ...current,
+                default_model: '',
+            }));
             setError(err.message || __('Erro ao carregar modelos da Groq.', 'ai-content-generator'));
             return [];
         } finally {
@@ -174,9 +179,19 @@ const SettingsPanel = ({ settings, onSave }) => {
                 setSuccess(true);
                 await loadModels(true, true);
             } else {
+                setAvailableModels([]);
+                setFormData((current) => ({
+                    ...current,
+                    default_model: '',
+                }));
                 setError(response.message || __('Chave API inválida.', 'ai-content-generator'));
             }
         } catch (err) {
+            setAvailableModels([]);
+            setFormData((current) => ({
+                ...current,
+                default_model: '',
+            }));
             setError(err.message || __('Erro ao validar chave.', 'ai-content-generator'));
         } finally {
             setSaving(false);

@@ -43,6 +43,7 @@ $async_generation = get_option('aicg_async_generation', true);
 $enable_notifications = get_option('aicg_enable_notifications', true);
 $async_available = !(defined('DISABLE_WP_CRON') && DISABLE_WP_CRON);
 $available_models = get_option('aicg_available_models', []);
+$models_error = null;
 
 if ($api_key_configured) {
     $client = new \AICG\API\GroqClient();
@@ -50,10 +51,12 @@ if ($api_key_configured) {
 
     if (!is_wp_error($models_result) && !empty($models_result)) {
         $available_models = $models_result;
+    } elseif (is_wp_error($models_result)) {
+        $models_error = $models_result->get_error_message();
     }
 }
 
-if (empty($available_models) && !empty($default_model)) {
+if (!$api_key_configured && empty($available_models) && !empty($default_model)) {
     $available_models = [
         [
             'id' => $default_model,
@@ -65,6 +68,12 @@ if (empty($available_models) && !empty($default_model)) {
 ?>
 <div class="wrap">
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+
+    <?php if (!empty($models_error)): ?>
+        <div class="notice notice-error">
+            <p><?php echo esc_html($models_error); ?></p>
+        </div>
+    <?php endif; ?>
     
     <form method="post" action="">
         <?php wp_nonce_field('aicg_settings_nonce'); ?>
@@ -100,7 +109,7 @@ if (empty($available_models) && !empty($default_model)) {
                     </label>
                 </th>
                 <td>
-                    <select id="aicg_default_model" name="aicg_default_model">
+                    <select id="aicg_default_model" name="aicg_default_model" <?php disabled(empty($available_models)); ?>>
                         <?php foreach ($available_models as $model): ?>
                             <option value="<?php echo esc_attr($model['id']); ?>" <?php selected($default_model, $model['id']); ?>>
                                 <?php echo esc_html($model['name'] ?? $model['id']); ?>
@@ -108,7 +117,13 @@ if (empty($available_models) && !empty($default_model)) {
                         <?php endforeach; ?>
                     </select>
                     <p class="description">
-                        <?php esc_html_e('Lista atualizada diretamente da API de modelos da Groq quando a chave estiver configurada.', 'ai-content-generator'); ?>
+                        <?php
+                        if (!empty($models_error)) {
+                            esc_html_e('Corrija a chave API para carregar a lista atual de modelos da Groq.', 'ai-content-generator');
+                        } else {
+                            esc_html_e('Lista atualizada diretamente da API de modelos da Groq quando a chave estiver configurada.', 'ai-content-generator');
+                        }
+                        ?>
                     </p>
                 </td>
             </tr>
