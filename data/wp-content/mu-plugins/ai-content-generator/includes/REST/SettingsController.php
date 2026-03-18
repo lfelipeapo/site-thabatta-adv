@@ -160,7 +160,19 @@ class SettingsController
             );
         }
 
-        $old_key = get_option('aicg_api_key_encrypted');
+        $client = new GroqClient($normalized_key);
+        $result = $client->validate_connection();
+
+        if (is_wp_error($result)) {
+            return $result;
+        }
+
+        $models = $client->get_available_models(true);
+
+        if (is_wp_error($models)) {
+            return $models;
+        }
+
         $encryption = new Encryption();
         $encrypted = $encryption->encrypt($normalized_key);
 
@@ -173,16 +185,6 @@ class SettingsController
 
         update_option('aicg_api_key_encrypted', $encrypted);
         delete_transient('aicg_groq_models_cache');
-
-        $client = new GroqClient();
-        $result = $client->validate_connection();
-
-        if (is_wp_error($result)) {
-            update_option('aicg_api_key_encrypted', $old_key);
-            return $result;
-        }
-
-        $client->get_available_models(true);
 
         return true;
     }

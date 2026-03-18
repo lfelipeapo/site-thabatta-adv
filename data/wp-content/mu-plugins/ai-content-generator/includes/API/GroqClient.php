@@ -74,9 +74,14 @@ class GroqClient
     /**
      * Construtor
      */
-    public function __construct()
+    public function __construct(?string $api_key = null)
     {
-        $this->load_api_key();
+        if ($api_key !== null) {
+            $this->api_key = trim($api_key);
+        } else {
+            $this->load_api_key();
+        }
+
         $this->logger = new Logger();
     }
 
@@ -91,8 +96,74 @@ class GroqClient
         
         if (!empty($encrypted_key)) {
             $encryption = new Encryption();
-            $this->api_key = $encryption->decrypt($encrypted_key);
+            $decrypted_key = trim($encryption->decrypt($encrypted_key));
+
+            if ($this->looks_like_api_key($decrypted_key)) {
+                $this->api_key = $decrypted_key;
+                return;
+            }
+
+            $recovered_key = $this->recover_double_encrypted_key($encryption, $decrypted_key);
+
+            if ($recovered_key !== null) {
+                $this->api_key = $recovered_key;
+                return;
+            }
+
+            $this->api_key = $decrypted_key;
         }
+    }
+
+    /**
+     * Tenta recuperar uma chave salva com dupla criptografia.
+     *
+     * @param Encryption $encryption Serviço de criptografia
+     * @param string     $candidate  Valor descriptografado na primeira passada
+     * @return string|null
+     */
+    private function recover_double_encrypted_key(Encryption $encryption, string $candidate): ?string
+    {
+        if ($candidate === '' || !$this->looks_like_encrypted_payload($candidate)) {
+            return null;
+        }
+
+        $recovered_key = trim($encryption->decrypt($candidate));
+
+        if (!$this->looks_like_api_key($recovered_key)) {
+            return null;
+        }
+
+        // Cura automaticamente o valor salvo para o formato correto.
+        update_option('aicg_api_key_encrypted', $encryption->encrypt($recovered_key));
+        delete_transient(self::MODELS_CACHE_KEY);
+
+        return $recovered_key;
+    }
+
+    /**
+     * Verifica se o valor parece uma chave da Groq em texto plano.
+     *
+     * @param string $value Valor a validar
+     * @return bool
+     */
+    private function looks_like_api_key(string $value): bool
+    {
+        return str_starts_with($value, 'gsk_') && strlen($value) >= 20;
+    }
+
+    /**
+     * Heurística simples para detectar um payload criptografado/base64.
+     *
+     * @param string $value Valor a validar
+     * @return bool
+     */
+    private function looks_like_encrypted_payload(string $value): bool
+    {
+        if (strlen($value) < 32 || preg_match('/\s/', $value)) {
+            return false;
+        }
+
+        return base64_decode($value, true) !== false;
     }
 
     /**

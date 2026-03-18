@@ -202,14 +202,23 @@ class Plugin
      */
     public function sanitize_api_key(string $value): string
     {
+        $value = trim($value);
+
         // Se estiver vazio, mantém o valor atual
         if (empty($value)) {
             return get_option('aicg_api_key_encrypted', '');
         }
 
-        // Criptografa a chave antes de salvar
         $encryption = new \AICG\Security\Encryption();
-        return $encryption->encrypt($value);
+        $decrypted = trim($encryption->decrypt($value));
+
+        // Evita dupla criptografia quando o valor já estiver protegido.
+        if (str_starts_with($decrypted, 'gsk_')) {
+            return $value;
+        }
+
+        // Criptografa a chave antes de salvar
+        return $encryption->encrypt(sanitize_text_field($value));
     }
 
     /**
