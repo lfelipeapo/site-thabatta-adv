@@ -103,8 +103,6 @@ RUN { \
 
 WORKDIR /var/www/html
 
-VOLUME /var/www/html/wp-content
-
 COPY data/wp-content/mu-plugins /var/www/html/wp-content/mu-plugins
 RUN mkdir /var/www/html/wp-content/cache
 
