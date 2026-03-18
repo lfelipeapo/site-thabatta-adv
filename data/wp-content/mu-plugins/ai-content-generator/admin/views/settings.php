@@ -15,7 +15,7 @@ if (isset($_POST['aicg_save_settings']) && check_admin_referer('aicg_settings_no
     // API Key
     if (!empty($_POST['aicg_api_key'])) {
         $encryption = new \AICG\Security\Encryption();
-        update_option('aicg_api_key_encrypted', $encryption->encrypt(sanitize_text_field($_POST['aicg_api_key'])));
+        update_option('aicg_api_key_encrypted', $encryption->encrypt(sanitize_text_field(trim((string) $_POST['aicg_api_key']))));
     }
 
     // Preferências

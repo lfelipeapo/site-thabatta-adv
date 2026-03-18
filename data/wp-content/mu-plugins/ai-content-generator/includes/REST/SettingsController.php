@@ -80,9 +80,11 @@ class SettingsController
 
         // Atualiza API key se fornecida
         if (isset($params['api_key']) && !empty($params['api_key'])) {
-            $encryption = new Encryption();
-            $encrypted = $encryption->encrypt($params['api_key']);
-            update_option('aicg_api_key_encrypted', $encrypted);
+            $validated = self::persist_validated_api_key((string) $params['api_key']);
+
+            if (is_wp_error($validated)) {
+                return $validated;
+            }
         }
 
         // Atualiza outros campos
@@ -119,7 +121,7 @@ class SettingsController
      */
     public static function validate_api_key(\WP_REST_Request $request)
     {
-        $api_key = $request->get_param('api_key');
+        $api_key = (string) $request->get_param('api_key');
 
         if (empty($api_key)) {
             return new \WP_Error(
@@ -128,17 +130,53 @@ class SettingsController
             );
         }
 
-        // Temporariamente salva a chave para teste
-        $old_key = get_option('aicg_api_key_encrypted');
-        
-        $encryption = new Encryption();
-        update_option('aicg_api_key_encrypted', $encryption->encrypt($api_key));
+        $validated = self::persist_validated_api_key($api_key);
 
-        // Testa conexão
+        if (is_wp_error($validated)) {
+            return $validated;
+        }
+
+        // Mantém nova chave
+        return new \WP_REST_Response([
+            'success' => true,
+            'message' => esc_html__('Chave API válida!', 'ai-content-generator'),
+        ], 200);
+    }
+
+    /**
+     * Normaliza, valida e persiste a chave da API Groq.
+     *
+     * @param string $api_key Chave enviada pela interface
+     * @return true|\WP_Error
+     */
+    private static function persist_validated_api_key(string $api_key)
+    {
+        $normalized_key = sanitize_text_field(trim($api_key));
+
+        if ($normalized_key === '') {
+            return new \WP_Error(
+                'empty_api_key',
+                esc_html__('Chave API não fornecida.', 'ai-content-generator')
+            );
+        }
+
+        $old_key = get_option('aicg_api_key_encrypted');
+        $encryption = new Encryption();
+        $encrypted = $encryption->encrypt($normalized_key);
+
+        if ($encrypted === '') {
+            return new \WP_Error(
+                'api_key_encrypt_failed',
+                esc_html__('Não foi possível proteger a chave API antes de salvar.', 'ai-content-generator')
+            );
+        }
+
+        update_option('aicg_api_key_encrypted', $encrypted);
+        delete_transient('aicg_groq_models_cache');
+
         $client = new GroqClient();
         $result = $client->validate_connection();
 
-        // Restaura chave antiga se falhou
         if (is_wp_error($result)) {
             update_option('aicg_api_key_encrypted', $old_key);
             return $result;
@@ -146,11 +184,7 @@ class SettingsController
 
         $client->get_available_models(true);
 
-        // Mantém nova chave
-        return new \WP_REST_Response([
-            'success' => true,
-            'message' => esc_html__('Chave API válida!', 'ai-content-generator'),
-        ], 200);
+        return true;
     }
 
     /**
